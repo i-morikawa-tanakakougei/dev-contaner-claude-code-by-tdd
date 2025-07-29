@@ -55,6 +55,18 @@ This document contains critical information about working with this codebase. Fo
 - NEVER ever mention a `co-authored-by` or similar aspects. In particular, never
   mention the tool used to create the commit message or PR.
 
+## Available Tools (MCP)
+
+1. Context7
+
+   - Please ensure you use Context7 in the following situations:
+   - **When you need the latest API or library information:** When using Python, other frequently updated libraries and frameworks, or minor packages such as FastHtml, please obtain the latest official documentation and code examples from Context7 to perform accurate code generation.
+   - **To ensure code accuracy:** To prevent outdated APIs or "hallucinated" code, please utilize Context7 to reference version-specific information.
+   - **To improve development efficiency:** When coding, obtain the latest technical information in real-time from Context7 to provide prompt and accurate suggestions.
+   - **For small-scale libraries and niche tech stacks:** When official documentation is limited, please obtain the latest information with Context7 and provide appropriate code.
+
+   When using Context7, please generate an accurate answer that is optimized for the user's request based on the information you have obtained.
+
 ## Python Tools
 
 ## Code Formatting
