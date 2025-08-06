@@ -1,4 +1,4 @@
-# Dev Container 環境で Claude Code を使用して TDD・DDD・レイヤードアーキテクチャによる Python 開発環境のひな型
+# Claude Code を使用して TDD・DDD・レイヤードアーキテクチャによる Python 開発 in Dev Container 環境のひな型
 
 このプロジェクトは、**TDD（テスト駆動開発）**、**DDD（ドメイン駆動設計）**、**レイヤードアーキテクチャ** を採用した Python 開発のための Dev Container 環境です。Claude Code と統合されたカスタムコマンドにより、体系的な開発ワークフローを提供します。
 
