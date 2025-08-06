@@ -50,10 +50,63 @@ This document contains critical information about working with this codebase. Fo
   the problem it tries to solve, and how it is solved. Don't go into the specifics of the
   code unless it adds clarity.
 
-- Always add `artofzero` as reviewer.
+- Always add `i-morikawa-tanakakougei` as reviewer.
 
 - NEVER ever mention a `co-authored-by` or similar aspects. In particular, never
   mention the tool used to create the commit message or PR.
+
+## Development Approach: TDD/DDD/Layered Architecture
+
+When developing features, follow this workflow:
+
+1. **Create Use Case Specification**: `/create-use-case <issue-number>`
+   - Write Given-When-Then scenarios in Japanese
+   - Define domain concepts and ubiquitous language
+   - Document in `docs/use_cases/`
+
+2. **Design Domain Model**: `/domain-modeling <issue-number>`
+   - Design entities, value objects, and domain services
+   - Define aggregate boundaries and repositories
+   - Document in `docs/domain/`
+
+3. **Create Tests (RED)**: `/create-tests <issue-number>`
+   - Write failing tests based on specifications
+   - Cover all Given-When-Then scenarios
+   - Follow TDD RED phase
+
+4. **Implement Domain Layer (GREEN)**: `/implement-domain <issue-number>`
+   - Implement only enough to pass tests
+   - Enforce business rules and invariants
+   - Keep domain pure (no I/O)
+
+5. **Implement Application Layer**: `/implement-usecase <issue-number>`
+   - Create use cases to orchestrate domain
+   - Handle application concerns (transactions, auth)
+   - Use DTOs for input/output
+
+6. **Implement Infrastructure Layer**: `/implement-infra <issue-number>`
+   - Create concrete repository implementations
+   - Handle persistence and external services
+   - Keep infrastructure details isolated
+
+7. **Implement Presentation Layer**: `/implement-presentation <issue-number>`
+   - Create API endpoints or CLI commands
+   - Handle input validation and error responses
+   - Keep presentation layer thin
+
+8. **Refactor (REFACTOR)**: `/refactor <issue-number>`
+   - Improve code quality after tests pass
+   - Remove duplication and simplify
+   - Maintain all tests GREEN
+
+9. **Run All Tests**: `/run-all-tests <issue-number>`
+   - Verify complete test suite passes
+   - Check coverage and quality metrics
+   - Generate comprehensive report
+
+Additional commands:
+- `/init-project-structure`: Initialize complete project structure
+- Custom commands are in `.claude/commands/tdd-ddd-layered/`
 
 ## Available Tools (MCP)
 
