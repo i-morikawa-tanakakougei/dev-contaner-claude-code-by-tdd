@@ -50,7 +50,7 @@
 - GitLens
 - Anthropic Claude Code
 
-## プロジェクト構造
+## プロジェクト構造（Claude Code in Dev Container 環境）
 
 ```
 .
@@ -99,7 +99,7 @@
 
 6. **テスト検証**: `/run-all-tests <issue番号>`
 
-#### プロジェクト構造
+#### プロジェクト構造(TDD・DDD・レイヤードアーキテクチャ)
 
 ```
 project/
