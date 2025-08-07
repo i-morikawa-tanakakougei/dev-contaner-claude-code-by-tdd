@@ -57,56 +57,124 @@ This document contains critical information about working with this codebase. Fo
 
 ## Development Approach: TDD/DDD/Layered Architecture
 
-When developing features, follow this workflow:
+### Process Design: Vision to Ticket Creation Flow (Option 3)
 
-1. **Create Use Case Specification**: `/create-use-case <issue-number>`
-   - Write Given-When-Then scenarios in Japanese
+This project adopts the **"Create core scenarios upfront, add and extend during sprints"** approach.
+
+#### Initial Phase (Project Start)
+
+1. **Vision Definition and Core Scenario Creation**: `/create-vision`
+
+   - Define vision with Bounded Context and main use cases
+   - Create Given-When-Then scenarios for core use cases (covering 80% of the whole)
+   - Establish ubiquitous language
+   - Document in `docs/vision/` and `docs/use_cases/core/`
+
+2. **Sprint Planning**: `/sprint-planning <sprint-number>`
+   - Split core scenarios into tickets (1 scenario = 1 ticket as baseline)
+   - Set priorities and define sprint goals
+   - Include Given-When-Then as acceptance criteria for each ticket
+   - Create and manage GitHub issues
+
+#### Sprint Execution Phase
+
+3. **Use Case Specification Creation**: `/create-use-case <issue-number>`
+
+   - Create Given-When-Then scenarios from issues
+   - Verify alignment with vision
    - Define domain concepts and ubiquitous language
    - Document in `docs/use_cases/`
 
-2. **Design Domain Model**: `/domain-modeling <issue-number>`
+4. **Domain Model Design**: `/domain-modeling <issue-number>`
+
    - Design entities, value objects, and domain services
    - Define aggregate boundaries and repositories
    - Document in `docs/domain/`
 
-3. **Create Tests (RED)**: `/create-tests <issue-number>`
-   - Write failing tests based on specifications
+5. **Test Creation (RED)**: `/create-tests <issue-number>`
+
+   - Create failing tests based on specifications
    - Cover all Given-When-Then scenarios
-   - Follow TDD RED phase
+   - Execute TDD RED phase
 
-4. **Implement Domain Layer (GREEN)**: `/implement-domain <issue-number>`
-   - Implement only enough to pass tests
-   - Enforce business rules and invariants
-   - Keep domain pure (no I/O)
+6. **Domain Layer Implementation (GREEN)**: `/implement-domain <issue-number>`
 
-5. **Implement Application Layer**: `/implement-usecase <issue-number>`
+   - Implement minimal code to pass tests
+   - Implement business rules and invariants
+   - Maintain domain purity (no I/O)
+
+7. **Application Layer Implementation**: `/implement-usecase <issue-number>`
+
    - Create use cases to orchestrate domain
-   - Handle application concerns (transactions, auth)
+   - Handle application concerns (transactions, authentication)
    - Use DTOs for input/output
 
-6. **Implement Infrastructure Layer**: `/implement-infra <issue-number>`
+8. **Infrastructure Layer Implementation**: `/implement-infra <issue-number>`
+
    - Create concrete repository implementations
    - Handle persistence and external services
    - Keep infrastructure details isolated
 
-7. **Implement Presentation Layer**: `/implement-presentation <issue-number>`
+9. **Presentation Layer Implementation**: `/implement-presentation <issue-number>`
+
    - Create API endpoints or CLI commands
    - Handle input validation and error responses
-   - Keep presentation layer thin
+   - Keep presentation layer lightweight
 
-8. **Refactor (REFACTOR)**: `/refactor <issue-number>`
-   - Improve code quality after tests pass
-   - Remove duplication and simplify
-   - Maintain all tests GREEN
+10. **Refactoring (REFACTOR)**: `/refactor <issue-number>`
+    - Improve code quality after tests pass
+    - Remove duplication and simplify
+    - Maintain all tests GREEN
 
-9. **Run All Tests**: `/run-all-tests <issue-number>`
-   - Verify complete test suite passes
-   - Check coverage and quality metrics
-   - Generate comprehensive report
+#### Scenario Evolution During Sprints
 
-Additional commands:
-- `/init-project-structure`: Initialize complete project structure
-- Custom commands are in `.claude/commands/tdd-ddd-layered/`
+11. **Scenario Addition/Extension**: `/evolve-scenarios <feature-name>`
+
+    - Add new scenarios based on sprint review feedback
+    - Document edge cases and new requirements
+    - Sync existing scenarios with modifications
+    - Simultaneous execution of new scenarios and ticket creation (ensure consistency)
+
+12. **Run All Tests**: `/run-all-tests <issue-number>`
+    - Execute complete test suite
+    - Verify coverage and quality metrics
+    - Generate comprehensive reports
+
+### Key Principles
+
+- **Vision Maintenance**: Always keep the overall vision in mind, avoid missing the forest for the trees
+- **Core Scenario Selection**: Focus on main use cases covering 80% of the vision
+- **Gradual Extension**: Add edge cases in later sprints
+- **Ticket Granularity**: 1 ticket = 1 scenario as baseline, split large scenarios
+- **Continuous Improvement**: Review specifications each sprint to prevent obsolescence
+
+### Command List
+
+Initial Phase:
+
+- `/create-vision`: Define vision and core scenarios
+- `/sprint-planning <sprint-number>`: Sprint planning and ticket creation
+
+Sprint Execution:
+
+- `/create-use-case <issue-number>`: Create use case specifications
+- `/domain-modeling <issue-number>`: Design domain model
+- `/create-tests <issue-number>`: Create tests (RED)
+- `/implement-domain <issue-number>`: Implement domain layer (GREEN)
+- `/implement-usecase <issue-number>`: Implement application layer
+- `/implement-infra <issue-number>`: Implement infrastructure layer
+- `/implement-presentation <issue-number>`: Implement presentation layer
+- `/refactor <issue-number>`: Refactoring (REFACTOR)
+
+Scenario Evolution:
+
+- `/evolve-scenarios <feature-name>`: Add/extend scenarios
+- `/run-all-tests <issue-number>`: Run all tests
+
+Others:
+
+- `/init-project-structure`: Initialize project structure
+- Custom commands are placed in `.claude/commands/tdd-ddd-layered/`
 
 ## Available Tools (MCP)
 
