@@ -57,7 +57,7 @@ This document contains critical information about working with this codebase. Fo
 
 ## Development Approach: TDD/DDD/Layered Architecture
 
-### Process Design: Vision to Ticket Creation Flow (Option 3)
+### Process Design: Vision to Ticket Creation Flow
 
 This project adopts the **"Create core scenarios upfront, add and extend during sprints"** approach.
 
