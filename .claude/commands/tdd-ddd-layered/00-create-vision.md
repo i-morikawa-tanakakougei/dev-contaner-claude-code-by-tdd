@@ -2,17 +2,24 @@ Create project vision and core scenarios.
 
 Follow these steps:
 
-1. **Define Project Vision**:
+1. **Gather Project Information Through Interactive Dialog**:
+   - Ask user about project purpose and goals if not clear
+   - Clarify target users and stakeholders
+   - Understand business domain and context
+   - Identify main features and functionality scope
+   - Confirm technical requirements and constraints
+
+2. **Define Project Vision**:
    - Clarify overall project goals
    - Identify main Bounded Contexts
    - Define core business value
    - Identify key stakeholders
 
-2. **Create Directory Structure**:
+3. **Create Directory Structure**:
    - Create `docs/vision/` directory
    - Create `docs/use_cases/core/` directory
 
-3. **Create Vision Document**:
+4. **Create Vision Document**:
    - File: `docs/vision/project-vision.md`
    - Use the following template (content in Japanese):
 
@@ -53,7 +60,7 @@ Follow these steps:
 - **可用性**: <Requirements>
 ```
 
-4. **Create Core Scenarios (80% Coverage)**:
+5. **Create Core Scenarios (80% Coverage)**:
    - Create Given-When-Then scenarios for each main use case
    - File: `docs/use_cases/core/<usecase-name>.md`
    - Use the following template (content in Japanese):
@@ -95,7 +102,7 @@ Follow these steps:
 - <About extensibility>
 ```
 
-5. **Create Core Scenarios Index**:
+6. **Create Core Scenarios Index**:
    - File: `docs/use_cases/core/index.md`
    - List all core scenarios with priorities (content in Japanese)
 
@@ -119,18 +126,22 @@ Follow these steps:
 - **スプリント3**: Use case 5
 ```
 
-6. **Validation**:
+7. **Validation**:
    - Confirm core scenarios cover 80% of the vision
    - Intentionally exclude edge cases (add in later sprints)
    - Check consistency of ubiquitous language
    - Verify each scenario is independently testable
 
-7. **Guide Next Steps**:
+8. **Guide Next Steps**:
    - Suggest next commands in Japanese:
      - `/sprint-planning 1` - First sprint planning
      - `/init-project-structure` - Initialize project structure
 
 Important Notes:
+- **Interactive Dialog First**: Always start by asking questions to understand the project context if information is unclear or missing
+- Gather sufficient information before proceeding to document creation
+- Ask specific questions about domain, users, business goals, and technical constraints
+- Confirm understanding with the user before moving to the next step
 - Limit core scenarios to 3-7 (covering 80% of the whole)
 - Exclude edge cases and special cases (add later)
 - Create vision as an evolving document

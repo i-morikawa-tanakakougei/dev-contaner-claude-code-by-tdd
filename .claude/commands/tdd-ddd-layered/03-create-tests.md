@@ -2,17 +2,21 @@ Create TDD tests based on Given-When-Then specifications and domain model.
 
 Follow these steps:
 
-1. **Check Prerequisites**:
+1. **Check Arguments**:
+   - Verify that `$ARGUMENTS` is provided
+   - If not provided, terminate immediately and prompt the user to pass the issue number argument in Japanese
+
+2. **Check Prerequisites**:
    - Verify use case specification exists in `docs/use_cases/`
    - Verify domain model exists in `docs/domain/`
    - If missing, prompt user in Japanese to complete previous steps
 
-2. **Analyze Specifications**:
+3. **Analyze Specifications**:
    - Read Given-When-Then scenarios
    - Read domain model design
    - Map scenarios to test cases
 
-3. **Create Test Structure**:
+4. **Create Test Structure**:
    - Create test directories if they don't exist:
    ```
    tests/
@@ -28,7 +32,7 @@ Follow these steps:
        └── api/
    ```
 
-4. **Write Unit Tests (RED phase)**:
+5. **Write Unit Tests (RED phase)**:
    - Start with domain entity tests
    - For each Given-When-Then scenario, create corresponding test
    - Tests should FAIL initially (no implementation yet)
@@ -44,16 +48,16 @@ Follow these steps:
        assert False  # RED: Not implemented yet
    ```
 
-5. **Create Test Files**:
+6. **Create Test Files**:
    - Domain entity tests: `tests/unit/domain/entities/test_<entity_name>.py`
    - Value object tests: `tests/unit/domain/value_objects/test_<vo_name>.py`
    - Use case tests: `tests/unit/application/use_cases/test_<use_case>.py`
 
-6. **Define Test Data Builders**:
+7. **Define Test Data Builders**:
    - Create test fixtures and builders for consistent test data
    - Place in `tests/fixtures/` or `tests/builders/`
 
-7. **Document Test Plan**:
+8. **Document Test Plan**:
    - Create `docs/test_plan/issue-$ARGUMENTS-test-plan.md` in JAPANESE:
    ```markdown
    # テスト計画: <機能名>
@@ -86,15 +90,15 @@ Follow these steps:
    ```
    ```
 
-8. **Verify Test Setup**:
+9. **Verify Test Setup**:
    - Run tests to confirm they fail (RED phase)
    - Check that all scenarios are covered
    - Ensure test names are descriptive
 
-9. **Update Issue**:
+10. **Update Issue**:
    - Comment: `gh issue comment $ARGUMENTS --body "TDDテストを作成しました（RED phase）。実装前のため、すべてのテストは失敗します。"`
 
-10. **Guide Next Steps**:
+11. **Guide Next Steps**:
     - Prompt user in Japanese to implement domain layer (`/implement-domain`)
     - Remind about RED-GREEN-REFACTOR cycle
 

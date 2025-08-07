@@ -2,17 +2,21 @@ Design domain models based on the Given-When-Then specification.
 
 Follow these steps:
 
-1. **Check Prerequisites**:
+1. **Check Arguments**:
+   - Verify that `$ARGUMENTS` is provided
+   - If not provided, terminate immediately and prompt the user to pass the issue number argument in Japanese
+
+2. **Check Prerequisites**:
    - Verify that use case specification exists in `docs/use_cases/`
    - If `$ARGUMENTS` is provided, look for `docs/use_cases/issue-$ARGUMENTS-*.md`
    - If no specification found, prompt user in Japanese to run `/create-use-case` first
 
-2. **Read Use Case Specification**:
+3. **Read Use Case Specification**:
    - Load the Given-When-Then specification file
    - Extract domain concepts and relationships
    - Identify entities, value objects, and domain services
 
-3. **Create Domain Model Design**:
+4. **Create Domain Model Design**:
    - Create `docs/domain/` directory if it doesn't exist
    - Create design document `docs/domain/issue-$ARGUMENTS-domain-model.md`
    - Write the design in JAPANESE using the following template:
@@ -73,7 +77,7 @@ Issue: #$ARGUMENTS
 - **含まれる情報**: <イベントデータ>
 ```
 
-4. **Create Initial Folder Structure**:
+5. **Create Initial Folder Structure**:
    - Create the following directory structure:
    ```
    domain/
@@ -84,20 +88,20 @@ Issue: #$ARGUMENTS
    └── events/
    ```
 
-5. **Validate Domain Model**:
+6. **Validate Domain Model**:
    - Ensure all scenarios from use case can be implemented
    - Check that business rules are enforced
    - Verify aggregate boundaries are correct
 
-6. **Document Design Decisions**:
+7. **Document Design Decisions**:
    - Add rationale for key design choices
    - Note any assumptions or constraints
    - List questions for stakeholder review if needed
 
-7. **Update Issue**:
+8. **Update Issue**:
    - Comment on issue: `gh issue comment $ARGUMENTS --body "ドメインモデル設計を完了しました: docs/domain/issue-$ARGUMENTS-domain-model.md"`
 
-8. **Guide Next Steps**:
+9. **Guide Next Steps**:
    - Suggest creating tests (`/create-tests`) in Japanese
    - Remind to review the model before implementation
 
