@@ -6,6 +6,22 @@ This directory contains custom commands for implementing features using Test-Dri
 
 This project adopts the **"Create core scenarios upfront, add and extend during sprints"** approach.
 
+### Overall Flow
+
+- Initial Phase
+  - 00: Vision definition and core scenario creation
+  - 01: Project structure initialization
+  - 02: Sprint planning and ticket creation
+- Sprint Execution Phase
+  - 03-09: Use case specification → Domain design → TDD implementation (RED→GREEN) → Each layer implementation
+  - 10: Run all tests
+  - 11: Refactoring (REFACTOR)
+- Scenario Evolution & Review Phase
+  - 12: Scenario evolution (based on sprint feedback)
+  - 13: Issue review implementation
+  - 14: Feedback reflection
+  - 15: PR creation and issue closing
+
 ### Initial Phase Commands
 
 1. **`/create-vision`** - Define project vision and core scenarios (80% coverage)
@@ -31,15 +47,18 @@ This project adopts the **"Create core scenarios upfront, add and extend during 
 ## Common Guidelines
 
 ### When referencing GitHub issues:
+
 - Always prioritize the most recent comments over older ones and the original issue description
 - If there are conflicts between the issue content and newer comments, prioritize the newer comments
 - Use `gh issue view <issue-number>` to get complete issue details including all comments
 
 ### Output language:
+
 - Command instructions are in English
 - User-facing output (specifications, design documents, error messages) must be in Japanese
 
 ### File organization:
+
 - Vision document: `docs/vision/`
 - Core scenarios: `docs/use_cases/core/`
 - Use case specifications: `docs/use_cases/`
@@ -52,6 +71,7 @@ This project adopts the **"Create core scenarios upfront, add and extend during 
 ## Usage Examples
 
 ### Project Initialization
+
 ```bash
 # Define vision and core scenarios
 /create-vision
@@ -64,6 +84,7 @@ This project adopts the **"Create core scenarios upfront, add and extend during 
 ```
 
 ### Sprint Execution
+
 ```bash
 # Start with a GitHub issue from sprint planning
 /create-use-case 123
@@ -80,6 +101,7 @@ This project adopts the **"Create core scenarios upfront, add and extend during 
 ```
 
 ### Scenario Evolution (During Sprint)
+
 ```bash
 # When new requirements emerge
 /evolve-scenarios cart-management

@@ -94,7 +94,31 @@ Follow these steps:
    - Remove test duplication
    - Ensure Given-When-Then structure
 
-10. **Run Full Validation**:
+10. **Create New Tickets for Additional Requirements** (if any):
+    - If new requirements were discovered during review:
+    
+    a. **Determine Sprint Allocation**:
+       - Check current sprint capacity
+       - Prioritize based on urgency and dependencies
+    
+    b. **Create GitHub Issues**:
+       ```bash
+       # For new scenarios discovered during review
+       gh issue create \
+         --title "実装: <New requirement>" \
+         --body "## 概要\n<Description>\n\n## 発見経緯\nIssue #$ARGUMENTS のレビュー中に発見\n\n## シナリオ\n- Given: <condition>\n- When: <action>\n- Then: <result>\n\n## 関連\n- 元Issue: #$ARGUMENTS\n- レビューレポート: docs/review/issue-$ARGUMENTS-review.md" \
+         --label "enhancement,from-review"
+       ```
+    
+    c. **Update Sprint Backlog**:
+       - If for current sprint: Update `docs/sprints/sprint-<current>-backlog.md`
+       - If for next sprint: Update `docs/sprints/sprint-<next>-backlog.md`
+    
+    d. **Create Scenario Document**:
+       - File: `docs/use_cases/evolved/from-review-$ARGUMENTS-<aspect>.md`
+       - Link to original issue and review report
+
+11. **Run Full Validation**:
     ```bash
     # Run all tests
     pytest
@@ -108,7 +132,7 @@ Follow these steps:
     pyright
     ```
 
-11. **Create Feedback Application Report**:
+12. **Create Feedback Application Report**:
     Create `docs/review/issue-$ARGUMENTS-feedback-applied.md` in Japanese:
 
 ```markdown
@@ -168,6 +192,12 @@ Issue: #$ARGUMENTS
 - <リファクタリング1>: <改善内容>
 - <リファクタリング2>: <改善内容>
 
+## 新規作成チケット
+| Issue # | タイトル | スプリント | 優先度 |
+|---------|----------|------------|--------|
+| #<new1> | <Title> | Sprint X | High |
+| #<new2> | <Title> | Sprint Y | Medium |
+
 ## 残課題
 - <将来的な改善案1>
 - <将来的な改善案2>
@@ -180,7 +210,7 @@ Issue: #$ARGUMENTS
 - [x] Given-When-Thenシナリオ完全実装
 ```
 
-12. **Update Issue**:
+13. **Update Issue**:
     ```bash
     gh issue comment $ARGUMENTS --body "レビューフィードバックを反映しました。
 
@@ -194,7 +224,7 @@ Issue: #$ARGUMENTS
     すべてのテストがGREENで、品質基準を満たしています。"
     ```
 
-13. **Commit Changes**:
+14. **Commit Changes**:
     ```bash
     git add .
     git commit -m "refactor: レビューフィードバックを反映 (#$ARGUMENTS)
@@ -206,7 +236,7 @@ Issue: #$ARGUMENTS
     詳細は docs/review/issue-$ARGUMENTS-feedback-applied.md を参照"
     ```
 
-14. **Display Summary**:
+15. **Display Summary**:
     Show summary in Japanese:
     ```
     フィードバック反映完了！
@@ -217,6 +247,7 @@ Issue: #$ARGUMENTS
     - 必須項目: X/X ✅
     - 推奨項目: Y/Z ✅
     - 保留項目: Z件
+    - 新規チケット作成: N件
     
     品質メトリクス:
     - カバレッジ: X% → Y% (↑Z%)

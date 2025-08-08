@@ -8,8 +8,12 @@ Follow these steps:
 
 2. **Analyze Feedback Source**:
    - Check for sprint review notes in `docs/sprints/`
+   - Check for review reports in `docs/review/issue-*-review.md`
    - Review recent GitHub issue comments
-   - Identify new requirements or edge cases discovered
+   - Identify new requirements or edge cases discovered from:
+     - Sprint retrospectives
+     - Code review feedback
+     - Test results and edge cases found during implementation
 
 3. **Determine Scenario Type**:
    - **Extension**: Adding detail to existing scenario
@@ -91,9 +95,21 @@ Follow these steps:
    - Confirm testability of new scenarios
 
 8. **Update Sprint Documentation**:
-   - Add to current sprint's backlog if capacity allows
-   - Otherwise, add to next sprint planning notes
-   - File: `docs/sprints/sprint-<number>-evolution.md`
+   - Determine which sprint the new scenario belongs to:
+     - Current sprint if capacity allows and aligns with sprint goal
+     - Next sprint if current sprint is full or scenario is lower priority
+   - Update appropriate sprint documents:
+     
+   a. **For Current Sprint**:
+      - Update `docs/sprints/sprint-<current>-backlog.md` with new issue
+      - Add to active sprint tracking
+   
+   b. **For Future Sprint**:
+      - Create/update `docs/sprints/sprint-<next>-backlog.md`
+      - Mark as "ready for sprint planning"
+   
+   c. **Create Evolution Report**:
+      - File: `docs/sprints/sprint-<number>-evolution.md`
 
 ```markdown
 # スプリント<number> シナリオ進化
