@@ -225,873 +225,428 @@ $ /use-case-status 999
 $ /use-case-status
 ```
 
-## Task Details
+## Command Implementation
 
-## 1. **Setup Safe Environment and Parse Arguments**
+### 1. Pre-execution Validation
 
 ```bash
-# 🔧 Load all safe operation functions with automatic argument parsing and validation
+# Load shared environment and validate arguments
 source "$(dirname "${BASH_SOURCE[0]}")/_setup_safe_environment.sh" "16-use-case-status" "$ARGUMENTS"
 
-# Arguments are already parsed and validated by setup script
-# Additional validation for this specific command
-if [[ ${#issue_numbers[@]} -ne 1 ]]; then
-    echo "エラー: イシュー番号を1つだけ指定してください（複数イシューの場合は個別に実行）"
-    show_usage_example "use-case-status" "1" "イシュー1の進捗確認"
-    show_usage_example "use-case-status" "7" "イシュー7の進捗確認"
+# Validate issue numbers provided
+if [[ ${#issue_numbers[@]} -eq 0 ]]; then
+    echo "❌ エラー: イシュー番号が必要です"
+    show_usage_example "use-case-status" "1,15" "イシュー1と15の状況確認"
+    exit 1
+fi
+
+# Check for metadata files existence
+echo "🔍 メタデータファイルの存在確認中..."
+for issue_num in "${issue_numbers[@]}"; do
+    if ! find docs/use_cases -name "issue-*${issue_num}*.json" -type f | grep -q .; then
+        echo "❌ Issue #${issue_num} のメタデータファイルが見つかりません"
+        echo "💡 まず /create-use-case ${issue_num} を実行してください"
+        exit 1
+    fi
+done
+
+echo "✅ 前提条件の確認が完了しました"
+```
+
+### 2. Execute Specialized Agent
+
+```bash
+# Execute the 16-use-case-status agent with comprehensive analysis
+echo "🤖 ステータス分析エージェントを実行中..."
+echo "📊 Issues: #$(IFS=','; echo "${issue_numbers[*]}") の包括的ステータス分析を開始します"
+
+use_task_tool "
+Please perform comprehensive use case development status analysis for issues: $(IFS=','; echo "${issue_numbers[*]}")
+
+Execute the following analysis:
+
+**Core Analysis Tasks:**
+1. **Metadata Discovery**: Scan and parse all related metadata files in docs/use_cases/
+2. **Progress Calculation**: Calculate completion percentages and phase distribution
+3. **File Inventory**: Discover implementation files across all layers (domain/application/infrastructure/presentation)
+4. **Quality Assessment**: Evaluate test coverage, code quality metrics (Ruff/Pyright), and architecture compliance
+5. **GitHub Integration**: Sync with GitHub issues for current state and activity analysis
+6. **Timeline Analysis**: Calculate development velocity and project timeline
+
+**Reporting Requirements:**
+1. **Progress Dashboard**: Visual progress indicators with completion percentages
+2. **Phase Status Matrix**: Detailed status for each development phase (use_case_creation, domain_modeling, test_creation, etc.)
+3. **Quality Metrics**: Test coverage, linting errors, type checking results
+4. **File Inventory**: Complete listing of documents, implementation files, and tests
+5. **GitHub Status**: Issue states, assignees, comments, and activity
+6. **Next Action Recommendations**: Intelligent suggestions for immediate next steps
+7. **Risk Assessment**: Identify potential blockers and stale issues
+
+**Output Format:**
+- Beautiful console progress display with visual progress bars
+- Comprehensive markdown status report
+- Actionable next steps with specific command recommendations
+- Quality metrics dashboard
+- Timeline and velocity analysis
+
+**Key Principles:**
+- READ-ONLY analysis (no file modifications)
+- Multi-dimensional analysis (metadata + files + GitHub + quality)
+- Intelligent recommendations based on current phase
+- Stakeholder-ready reporting
+- Predictive insights and trend analysis
+
+This is a status reporting command - focus on comprehensive analysis and beautiful visualization of current project state.
+" "16-use-case-status"
+
+if [[ $? -ne 0 ]]; then
+    echo "❌ ステータス分析エージェントの実行に失敗しました"
     exit 1
 fi
 ```
 
-## 2. **Comprehensive Metadata Discovery and Validation**
+### 3. Agent Result Verification
 
 ```bash
-# Discover and validate metadata with advanced search
-echo "🔍 メタデータとプロジェクト情報を収集中..."
+# Verify comprehensive status analysis completion
+echo "🔍 ステータス分析結果を検証中..."
 
-status_workspace="$(mktemp -d -t status_workspace_XXXXXX)"
-cleanup() { rm -rf "$status_workspace" 2>/dev/null || true; }
-trap cleanup EXIT
+# Check if analysis generated expected outputs
+verification_passed=true
 
-discover_project_metadata() {
-    local discovery_report="$status_workspace/discovery_report.json"
+# Verify progress analysis was completed
+if ! echo "$TASK_RESULT" | grep -q "進捗"; then
+    echo "⚠️ 警告: 進捗分析が不完全な可能性があります"
+    verification_passed=false
+fi
 
-    # Initialize discovery report
-    cat > "$discovery_report" << EOF
-{
-  "discovery_date": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
-  "requested_issues": [$(IFS=','; echo "\"${issue_numbers[*]}\"")],
-  "discovered_features": [],
-  "metadata_files": [],
-  "related_documents": [],
-  "github_status": {}
-}
-EOF
+# Verify quality metrics were assessed
+if ! echo "$TASK_RESULT" | grep -q "品質"; then
+    echo "⚠️ 警告: 品質メトリクス分析が不完全な可能性があります"
+    verification_passed=false
+fi
 
-    issue_list=$(IFS=-; echo "${issue_numbers[*]}")
+# Verify next actions were provided
+if ! echo "$TASK_RESULT" | grep -q "次の"; then
+    echo "⚠️ 警告: 次のアクション推奨が不完全な可能性があります"
+    verification_passed=false
+fi
 
-    # Try explicit feature name first
-    if [[ ${#other_args[@]} -gt 0 ]]; then
-        feature_name="${other_args[0]}"
-        metadata_file="docs/use_cases/issue-${issue_list}-${feature_name}.json"
-        echo "🎯 指定フィーチャー: $feature_name"
-    else
-        # Search for metadata files matching issue pattern
-        echo "  🔍 イシューパターンに基づくメタデータ検索中..."
-        local found_files=()
-        mapfile -t found_files < <(find docs/use_cases -name "issue-${issue_list}-*.json" 2>/dev/null)
+if [[ "$verification_passed" == "true" ]]; then
+    echo "✅ ステータス分析の検証が完了しました"
+else
+    echo "⚠️ 一部の分析が不完全ですが、利用可能な結果を表示します"
+fi
+```
 
-        if [[ ${#found_files[@]} -eq 0 ]]; then
-            # Try individual issue search
-            echo "  🔄 個別イシューでの検索中..."
-            for issue_num in "${issue_numbers[@]}"; do
-                mapfile -t -O ${#found_files[@]} found_files < <(find docs/use_cases -name "issue-*${issue_num}*.json" 2>/dev/null)
-            done
-        fi
+### 4. Display Success Summary
 
-        if [[ ${#found_files[@]} -eq 0 ]]; then
-            echo "❌ エラー: 指定されたイシューに関連するメタデータファイルが見つかりません"
-            echo "💡 ヒント: まず /create-use-case コマンドでユースケースを作成してください"
-            echo "💡 使用可能なコマンド:"
-            echo "   /create-use-case $(IFS=','; echo "${issue_numbers[*]}"),<feature-name>"
-            exit 1
-        elif [[ ${#found_files[@]} -eq 1 ]]; then
-            metadata_file="${found_files[0]}"
-            feature_name=$(basename "$metadata_file" .json | sed 's/issue-[0-9-]*-//')
-            echo "✅ メタデータファイル発見: $metadata_file"
-        else
-            echo "📋 複数のフィーチャーが見つかりました:"
-            for i in "${!found_files[@]}"; do
-                local file="${found_files[$i]}"
-                local fname=$(basename "$file" .json | sed 's/issue-[0-9-]*-//')
-                echo "  $((i+1)). $fname ($(basename "$file"))"
-            done
-            echo "💡 具体的なフィーチャー名を指定してください:"
-            echo "   /use-case-status $(IFS=','; echo "${issue_numbers[*]}"),<feature-name>"
-            exit 1
-        fi
+```bash
+# Display beautiful success summary
+echo ""
+echo "🎉 ユースケース開発ステータス分析完了"
+echo "========================================"
+echo ""
+echo "📊 **分析対象**: Issues #$(IFS=', #'; echo "${issue_numbers[*]}")"
+echo "📈 **実行内容**: 包括的ステータス分析とレポート生成"
+echo "🔍 **分析領域**: メタデータ、ファイル、品質、GitHub連携"
+echo "🎯 **成果物**: 進捗ダッシュボード、詳細レポート、推奨アクション"
+echo ""
+echo "✅ **ステータス分析が正常に完了しました**"
+echo ""
+echo "📋 詳細な分析結果は上記のレポートをご確認ください"
+echo "🔄 定期的な進捗確認により、プロジェクトの可視性を維持してください"
+echo ""
+echo "💡 次回実行: /use-case-status $(IFS=','; echo "${issue_numbers[*]}") で最新状況を確認"
+```
+
+## Important Implementation Notes
+
+### **Comprehensive Status Analysis**
+
+This command provides comprehensive, read-only analysis of use case development status with intelligent insights and actionable recommendations.
+
+**Key Capabilities:**
+- Multi-dimensional analysis (metadata + files + GitHub + quality)
+- Real-time progress calculation and visualization
+- Intelligent next action recommendations
+- Stakeholder-ready reporting and documentation
+
+**Read-Only Operations:**
+- No file modifications or implementation changes
+- Safe execution with timeout controls
+- Beautiful console display and detailed reports
+- Specific command suggestions for next actions
+
+## 📍 **AGENT INTEGRATION IMPLEMENTATION**
+
+This command follows the established 4-step agent integration pattern for consistent execution:
+
+### **Step 1: Pre-execution Validation** 🔍
+
+```bash
+# Load shared environment and validate arguments
+source "$(dirname "${BASH_SOURCE[0]}")/_setup_safe_environment.sh" "16-use-case-status" "$ARGUMENTS"
+
+# Validate issue numbers provided
+if [[ ${#issue_numbers[@]} -eq 0 ]]; then
+    echo "❌ エラー: イシュー番号が必要です"
+    show_usage_example "use-case-status" "1,15" "イシュー1と15の状況確認"
+    show_usage_example "use-case-status" "7" "イシュー7の状況確認"
+    show_usage_example "use-case-status" "1,feature-name" "イシュー1の特定フィーチャー確認"
+    exit 1
+fi
+
+# Validate project structure
+if [[ ! -d "docs/use_cases" ]]; then
+    echo "❌ エラー: プロジェクト構造が見つかりません"
+    echo "💡 ヒント: /init-project-structure を実行してください"
+    exit 1
+fi
+
+echo "🔍 プロジェクト状況分析を開始します..."
+echo "📋 対象イシュー: $(IFS=', #'; echo "#${issue_numbers[*]}")"
+```
+
+### **Step 2: Execute Specialized Agent** 🤖
+
+```bash
+# Execute the 16-use-case-status agent with comprehensive analysis
+use_task_tool "
+Please perform comprehensive use case development status analysis for issues: $(IFS=','; echo "${issue_numbers[*]}")
+
+## Agent Tasks:
+1. **Project Metadata Discovery**:
+   - Locate metadata files for specified issues
+   - Extract feature information and current phase
+   - Validate project structure and documentation
+   - Build comprehensive project inventory
+
+2. **Multi-Dimensional Status Analysis**:
+   - Analyze development phase completion across all layers
+   - Calculate progress percentages and completion metrics
+   - Review file inventory and artifact status
+   - Assess quality metrics (test coverage, Ruff, Pyright)
+   - Analyze GitHub issue status and synchronization
+   - Generate timeline analysis and phase transitions
+
+3. **Progress Analytics and Visualization**:
+   - Calculate completion percentages with intelligent weighting
+   - Generate progress bars and visual indicators
+   - Identify bottlenecks and blocked phases
+   - Provide phase-by-phase completion status
+   - Map dependencies and critical path analysis
+
+4. **Quality Assessment**:
+   - Comprehensive test coverage analysis
+   - Code quality metrics (complexity, duplication)
+   - Architecture compliance validation
+   - Given-When-Then scenario coverage
+   - Security and performance considerations
+
+5. **Intelligent Recommendations**:
+   - Suggest next optimal actions based on current state
+   - Identify blocking issues and dependencies
+   - Recommend priority optimizations
+   - Provide timeline estimates for completion
+   - Flag risks and potential issues
+
+6. **Stakeholder Reporting**:
+   - Generate detailed status reports for different audiences
+   - Create executive summaries and technical details
+   - Provide actionable insights and decisions points
+   - Generate progress dashboards and metrics
+
+## Success Criteria:
+- Complete project metadata discovery and inventory
+- Accurate progress calculation across all dimensions
+- Quality metrics analyzed and reported
+- Clear next action recommendations provided
+- Comprehensive status report generated
+- All analysis completed safely (read-only operations)
+
+## TDD/DDD/Layered Architecture Focus:
+- Validate architectural layer separation and compliance
+- Assess domain model richness and business logic placement
+- Review test pyramid and Given-When-Then coverage
+- Analyze cross-layer integration and boundaries
+- Verify clean architecture dependency directions
+" "16-use-case-status"
+```
+
+### **Step 3: Agent Result Verification** ✅
+
+```bash
+# Verify agent execution results
+echo "🔍 Verifying 16-use-case-status agent results..."
+
+# Check if status analysis was completed
+issue_list=$(IFS=-; echo "${issue_numbers[*]}")
+status_patterns=(
+    "docs/status/issue-${issue_list}-*.json"
+    "docs/analysis/status-${issue_list}-*.json"
+    "docs/reports/*status*${issue_list}*.json"
+)
+
+status_file=""
+for pattern in "${status_patterns[@]}"; do
+    if ls $pattern 2>/dev/null >/dev/null; then
+        status_file=$(ls $pattern 2>/dev/null | head -1)
+        break
     fi
+done
 
-    # Validate metadata file exists
-    if [[ ! -f "$metadata_file" ]]; then
-        echo "❌ エラー: メタデータファイルが見つかりません: $metadata_file"
-        echo "💡 確認事項:"
-        echo "   - フィーチャー名のスペルが正しいか"
-        echo "   - /create-use-case コマンドが実行済みか"
-        echo "   - docs/use_cases/ ディレクトリに *.json ファイルがあるか"
+if [[ -z "$status_file" ]]; then
+    echo "❌ Status analysis file not found"
+    exit 1
+fi
+
+# Validate analysis completeness
+if [[ -f "$status_file" ]] && command -v jq >/dev/null 2>&1; then
+    analysis_complete=$(jq -r '.analysis_complete // false' "$status_file" 2>/dev/null)
+    progress_calculated=$(jq -r '.progress.calculated // false' "$status_file" 2>/dev/null)
+    recommendations_count=$(jq -r '.recommendations | length // 0' "$status_file" 2>/dev/null)
+    
+    if [[ "$analysis_complete" != "true" ]]; then
+        echo "❌ Analysis not completed properly"
         exit 1
     fi
-
-    # Update discovery report
-    jq --arg metadata "$metadata_file" --arg feature "$feature_name" \
-       '.metadata_files += [$metadata] | .discovered_features += [$feature]' \
-       "$discovery_report" > "${discovery_report}.tmp" && mv "${discovery_report}.tmp" "$discovery_report"
-
-    echo "✅ プロジェクト情報収集完了: $feature_name"
-    echo "$discovery_report"
-}
-
-discovery_report=$(discover_project_metadata)
-metadata_file=$(jq -r '.metadata_files[0]' "$discovery_report")
-feature_name=$(jq -r '.discovered_features[0]' "$discovery_report")
-```
-
-## 3. **Advanced Metadata Analysis**
-
-```bash
-# Perform comprehensive metadata analysis
-echo "📊 メタデータを詳細分析中..."
-
-analyze_metadata_comprehensive() {
-    local analysis_report="$status_workspace/metadata_analysis.json"
-
-    echo "  📋 基本情報を抽出中..."
-
-    # Extract basic information
-    local created_at=$(jq -r '.created_at // "Unknown"' "$metadata_file")
-    local updated_at=$(jq -r '.updated_at // "Unknown"' "$metadata_file")
-    local current_phase=$(jq -r '.phase // "unknown"' "$metadata_file")
-    local issue_array=$(jq -c '.issues // []' "$metadata_file")
-
-    # Initialize analysis
-    cat > "$analysis_report" << EOF
-{
-  "analysis_date": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
-  "feature": "$feature_name",
-  "metadata_file": "$metadata_file",
-  "basic_info": {
-    "created_at": "$created_at",
-    "updated_at": "$updated_at",
-    "current_phase": "$current_phase",
-    "issues": $issue_array
-  },
-  "phase_analysis": {},
-  "file_inventory": {},
-  "quality_metrics": {},
-  "progress_calculation": {},
-  "timeline_analysis": {}
-}
-EOF
-
-    echo "  🔍 フェーズ別進捗を分析中..."
-
-    # Analyze each development phase
-    local phases=("use_case_creation" "domain_modeling" "test_creation" "domain_implementation" "usecase_implementation" "infrastructure_implementation" "presentation_implementation" "all_tests_completed" "refactor" "scenario_evolution" "review" "feedback_application")
-
-    local total_phases=${#phases[@]}
-    local completed_phases=0
-    local current_phase_index=0
-
-    for i in "${!phases[@]}"; do
-        local phase="${phases[$i]}"
-        local phase_data=$(jq -c ".phases.${phase} // {}" "$metadata_file")
-        local completed=$(jq -r ".phases.${phase}.completed // false" "$metadata_file")
-        local created=$(jq -r ".phases.${phase}.created // false" "$metadata_file")
-
-        if [[ "$completed" == "true" ]]; then
-            completed_phases=$((completed_phases + 1))
-        fi
-
-        if [[ "$current_phase" == *"${phase}"* ]]; then
-            current_phase_index=$i
-        fi
-
-        # Update analysis with phase data
-        jq --arg phase "$phase" --argjson data "$phase_data" \
-           --arg status "$(if [[ "$completed" == "true" ]]; then echo "completed"; elif [[ "$created" == "true" ]]; then echo "in_progress"; else echo "pending"; fi)" \
-           '.phase_analysis[$phase] = ($data + {"status": $status})' \
-           "$analysis_report" > "${analysis_report}.tmp" && mv "${analysis_report}.tmp" "$analysis_report"
-    done
-
-    # Calculate progress percentage
-    local progress_percentage=$(( (completed_phases * 100) / total_phases ))
-
-    echo "  📈 進捗率計算: ${completed_phases}/${total_phases} (${progress_percentage}%)"
-
-    # Update progress calculation
-    jq --argjson total "$total_phases" --argjson completed "$completed_phases" \
-       --argjson percentage "$progress_percentage" --argjson current_index "$current_phase_index" \
-       '.progress_calculation = {
-         "total_phases": $total,
-         "completed_phases": $completed,
-         "progress_percentage": $percentage,
-         "current_phase_index": $current_index
-       }' "$analysis_report" > "${analysis_report}.tmp" && mv "${analysis_report}.tmp" "$analysis_report"
-
-    echo "$analysis_report"
-}
-
-metadata_analysis=$(analyze_metadata_comprehensive)
-```
-
-## 4. **File Inventory and Quality Assessment**
-
-```bash
-# Conduct comprehensive file inventory and quality assessment
-echo "📁 ファイルインベントリと品質評価を実行中..."
-
-conduct_file_quality_assessment() {
-    local inventory_report="$status_workspace/file_inventory.json"
-
-    # Initialize inventory
-    cat > "$inventory_report" << EOF
-{
-  "inventory_date": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
-  "feature": "$feature_name",
-  "documents": {},
-  "implementation": {},
-  "tests": {},
-  "quality_metrics": {},
-  "file_health": {}
-}
-EOF
-
-    echo "  📄 ドキュメントファイルを検索中..."
-
-    # Find specification files
-    local spec_file=""
-    local spec_candidates=()
-    mapfile -t spec_candidates < <(find docs/use_cases -name "*${feature_name}*" -name "*.md" 2>/dev/null)
-    if [[ ${#spec_candidates[@]} -gt 0 ]]; then
-        spec_file="${spec_candidates[0]}"
+    
+    if [[ "$progress_calculated" != "true" ]]; then
+        echo "❌ Progress calculation not completed"
+        exit 1
     fi
-
-    # Find domain documentation
-    local domain_docs=()
-    mapfile -t domain_docs < <(find docs/domain -name "*${feature_name}*" 2>/dev/null)
-
-    # Find test reports
-    local test_reports=()
-    mapfile -t test_reports < <(find docs/test_results -name "*${feature_name}*" 2>/dev/null)
-
-    # Find review documents
-    local review_docs=()
-    mapfile -t review_docs < <(find docs/review -name "*${feature_name}*" 2>/dev/null)
-
-    # Update documents inventory
-    jq --arg spec "$spec_file" \
-       --argjson domain_docs "$(printf '%s\n' "${domain_docs[@]}" | jq -R . | jq -s .)" \
-       --argjson test_reports "$(printf '%s\n' "${test_reports[@]}" | jq -R . | jq -s .)" \
-       --argjson review_docs "$(printf '%s\n' "${review_docs[@]}" | jq -R . | jq -s .)" \
-       '.documents = {
-         "specification": $spec,
-         "domain_docs": $domain_docs,
-         "test_reports": $test_reports,
-         "review_docs": $review_docs
-       }' "$inventory_report" > "${inventory_report}.tmp" && mv "${inventory_report}.tmp" "$inventory_report"
-
-    echo "  🏗️ 実装ファイルを検索中..."
-
-    # Find implementation files by layer
-    local layers=("domain" "application" "infrastructure" "presentation")
-    for layer in "${layers[@]}"; do
-        if [[ -d "src/$layer" ]]; then
-            local layer_files=()
-            mapfile -t layer_files < <(find "src/$layer" -name "*.py" 2>/dev/null)
-
-            jq --arg layer "$layer" \
-               --argjson files "$(printf '%s\n' "${layer_files[@]}" | jq -R . | jq -s .)" \
-               --argjson count "${#layer_files[@]}" \
-               '.implementation[$layer] = {"files": $files, "count": $count}' \
-               "$inventory_report" > "${inventory_report}.tmp" && mv "${inventory_report}.tmp" "$inventory_report"
-        fi
-    done
-
-    echo "  🧪 テストファイルを検索中..."
-
-    # Find test files
-    local test_types=("unit" "integration" "e2e")
-    for test_type in "${test_types[@]}"; do
-        if [[ -d "tests/$test_type" ]]; then
-            local test_files=()
-            mapfile -t test_files < <(find "tests/$test_type" -name "*.py" 2>/dev/null)
-
-            jq --arg type "$test_type" \
-               --argjson files "$(printf '%s\n' "${test_files[@]}" | jq -R . | jq -s .)" \
-               --argjson count "${#test_files[@]}" \
-               '.tests[$type] = {"files": $files, "count": $count}' \
-               "$inventory_report" > "${inventory_report}.tmp" && mv "${inventory_report}.tmp" "$inventory_report"
-        fi
-    done
-
-    echo "  📊 品質メトリクスを収集中..."
-
-    # Collect quality metrics if possible
-    local coverage_percent="N/A"
-    local ruff_errors="N/A"
-    local pyright_errors="N/A"
-
-    # Get test coverage if pytest is available
-    if command -v uv >/dev/null 2>&1 && [[ -d "tests" ]]; then
-        local coverage_file="$status_workspace/quick_coverage.json"
-        if PYTEST_DISABLE_PLUGIN_AUTOLOAD="" timeout 30 uv run --frozen pytest --cov=src --cov-report=json:"$coverage_file" -q >/dev/null 2>&1; then
-            coverage_percent=$(jq -r '.totals.percent_covered // "N/A"' "$coverage_file" 2>/dev/null || echo "N/A")
-        fi
+    
+    if [[ "$recommendations_count" == "0" ]]; then
+        echo "⚠️ No recommendations generated"
     fi
-
-    # Get Ruff issues if available
-    if command -v uv >/dev/null 2>&1; then
-        local ruff_file="$status_workspace/quick_ruff.json"
-        if timeout 15 uv run --frozen ruff check . --output-format=json > "$ruff_file" 2>/dev/null; then
-            ruff_errors=$(jq '. | length' "$ruff_file" 2>/dev/null || echo "N/A")
-        fi
-    fi
-
-    # Get Pyright issues if available
-    if command -v uv >/dev/null 2>&1; then
-        local pyright_file="$status_workspace/quick_pyright.json"
-        if timeout 15 uv run --frozen pyright --outputjson > "$pyright_file" 2>/dev/null; then
-            pyright_errors=$(jq '.summary.errorCount // "N/A"' "$pyright_file" 2>/dev/null || echo "N/A")
-        fi
-    fi
-
-    # Update quality metrics
-    jq --arg coverage "$coverage_percent" \
-       --arg ruff "$ruff_errors" \
-       --arg pyright "$pyright_errors" \
-       '.quality_metrics = {
-         "test_coverage": $coverage,
-         "ruff_errors": $ruff,
-         "pyright_errors": $pyright
-       }' "$inventory_report" > "${inventory_report}.tmp" && mv "${inventory_report}.tmp" "$inventory_report"
-
-    echo "✅ ファイルインベントリ完了"
-    echo "$inventory_report"
-}
-
-file_inventory=$(conduct_file_quality_assessment)
-```
-
-## 5. **GitHub Integration and Status Sync**
-
-```bash
-# Sync with GitHub for comprehensive status
-echo "🔗 GitHub連携と状況同期を実行中..."
-
-sync_github_status() {
-    local github_report="$status_workspace/github_status.json"
-
-    # Initialize GitHub status report
-    cat > "$github_report" << EOF
-{
-  "sync_date": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
-  "feature": "$feature_name",
-  "issues": {},
-  "repository_info": {},
-  "team_activity": {}
-}
-EOF
-
-    echo "  🎯 GitHub イシュー情報を取得中..."
-
-    # Get issue information for each issue number
-    for issue_num in "${issue_numbers[@]}"; do
-        echo "    📋 Issue #$issue_num を確認中..."
-
-        if safe_gh_command "issue" "view" "$issue_num" --json state,title,labels,assignees,updatedAt,comments; then
-            local issue_data=$(safe_gh_command "issue" "view" "$issue_num" --json state,title,labels,assignees,updatedAt,comments)
-
-            if [[ -n "$issue_data" ]]; then
-                local state=$(echo "$issue_data" | jq -r '.state // "unknown"')
-                local title=$(echo "$issue_data" | jq -r '.title // "Unknown"')
-                local updated_at=$(echo "$issue_data" | jq -r '.updatedAt // "Unknown"')
-                local assignees_count=$(echo "$issue_data" | jq '.assignees | length')
-                local comments_count=$(echo "$issue_data" | jq '.comments | length')
-                local labels=$(echo "$issue_data" | jq -c '.labels // []')
-
-                jq --arg issue "$issue_num" \
-                   --arg state "$state" \
-                   --arg title "$title" \
-                   --arg updated "$updated_at" \
-                   --argjson assignees "$assignees_count" \
-                   --argjson comments "$comments_count" \
-                   --argjson labels "$labels" \
-                   '.issues[$issue] = {
-                     "state": $state,
-                     "title": $title,
-                     "updated_at": $updated,
-                     "assignees_count": $assignees,
-                     "comments_count": $comments,
-                     "labels": $labels
-                   }' "$github_report" > "${github_report}.tmp" && mv "${github_report}.tmp" "$github_report"
-
-                echo "      ✅ Issue #$issue_num: $state ($title)"
-            else
-                echo "      ⚠️ Issue #$issue_num: 情報取得に失敗"
-            fi
-        else
-            echo "      ❌ Issue #$issue_num: アクセスできません"
-        fi
-    done
-
-    echo "  📊 リポジトリ情報を取得中..."
-
-    # Get basic repository information
-    if safe_gh_command "repo" "view" --json name,defaultBranch,pushedAt; then
-        local repo_data=$(safe_gh_command "repo" "view" --json name,defaultBranch,pushedAt)
-
-        if [[ -n "$repo_data" ]]; then
-            jq --argjson repo "$repo_data" '.repository_info = $repo' "$github_report" > "${github_report}.tmp" && mv "${github_report}.tmp" "$github_report"
-            echo "    ✅ リポジトリ情報取得完了"
-        fi
-    else
-        echo "    ⚠️ リポジトリ情報の取得に失敗"
-    fi
-
-    echo "$github_report"
-}
-
-github_status=$(sync_github_status)
-```
-
-## 6. **Intelligent Next Action Recommendations**
-
-```bash
-# Generate intelligent next action recommendations
-echo "🧠 次のアクションを知的に推奨中..."
-
-generate_smart_recommendations() {
-    local recommendations_report="$status_workspace/recommendations.json"
-
-    # Get current progress data
-    local current_phase=$(jq -r '.basic_info.current_phase' "$metadata_analysis")
-    local progress_percentage=$(jq -r '.progress_calculation.progress_percentage' "$metadata_analysis")
-    local completed_phases=$(jq -r '.progress_calculation.completed_phases' "$metadata_analysis")
-
-    # Initialize recommendations
-    cat > "$recommendations_report" << EOF
-{
-  "analysis_date": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
-  "feature": "$feature_name",
-  "current_phase": "$current_phase",
-  "progress_percentage": $progress_percentage,
-  "recommendations": {
-    "immediate_actions": [],
-    "next_milestones": [],
-    "quality_improvements": [],
-    "risk_mitigation": []
-  },
-  "priority_matrix": {},
-  "estimated_effort": {}
-}
-EOF
-
-    echo "  🎯 現在フェーズを分析中: $current_phase"
-
-    # Determine immediate next actions based on current phase
-    local immediate_actions=()
-    local next_milestones=()
-    local quality_improvements=()
-    local risk_items=()
-
-    case "$current_phase" in
-        "created"|"use_case_created")
-            immediate_actions+=("ドメインモデリングの実行: /domain-modeling $(IFS=','; echo "${issue_numbers[*]}")")
-            next_milestones+=("ドメイン設計の完了")
-            ;;
-        "domain_modeled")
-            immediate_actions+=("テスト作成(RED): /create-tests $(IFS=','; echo "${issue_numbers[*]}")")
-            next_milestones+=("失敗テストの作成とTDD開始")
-            ;;
-        "tests_created")
-            immediate_actions+=("ドメイン実装(GREEN): /implement-domain $(IFS=','; echo "${issue_numbers[*]}")")
-            next_milestones+=("ドメイン層の実装完了")
-            ;;
-        "domain_implemented")
-            immediate_actions+=("アプリケーション層実装: /implement-usecase $(IFS=','; echo "${issue_numbers[*]}")")
-            next_milestones+=("ユースケース層の実装完了")
-            ;;
-        "usecase_implemented")
-            immediate_actions+=("インフラ層実装: /implement-infra $(IFS=','; echo "${issue_numbers[*]}")")
-            next_milestones+=("永続化層の実装完了")
-            ;;
-        "infrastructure_implemented")
-            immediate_actions+=("プレゼンテーション層実装: /implement-presentation $(IFS=','; echo "${issue_numbers[*]}")")
-            next_milestones+=("API/UI層の実装完了")
-            ;;
-        "presentation_implemented")
-            immediate_actions+=("全テスト実行: /run-all-tests $(IFS=','; echo "${issue_numbers[*]}")")
-            next_milestones+=("包括的テストの実行と品質確認")
-            ;;
-        "all_tests_completed")
-            immediate_actions+=("リファクタリング: /refactor $(IFS=','; echo "${issue_numbers[*]}")")
-            next_milestones+=("コード品質の向上(REFACTOR)")
-            ;;
-        "refactored")
-            immediate_actions+=("レビュー実行: /review-issue $(IFS=','; echo "${issue_numbers[*]}")")
-            next_milestones+=("実装の包括的レビュー")
-            ;;
-        "reviewed")
-            immediate_actions+=("フィードバック適用: /apply-feedback $(IFS=','; echo "${issue_numbers[*]}")")
-            next_milestones+=("レビューフィードバックの反映")
-            ;;
-        "feedback_applied")
-            immediate_actions+=("プルリクエスト作成: /create-pr $(IFS=','; echo "${issue_numbers[*]}")")
-            next_milestones+=("本番展開の準備完了")
-            ;;
-        *)
-            immediate_actions+=("進捗状況の詳細確認が必要")
-            next_milestones+=("現在のフェーズの特定と適切なアクション決定")
-            ;;
-    esac
-
-    # Add quality improvement recommendations based on metrics
-    local coverage=$(jq -r '.quality_metrics.test_coverage // "N/A"' "$file_inventory")
-    local ruff_errors=$(jq -r '.quality_metrics.ruff_errors // "N/A"' "$file_inventory")
-    local pyright_errors=$(jq -r '.quality_metrics.pyright_errors // "N/A"' "$file_inventory")
-
-    if [[ "$coverage" != "N/A" && "$coverage" != "null" ]]; then
-        if (( $(echo "$coverage < 80" | bc -l 2>/dev/null || echo 0) )); then
-            quality_improvements+=("テストカバレッジを80%以上に向上 (現在: ${coverage}%)")
-        fi
-    fi
-
-    if [[ "$ruff_errors" != "N/A" && "$ruff_errors" != "null" && "$ruff_errors" != "0" ]]; then
-        quality_improvements+=("Ruffエラーの修正: ${ruff_errors}件")
-    fi
-
-    if [[ "$pyright_errors" != "N/A" && "$pyright_errors" != "null" && "$pyright_errors" != "0" ]]; then
-        quality_improvements+=("Pyright型エラーの修正: ${pyright_errors}件")
-    fi
-
-    # Add risk mitigation based on GitHub status
-    local open_issues=$(jq -r '[.issues[] | select(.state == "open")] | length' "$github_status")
-    if [[ $open_issues -gt 1 ]]; then
-        risk_items+=("複数のオープンイシューが存在: ${open_issues}件 - 優先度の明確化が必要")
-    fi
-
-    # Check for stale issues (updated more than 7 days ago)
-    local stale_threshold=$(date -u -d '7 days ago' +%Y-%m-%dT%H:%M:%SZ)
-    local stale_issues=$(jq -r --arg threshold "$stale_threshold" '[.issues[] | select(.updated_at < $threshold)] | length' "$github_status")
-    if [[ $stale_issues -gt 0 ]]; then
-        risk_items+=("更新が停滞しているイシュー: ${stale_issues}件 - 定期的な進捗確認が必要")
-    fi
-
-    # Update recommendations
-    jq --argjson immediate "$(printf '%s\n' "${immediate_actions[@]}" | jq -R . | jq -s .)" \
-       --argjson milestones "$(printf '%s\n' "${next_milestones[@]}" | jq -R . | jq -s .)" \
-       --argjson quality "$(printf '%s\n' "${quality_improvements[@]}" | jq -R . | jq -s .)" \
-       --argjson risks "$(printf '%s\n' "${risk_items[@]}" | jq -R . | jq -s .)" \
-       '.recommendations.immediate_actions = $immediate |
-        .recommendations.next_milestones = $milestones |
-        .recommendations.quality_improvements = $quality |
-        .recommendations.risk_mitigation = $risks' \
-       "$recommendations_report" > "${recommendations_report}.tmp" && mv "${recommendations_report}.tmp" "$recommendations_report"
-
-    echo "✅ 推奨アクション生成完了"
-    echo "$recommendations_report"
-}
-
-recommendations=$(generate_smart_recommendations)
-```
-
-## 7. **Comprehensive Status Report Generation**
-
-```bash
-# Generate beautiful, comprehensive status report
-echo "📋 包括的ステータスレポートを生成中..."
-
-generate_status_report() {
-    local status_report_file="$status_workspace/use_case_status_report.md"
-
-    # Extract data for report
-    local created_at=$(jq -r '.basic_info.created_at' "$metadata_analysis")
-    local updated_at=$(jq -r '.basic_info.updated_at' "$metadata_analysis")
-    local current_phase=$(jq -r '.basic_info.current_phase' "$metadata_analysis")
-    local progress_percentage=$(jq -r '.progress_calculation.progress_percentage' "$metadata_analysis")
-    local completed_phases=$(jq -r '.progress_calculation.completed_phases' "$metadata_analysis")
-    local total_phases=$(jq -r '.progress_calculation.total_phases' "$metadata_analysis")
-
-    # Create progress bar
-    local progress_filled=$((progress_percentage / 8))  # 8% per block for ~12 blocks
-    local progress_empty=$((12 - progress_filled))
-    local progress_bar=""
-    for ((i=0; i<progress_filled; i++)); do progress_bar+="█"; done
-    for ((i=0; i<progress_empty; i++)); do progress_bar+="░"; done
-
-    # Extract file information
-    local spec_file=$(jq -r '.documents.specification // "未作成"' "$file_inventory")
-    local domain_docs_count=$(jq '.documents.domain_docs | length' "$file_inventory")
-    local test_reports_count=$(jq '.documents.test_reports | length' "$file_inventory")
-    local review_docs_count=$(jq '.documents.review_docs | length' "$file_inventory")
-
-    # Extract implementation counts
-    local domain_files=$(jq '.implementation.domain.count // 0' "$file_inventory")
-    local app_files=$(jq '.implementation.application.count // 0' "$file_inventory")
-    local infra_files=$(jq '.implementation.infrastructure.count // 0' "$file_inventory")
-    local pres_files=$(jq '.implementation.presentation.count // 0' "$file_inventory")
-
-    # Extract test counts
-    local unit_tests=$(jq '.tests.unit.count // 0' "$file_inventory")
-    local integration_tests=$(jq '.tests.integration.count // 0' "$file_inventory")
-    local e2e_tests=$(jq '.tests.e2e.count // 0' "$file_inventory")
-
-    # Extract quality metrics
-    local coverage=$(jq -r '.quality_metrics.test_coverage // "N/A"' "$file_inventory")
-    local ruff_errors=$(jq -r '.quality_metrics.ruff_errors // "N/A"' "$file_inventory")
-    local pyright_errors=$(jq -r '.quality_metrics.pyright_errors // "N/A"' "$file_inventory")
-
-    cat > "$status_report_file" << EOF
-# 📊 ユースケース開発状況レポート
-
-## 🎯 基本情報
-
-| 項目 | 詳細 |
-|------|------|
-| **機能名** | ${feature_name} |
-| **関連イシュー** | #$(IFS=' #'; echo "${issue_numbers[*]}") |
-| **作成日時** | ${created_at} |
-| **最終更新** | ${updated_at} |
-| **現在フェーズ** | ${current_phase} |
-| **メタデータファイル** | \`${metadata_file}\` |
-
-## 📈 全体進捗状況
-
-### 進捗概要
-\`\`\`
-[${progress_bar}] ${progress_percentage}% 完了
-\`\`\`
-
-**完了フェーズ**: ${completed_phases} / ${total_phases}
-
-### フェーズ別詳細進捗
-
-$(
-echo "| フェーズ | 状態 | 完了日時 | 詳細 |"
-echo "|---------|------|----------|------|"
-
-# Generate phase status table
-phases=("use_case_creation" "domain_modeling" "test_creation" "domain_implementation" "usecase_implementation" "infrastructure_implementation" "presentation_implementation" "all_tests_completed" "refactor" "scenario_evolution" "review" "feedback_application")
-phase_names=("📝 ユースケース仕様" "🏗️ ドメインモデル" "🧪 テスト作成(RED)" "💼 ドメイン実装(GREEN)" "🔧 アプリケーション層" "🏭 インフラ層" "🖼️ プレゼンテーション層" "🧪 全テスト実行" "🔄 リファクタリング" "📋 シナリオ進化" "🔍 実装レビュー" "🔧 フィードバック適用")
-
-for i in "${!phases[@]}"; do
-    phase="${phases[$i]}"
-    phase_name="${phase_names[$i]}"
-
-    completed=$(jq -r ".phase_analysis.${phase}.completed // false" "$metadata_analysis")
-    completed_at=$(jq -r ".phase_analysis.${phase}.completed_at // \"-\"" "$metadata_analysis")
-    created=$(jq -r ".phase_analysis.${phase}.created // false" "$metadata_analysis")
-
-    if [[ "$completed" == "true" ]]; then
-        status="✅ 完了"
-    elif [[ "$created" == "true" ]]; then
-        status="🚧 実装中"
-    else
-        status="⏳ 未着手"
-    fi
-
-    echo "| ${phase_name} | ${status} | ${completed_at} | - |"
-done
-)
-
-## 📁 ファイル一覧
-
-### 📄 ドキュメント
-| 種類 | ファイル/数量 | 状態 |
-|------|---------------|------|
-| ユースケース仕様 | \`${spec_file}\` | $(if [[ "$spec_file" != "未作成" ]]; then echo "✅ 存在"; else echo "❌ 未作成"; fi) |
-| ドメイン設計書 | ${domain_docs_count} ファイル | $(if [[ $domain_docs_count -gt 0 ]]; then echo "✅ 存在"; else echo "❌ 未作成"; fi) |
-| テストレポート | ${test_reports_count} ファイル | $(if [[ $test_reports_count -gt 0 ]]; then echo "✅ 存在"; else echo "❌ 未作成"; fi) |
-| レビューレポート | ${review_docs_count} ファイル | $(if [[ $review_docs_count -gt 0 ]]; then echo "✅ 存在"; else echo "❌ 未作成"; fi) |
-
-### 🏗️ 実装ファイル
-| レイヤー | ファイル数 | 状態 |
-|----------|------------|------|
-| Domain | ${domain_files} ファイル | $(if [[ $domain_files -gt 0 ]]; then echo "✅ 実装済み"; else echo "❌ 未実装"; fi) |
-| Application | ${app_files} ファイル | $(if [[ $app_files -gt 0 ]]; then echo "✅ 実装済み"; else echo "❌ 未実装"; fi) |
-| Infrastructure | ${infra_files} ファイル | $(if [[ $infra_files -gt 0 ]]; then echo "✅ 実装済み"; else echo "❌ 未実装"; fi) |
-| Presentation | ${pres_files} ファイル | $(if [[ $pres_files -gt 0 ]]; then echo "✅ 実装済み"; else echo "❌ 未実装"; fi) |
-
-### 🧪 テストファイル
-| テスト種別 | ファイル数 | 状態 |
-|------------|------------|------|
-| Unit Tests | ${unit_tests} ファイル | $(if [[ $unit_tests -gt 0 ]]; then echo "✅ 存在"; else echo "❌ 未作成"; fi) |
-| Integration Tests | ${integration_tests} ファイル | $(if [[ $integration_tests -gt 0 ]]; then echo "✅ 存在"; else echo "❌ 未作成"; fi) |
-| E2E Tests | ${e2e_tests} ファイル | $(if [[ $e2e_tests -gt 0 ]]; then echo "✅ 存在"; else echo "❌ 未作成"; fi) |
-
-## 📊 品質メトリクス
-
-| メトリクス | 現在値 | 目標 | 評価 |
-|-----------|--------|------|------|
-| テストカバレッジ | ${coverage}% | >80% | $(if [[ "$coverage" != "N/A" && "$coverage" != "null" ]]; then if (( $(echo "$coverage >= 80" | bc -l 2>/dev/null || echo 0) )); then echo "✅ 達成"; else echo "⚠️ 要改善"; fi; else echo "❓ 未測定"; fi) |
-| Ruffエラー | ${ruff_errors} 件 | 0件 | $(if [[ "$ruff_errors" == "0" ]]; then echo "✅ 適合"; elif [[ "$ruff_errors" != "N/A" && "$ruff_errors" != "null" ]]; then echo "⚠️ 要修正"; else echo "❓ 未確認"; fi) |
-| Pyrightエラー | ${pyright_errors} 件 | 0件 | $(if [[ "$pyright_errors" == "0" ]]; then echo "✅ 適合"; elif [[ "$pyright_errors" != "N/A" && "$pyright_errors" != "null" ]]; then echo "⚠️ 要修正"; else echo "❓ 未確認"; fi) |
-
-## 🔗 GitHub 連携状況
-
-$(
-echo "| Issue # | 状態 | タイトル | 最終更新 | コメント数 |"
-echo "|---------|------|----------|----------|------------|"
-
-for issue_num in "${issue_numbers[@]}"; do
-    state=$(jq -r ".issues.\"${issue_num}\".state // \"unknown\"" "$github_status")
-    title=$(jq -r ".issues.\"${issue_num}\".title // \"Unknown\"" "$github_status")
-    updated=$(jq -r ".issues.\"${issue_num}\".updated_at // \"Unknown\"" "$github_status")
-    comments=$(jq -r ".issues.\"${issue_num}\".comments_count // 0" "$github_status")
-
-    state_icon="❓"
-    case "$state" in
-        "open") state_icon="🔓" ;;
-        "closed") state_icon="✅" ;;
-    esac
-
-    echo "| #${issue_num} | ${state_icon} ${state} | ${title} | ${updated} | ${comments} |"
-done
-)
-
-## 🎯 次のアクション
-
-### 🚨 即座に実行すべき項目
-$(jq -r '.recommendations.immediate_actions[] | "- " + .' "$recommendations")
-
-### 📋 次のマイルストーン
-$(jq -r '.recommendations.next_milestones[] | "- " + .' "$recommendations")
-
-$(if jq -e '.recommendations.quality_improvements | length > 0' "$recommendations" >/dev/null; then
-echo "### 📈 品質改善推奨項目"
-jq -r '.recommendations.quality_improvements[] | "- " + .' "$recommendations"
-fi)
-
-$(if jq -e '.recommendations.risk_mitigation | length > 0' "$recommendations" >/dev/null; then
-echo "### ⚠️ リスク軽減項目"
-jq -r '.recommendations.risk_mitigation[] | "- " + .' "$recommendations"
-fi)
-
-## 📈 開発効率分析
-
-### タイムライン概要
-- **開始**: $(echo "$created_at" | cut -d'T' -f1)
-- **最終更新**: $(echo "$updated_at" | cut -d'T' -f1)
-- **経過日数**: $(( ($(date -d "$updated_at" +%s 2>/dev/null || date +%s) - $(date -d "$created_at" +%s 2>/dev/null || date +%s)) / 86400 )) 日
-- **進捗率**: ${progress_percentage}%
-
-### 推定残り作業
-$(
-remaining_phases=$((total_phases - completed_phases))
-if [[ $remaining_phases -eq 0 ]]; then
-    echo "🎉 **完了**: 全フェーズが完了しています！"
-elif [[ $remaining_phases -le 2 ]]; then
-    echo "🏁 **最終段階**: あと${remaining_phases}フェーズで完了"
-else
-    echo "⏳ **継続中**: あと${remaining_phases}フェーズが残っています"
 fi
-)
 
-## 🎉 ステータスサマリー
-
-$(
-if [[ $progress_percentage -ge 100 ]]; then
-    echo "✅ **完了**: 全開発フェーズが完了しました！本番展開準備完了です。"
-elif [[ $progress_percentage -ge 80 ]]; then
-    echo "🏁 **最終段階**: 開発がほぼ完了しています。最終調整とレビューに集中してください。"
-elif [[ $progress_percentage -ge 60 ]]; then
-    echo "🚀 **順調**: 開発が順調に進んでいます。品質確保に注意して継続してください。"
-elif [[ $progress_percentage -ge 40 ]]; then
-    echo "⚡ **中盤**: 実装の中盤です。アーキテクチャの一貫性を保ちながら進めてください。"
-elif [[ $progress_percentage -ge 20 ]]; then
-    echo "🌱 **初期段階**: 基礎設計から実装への移行期です。設計の品質確保が重要です。"
-else
-    echo "🚀 **開始**: プロジェクトの初期段階です。しっかりとした基盤作りに集中してください。"
-fi
-)
-
----
-
-**レポート生成日時**: $(date)
-**次回確認推奨**: $(date -d '+1 day')
-EOF
-
-    echo "✅ ステータスレポート生成完了: $status_report_file"
-    echo "$status_report_file"
-}
-
-status_report_file=$(generate_status_report)
+echo "✅ 16-use-case-status agent results verified successfully"
+echo "   📊 Status file: $status_file"
+echo "   📈 Analysis complete: $analysis_complete"
+echo "   📋 Recommendations: $recommendations_count items"
 ```
 
-## 8. **Beautiful Console Display**
+### **Step 4: Display Success Summary** 🎉
 
 ```bash
-# Display beautiful status in console
+# Display comprehensive status summary
 echo ""
-echo "🎉 ユースケース開発状況レポート"
+echo "🎉 プロジェクト状況分析完了!"
 echo "=================================="
-echo ""
-echo "🎯 **基本情報**"
-echo "  機能名: $feature_name"
-echo "  関連イシュー: #$(IFS=' #'; echo "${issue_numbers[*]}")"
-echo "  現在フェーズ: $(jq -r '.basic_info.current_phase' "$metadata_analysis")"
-echo ""
 
-# Display beautiful progress bar
-progress_percentage=$(jq -r '.progress_calculation.progress_percentage' "$metadata_analysis")
-completed_phases=$(jq -r '.progress_calculation.completed_phases' "$metadata_analysis")
-total_phases=$(jq -r '.progress_calculation.total_phases' "$metadata_analysis")
-
-progress_filled=$((progress_percentage / 5))  # 5% per block for 20 blocks
-progress_empty=$((20 - progress_filled))
-progress_bar=""
-for ((i=0; i<progress_filled; i++)); do progress_bar+="█"; done
-for ((i=0; i<progress_empty; i++)); do progress_bar+="░"; done
-
-echo "📈 **全体進捗**"
-echo "  [${progress_bar}] ${progress_percentage}%"
-echo "  完了フェーズ: ${completed_phases}/${total_phases}"
-echo ""
-
-# Display immediate next actions
-echo "🎯 **次のアクション**"
-jq -r '.recommendations.immediate_actions[] | "  ▶ " + .' "$recommendations"
-echo ""
-
-# Display quality status
-coverage=$(jq -r '.quality_metrics.test_coverage // "N/A"' "$file_inventory")
-ruff_errors=$(jq -r '.quality_metrics.ruff_errors // "N/A"' "$file_inventory")
-pyright_errors=$(jq -r '.quality_metrics.pyright_errors // "N/A"' "$file_inventory")
-
-echo "📊 **品質状況**"
-echo "  テストカバレッジ: ${coverage}%"
-echo "  Ruffエラー: ${ruff_errors} 件"
-echo "  Pyrightエラー: ${pyright_errors} 件"
-echo ""
-
-# Display GitHub status summary
-open_issues=$(jq -r '[.issues[] | select(.state == "open")] | length' "$github_status")
-closed_issues=$(jq -r '[.issues[] | select(.state == "closed")] | length' "$github_status")
-
-echo "🔗 **GitHub状況**"
-echo "  オープンイシュー: ${open_issues} 件"
-echo "  完了イシュー: ${closed_issues} 件"
-echo ""
-
-# Display key files
-spec_file=$(jq -r '.documents.specification // "未作成"' "$file_inventory")
-echo "📁 **主要ファイル**"
-echo "  ユースケース仕様: $(basename "$spec_file")"
-echo "  メタデータ: $(basename "$metadata_file")"
-echo "  詳細レポート: $(basename "$status_report_file")"
-echo ""
-
-# Display status summary
-echo "🎯 **ステータスサマリー**"
-if [[ $progress_percentage -ge 100 ]]; then
-    echo "  ✅ 完了: 全開発フェーズが完了しました！"
-elif [[ $progress_percentage -ge 80 ]]; then
-    echo "  🏁 最終段階: もうすぐ完了です"
-elif [[ $progress_percentage -ge 60 ]]; then
-    echo "  🚀 順調: 開発が順調に進んでいます"
-elif [[ $progress_percentage -ge 40 ]]; then
-    echo "  ⚡ 中盤: 実装の中盤です"
-elif [[ $progress_percentage -ge 20 ]]; then
-    echo "  🌱 初期段階: 基礎から実装への移行期"
-else
-    echo "  🚀 開始: プロジェクトの初期段階"
+# Extract and display key metrics
+if [[ -f "$status_file" ]] && command -v jq >/dev/null 2>&1; then
+    overall_progress=$(jq -r '.progress.overall_percentage // 0' "$status_file" 2>/dev/null)
+    current_phase=$(jq -r '.current_phase // "unknown"' "$status_file" 2>/dev/null)
+    feature_name=$(jq -r '.feature_name // "unknown"' "$status_file" 2>/dev/null)
+    total_issues=$(jq -r '.issues | length // 0' "$status_file" 2>/dev/null)
+    
+    echo "📊 基本情報:"
+    echo "   🏷️  フィーチャー: $feature_name"
+    echo "   🔢 対象イシュー: $total_issues 件 ($(IFS=', #'; echo "#${issue_numbers[*]}"))"
+    echo "   📈 全体進捗: ${overall_progress}%"
+    echo "   📍 現在フェーズ: $current_phase"
+    echo ""
+    
+    # Display progress indicator
+    progress_bar=""
+    for ((i=1; i<=20; i++)); do
+        if (( $(echo "$overall_progress >= $i * 5" | bc -l) )); then
+            progress_bar+="█"
+        else
+            progress_bar+="░"
+        fi
+    done
+    
+    echo "📊 進捗状況:"
+    echo "   [$progress_bar] ${overall_progress}%"
+    echo ""
+    
+    # Display quality metrics if available
+    test_coverage=$(jq -r '.quality.test_coverage // "N/A"' "$status_file" 2>/dev/null)
+    ruff_errors=$(jq -r '.quality.ruff_errors // "N/A"' "$status_file" 2>/dev/null)
+    pyright_errors=$(jq -r '.quality.pyright_errors // "N/A"' "$status_file" 2>/dev/null)
+    
+    if [[ "$test_coverage" != "N/A" ]]; then
+        echo "🔍 品質メトリクス:"
+        echo "   📊 テストカバレッジ: ${test_coverage}%"
+        echo "   🔧 Ruffエラー: $ruff_errors 件"
+        echo "   🔍 Pyrightエラー: $pyright_errors 件"
+        echo ""
+    fi
+    
+    # Display next recommended actions
+    recommendations=$(jq -r '.recommendations[]?.action // empty' "$status_file" 2>/dev/null)
+    if [[ -n "$recommendations" ]]; then
+        echo "📋 推奨アクション:"
+        echo "$recommendations" | head -3 | sed 's/^/   /'
+        echo ""
+    fi
+    
+    # Progress assessment
+    if (( $(echo "$overall_progress >= 100" | bc -l) )); then
+        echo "✅ 状態: 完了 - 全開発フェーズが完了しました！"
+    elif (( $(echo "$overall_progress >= 80" | bc -l) )); then
+        echo "🏁 状態: 最終段階 - もうすぐ完了です"
+    elif (( $(echo "$overall_progress >= 60" | bc -l) )); then
+        echo "🚀 状態: 順調 - 開発が順調に進んでいます"
+    elif (( $(echo "$overall_progress >= 40" | bc -l) )); then
+        echo "⚡ 状態: 中盤 - 実装の中盤です"
+    elif (( $(echo "$overall_progress >= 20" | bc -l) )); then
+        echo "🌱 状態: 初期段階 - 基礎から実装への移行期"
+    else
+        echo "🚀 状態: 開始 - プロジェクトの初期段階"
+    fi
+    echo ""
+    
+    # Show detailed report location
+    echo "📋 詳細レポート: $status_file"
+    echo "🔄 更新: /use-case-status $(IFS=','; echo "${issue_numbers[*]}") で最新状況確認"
+    echo ""
 fi
-echo ""
 
-echo "📋 **詳細レポート**: $status_report_file"
-echo "🔄 **更新**: /use-case-status $(IFS=','; echo "${issue_numbers[*]}") で最新状況確認"
-echo ""
 echo "✅ ステータス確認が完了しました"
+```
+```
+
+## Common Errors and Solutions
+
+### ❌ Error Case 1: Missing issue numbers
+**Cause**: Command executed without required issue numbers  
+**Solution**: Provide issue numbers: `/use-case-status 1,7`
+
+### ❌ Error Case 2: Project structure not found
+**Cause**: Command executed outside of TDD/DDD project  
+**Solution**: Initialize project structure: `/init-project-structure`
+
+### ❌ Error Case 3: Metadata files not found
+**Cause**: Use cases not created for specified issues  
+**Solution**: Create use cases first: `/create-use-case <issue-numbers>,<feature-name>`
+
+## Execution Examples
+
+### ✅ Success Example
+```bash
+$ /use-case-status 15
+🔍 プロジェクト状況分析を開始します...
+📋 対象イシュー: #15
+🤖 16-use-case-status エージェント実行中...
+✅ 分析完了
+📊 進捗状況: [████████████████░░░░] 80%
+🏁 状態: 最終段階 - もうすぐ完了です
+✅ ステータス確認が完了しました
+```
+
+### ❌ Failure Example and Fix
+```bash
+$ /use-case-status
+❌ エラー: イシュー番号が必要です
+💡 使用例: /use-case-status 1,15
+
+# Fix: Provide issue numbers
+$ /use-case-status 1,15
 ```
 
 ## 重要な注意事項
@@ -1101,21 +656,21 @@ echo "✅ ステータス確認が完了しました"
 - メタデータ・ファイル・GitHub・品質の多角的分析
 - リアルタイム進捗計算と可視化
 - インテリジェントな次アクション推奨
-- 過去実績と将来予測の統合表示
+- ステークホルダー向けレポート生成
 
 ### **チーム協力支援**
 
-- ステークホルダー向け詳細レポート生成
 - GitHub イシューとの完全同期
 - 品質メトリクスの透明性確保
 - プロジェクト健全性の継続監視
+- 具体的なコマンド提案と実行可能性
 
 ### **使いやすさと効率性**
 
 - 読み取り専用での安全な実行
 - 高速な情報収集とタイムアウト制御
 - 美しいコンソール表示と詳細レポート
-- 具体的なコマンド提案と実行可能性
+- エージェント統合による一貫した処理
 
 **統合版ステータス確認コマンドにより、プロジェクトの完全な可視性と効率的な意思決定支援が実現されます！**
 

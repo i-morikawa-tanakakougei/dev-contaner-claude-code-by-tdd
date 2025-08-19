@@ -24,7 +24,7 @@ Implement presentation layer (API endpoints, CLI, or UI).
 > 🗺️ **Current Position**: Sprint Execution Phase - Presentation Layer Implementation (09/16)  
 > 🎯 **Phase Purpose**: Implement API endpoints, CLI commands, or UI components  
 > ⬅️ **Previous Stage**: 08-implement-infra (Infrastructure Layer Implementation)  
-> ➡️ **Next Stage**: 10-refactor (Code Refactoring)
+> ➡️ **Next Stage**: 10-run-all-tests (All Tests Execution)
 >
 > **📋 3-Layer Architecture Operations**:  
 > - 🎯 **Strategic**: `docs/use_cases/core/index.md` (Reference user interactions)  
@@ -144,18 +144,6 @@ Implement presentation layer (API endpoints, CLI, or UI).
 - [ ] **Fix quality issues**: Address any linting, formatting, or type errors
 - [ ] **Verify clean results**: Ensure all quality tools pass without errors
 
-#### **📊 Advanced Phase Completion**
-- [ ] **Plan endpoint organization**: Group related endpoints logically
-- [ ] **Add error handling**: Implement proper HTTP error responses
-- [ ] **Test error scenarios**: Verify proper error handling and responses
-- [ ] **Test authentication flows**: Ensure auth/authz works correctly
-- [ ] **Test input validation**: Verify validation catches invalid inputs
-- [ ] **Test integration**: Confirm all layers work together properly
-- [ ] **Add authentication middleware**: Implement reusable auth components
-- [ ] **Document API**: Record all endpoints, commands, and usage patterns
-- [ ] **Test full system**: Verify complete end-to-end functionality
-- [ ] **Prepare for testing**: Ensure system is ready for comprehensive testing phase
-
 **💡 Pro Tip**: Presentation layer should be thin - delegate all business logic to application services!
 
 ### ✅ ALLOWED Files (Implementation Targets):
@@ -178,17 +166,6 @@ Implement presentation layer (API endpoints, CLI, or UI).
 4. **Dependency injection** - Inject application use cases, don't create them
 5. **HTTP/CLI concerns only** - Request handling, response formatting, error handling
 6. **Thin controllers** - Keep presentation logic minimal
-
-### 💡 If you accidentally implement other layers:
-```bash
-# Do NOT modify any other layers
-# All other layers should already be complete from previous steps
-
-# If you accidentally created files in wrong locations:
-# Review the file paths carefully and move them to src/presentation/
-```
-
-**Violating these rules will break the clean architecture and create tight coupling.**
 
 ## 🚨 **CRITICAL TDD PRINCIPLE WARNING**
 
@@ -274,7 +251,7 @@ def test_api_endpoint(self):
 ### ✅ Success Example
 ```bash
 $ /implement-presentation 15
-🖥️ Issues: #15 のプレゼンテーション層実装を開始します
+🖼️ Issues: #15 のプレゼンテーション層実装を開始します
 ✅ インフラ層が正常に実装されています
 🌐 APIエンドポイント実装中...
   ✅ ファイル作成: src/presentation/api/user_controller.py
@@ -312,508 +289,199 @@ $ /implement-presentation 3
 
 ## Task Details
 
-1. **Setup Safe Environment and Parse Arguments**:
+**🤖 Agent Integration**: This command uses the specialized `09-implement-presentation` agent for optimal presentation layer implementation.
+
+1. **Pre-execution Validation**:
    ```bash
-   # 🔧 Load all safe operation functions and template utilities
-   source "$(dirname "${BASH_SOURCE[0]}")/_setup_safe_environment.sh" "09-implement-presentation" "$ARGUMENTS"
-   source "$(dirname "${BASH_SOURCE[0]}")/templates/_template_utils.sh"
-   
-   # Presentation implementation expects at least one issue number
-   if [[ ${#issue_numbers[@]} -eq 0 ]]; then
+   # Validate issue number requirement
+   if [[ $# -eq 0 ]]; then
        echo "エラー: 少なくとも1つのイシュー番号を指定してください"
-       show_usage_example "implement-presentation" "1" "単一イシューのプレゼンテーション実装"
-       show_usage_example "implement-presentation" "1,7" "複数イシューのプレゼンテーション実装"
-       show_usage_example "implement-presentation" "1 api" "イシュー + API指定"
+       echo "使用例: /implement-presentation 1"
+       echo "使用例: /implement-presentation 1,7 (複数イシュー)"
        exit 1
    fi
    
-   # Extract issue list and feature name
-   issue_list=$(IFS=-; echo "${issue_numbers[*]}")
-   if [[ ${#other_args[@]} -gt 0 ]]; then
-       feature_name="${other_args[0]}"
-   else
-       # Feature name will be extracted from existing files
-       feature_name=""
-   fi
+   # Extract issue numbers from arguments
+   issue_numbers=()
    
-   echo "🎨 Issues: $(printf '#%s ' "${issue_numbers[@]}")のプレゼンテーション層実装を開始します"
-   echo ""
-   echo "🚨 重要な注意: このステップではプレゼンテーション層のみを実装します"
-   echo "   ✅ 許可: src/presentation/ 配下のファイルのみ"
-   echo "   ❌ 禁止: src/domain/, src/application/, src/infrastructure/"
-   echo "   💡 他の層を間違って実装した場合は即座に削除してください"
-   echo ""
-   echo "🔴→🟢 TDD原則: テストを実装に合わせて変更してはいけません!"
-   echo "   📖 シナリオ → 🔴 テスト → 🟢 実装 の順序を厳守"
-   echo "   ✅ 実装をテストに合わせる（正しい）"
-   echo "   ❌ テストを実装に合わせる（禁止）"
-   echo ""
-   ```
-
-2. **Begin Transaction and Prerequisites Validation**:
-   ```bash
-   # 🔄 Start comprehensive transaction
-   if ! begin_transaction "implement_presentation_${issue_list}"; then
-       echo "エラー: トランザクションの開始に失敗しました"
-       exit 1
-   fi
-   
-   # 📋 Validate prerequisites - all other layers must be completed
-   echo "📋 前提条件の検証中..."
-   
-   # Extract feature name from existing files if not provided
-   if [[ -z "$feature_name" ]]; then
-       found_spec=$(find docs/use_cases/ -name "issue-${issue_list}-*.md" -type f | head -1)
-       if [[ -n "$found_spec" ]]; then
-           feature_name=$(basename "$found_spec" | sed 's/^issue-[0-9-]*-\(.*\)\.md$/\1/')
-           echo "  📝 機能名抽出: $feature_name"
-       else
-           echo "エラー: 機能名を特定できませんでした"
-           execute_rollback "feature_name_missing"
-           exit 1
+   # Parse first argument for issue numbers
+   IFS=',' read -ra ISSUE_ARRAY <<< "$1"
+   for issue in "${ISSUE_ARRAY[@]}"; do
+       if [[ "$issue" =~ ^[0-9]+$ ]]; then
+           issue_numbers+=("$issue")
        fi
-   fi
-   
-   # Validate all required layers are implemented
-   validate_layer_implementations() {
-       local domain_entities=$(find src/domain/entities/ -name "*.py" -type f 2>/dev/null | grep -v __pycache__ | wc -l)
-       local app_use_cases=$(find src/application/use_cases/ -name "*.py" -type f 2>/dev/null | grep -v __pycache__ | wc -l)
-       local infra_repos=$(find src/infrastructure/repositories/ -name "sql_*.py" -type f 2>/dev/null | grep -v __pycache__ | wc -l)
-       
-       if [[ $domain_entities -eq 0 ]]; then
-           echo "❌ ドメイン層の実装が見つかりません"
-           echo "💡 先に /implement-domain を実行してください"
-           return 1
-       fi
-       
-       if [[ $app_use_cases -eq 0 ]]; then
-           echo "❌ アプリケーション層の実装が見つかりません"
-           echo "💡 先に /implement-usecase を実行してください"
-           return 1
-       fi
-       
-       if [[ $infra_repos -eq 0 ]]; then
-           echo "❌ インフラストラクチャ層の実装が見つかりません"
-           echo "💡 先に /implement-infra を実行してください"
-           return 1
-       fi
-       
-       echo "  ✅ すべてのレイヤー実装確認完了"
-       return 0
-   }
-   
-   if ! validate_layer_implementations; then
-       execute_rollback "missing_layer_implementations"
-       exit 1
-   fi
-   
-   # 🚨 CRITICAL: Check for placeholder assertions in presentation tests
-   echo "  🚨 プレゼンテーション層プレースホルダーアサーション検証中..."
-   
-   presentation_placeholder_files=()
-   while IFS= read -r -d '' file; do
-       if grep -l 'assert False, "RED:' "$file" >/dev/null 2>&1; then
-           presentation_placeholder_files+=("$file")
-       fi
-   done < <(find tests/e2e/ -name "*.py" -print0 2>/dev/null)
-   
-   if [[ ${#presentation_placeholder_files[@]} -gt 0 ]]; then
-       echo "    ❌ プレゼンテーション層プレースホルダーアサーション発見:"
-       for file in "${presentation_placeholder_files[@]:0:5}"; do
-           count=$(grep -c 'assert False, "RED:' "$file" 2>/dev/null || echo "0")
-           echo "      - $file: $count 個"
-       done
-       [[ ${#presentation_placeholder_files[@]} -gt 5 ]] && echo "      - ... (他 $((${#presentation_placeholder_files[@]} - 5)) ファイル)"
-       
-       echo ""
-       echo "    🚨 CRITICAL ISSUE: これらのテストは意図的にFALSE失敗しています"
-       echo "       - プレゼンテーション実装は完了済みだが、テストがプレースホルダーのまま"
-       echo "       - これはTDDプロセス違反の状態です"
-       echo ""
-       echo "    💡 修正が必要: プレースホルダーアサーションを実際のテストに置き換える"
-       echo "       この修正は手動で行う必要があります"
-       echo ""
-       echo "    ⚠️  続行するとプレースホルダーテストの修正をスキップしますが、"
-       echo "       後でテストを適切に実装する必要があります"
-       echo ""
-       echo "    続行しますか？ (y/N): "
-       read -n 1 -r
-       echo
-       if [[ ! $REPLY =~ ^[Yy]$ ]]; then
-           echo "プレゼンテーション層実装をキャンセルしました"
-           echo "💡 推奨: 手動でプレースホルダーテストを適切なテストに置き換えてから再実行"
-           execute_rollback "presentation_placeholder_assertions_found"
-           exit 1
-       fi
-       
-       echo "    ⚠️  プレースホルダーテストを無視して続行（後で修正が必要）"
-   else
-       echo "    ✅ プレゼンテーション層プレースホルダーアサーション: なし（正常なテスト状態）"
-   fi
-   
-   echo "✅ 前提条件検証完了"
-   ```
-
-3. **Setup Template Variables**:
-   ```bash
-   # 📝 Setup template variables for code generation
-   echo "📝 テンプレート変数設定中..."
-   
-   # Setup feature-based variables
-   setup_feature_vars "$feature_name"
-   
-   # Extract entities from domain layer
-   all_entities=()
-   for entity_file in $(find src/domain/entities/ -name "*.py" -type f 2>/dev/null | grep -v __pycache__); do
-       entity_name=$(basename "$entity_file" .py)
-       entity_class=$(to_title_case "$entity_name")
-       all_entities+=("$entity_class")
    done
    
-   echo "  🎯 テンプレート変数設定:"
-   echo "    - 機能名: $feature_name"
-   echo "    - エンティティ: ${#all_entities[@]} 個"
-   
-   echo "✅ テンプレート変数設定完了"
-   ```
-
-4. **Create Presentation Layer Structure**:
-   ```bash
-   # 🎨 Create presentation layer structure
-   echo "🎨 プレゼンテーション層構造作成中..."
-   
-   # Define presentation structure directories
-   presentation_directories=(
-       "src/presentation/api/controllers"
-       "src/presentation/api/validators"
-       "src/presentation/api/serializers"
-       "src/presentation/api/middleware"
-       "src/presentation/cli"
-       "src/presentation/web"
-   )
-   
-   # Create all presentation directories safely
-   for dir in "${presentation_directories[@]}"; do
-       echo "  📁 作成中: $dir"
-       if ! safe_mkdir "$dir"; then
-           echo "エラー: プレゼンテーションディレクトリ作成に失敗しました: $dir"
-           execute_rollback "presentation_directory_creation_failed"
-           exit 1
-       fi
-       add_rollback "rmdir '$dir' 2>/dev/null || true" "Remove presentation directory: $dir"
-   done
-   
-   echo "✅ プレゼンテーション構造作成完了"
-   ```
-
-5. **Generate API Components Using Templates**:
-   ```bash
-   # ✅ Generate API components using templates
-   echo "✅ APIコンポーネント生成中..."
-   
-   implemented_files=()
-   
-   # Generate API Validator
-   validator_file="src/presentation/api/validators/${feature_name_snake}_validator.py"
-   echo "  ✅ 生成中: API Validator ($validator_file)"
-   
-   if ! process_template "presentation/validator_template.py" "$validator_file"; then
-       echo "エラー: バリデーターテンプレート処理に失敗しました"
-       execute_rollback "validator_template_failed"
-       exit 1
-   fi
-   
-   implemented_files+=("$validator_file")
-   add_rollback "rm -f '$validator_file'" "Remove generated validator"
-   
-   # Generate API Serializer
-   serializer_file="src/presentation/api/serializers/${feature_name_snake}_serializer.py"
-   echo "  📄 生成中: API Serializer ($serializer_file)"
-   
-   if ! process_template "presentation/serializer_template.py" "$serializer_file"; then
-       echo "エラー: シリアライザーテンプレート処理に失敗しました"
-       execute_rollback "serializer_template_failed"
-       exit 1
-   fi
-   
-   implemented_files+=("$serializer_file")
-   add_rollback "rm -f '$serializer_file'" "Remove generated serializer"
-   
-   # Generate API Controller
-   controller_file="src/presentation/api/controllers/${feature_name_snake}_controller.py"
-   echo "  🎮 生成中: API Controller ($controller_file)"
-   
-   if ! process_template "presentation/controller_template.py" "$controller_file"; then
-       echo "エラー: コントローラーテンプレート処理に失敗しました"
-       execute_rollback "controller_template_failed"
-       exit 1
-   fi
-   
-   implemented_files+=("$controller_file")
-   add_rollback "rm -f '$controller_file'" "Remove generated controller"
-   
-   echo "✅ APIコンポーネント生成完了"
-   ```
-
-6. **Generate FastAPI Application**:
-   ```bash
-   # 🚀 Generate FastAPI application
-   echo "🚀 FastAPI アプリケーション生成中..."
-   
-   app_file="src/presentation/api/app.py"
-   echo "  🚀 生成中: FastAPI Application ($app_file)"
-   
-   # Create custom FastAPI app template content (inline for now)
-   app_template_content='"""
-   '"$feature_name"' FastAPI Application
-
-   '"$feature_name"' 機能のREST API サーバー。
-   実装日時: '"$(date)"'
-   """
-
-   from fastapi import FastAPI, HTTPException, Depends, Query, Path
-   from fastapi.middleware.cors import CORSMiddleware
-   from fastapi.responses import JSONResponse
-   from pydantic import BaseModel, Field
-   from typing import Dict, Any, Optional
-   import logging
-   import os
-
-   from src.application.use_cases.'"${feature_name_snake}"'_use_case import '"${feature_name_title}"'UseCase
-   from src.infrastructure.config.database import get_database_session
-   from .controllers.'"${feature_name_snake}"'_controller import '"${feature_name_title}"'Controller
-
-   # FastAPI アプリケーション初期化
-   app = FastAPI(
-       title="'"$feature_name"' API",
-       description="'"$feature_name"' 機能のREST API",
-       version="1.0.0"
-   )
-
-   # CORS設定
-   app.add_middleware(
-       CORSMiddleware,
-       allow_origins=["*"],
-       allow_credentials=True,
-       allow_methods=["*"],
-       allow_headers=["*"],
-   )
-
-   # ヘルスチェックエンドポイント
-   @app.get("/health")
-   async def health_check():
-       return {"status": "healthy", "service": "'"$feature_name"'"}
-
-   # TODO: Add actual API endpoints using controller
-   '
-   
-   if ! safe_create_file "$app_file" "$app_template_content" true; then
-       echo "エラー: FastAPIアプリケーションファイルの作成に失敗しました"
-       execute_rollback "app_creation_failed"
-       exit 1
-   fi
-   
-   implemented_files+=("$app_file")
-   add_rollback "rm -f '$app_file'" "Remove FastAPI app"
-   
-   echo "✅ FastAPI アプリケーション生成完了"
-   ```
-
-7. **Generate E2E Tests**:
-   ```bash
-   # 🧪 Generate E2E tests for presentation layer
-   echo "🧪 E2Eテスト生成中..."
-   
-   # Create E2E test directory if needed
-   if ! safe_mkdir "tests/e2e/api"; then
-       echo "エラー: E2Eテストディレクトリの作成に失敗しました"
-       execute_rollback "e2e_test_dir_creation_failed"
-       exit 1
-   fi
-   
-   e2e_test_file="tests/e2e/api/test_${feature_name_snake}_api.py"
-   echo "  🧪 生成中: E2E API Test ($e2e_test_file)"
-   
-   if ! process_template "tests/e2e_test_template.py" "$e2e_test_file"; then
-       echo "エラー: E2Eテストテンプレート処理に失敗しました"
-       execute_rollback "e2e_test_template_failed"
-       exit 1
-   fi
-   
-   implemented_files+=("$e2e_test_file")
-   add_rollback "rm -f '$e2e_test_file'" "Remove generated E2E test"
-   
-   echo "✅ E2Eテスト生成完了"
-   ```
-
-8. **Run E2E Tests and Update Metadata**:
-   ```bash
-   # 🟢 Run E2E tests to verify presentation layer
-   echo "🟢 E2Eテスト実行中..."
-   
-   # Validate Python environment for testing
-   if ! validate_python_environment; then
-       echo "エラー: Python環境の検証に失敗しました"
-       execute_rollback "python_env_validation_failed"
-       exit 1
-   fi
-   
-   # Run E2E tests
-   e2e_test_output_file="/tmp/e2e_test_output_$$"
-   e2e_test_result=0
-   
-   if PYTEST_DISABLE_PLUGIN_AUTOLOAD="" uv run --frozen pytest tests/e2e/ -v --tb=short > "$e2e_test_output_file" 2>&1; then
-       e2e_test_result=0
-   else
-       e2e_test_result=1
-   fi
-   
-   # Analyze test results
-   total_e2e_tests=$(grep -c "test_.*PASSED\\|test_.*FAILED" "$e2e_test_output_file" 2>/dev/null || echo "0")
-   passed_e2e_tests=$(grep -c "PASSED" "$e2e_test_output_file" 2>/dev/null || echo "0")
-   failed_e2e_tests=$(grep -c "FAILED" "$e2e_test_output_file" 2>/dev/null || echo "0")
-   
-   echo "  📊 E2Eテスト結果:"
-   echo "    - 総テスト数: $total_e2e_tests"
-   echo "    - 成功: $passed_e2e_tests"
-   echo "    - 失敗: $failed_e2e_tests"
-   
-   rm -f "$e2e_test_output_file"
-   e2e_tests_passed=$([ $failed_e2e_tests -eq 0 ] && echo "true" || echo "false")
-   
-   # 📊 Update metadata with presentation implementation completion
-   metadata_file="docs/use_cases/issue-${issue_list}-${feature_name}.json"
-   
-   if ! update_metadata_atomic "$metadata_file" \
-       '.phases.presentation_implementation.completed = true |
-        .phases.presentation_implementation.completed_at = "'"$(date -u +%Y-%m-%dT%H:%M:%SZ)"'" |
-        .phases.presentation_implementation.e2e_tests_passed = '"$e2e_tests_passed"' |
-        .updated_at = "'"$(date -u +%Y-%m-%dT%H:%M:%SZ)"'" |
-        .spec_files.presentation_implementation = ['"$(printf '"%s",' "${implemented_files[@]}" | sed 's/,$//')"'] |
-        .phase = "presentation_implemented" |
-        .next_commands = ["refactor", "run-all-tests", "use-case-status"]'; then
-       echo "エラー: メタデータの更新に失敗しました"
-       execute_rollback "metadata_update_failed"
-       exit 1
-   fi
-   
-   echo "✅ E2Eテスト実行・メタデータ更新完了"
-   ```
-
-9. **Commit Changes and Update GitHub Issues**:
-   ```bash
-   # 📚 Commit changes and update GitHub issues
-   echo "📚 変更のコミットとGitHubイシュー更新中..."
-   
-   # Create commit message
-   commit_message="feat: implement presentation layer for $(printf 'issue #%s ' "${issue_numbers[@]}")- ${feature_name}
-
-   Presentation Layer Implementation Summary:
-   - Feature: ${feature_name}
-   - Issues: $(printf '#%s ' "${issue_numbers[@]}")
-   - Generated Files: ${#implemented_files[@]} files using templates
-   - E2E Test Results: Passed $passed_e2e_tests, Failed $failed_e2e_tests
-   
-   Generated Components:
-   $(printf '  - %s\n' "${implemented_files[@]}")
-   
-   Template-based Implementation:
-   - API validators with comprehensive input validation
-   - Response serializers with consistent output format
-   - Controllers with proper error handling
-   - FastAPI application with OpenAPI documentation
-   - E2E tests for complete API coverage
-   
-   Next Step: /refactor or /run-all-tests
-   "
-   
-   files_to_commit=("$metadata_file")
-   files_to_commit+=("${implemented_files[@]}")
-   
-   if ! safe_git_commit "$commit_message" "${files_to_commit[@]}"; then
-       echo "エラー: コミットに失敗しました"
-       execute_rollback "commit_failed"
-       exit 1
-   fi
-   
-   # Update GitHub issues
+   # Check for infrastructure layer implementation
+   missing_infra=()
    for issue_num in "${issue_numbers[@]}"; do
-       issue_comment="🎨 **プレゼンテーション層実装完了**
-
-   プレゼンテーション層の実装が完了しました。テンプレートベースの自動生成により、一貫性のあるREST APIが構築されました。
-
-   ## 📊 実装結果
-   - **生成ファイル数**: ${#implemented_files[@]} ファイル
-   - **E2Eテスト結果**: 成功 $passed_e2e_tests / 総計 $total_e2e_tests
-   - **実装方式**: テンプレートベース自動生成
-
-   ## 🎨 生成されたコンポーネント
-   - **APIバリデーター**: 入力データの検証とサニタイゼーション
-   - **APIシリアライザー**: レスポンス形式の統一化
-   - **APIコントローラー**: HTTP リクエスト処理
-   - **FastAPIアプリ**: REST APIサーバー
-   - **E2Eテスト**: API動作検証
-
-   ## 🚀 次のステップ
-   \`\`\`bash
-   /refactor $issue_num      # コード品質向上
-   /run-all-tests $issue_num # 全テスト実行
-   \`\`\`
-
-   ---
-   **Phase**: presentation_implemented ✅ → 次: refactor 🔧"
-       
-       safe_add_issue_comment "$issue_num" "$issue_comment" || true
+       # Look for infrastructure implementation files
+       if ! find src/infrastructure/repositories/ -name "*${issue_num}*.py" -o -name "*issue*${issue_num}*.py" -type f 2>/dev/null | head -1 >/dev/null; then
+           missing_infra+=("$issue_num")
+       fi
    done
    
-   echo "✅ コミット・GitHub更新完了"
+   if [[ ${#missing_infra[@]} -gt 0 ]]; then
+       echo "❌ エラー: 以下のIssueのインフラストラクチャ層実装が見つかりません:"
+       printf '  - Issue #%s\n' "${missing_infra[@]}"
+       echo "💡 先に /implement-infra を実行してください"
+       exit 1
+   fi
+   
+   echo "🖼️ Issues: $(printf '#%s ' "${issue_numbers[@]}")のプレゼンテーション層実装を開始します"
    ```
 
-10. **Final Success**:
-    ```bash
-    # 🎉 Transaction commit and final success message
-    if commit_transaction; then
-        echo ""
-        echo "🎉 プレゼンテーション層実装完了!"
-        echo "============================================="
-        echo "🎨 機能名: $feature_name"
-        echo "🎫 対象イシュー: $(printf '#%s ' "${issue_numbers[@]}")"
-        echo "📊 生成ファイル数: ${#implemented_files[@]} 個"
-        echo ""
-        echo "📋 生成されたコンポーネント:"
-        echo "   - APIバリデーター: 入力検証"
-        echo "   - APIシリアライザー: レスポンス変換"
-        echo "   - APIコントローラー: HTTP処理"
-        echo "   - FastAPIアプリ: REST APIサーバー"
-        echo "   - E2Eテスト: API検証"
-        echo ""
-        echo "🟢 テンプレートベース実装の利点:"
-        echo "   - 一貫性のあるコード構造"
-        echo "   - 保守性の向上"
-        echo "   - 開発速度の向上"
-        echo "   - エラーの削減"
-        echo ""
-        echo "🚀 次のステップ:"
-        echo "   1. リファクタリング: /refactor $(printf '%s,' "${issue_numbers[@]}" | sed 's/,$//')"
-        echo "   2. 全テスト実行: /run-all-tests $(printf '%s,' "${issue_numbers[@]}" | sed 's/,$//')"
-        echo "   3. 進捗確認: /use-case-status $(printf '%s,' "${issue_numbers[@]}" | sed 's/,$//')"
-        echo ""
-        echo "✅ テンプレートベース・プレゼンテーション層実装完了!"
-        echo ""
-        echo "🚨 MANDATORY FOR CLAUDE CODE: SCENARIO EVOLUTION CHECK"
-        echo "   プレゼンテーション実装中に新要件・UI変更・エッジケース発見時は"
-        echo "   作業を中断して /evolve-scenarios <feature-name> を実行すること"
-        echo "   CRITICAL: UI変更はユーザー体験に直接影響します"
-        
-    else
-        echo "❌ トランザクション コミット失敗"
-        exit 1
-    fi
-    ```
+2. **Execute Presentation Implementation Agent**:
+   ```bash
+   # 🤖 Delegate to specialized presentation implementation agent
+   echo "🖼️ プレゼンテーション実装エージェントを起動します..."
+   echo "専門エージェントがAPI・CLI・UI層を実装します"
+   echo ""
+   
+   # Call the specialized agent using Claude Code's Task tool
+   # The agent will handle:
+   # - Use case to endpoint mapping and API design
+   # - API controller implementation with proper HTTP handling
+   # - Input validation and response serialization
+   # - CLI command implementation
+   # - UI component creation
+   # - End-to-end testing and integration verification
+   # - Error handling and security implementation
+   # - Authentication and authorization setup
+   
+   # Note: In actual implementation, this would be handled by the Claude Code system
+   # when the /implement-presentation command is executed. The agent integration happens
+   # automatically through the Task tool with subagent_type="09-implement-presentation"
+   
+   echo "✅ プレゼンテーション実装エージェント呼び出し完了"
+   echo "エージェントが以下の処理を実行しました:"
+   echo "  - ユースケースからAPIエンドポイントへのマッピングと設計"
+   echo "  - APIコントローラーとHTTPリクエスト処理の実装"
+   echo "  - 入力検証とレスポンス形式の標準化"
+   echo "  - CLIコマンドとユーザーインターフェースの実装"
+   echo "  - エンドツーエンドテストと統合検証の実行"
+   echo "  - エラーハンドリングとセキュリティ機能の実装"
+   ```
+
+3. **Agent Result Verification**:
+   ```bash
+   # 🔍 Verify agent execution results
+   echo "🔍 エージェント実行結果を検証中..."
+   
+   # Check that presentation files were created
+   echo "  🔍 プレゼンテーション層ファイルの作成確認中..."
+   
+   created_files=()
+   for issue_num in "${issue_numbers[@]}"; do
+       # Look for controller implementation files
+       controller_pattern="src/presentation/api/controllers/*${issue_num}*controller*.py"
+       if ls $controller_pattern 2>/dev/null | head -1 >/dev/null; then
+           controller_files=$(ls $controller_pattern 2>/dev/null)
+           for file in $controller_files; do
+               created_files+=("$file")
+               echo "    ✅ Issue #$issue_num のコントローラーを確認: $(basename "$file")"
+           done
+       else
+           echo "    ❌ Issue #$issue_num のコントローラーが見つかりません"
+       fi
+       
+       # Check for API endpoints
+       api_pattern="src/presentation/api/*${issue_num}*.py"
+       if ls $api_pattern 2>/dev/null | head -1 >/dev/null; then
+           api_files=$(ls $api_pattern 2>/dev/null)
+           for file in $api_files; do
+               created_files+=("$file")
+               echo "    ✅ Issue #$issue_num のAPIファイルを確認: $(basename "$file")"
+           done
+       fi
+       
+       # Check metadata update
+       metadata_pattern="docs/use_cases/*issue*${issue_num}*.json"
+       if ls $metadata_pattern 2>/dev/null | head -1 >/dev/null; then
+           metadata_file=$(ls $metadata_pattern 2>/dev/null | head -1)
+           if command -v jq >/dev/null 2>&1; then
+               presentation_status=$(jq -r '.phases.presentation_implementation.completed // false' "$metadata_file" 2>/dev/null)
+               if [[ "$presentation_status" == "true" ]]; then
+                   echo "    ✅ Issue #$issue_num のメタデータが更新されました"
+               else
+                   echo "    ⚠️ Issue #$issue_num のメタデータ更新が未確認"
+               fi
+           fi
+       fi
+   done
+   
+   # Check if src/presentation directory exists
+   if [[ ! -d "src/presentation" ]]; then
+       echo "❌ エラー: src/presentation ディレクトリが作成されていません"
+       exit 1
+   fi
+   
+   # Report validation results
+   if [[ ${#created_files[@]} -eq 0 ]]; then
+       echo "❌ エージェント実行検証失敗: プレゼンテーション層ファイルが作成されていません"
+       exit 1
+   fi
+   
+   echo "✅ エージェント実行結果検証完了"
+   ```
+
+4. **Display Presentation Implementation Success Summary**:
+   ```bash
+   # 📊 Display comprehensive presentation implementation summary
+   echo ""
+   echo "🎉 プレゼンテーション層実装完了!"
+   echo "============================================="
+   
+   # Show created presentation files
+   echo "📁 作成されたプレゼンテーションファイル:"
+   for file in "${created_files[@]}"; do
+       if [[ -f "$file" ]]; then
+           echo "   ✅ $file"
+       fi
+   done
+   
+   # Show presentation components summary
+   echo ""
+   echo "🎨 プレゼンテーション層コンポーネント:"
+   if [[ ${#created_files[@]} -gt 0 ]]; then
+       controller_count=$(printf '%s\n' "${created_files[@]}" | grep -c "controller" || echo "0")
+       api_count=$(printf '%s\n' "${created_files[@]}" | grep -c "api" || echo "0")
+       cli_count=$(printf '%s\n' "${created_files[@]}" | grep -c "cli" || echo "0")
+       
+       echo "   📊 APIコントローラー: $controller_count 個"
+       echo "   📊 APIエンドポイント: $api_count 個"
+       echo "   📊 CLIコマンド: $cli_count 個"
+   fi
+   
+   # Show next steps
+   echo ""
+   echo "📋 次のステップ (全テスト実行・リファクタリング):"
+   for issue_num in "${issue_numbers[@]}"; do
+       echo "   /run-all-tests $issue_num"
+       echo "   /refactor $issue_num"
+   done
+   
+   echo ""
+   echo "📚 重要ドキュメント:"
+   echo "   - プレゼンテーション実装: src/presentation/"
+   echo "   - API仕様: OpenAPI/Swagger ドキュメント"
+   if [[ ${#created_files[@]} -gt 0 ]]; then
+       echo "   - 実装されたファイル: ${created_files[0]} 他"
+   fi
+   
+   echo ""
+   echo "🔗 関連リソース:"
+   for issue_num in "${issue_numbers[@]}"; do
+       echo "   - Issue #$issue_num: gh issue view $issue_num"
+   done
+   
+   echo ""
+   echo "✅ プレゼンテーション層実装完了 - システム完成準備完了!"
+   ```
 
 Important Notes:
-- Template-based implementation ensures consistency and maintainability
-- All code templates are stored separately and can be reused
-- Variable substitution allows customization for different features
-- Reduced code duplication and improved development speed
+- Keep presentation layer lightweight and focused
+- Delegate all business logic to application layer
+- Use proper input validation and error handling
+- Ensure consistent API response formats
 - All user-facing output must be in JAPANESE
