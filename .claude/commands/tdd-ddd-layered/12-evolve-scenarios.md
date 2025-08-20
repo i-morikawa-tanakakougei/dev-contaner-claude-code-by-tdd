@@ -175,17 +175,69 @@ Follow these steps:
 
 1. **Pre-execution Validation**:
    ```bash
-   # 🔧 Load all safe operation functions
-   source "$(dirname "${BASH_SOURCE[0]}")/_setup_safe_environment.sh" "12-evolve-scenarios" "$ARGUMENTS"
+   # 🔧 Load lightweight structure validation
+   source "$(dirname "${BASH_SOURCE[0]}")/_validate_structure.sh"
    
    # Validate feature name requirement
-   if [[ ${#other_args[@]} -eq 0 ]]; then
+   if [[ $# -eq 0 ]]; then
        echo "エラー: フィーチャー名が必要です"
-       show_usage_example "evolve-scenarios" "feature-name" "フィーチャーのシナリオ進化"
-       show_usage_example "evolve-scenarios" "1,feature-name" "イシュー1関連のシナリオ進化"
-       show_usage_example "evolve-scenarios" "1,7,feature-name" "複数イシュー統合のシナリオ進化"
+       echo "使用例:"
+       echo "  /evolve-scenarios user-authentication        # 単一フィーチャー"
+       echo "  /evolve-scenarios trading-execution          # システム拡張"
        exit 1
    fi
+   
+   # Extract feature name
+   feature_name="$1"
+   echo "🔄 フィーチャー: $feature_name のシナリオ進化を開始します"
+   
+   # Execute docs structure validation
+   if ! main "12-evolve-scenarios"; then
+       echo "❌ ドキュメント構造確認が失敗しました"
+       exit 1
+   fi
+   
+   echo "✅ 前提条件確認完了: シナリオ進化準備完了"
+   ```
+
+2. **Context Preparation and Agent Execution**:
+   ```bash
+   # 🔄 Prepare context for agent (Pattern B: Hybrid approach)
+   echo "🔄 コンテキスト準備とエージェント起動..."
+   
+   # Create context file with scenario evolution information
+   context_file="/workspace/.claude/context/current-command-context.json"
+   current_time=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+   
+   # Build context JSON for scenario evolution
+   cat > "$context_file" <<EOF
+   {
+     "command": "evolve-scenarios",
+     "timestamp": "$current_time",
+     "feature_name": "$feature_name",
+     "phase": "scenario-evolution",
+     "context": {
+       "expected_outputs": [
+         "docs/use_cases/evolved/$feature_name-evolved.md",
+         "docs/analysis/scenario-evolution-report.md"
+       ],
+       "architecture_patterns": ["Scenario Evolution", "Requirements Discovery", "Given-When-Then"]
+     },
+     "additional_instructions": "フィーチャー '$feature_name' のシナリオ進化を実行してください。スプリントフィードバック、開発中発見、ユーザー要望を分析し、新しいGiven-When-Thenシナリオを創出してください。",
+     "special_considerations": [
+       "既存シナリオとの整合性維持",
+       "新規要件と制約の適切な文書化",
+       "ドメインモデル影響の評価",
+       "実装優先度と複雑度の評価"
+     ],
+     "custom_context": {
+       "scenario_discovery": true,
+       "requirements_evolution": true,
+       "domain_impact_assessment": true,
+       "priority_evaluation": true
+     }
+   }
+   EOF
    
    feature_name="${other_args[0]}"
    

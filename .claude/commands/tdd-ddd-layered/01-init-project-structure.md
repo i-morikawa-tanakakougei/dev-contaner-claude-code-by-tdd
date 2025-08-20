@@ -105,34 +105,16 @@ $ /init-project-structure
 
 1. **Pre-execution Validation**:
    ```bash
-   # 🔧 Load all safe operation functions
-   source "$(dirname "${BASH_SOURCE[0]}")/_setup_safe_environment.sh" "01-init-project-structure" "$ARGUMENTS"
+   # 🔧 Load lightweight structure validation
+   source "$(dirname "${BASH_SOURCE[0]}")/_validate_structure.sh"
    
-   # Validate initialization preconditions
+   # Validate project initialization structure and preconditions
    echo "🏗️ プロジェクト構造初期化を開始します"
    
-   # Check if we're in a valid project directory
-   if [[ ! -f "pyproject.toml" ]] && [[ ! -f "package.json" ]] && [[ ! -f "Cargo.toml" ]]; then
-       echo "⚠️  プロジェクト設定ファイルが見つかりません"
-       echo "新しいプロジェクトを初期化しますか？ (y/N): "
-       read -n 1 -r
-       echo
-       if [[ ! $REPLY =~ ^[Yy]$ ]]; then
-           echo "プロジェクト初期化をキャンセルしました"
-           exit 0
-       fi
-   fi
-   
-   # Check if project is already initialized
-   if [[ -d "src" ]] || [[ -d "docs" ]] || [[ -d "tests" ]]; then
-       echo "⚠️  プロジェクト構造が既に存在します"
-       echo "既存の構造を上書きしますか？ (y/N): "
-       read -n 1 -r
-       echo
-       if [[ ! $REPLY =~ ^[Yy]$ ]]; then
-           echo "プロジェクト初期化をキャンセルしました"
-           exit 0
-       fi
+   # Execute structure validation with user interaction
+   if ! main "01-init-project-structure"; then
+       echo "❌ 構造確認が失敗しました"
+       exit 1
    fi
    
    echo "✅ 前提条件確認完了: プロジェクト構造初期化準備完了"
