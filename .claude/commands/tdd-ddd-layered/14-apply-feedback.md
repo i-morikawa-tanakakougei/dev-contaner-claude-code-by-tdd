@@ -212,367 +212,170 @@ $ /apply-feedback 15
 
 ## Task Details
 
-**Agent Integration Pattern - 4 Steps:**
+**🤖 Agent Integration**: This command uses the specialized `14-apply-feedback` agent for systematic feedback implementation and improvement.
+
+Follow these steps:
 
 1. **Pre-execution Validation**:
    ```bash
-   # 🔧 Load all safe operation functions
-   source "$(dirname "${BASH_SOURCE[0]}")/_setup_safe_environment.sh" "14-apply-feedback" "$ARGUMENTS"
-   
    # Validate issue number requirement
-   if [[ ${#issue_numbers[@]} -eq 0 ]]; then
+   if [[ $# -eq 0 ]]; then
        echo "エラー: 最低1つのイシュー番号が必要です"
-       show_usage_example "apply-feedback" "1" "単一イシューのフィードバック適用"
-       show_usage_example "apply-feedback" "1,7" "複数イシューのフィードバック適用"
-       show_usage_example "apply-feedback" "1,feature-name" "イシュー + フィーチャー指定"
+       echo "使用例:"
+       echo "  /apply-feedback 15        # 単一イシューフィードバック適用"
+       echo "  /apply-feedback 15,23     # 複数イシューフィードバック適用"
        exit 1
    fi
    
-   # Discover feature name and metadata
-   issue_list=$(IFS=-; echo "${issue_numbers[*]}")
-   if [[ ${#other_args[@]} -gt 0 ]]; then
-       feature_name="${other_args[0]}"
-   else
-       # Extract feature name from use case file
-       feature_name=$(find docs/use_cases -name "issue-${issue_list}-*.md" | head -1 | sed 's/.*issue-[0-9-]*-\(.*\)\.md$/\1/')
-       if [[ -z "$feature_name" ]]; then
-           echo "❌ エラー: フィーチャー名を特定できませんでした"
-           echo "💡 使用方法: /apply-feedback $issue_list,<feature-name>"
-           exit 1
+   # Parse issue numbers
+   IFS=',' read -ra ISSUES <<< "$1"
+   echo "🔄 Issues: $(printf '#%s ' "${ISSUES[@]}")のフィードバック適用を開始します"
+   
+   # Check review completion
+   review_found=false
+   for issue_num in "${ISSUES[@]}"; do
+       if find docs/reviews/ -name "*${issue_num}*review*" -type f 2>/dev/null | head -1 >/dev/null; then
+           review_found=true
+           break
        fi
-   fi
+   done
    
-   metadata_file="docs/use_cases/issue-${issue_list}-${feature_name}.json"
-   spec_file="docs/use_cases/issue-${issue_list}-${feature_name}.md"
-   
-   echo "🔄 Issues: #$(IFS=' #'; echo "${issue_numbers[*]}") - ${feature_name} のフィードバック適用を開始します"
-   
-   # Validate prerequisites
-   if [[ ! -f "$metadata_file" ]]; then
-       echo "❌ エラー: メタデータファイルが見つかりません: $metadata_file"
+   if [[ "$review_found" != "true" ]]; then
+       echo "❌ レビューが完了していません"
+       echo "💡 最初にレビューを完了してください: /review-issue $1"
        exit 1
    fi
-   
-   # Check that review is completed
-   if command -v jq >/dev/null 2>&1; then
-       review_status=$(jq -r '.phases.review.reviewed // false' "$metadata_file" 2>/dev/null)
-       if [[ "$review_status" != "true" ]]; then
-           echo "❌ エラー: レビューが完了していません"
-           echo "💡 最初にレビューを完了してください: /review-issue ${issue_numbers[*]}"
-           exit 1
-       fi
-   fi
-   
-   echo "✅ 前提条件確認完了: フィードバック適用準備完了"
    ```
 
-2. **Execute Specialized Agent**:
+2. **Context Preparation and Agent Execution**:
    ```bash
-   # 🤖 Call specialized agent with Task tool for feedback application
-   echo "🤖 専用エージェント実行中: 14-apply-feedback"
+   # 🔄 Prepare context for agent (Pattern B: Hybrid approach)
+   echo "🔄 コンテキスト準備とエージェント起動..."
    
-   # Build comprehensive task context
-   task_context="Feedback Application Request:
+   # Create context file with feedback application information
+   context_file="/workspace/.claude/context/current-command-context.json"
+   current_time=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
    
-   Issues: $(printf '#%s ' "${issue_numbers[@]}")
-   Feature: $feature_name
-   Metadata: $metadata_file
-   Spec: $spec_file
+   # Build context JSON for feedback application
+   cat > "$context_file" <<EOF
+   {
+     "command": "apply-feedback",
+     "timestamp": "$current_time",
+     "issue_numbers": [$(IFS=,; printf '%s\n' "${ISSUES[@]}" | paste -sd,)],
+     "phase": "feedback-application",
+     "context": {
+       "expected_outputs": [
+         "improved codebase in src/",
+         "updated tests in tests/",
+         "docs/analysis/improvement-report.md"
+       ],
+       "architecture_patterns": ["Continuous Improvement", "Quality Enhancement", "TDD"]
+     },
+     "additional_instructions": "レビューで特定された課題に対して体系的にフィードバックを適用してください。優先度に基づいて改善を実施し、全テストがGREEN状態を維持するように注意してください。アーキテクチャ準拠性、コード品質、テストカバレッジの向上を図ってください。",
+     "special_considerations": [
+       "レビューフィードバックの優先度に基づく体系的改善",
+       "全テストのGREEN状態維持（テスト破綻防止）",
+       "アーキテクチャ準拠性の維持・向上",
+       "新機能追加ではなく既存機能の品質向上に専念"
+     ],
+     "custom_context": {
+       "feedback_prioritization": true,
+       "systematic_improvement": true,
+       "test_preservation": true,
+       "quality_enhancement": true
+     }
+   }
+   EOF
    
-   Request: Systematic application of review feedback with targeted improvements only
+   echo "✅ コンテキストファイル作成完了: $context_file"
    
-   COMPREHENSIVE TASK CHECKLIST:
+   # 🤖 Call the specialized agent with hybrid context
+   echo ""
+   echo "🔄 フィードバック適用エージェントを起動します..."
+   echo "専門エージェントが体系的にフィードバックを適用します"
+   echo ""
    
-   🔴 Required Tasks:
+   # Actual Claude Code Task tool invocation with hybrid approach
+   cat <<'AGENT_CALL'
+   Task tool will be called with:
+   - subagent_type: "14-apply-feedback"
+   - description: "Apply review feedback systematically with quality improvements"
+   - prompt: |
+     フィードバック適用タスクを実行してください。
+     
+     ## コンテキスト情報の取得
+     1. 一時コンテキスト（イシュー情報）:
+        - /workspace/.claude/context/current-command-context.json を読み込み
+     
+     2. フィードバック情報の確認:
+        - docs/reviews/ でレビューフィードバックを確認
+        - docs/analysis/ で品質分析結果を確認
+        - src/ で現在の実装状況を確認
+     
+     ## 実行タスク
+     1. レビューフィードバック分析と優先度付け
+     2. 全レイヤーでの体系的フィードバック実装
+     3. コード品質改善とリファクタリング
+     4. アーキテクチャ準拠性修正
+     5. テストカバレッジ向上とシナリオ整合
+     6. ドキュメント更新と改善
+     7. パフォーマンス最適化（該当箇所）
+     8. セキュリティ課題解決と強化
+     
+     ## 処理完了後
+     - 改善実装結果の詳細報告
+     - before/after品質メトリクス比較
+     - 次のステップ（テスト実行・PR作成）への案内
+   AGENT_CALL
    
-   📊 Review Analysis and Planning:
-   - Parse review findings: analyze comprehensive review report from step 13
-   - Categorize feedback items: group by Critical/High/Medium/Low priority
-   - Assess implementation effort: estimate time and complexity for each item
-   - Plan implementation sequence: order improvements by priority and dependencies
-   
-   🚨 Critical Issues Resolution (Priority 1):
-   - Fix security vulnerabilities: address any security issues identified in review
-   - Resolve Given-When-Then gaps: fix missing or incorrect scenario coverage
-   - Fix broken architecture boundaries: correct any layer violation issues
-   - Address data integrity issues: fix any data handling or validation problems
-   - Fix broken or missing tests: address test failures or gaps
-   
-   🟡 Recommended Tasks:
-   
-   ⚡ High Priority Improvements (Priority 2):
-   - Improve test quality: enhance test structure, readability, and coverage
-   - Fix code quality issues: address complex methods, naming, and duplication
-   - Improve error handling: enhance exception handling and error responses
-   - Address API design issues: fix endpoint design and response formatting problems
-   - Improve domain model: enhance entity, value object, and service design
-   - Fix integration issues: address repository and external service integration problems
-   
-   🟢 Optional Tasks:
-   
-   📈 Medium Priority Enhancements (Priority 3):
-   - Improve documentation: enhance code comments, API docs, and user guides
-   - Optimize performance: address non-critical performance improvements
-   - Identify risk areas: flag changes that might affect system stability
-   - Create implementation roadmap: plan systematic approach for applying feedback
-   - Resolve performance bottlenecks: fix critical performance issues
-   - Enhance user experience: improve CLI usability and API responses
-   - Improve code organization: better structure and modularization
-   - Add monitoring/logging: enhance observability and debugging capabilities
-   - Improve configuration: better configuration management and validation
-   
-   🔧 Code Quality Validation (After Each Priority Level):
-   - Run ruff linting: execute uv run --frozen ruff check src/ --fix
-   - Run ruff formatting: execute uv run --frozen ruff format src/
-   - Run type checking: execute uv run --frozen pyright src/
-   - Fix quality issues: address any linting, formatting, or type errors
-   - Verify clean results: ensure all quality tools pass without errors
-   
-   🧪 Continuous Testing (After Each Change):
-   - Run affected tests: execute tests related to changed code
-   - Run full test suite: execute uv run --frozen pytest for complete validation
-   - Verify all tests GREEN: ensure no functionality is broken
-   - Check test coverage: verify coverage hasn't decreased
-   - Validate Given-When-Then scenarios: ensure scenario tests still pass
-   - Test integration points: verify cross-layer integration still works
-   
-   📖 Given-When-Then Coverage Improvements:
-   - Add missing scenario tests: implement tests for uncovered scenarios
-   - Improve test clarity: make tests better express business intent
-   - Fix scenario-test mismatches: align tests with actual scenarios
-   - Add edge case tests: implement tests for boundary conditions
-   - Improve error scenario coverage: add tests for failure scenarios
-   - Enhance acceptance criteria validation: ensure all criteria are tested
-   
-   🏗️ Architecture Compliance Fixes:
-   - Fix layer violations: correct any dependency direction issues
-   - Improve interface segregation: enhance repository and service interfaces
-   - Fix domain purity issues: remove external dependencies from domain layer
-   - Improve aggregate design: fix any aggregate boundary issues
-   - Enhance domain model: improve entity and value object design
-   - Fix transaction boundaries: correct any transaction management issues
-   
-   🔗 Integration and Infrastructure Improvements:
-   - Improve repository implementations: fix data access patterns and error handling
-   - Enhance external service integration: improve third-party service handling
-   - Fix configuration issues: address configuration management problems
-   - Improve error propagation: enhance cross-layer error handling
-   - Fix transaction management: address database transaction issues
-   - Enhance monitoring: improve logging and observability
-   
-   🌐 Presentation Layer Enhancements:
-   - Fix API design issues: improve endpoint design and HTTP status codes
-   - Improve input validation: enhance request validation and error responses
-   - Fix authentication/authorization: address security implementation issues
-   - Improve response formatting: enhance response structure and error handling
-   - Fix API documentation: correct endpoint documentation issues
-   - Enhance CLI usability: improve command-line interface user experience
-   
-   📊 Quality Metrics Validation:
-   - Measure improvement impact: compare before/after quality metrics
-   - Validate coverage improvements: ensure test coverage has increased
-   - Assess complexity reduction: verify code complexity has decreased
-   - Check performance improvements: measure any performance gains
-   - Validate maintainability: assess code maintainability improvements
-   - Document quality gains: record measurable quality improvements
-   
-   🔍 Final Validation and Quality Check:
-   - Run comprehensive test suite: execute all tests with coverage
-   - Final code quality check: run uv run --frozen ruff check src/ --fix
-   - Final formatting check: run uv run --frozen ruff format src/
-   - Final type checking: run uv run --frozen pyright src/
-   - Validate all improvements: ensure all feedback items are addressed
-   - Check system stability: verify system operates correctly after changes
-   
-   📚 Documentation and Handoff:
-   - Update implementation documentation: record changes made during feedback application
-   - Update metadata: record feedback application results in issue-X-Y.json
-   - Create improvement summary: document what was improved and impact
-   - Commit all improvements: version control all changes with clear commit messages
-   - Prepare for PR creation: ensure code is ready for pull request submission
-   - Generate final quality report: create before/after comparison of quality metrics
-   
-   CONSTRAINTS:
-   - TARGETED IMPROVEMENTS ONLY - apply specific feedback from review only
-   - LIMITED IMPLEMENTATION - only make changes based on review feedback
-   - Quality improvement focus - address specific issues identified in review
-   - Follow review recommendations - no arbitrary changes beyond feedback
-   - No new features or functionality beyond feedback scope
-   - Maintain TDD/DDD/Clean Architecture principles
-   - Apply feedback systematically by priority with continuous validation
-   
-   OUTPUT REQUIREMENTS:
-   - Generate feedback application report in docs/reviews/
-   - Update metadata files with application status and metrics
-   - Create improved implementation addressing review feedback
-   - Commit changes with clear messages
-   - Maintain all tests in GREEN state
-   - Ensure architecture compliance maintained
-   
-   CRITICAL SCENARIO EVOLUTION CHECK:
-   If new requirements, constraints, or improvement opportunities are discovered during
-   feedback application, immediately interrupt work and execute /evolve-scenarios <feature-name>
-   Feedback application is a critical opportunity for new scenario discovery"
-   
-   # Execute the specialized agent
-   claude_task="$task_context" \
-       claude_agent="14-apply-feedback" \
-       claude_working_dir="$(pwd)" \
-       claude_issues="$(printf '%s,' "${issue_numbers[@]}" | sed 's/,$//')" \
-       claude_feature_name="$feature_name" \
-       claude --agent
-   
-   agent_exit_code=$?
-   echo "✅ 専用エージェント実行完了 (終了コード: $agent_exit_code)"
+   echo "✅ エージェント呼び出し設定完了"
+   echo "エージェントが以下の処理を実行します:"
+   echo "  - コンテキストファイルからのイシュー情報取得"
+   echo "  - レビューフィードバック分析と優先度付け"
+   echo "  - 全レイヤーでの体系的フィードバック実装"
+   echo "  - コード品質改善とリファクタリング"
+   echo "  - アーキテクチャ準拠性修正"
+   echo "  - テストカバレッジ向上とシナリオ整合"
+   echo "  - ドキュメント更新と改善"
    ```
 
 3. **Agent Result Verification**:
    ```bash
    # 🔍 Verify agent execution results
-   echo "🔍 エージェント結果検証中..."
+   echo "🔍 エージェント実行結果を検証中..."
    
-   verification_issues=()
+   # Check that improvements were implemented
+   git_changes=$(git status --porcelain 2>/dev/null | wc -l)
    
-   # Check metadata was updated properly
-   if [[ -f "$metadata_file" ]] && command -v jq >/dev/null 2>&1; then
-       feedback_applied=$(jq -r '.phases.feedback_application.applied // false' "$metadata_file" 2>/dev/null)
-       if [[ "$feedback_applied" == "true" ]]; then
-           applied_count=$(jq -r '.phases.feedback_application.applied_improvements // 0' "$metadata_file")
-           skipped_count=$(jq -r '.phases.feedback_application.skipped_improvements // 0' "$metadata_file")
-           created_issues=$(jq -r '.phases.feedback_application.created_issues // 0' "$metadata_file")
-           post_coverage=$(jq -r '.phases.feedback_application.post_coverage // "N/A"' "$metadata_file")
-           
-           echo "  ✅ メタデータ更新完了"
-           echo "    📈 適用完了: ${applied_count} 項目"
-           echo "    ⏸️ 保留項目: ${skipped_count} 項目"
-           echo "    🆕 新規Issue: ${created_issues} 件"
-           echo "    📊 改善後カバレッジ: ${post_coverage}%"
-       else
-           verification_issues+=("メタデータの適用状況が未確認")
-       fi
-   else
-       verification_issues+=("メタデータファイルの検証に失敗")
-   fi
-   
-   # Check generated feedback application report
-   feedback_report_pattern="docs/reviews/*issue*${issue_list}*${feature_name}*feedback*.md"
-   feedback_reports=($(ls $feedback_report_pattern 2>/dev/null))
-   
-   if [[ ${#feedback_reports[@]} -eq 0 ]]; then
-       # Try alternative pattern
-       feedback_report_pattern="docs/reviews/*issue*${issue_list}*feedback*.md"
-       feedback_reports=($(ls $feedback_report_pattern 2>/dev/null))
-   fi
-   
-   if [[ ${#feedback_reports[@]} -eq 0 ]]; then
-       verification_issues+=("フィードバック適用レポートが作成されていません")
-   else
-       feedback_report="${feedback_reports[-1]}"  # Get most recent
-       echo "  ✅ フィードバック適用レポート: $(basename "$feedback_report")"
-   fi
-   
-   # Verify tests are still passing
-   if PYTEST_DISABLE_PLUGIN_AUTOLOAD="" uv run --frozen pytest -q >/dev/null 2>&1; then
-       echo "  ✅ 全テストGREEN確認"
-   else
-       verification_issues+=("テスト失敗を検出")
-   fi
-   
-   # Check for obvious architecture violations
-   if find src/ -name "*.py" 2>/dev/null | xargs grep -l "import.*infrastructure" 2>/dev/null | grep -q "domain" 2>/dev/null; then
-       verification_issues+=("潜在的なアーキテクチャ違反を検出")
-   else
-       echo "  ✅ アーキテクチャ準拠性維持"
-   fi
-   
-   # Check agent exit code
-   if [[ $agent_exit_code -ne 0 ]]; then
-       verification_issues+=("エージェント実行エラー (終了コード: $agent_exit_code)")
-   fi
-   
-   # Report verification results
-   if [[ ${#verification_issues[@]} -eq 0 ]]; then
-       echo "✅ エージェント結果検証完了"
-   else
-       echo "❌ エージェント結果検証で問題が発見されました:"
-       printf '  - %s\n' "${verification_issues[@]}"
+   # Validate feedback application results
+   if [[ $git_changes -eq 0 ]]; then
+       echo "❌ エージェント実行検証失敗:"
+       echo "  フィードバック適用による変更が見つかりません"
        exit 1
    fi
+   
+   echo "✅ エージェント実行結果検証完了"
+   echo "  - 実装された変更: ${git_changes}個のファイル"
    ```
 
 4. **Display Success Summary**:
    ```bash
-   # 🎉 Display comprehensive success summary
+   # 📊 Display comprehensive success summary
    echo ""
    echo "🎉 フィードバック適用完了!"
-   echo ""
-   echo "📊 実行サマリー:"
-   echo "  📂 対象Issues: $(printf '#%s ' "${issue_numbers[@]}")"
-   echo "  🏷️ フィーチャー: $feature_name"
-   echo "  📝 生成レポート: $feedback_report"
-   echo "  🔄 メタデータ: $metadata_file"
-   echo ""
+   echo "========================"
    
-   # Show feedback application summary
-   if [[ -f "$metadata_file" ]] && command -v jq >/dev/null 2>&1; then
-       applied_count=$(jq -r '.phases.feedback_application.applied_improvements // 0' "$metadata_file")
-       skipped_count=$(jq -r '.phases.feedback_application.skipped_improvements // 0' "$metadata_file")
-       created_issues=$(jq -r '.phases.feedback_application.created_issues // 0' "$metadata_file")
-       post_coverage=$(jq -r '.phases.feedback_application.post_coverage // "N/A"' "$metadata_file")
-       post_ruff=$(jq -r '.phases.feedback_application.post_ruff_errors // "N/A"' "$metadata_file")
-       post_pyright=$(jq -r '.phases.feedback_application.post_pyright_errors // "N/A"' "$metadata_file")
-       tests_passing=$(jq -r '.phases.feedback_application.tests_passing // false' "$metadata_file")
-       
-       echo "🔄 フィードバック適用結果:"
-       echo "   📈 適用完了: ${applied_count} 項目"
-       echo "   ⏸️ 保留項目: ${skipped_count} 項目"
-       echo "   🆕 新規Issue: ${created_issues} 件"
-       echo "   📊 テストカバレッジ: ${post_coverage}%"
-       echo "   🔧 Ruffエラー: ${post_ruff} 件"
-       echo "   🔍 Pyrightエラー: ${post_pyright} 件"
-       echo "   🧪 テスト状態: $(if [[ "$tests_passing" == "true" ]]; then echo "✅ 全GREEN"; else echo "❌ 要修正"; fi)"
-       
-       # Determine quality status and next steps
-       if [[ "$post_ruff" == "0" && "$post_pyright" == "0" && "$tests_passing" == "true" ]]; then
-           echo ""
-           echo "🎯 品質評価: ✅ 優秀 - 品質基準達成"
-           next_step="/create-pr ${issue_numbers[*]}"
-       elif [[ "$applied_count" != "0" ]]; then
-           echo ""
-           echo "🎯 品質評価: 📈 改善 - 品質向上"
-           if [[ "$created_issues" != "0" ]]; then
-               next_step="新規Issue対応後に /create-pr ${issue_numbers[*]}"
-           else
-               next_step="/create-pr ${issue_numbers[*]}"
-           fi
-       else
-           echo ""
-           echo "🎯 品質評価: ⚠️ 要継続 - さらなる改善必要"
-           next_step="/review-issue ${issue_numbers[*]} (再レビュー)"
-       fi
-   else
-       next_step="/review-issue ${issue_numbers[*]} (再レビュー)"
-   fi
-   
+   # Show summary information
+   echo "📊 適用サマリー:"
+   echo "  🔄 対象Issues: $(printf '#%s ' "${ISSUES[@]}")"
+   echo "  📝 変更ファイル: ${git_changes}個"
    echo ""
    echo "📋 次のステップ:"
-   echo "   💡 $next_step"
-   echo "   💡 /use-case-status $(IFS=','; echo "${issue_numbers[*]}")"
-   
+   echo "   1. テスト実行: /run-all-tests $1"
+   echo "   2. プルリクエスト作成: /create-pr $1"
+   echo "   3. ステータス確認: /use-case-status"
    echo ""
-   echo "📁 生成ファイル:"
-   echo "  📝 フィードバック適用レポート: $feedback_report"
-   echo "  🔄 メタデータ: $metadata_file"
-   echo "  🔧 改善されたソースコード"
-   
-   echo ""
-   echo "🔗 関連リソース:"
-   for issue_num in "${issue_numbers[@]}"; do
-       echo "   - Issue #$issue_num: gh issue view $issue_num"
-   done
-   
-   echo ""
-   echo "🎯 フィードバック適用が正常に完了しました!"
+   echo "✅ フィードバック適用完了 - プルリクエスト作成準備完了!"
    ```
 
 **💡 Key Benefits of Feedback Application:**

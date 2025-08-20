@@ -113,30 +113,91 @@ Design domain models based on the Given-When-Then specification.
    echo "🏗️ Issues: $(printf '#%s ' "${issue_numbers[@]}")のドメインモデリングを開始します"
    ```
 
-2. **Execute Domain Modeling Agent**:
+2. **Context Preparation and Agent Execution**:
    ```bash
-   # 🤖 Delegate to specialized domain modeling agent
+   # 🔄 Prepare context for agent (Pattern B: Hybrid approach)
+   echo "🏗️ コンテキスト準備とエージェント起動..."
+   
+   # Create context file with domain modeling information
+   context_file="/workspace/.claude/context/current-command-context.json"
+   current_time=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+   
+   # Build context JSON for domain modeling
+   cat > "$context_file" <<EOF
+   {
+     "command": "domain-modeling",
+     "timestamp": "$current_time",
+     "issue_numbers": [$(IFS=,; echo "${issue_numbers[*]}")],
+     "phase": "domain-modeling",
+     "context": {
+       "expected_outputs": [
+         "docs/domain/issue-X-Y.md",
+         "docs/domain/entities/",
+         "docs/domain/value-objects/",
+         "docs/domain/aggregates/"
+       ],
+       "architecture_patterns": ["DDD", "Clean Architecture"]
+     },
+     "additional_instructions": "DDDの原則に基づいてドメインモデルを設計してください。ユースケース仕様を分析し、エンティティ、値オブジェクト、アグリゲート境界を適切に定義してください。ユビキタス言語の一貫性を保ち、ビジネスルールをドメイン層に適切に配置してください。",
+     "special_considerations": [
+       "既存のユースケース仕様（docs/use_cases/issue-X-Y.md）との整合性確認",
+       "アグリゲート境界の適切な設計（不変条件の保護）",
+       "ドメインサービスとエンティティの責務分離",
+       "リポジトリインターフェースの抽象化レベル調整"
+     ],
+     "custom_context": {
+       "ubiquitous_language_focus": true,
+       "aggregate_design": true,
+       "domain_purity": true,
+       "business_rules_modeling": true
+     }
+   }
+   EOF
+   
+   echo "✅ コンテキストファイル作成完了: $context_file"
+   
+   # 🤖 Call the specialized agent with hybrid context
+   echo ""
    echo "🏗️ ドメインモデリングエージェントを起動します..."
    echo "専門エージェントがDDD原則に基づいてドメインモデルを設計します"
    echo ""
    
-   # Call the specialized agent using Claude Code's Task tool
-   # The agent will handle:
-   # - Use case specification analysis for domain concepts
-   # - Entity and value object identification and design
-   # - Aggregate boundary definition and consistency rules
-   # - Domain service design for complex business logic
-   # - Repository interface definition
-   # - Domain event identification
-   # - Ubiquitous language establishment
-   # - Domain model documentation creation
+   # Actual Claude Code Task tool invocation with hybrid approach
+   cat <<'AGENT_CALL'
+   Task tool will be called with:
+   - subagent_type: "04-domain-modeling"
+   - description: "Design domain model using DDD principles"
+   - prompt: |
+     ドメインモデル設計タスクを実行してください。
+     
+     ## コンテキスト情報の取得
+     1. 一時コンテキスト（イシュー情報）:
+        - /workspace/.claude/context/current-command-context.json を読み込み
+     
+     2. 既存TDD/DDD情報の確認:
+        - docs/use_cases/issue-X-Y.md でユースケース仕様を確認
+        - docs/use_cases/issue-X-Y.json で現在のフェーズを確認
+        - docs/vision/project-vision.md でドメイン境界を確認
+     
+     ## 実行タスク
+     1. ユースケース仕様の分析とドメイン概念の抽出
+     2. エンティティと値オブジェクトの識別・設計
+     3. アグリゲート境界の定義と整合性ルールの確立
+     4. ドメインサービスと複雑なビジネスロジックの設計
+     5. リポジトリインターフェースの定義
+     6. ドメインイベントの識別
+     7. ユビキタス言語の確立
+     8. ドメインモデル文書の作成
+     
+     ## 処理完了後
+     - 作成したドメインモデル文書のパス報告
+     - 設計されたエンティティ・値オブジェクト数の報告
+     - 次のステップ（テスト作成）への案内
+   AGENT_CALL
    
-   # Note: In actual implementation, this would be handled by the Claude Code system
-   # when the /domain-modeling command is executed. The agent integration happens
-   # automatically through the Task tool with subagent_type="04-domain-modeling"
-   
-   echo "✅ ドメインモデリングエージェント呼び出し完了"
-   echo "エージェントが以下の処理を実行しました:"
+   echo "✅ エージェント呼び出し設定完了"
+   echo "エージェントが以下の処理を実行します:"
+   echo "  - コンテキストファイルからのイシュー情報取得"
    echo "  - ユースケース仕様の分析とドメイン概念の抽出"
    echo "  - エンティティと値オブジェクトの設計"
    echo "  - アグリゲート境界の定義と整合性ルールの確立"

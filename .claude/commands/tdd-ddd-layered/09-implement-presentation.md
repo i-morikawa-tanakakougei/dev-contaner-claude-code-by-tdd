@@ -331,30 +331,90 @@ $ /implement-presentation 3
    echo "🖼️ Issues: $(printf '#%s ' "${issue_numbers[@]}")のプレゼンテーション層実装を開始します"
    ```
 
-2. **Execute Presentation Implementation Agent**:
+2. **Context Preparation and Agent Execution**:
    ```bash
-   # 🤖 Delegate to specialized presentation implementation agent
+   # 🔄 Prepare context for agent (Pattern B: Hybrid approach)
+   echo "🖼️ コンテキスト準備とエージェント起動..."
+   
+   # Create context file with presentation layer information
+   context_file="/workspace/.claude/context/current-command-context.json"
+   current_time=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+   
+   # Build context JSON for presentation layer implementation
+   cat > "$context_file" <<EOF
+   {
+     "command": "implement-presentation",
+     "timestamp": "$current_time",
+     "issue_numbers": [$(IFS=,; echo "${issue_numbers[*]}")],
+     "phase": "presentation-layer",
+     "context": {
+       "expected_outputs": [
+         "src/presentation/api/controllers/",
+         "src/presentation/cli/commands/",
+         "src/presentation/ui/components/",
+         "src/presentation/middleware/"
+       ],
+       "architecture_patterns": ["Clean Architecture", "API First", "MVC"]
+     },
+     "additional_instructions": "プレゼンテーション層を実装してください。アプリケーション層のユースケースをAPIエンドポイント、CLIコマンド、またはUI画面として公開してください。入力検証、エラーハンドリング、認証・認可を適切に実装し、ユーザーにとって使いやすいインターフェースを提供してください。",
+     "special_considerations": [
+       "アプリケーション層ユースケース（src/application/）との密な連携",
+       "RESTful API設計とOpenAPI仕様への準拠",
+       "入力検証とセキュリティ対策の実装",
+       "エンドツーエンドテストの作成と実行"
+     ],
+     "custom_context": {
+       "api_design": true,
+       "input_validation": true,
+       "security_implementation": true,
+       "e2e_testing": true
+     }
+   }
+   EOF
+   
+   echo "✅ コンテキストファイル作成完了: $context_file"
+   
+   # 🤖 Call the specialized agent with hybrid context
+   echo ""
    echo "🖼️ プレゼンテーション実装エージェントを起動します..."
    echo "専門エージェントがAPI・CLI・UI層を実装します"
    echo ""
    
-   # Call the specialized agent using Claude Code's Task tool
-   # The agent will handle:
-   # - Use case to endpoint mapping and API design
-   # - API controller implementation with proper HTTP handling
-   # - Input validation and response serialization
-   # - CLI command implementation
-   # - UI component creation
-   # - End-to-end testing and integration verification
-   # - Error handling and security implementation
-   # - Authentication and authorization setup
+   # Actual Claude Code Task tool invocation with hybrid approach
+   cat <<'AGENT_CALL'
+   Task tool will be called with:
+   - subagent_type: "09-implement-presentation"
+   - description: "Implement presentation layer with API, CLI, and UI interfaces"
+   - prompt: |
+     プレゼンテーション層実装タスクを実行してください。
+     
+     ## コンテキスト情報の取得
+     1. 一時コンテキスト（イシュー情報）:
+        - /workspace/.claude/context/current-command-context.json を読み込み
+     
+     2. 既存実装情報の確認:
+        - src/application/ でアプリケーション層ユースケースを確認
+        - src/infrastructure/ で利用可能なインフラ層を確認
+        - docs/use_cases/issue-X-Y.json で現在のフェーズを確認
+     
+     ## 実行タスク
+     1. ユースケースからAPIエンドポイントへのマッピングと設計
+     2. APIコントローラーとHTTPリクエスト処理の実装
+     3. 入力検証とレスポンス形式の標準化
+     4. CLIコマンドとユーザーインターフェースの実装
+     5. エンドツーエンドテストと統合検証の実行
+     6. エラーハンドリングとセキュリティ機能の実装
+     7. 認証・認可機能の設定
+     
+     ## 処理完了後
+     - 実装したプレゼンテーション層クラスのパス報告
+     - エンドツーエンドテスト実行結果の報告
+     - 次のステップ（全テスト実行）への案内
+   AGENT_CALL
    
-   # Note: In actual implementation, this would be handled by the Claude Code system
-   # when the /implement-presentation command is executed. The agent integration happens
-   # automatically through the Task tool with subagent_type="09-implement-presentation"
-   
-   echo "✅ プレゼンテーション実装エージェント呼び出し完了"
-   echo "エージェントが以下の処理を実行しました:"
+   echo "✅ エージェント呼び出し設定完了"
+   echo "エージェントが以下の処理を実行します:"
+   echo "  - コンテキストファイルからのイシュー情報取得"
    echo "  - ユースケースからAPIエンドポイントへのマッピングと設計"
    echo "  - APIコントローラーとHTTPリクエスト処理の実装"
    echo "  - 入力検証とレスポンス形式の標準化"

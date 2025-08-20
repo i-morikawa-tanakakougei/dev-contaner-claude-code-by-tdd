@@ -101,29 +101,90 @@ Plan sprint and create tickets from core scenarios.
    echo "📋 スプリント $sprint_number の計画を開始します"
    ```
 
-2. **Execute Sprint Planning Agent**:
+2. **Context Preparation and Agent Execution**:
    ```bash
-   # 🤖 Delegate to specialized sprint planning agent
+   # 🔄 Prepare context for agent (Pattern B: Hybrid approach)
+   echo "📋 コンテキスト準備とエージェント起動..."
+   
+   # Create context file with sprint planning information
+   context_file="/workspace/.claude/context/current-command-context.json"
+   current_time=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+   
+   # Build context JSON for sprint planning
+   cat > "$context_file" <<EOF
+   {
+     "command": "sprint-planning",
+     "timestamp": "$current_time",
+     "sprint_number": $sprint_number,
+     "phase": "sprint-planning",
+     "context": {
+       "github_cli_available": $(command -v gh >/dev/null 2>&1 && echo "true" || echo "false"),
+       "git_repo": $(git rev-parse --is-inside-work-tree 2>/dev/null && echo "true" || echo "false"),
+       "expected_outputs": [
+         "docs/sprints/sprint-$sprint_number.md",
+         "docs/sprints/sprint-$sprint_number-backlog.md"
+       ],
+       "architecture_patterns": ["TDD", "DDD", "Layered Architecture"]
+     },
+     "additional_instructions": "スプリント $sprint_number の計画を作成してください。コアシナリオを分析し、適切なチケット分割とGitHub Issue作成を行ってください。Given-When-Then形式の受け入れ条件を各チケットに含めてください。",
+     "special_considerations": [
+       "既存のコアシナリオ（docs/use_cases/core/）との整合性確認",
+       "スプリント容量とチーム能力の適切な見積もり",
+       "チケット間の依存関係の明確化",
+       "GitHub Issueの品質確保（ラベル、マイルストーン設定）"
+     ],
+     "custom_context": {
+       "capacity_planning": true,
+       "github_integration": true,
+       "milestone_management": true,
+       "sprint_goal_definition": true
+     }
+   }
+   EOF
+   
+   echo "✅ コンテキストファイル作成完了: $context_file"
+   
+   # 🤖 Call the specialized agent with hybrid context
+   echo ""
    echo "📋 スプリント計画エージェントを起動します..."
-   echo "専門エージェントがスプリント計画とチケット作成を行います"
+   echo "専門エージェントがスプリント $sprint_number の計画とチケット作成を行います"
    echo ""
    
-   # Call the specialized agent using Claude Code's Task tool
-   # The agent will handle:
-   # - Core scenario analysis
-   # - Sprint capacity planning
-   # - Ticket breakdown and creation
-   # - GitHub issue generation
-   # - Sprint backlog documentation
-   # - Milestone and label management
-   # - Progress tracking setup
+   # Actual Claude Code Task tool invocation with hybrid approach
+   cat <<'AGENT_CALL'
+   Task tool will be called with:
+   - subagent_type: "02-sprint-planning"
+   - description: "Create sprint plan and GitHub issues for TDD/DDD development"
+   - prompt: |
+     スプリント計画作成タスクを実行してください。
+     
+     ## コンテキスト情報の取得
+     1. 一時コンテキスト（スプリント情報）:
+        - /workspace/.claude/context/current-command-context.json を読み込み
+     
+     2. 既存プロジェクト情報の確認:
+        - docs/use_cases/core/index.md でコアシナリオを確認
+        - docs/vision/project-vision.md でプロジェクトビジョンを確認
+        - 既存のスプリント状況（docs/sprints/）を確認
+     
+     ## 実行タスク
+     1. コアシナリオの分析と優先度付け
+     2. スプリント容量の見積もりと目標設定
+     3. チケット分割と依存関係の定義
+     4. GitHub Issue作成（Given-When-Then受け入れ条件付き）
+     5. スプリントバックログドキュメント作成
+     6. マイルストーンとラベル管理
+     7. 進捗管理体制の設定
+     
+     ## 処理完了後
+     - 作成したスプリント文書のパス報告
+     - 作成されたGitHub Issue数の報告
+     - 次のステップ（ユースケース作成）への案内
+   AGENT_CALL
    
-   # Note: In actual implementation, this would be handled by the Claude Code system
-   # when the /sprint-planning command is executed. The agent integration happens
-   # automatically through the Task tool with subagent_type="02-sprint-planning"
-   
-   echo "✅ スプリント計画エージェント呼び出し完了"
-   echo "エージェントが以下の処理を実行しました:"
+   echo "✅ エージェント呼び出し設定完了"
+   echo "エージェントが以下の処理を実行します:"
+   echo "  - コンテキストファイルからのスプリント情報取得"
    echo "  - コアシナリオの分析と優先度付け"
    echo "  - スプリント容量の見積もりとチケット選択"
    echo "  - GitHub Issueの作成とマイルストーン設定"
@@ -181,6 +242,14 @@ Plan sprint and create tickets from core scenarios.
    fi
    
    echo "✅ エージェント実行結果検証完了"
+   
+   # Clean up context file after successful execution
+   if [[ -f "$context_file" ]]; then
+       # Archive context to execution history
+       echo "{\"timestamp\":\"$(date -Iseconds)\",\"command\":\"sprint-planning\",\"sprint_number\":$sprint_number,\"status\":\"completed\"}" >> /workspace/.claude/context/execution-history.jsonl
+       rm -f "$context_file"
+       echo "📝 コンテキストを実行履歴に記録し、一時ファイルをクリーンアップしました"
+   fi
    ```
 
 4. **Display Sprint Planning Success Summary**:

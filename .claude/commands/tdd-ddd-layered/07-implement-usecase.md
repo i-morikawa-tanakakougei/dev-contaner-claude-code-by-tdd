@@ -314,268 +314,275 @@ git restore tests/unit/application/
 
 ---
 
-## 🤖 Agent Integration Implementation
+## Task Details
 
-This command uses the specialized **07-implement-usecase** agent for application layer implementation following TDD GREEN phase principles.
+**🤖 Agent Integration**: This command uses the specialized `07-implement-usecase` agent for optimal application layer implementation following TDD GREEN phase principles.
 
-### 1. Pre-execution Validation
+Follow these steps:
 
-```bash
-# 🔧 Environment setup and argument parsing
-source "$(dirname "${BASH_SOURCE[0]}")/_setup_safe_environment.sh" "07-implement-usecase" "$ARGUMENTS"
+1. **Pre-execution Validation**:
+   ```bash
+   # Validate issue numbers are provided
+   if [[ $# -eq 0 ]]; then
+       echo "エラー: 少なくとも1つのイシュー番号を指定してください"
+       echo "使用例:"
+       echo "  /implement-usecase 15     # 単一イシュー"
+       echo "  /implement-usecase 15,23  # 複数イシュー"
+       exit 1
+   fi
+   
+   # Parse issue numbers
+   IFS=',' read -ra ISSUES <<< "$1"
+   echo "🔄 Issues: $(printf '#%s ' "${ISSUES[@]}")のアプリケーション層実装を開始します"
+   
+   # Check domain layer prerequisites
+   if [[ ! -d "src/domain/entities" ]] || [[ -z "$(find src/domain/entities/ -name "*.py" 2>/dev/null)" ]]; then
+       echo "❌ ドメイン層の実装が見つかりません"
+       echo "💡 最初にドメイン層を実装してください:"
+       echo "   /implement-domain $1"
+       exit 1
+   fi
+   ```
 
-# Use case implementation expects at least one issue number
-if [[ ${#issue_numbers[@]} -eq 0 ]]; then
-    echo "エラー: 少なくとも1つのイシュー番号を指定してください"
-    show_usage_example "implement-usecase" "1" "単一イシューのユースケース実装"
-    show_usage_example "implement-usecase" "1,7" "複数イシューのユースケース実装"
-    show_usage_example "implement-usecase" "1 feature-name" "イシュー + 機能名指定"
-    exit 1
-fi
+2. **Context Preparation and Agent Execution**:
+   ```bash
+   # 🔄 Prepare context for agent (Pattern B: Hybrid approach)
+   echo "🏗️ コンテキスト準備とエージェント起動..."
+   
+   # Create context file with use case implementation information
+   context_file="/workspace/.claude/context/current-command-context.json"
+   current_time=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+   
+   # Extract issue list and feature name
+   issue_list=$(IFS=,; echo "${ISSUES[*]}")
+   if [[ ${#other_args[@]} -gt 0 ]]; then
+       feature_name="${other_args[0]}"
+   else
+       # Feature name will be extracted from existing metadata files
+       feature_name=""
+   fi
+   
+   # Build context JSON for use case implementation
+   cat > "$context_file" <<EOF
+   {
+     "command": "implement-usecase",
+     "timestamp": "$current_time",
+     "issue_numbers": [$(IFS=,; echo "${ISSUES[*]}")],
+     "feature_name": "${feature_name:-"auto-detect"}",
+     "phase": "application-layer-implementation",
+     "context": {
+       "expected_outputs": [
+         "src/application/use_cases/",
+         "src/application/dtos/",
+         "src/application/services/",
+         "Updated test files with GREEN status"
+       ],
+       "architecture_patterns": ["Application Layer", "Use Cases", "DTOs", "Clean Architecture"]
+     },
+     "additional_instructions": "TDD GREEN段階でアプリケーション層の実装を行ってください。ドメイン層を協調させるユースケース、DTOs、アプリケーションサービスを実装し、すべてのテストがGREEN状態になることを確保してください。",
+     "special_considerations": [
+       "ドメインロジックの協調のみ（ビジネスロジックはドメイン層）",
+       "DTOを使用した境界での変換処理",
+       "横断的関心事（トランザクション・認証・ログ）の処理",
+       "依存性注入によるドメインインターフェースへの依存"
+     ],
+     "custom_context": {
+       "tdd_green_phase": true,
+       "domain_orchestration": true,
+       "clean_architecture_compliance": true,
+       "application_layer_focus": true
+     }
+   }
+   EOF
+   
+   echo "✅ コンテキストファイル作成完了: $context_file"
+   
+   # 🤖 Call the specialized agent with hybrid context
+   echo ""
+   echo "🏗️ アプリケーション層実装エージェントを起動します..."
+   echo "専門エージェントがTDD GREEN phaseでアプリケーション層を実装します"
+   echo ""
+   
+   # Actual Claude Code Task tool invocation with hybrid approach
+   cat <<'AGENT_CALL'
+   Task tool will be called with:
+   - subagent_type: "07-implement-usecase"
+   - description: "TDD GREEN phase application layer implementation"
+   - prompt: |
+     アプリケーション層実装タスクを実行してください。
+     
+     ## コンテキスト情報の取得
+     1. 一時コンテキスト（イシュー情報）:
+        - /workspace/.claude/context/current-command-context.json を読み込み
+     
+     2. ドメイン層の確認:
+        - src/domain/ でドメイン実装を確認
+        - tests/ でテスト仕様を確認
+        - docs/use_cases/ でユースケース仕様を確認
+     
+     ## 実行タスク
+     1. ユースケース実装（ドメインエンティティ・サービスの協調）
+     2. DTOs作成（境界での入出力データ変換）
+     3. アプリケーションサービス実装（横断的関心事処理）
+     4. リポジトリインターフェース依存関係の設定
+     5. エラーハンドリングと検証ロジック
+     6. テスト実行によるGREEN状態確保
+     7. Clean Architecture原則の遵守確認
+     8. 実装完了確認とファイル構造検証
+     
+     ## 処理完了後
+     - アプリケーション層実装の完了確認
+     - すべてのテストGREEN状態の確保
+     - 次のステップ（インフラ層実装）への案内
+   AGENT_CALL
+   
+   echo "✅ エージェント呼び出し設定完了"
+   echo "エージェントが以下の処理を実行します:"
+   echo "  - コンテキストファイルからのイシュー情報取得"
+   echo "  - ユースケース実装（ドメインエンティティ・サービスの協調）"
+   echo "  - DTOs作成（境界での入出力データ変換）"
+   echo "  - アプリケーションサービス実装（横断的関心事処理）"
+   echo "  - リポジトリインターフェース依存関係の設定"
+   echo "  - エラーハンドリングと検証ロジック"
+   echo "  - テスト実行によるGREEN状態確保"
+   echo "  - Clean Architecture原則の遵守確認"
+   
+   # Execute the specialized agent
+   claude_task="$task_context" \
+       claude_agent="07-implement-usecase" \
+       claude_working_dir="$(pwd)" \
+       claude_issues="$(printf '%s,' "${ISSUES[@]}" | sed 's/,$//')" \
+       claude_feature_name="$feature_name" \
+       claude --agent
+   
+   agent_exit_code=$?
+   echo "✅ 専用エージェント実行完了 (終了コード: $agent_exit_code)"
+   ```
 
-echo "🔄 Issues: $(printf '#%s ' "${issue_numbers[@]}")のアプリケーション層実装を開始します"
-echo ""
-echo "🚨 重要な注意: このステップではアプリケーション層のみを実装します"
-echo "   ✅ 許可: src/application/ 配下のファイルのみ"
-echo "   ❌ 禁止: src/domain/, src/infrastructure/, src/presentation/"
-echo "   💡 他の層を間違って実装した場合は即座に削除してください"
-echo ""
-echo "🔴→🟢 TDD原則: テストを実装に合わせて変更してはいけません!"
-echo "   📖 シナリオ → 🔴 テスト → 🟢 実装 の順序を厳守"
-echo "   ✅ 実装をテストに合わせる（正しい）"
-echo "   ❌ テストを実装に合わせる（禁止）"
-echo ""
+3. **Agent Result Verification**:
+   ```bash
+   # 🔍 Verify agent execution results
+   echo "🔍 エージェント結果検証中..."
+   
+   verification_issues=()
+   
+   # Check that application layer files were created
+   application_files=(
+       "src/application/use_cases/"
+       "src/application/dtos/"
+   )
+   
+   # Validate application layer structure
+   missing_dirs=()
+   for dir in "${application_files[@]}"; do
+       if [[ ! -d "$dir" ]]; then
+           missing_dirs+=("$dir")
+       fi
+   done
+   
+   # Check for application layer implementation files
+   usecase_files=$(find src/application/use_cases/ -name "*.py" 2>/dev/null | wc -l)
+   dto_files=$(find src/application/dtos/ -name "*.py" 2>/dev/null | wc -l)
+   
+   # Validate directory creation
+   if [[ ${#missing_dirs[@]} -gt 0 ]]; then
+       verification_issues+=("未作成ディレクトリ: ${missing_dirs[*]}")
+   else
+       echo "  ✅ アプリケーション層ディレクトリ構造: 作成済み"
+   fi
+   
+   # Validate file creation
+   if [[ $usecase_files -eq 0 ]]; then
+       verification_issues+=("ユースケース実装ファイルが見つかりません")
+   else
+       echo "  ✅ ユースケースファイル: ${usecase_files}個"
+   fi
+   
+   if [[ $dto_files -gt 0 ]]; then
+       echo "  ✅ DTOファイル: ${dto_files}個"
+   fi
+   
+   # Check metadata updates
+   metadata_updated=0
+   for issue_num in "${ISSUES[@]}"; do
+       metadata_file=$(find docs/use_cases -name "issue-${issue_num}-*.json" | head -1)
+       if [[ -f "$metadata_file" ]] && grep -q "application_implementation" "$metadata_file"; then
+           metadata_updated=$((metadata_updated + 1))
+       fi
+   done
+   
+   if [[ $metadata_updated -eq ${#ISSUES[@]} ]]; then
+       echo "  ✅ メタデータ更新: ${metadata_updated}/${#ISSUES[@]} 完了"
+   else
+       verification_issues+=("メタデータ更新が不完全: ${metadata_updated}/${#ISSUES[@]}")
+   fi
+   
+   # Check agent exit code
+   if [[ $agent_exit_code -ne 0 ]]; then
+       verification_issues+=("エージェント実行エラー (終了コード: $agent_exit_code)")
+   fi
+   
+   # Report verification results
+   if [[ ${#verification_issues[@]} -eq 0 ]]; then
+       echo "✅ エージェント結果検証完了"
+   else
+       echo "❌ エージェント結果検証で問題が発見されました:"
+       printf '  - %s\n' "${verification_issues[@]}"
+       exit 1
+   fi
+   ```
 
-# 📋 Validate prerequisites - domain implementation must be completed
-echo "📋 前提条件の検証中..."
-
-# Check for domain implementation
-domain_entities=$(find src/domain/entities/ -name "*.py" -type f 2>/dev/null | grep -v __pycache__ || echo "")
-if [[ -z "$domain_entities" ]]; then
-    echo "❌ ドメイン層の実装が見つかりません"
-    echo "💡 最初にドメイン層を実装してください:"
-    echo "   /implement-domain $(printf '%s,' "${issue_numbers[@]}" | sed 's/,$//')"
-    exit 1
-fi
-
-# Check for use case tests
-usecase_test_files=$(find tests/unit/application/use_cases/ -name "test_*.py" -type f 2>/dev/null || echo "")
-if [[ -z "$usecase_test_files" ]]; then
-    echo "❌ ユースケーステストが見つかりません"
-    echo "💡 最初にTDDテストを作成してください:"
-    echo "   /create-tests $(printf '%s,' "${issue_numbers[@]}" | sed 's/,$//')"
-    exit 1
-fi
-
-echo "  ✅ ドメイン実装確認: $(echo "$domain_entities" | wc -l) ファイル"
-echo "  ✅ ユースケーステスト確認: $(echo "$usecase_test_files" | wc -l) ファイル"
-echo "✅ 前提条件検証完了"
-```
-
-### 2. Execute Specialized Agent
-
-```bash
-# 🤖 Execute 07-implement-usecase agent with comprehensive task delegation
-echo "🤖 07-implement-usecase エージェント実行中..."
-
-# Extract issue list and feature name for agent
-issue_list=$(IFS=-; echo "${issue_numbers[*]}")
-if [[ ${#other_args[@]} -gt 0 ]]; then
-    feature_name="${other_args[0]}"
-else
-    # Feature name will be extracted from existing files by agent
-    feature_name=""
-fi
-
-# Prepare agent context and task parameters
-agent_task_context="
-Applications Layer Implementation Task:
-- Target Issues: $(printf '#%s ' "${issue_numbers[@]}")
-- Feature Name: ${feature_name:-"auto-detect"}
-- Implementation Focus: Use cases, DTOs, application services
-- Architecture Layer: Application only (no domain/infra/presentation)
-- TDD Phase: GREEN (implement to pass existing tests)
-- Dependencies: Domain layer (completed), Use case tests (created)
-
-Critical Requirements:
-1. Implement ONLY application layer components
-2. Orchestrate domain logic without containing business rules  
-3. Create DTOs for clean input/output boundaries
-4. Use dependency injection for repository interfaces
-5. Handle application-level concerns (transactions, authentication)
-6. Follow Clean Architecture principles
-7. Ensure tests move from RED to GREEN state
-8. Create mock repositories for testing isolation
-
-Forbidden Actions:
-- NO domain layer modifications (already complete)
-- NO infrastructure implementations (wrong layer)
-- NO presentation layer code (wrong layer)
-- NO business logic in application layer
-- NO test modifications to match implementation
-
-Template Usage:
-- Use application/dto_template.py for DTOs
-- Use application/exceptions_template.py for exception handling
-- Use application/usecase_template.py for use case classes
-- Follow consistent code generation patterns
-
-Expected Outputs:
-- src/application/use_cases/ (use case classes)
-- src/application/dtos/ (data transfer objects)  
-- src/application/exceptions/ (application-specific errors)
-- Mock repositories for testing (if needed)
-- Updated metadata files
-- Comprehensive documentation
-"
-
-# Execute agent with robust error handling and progress tracking
-if Task "$agent_task_context" agent:07-implement-usecase; then
-    echo "✅ 07-implement-usecase エージェント実行完了"
-else
-    echo "❌ 07-implement-usecase エージェント実行失敗"
-    echo "💡 以下を確認してください:"
-    echo "   - ドメイン層実装の完了状況"
-    echo "   - ユースケーステストの存在"
-    echo "   - プレースホルダーアサーションの有無"
-    echo "   - メタデータファイルの整合性"
-    exit 1
-fi
-```
-
-### 3. Agent Result Verification
-
-```bash
-# 🔍 Verify agent implementation results
-echo "🔍 エージェント実装結果検証中..."
-
-# Check if application layer files were created
-app_usecase_files=$(find src/application/use_cases/ -name "*.py" -type f 2>/dev/null | grep -v __pycache__ || echo "")
-app_dto_files=$(find src/application/dtos/ -name "*.py" -type f 2>/dev/null | grep -v __pycache__ || echo "")
-app_exception_files=$(find src/application/exceptions/ -name "*.py" -type f 2>/dev/null | grep -v __pycache__ || echo "")
-
-if [[ -z "$app_usecase_files" ]]; then
-    echo "❌ ユースケースファイルが作成されていません"
-    exit 1
-fi
-
-if [[ -z "$app_dto_files" ]]; then
-    echo "❌ DTOファイルが作成されていません"
-    exit 1
-fi
-
-if [[ -z "$app_exception_files" ]]; then
-    echo "❌ 例外ファイルが作成されていません"
-    exit 1
-fi
-
-echo "  ✅ ユースケース: $(echo "$app_usecase_files" | wc -l) ファイル"
-echo "  ✅ DTO: $(echo "$app_dto_files" | wc -l) ファイル"  
-echo "  ✅ 例外: $(echo "$app_exception_files" | wc -l) ファイル"
-
-# Verify use case tests are now passing (GREEN state)
-echo "  🧪 ユースケーステスト GREEN状態検証中..."
-if PYTEST_DISABLE_PLUGIN_AUTOLOAD="" uv run --frozen pytest tests/unit/application/use_cases/ -v --tb=short > /tmp/usecase_test_results 2>&1; then
-    passed_tests=$(grep -c "PASSED" /tmp/usecase_test_results 2>/dev/null || echo "0")
-    failed_tests=$(grep -c "FAILED" /tmp/usecase_test_results 2>/dev/null || echo "0")
-    echo "    ✅ テスト結果: 成功 $passed_tests, 失敗 $failed_tests"
-    
-    if [[ $failed_tests -gt 0 ]]; then
-        echo "    ⚠️  一部のテストが失敗していますが、実装は完了しました"
-        echo "    💡 必要に応じて追加実装を検討してください"
-    fi
-else
-    echo "    ⚠️  テスト実行でエラーが発生しましたが、実装は完了しました"
-fi
-rm -f /tmp/usecase_test_results
-
-# Check architecture compliance (no forbidden dependencies)
-echo "  🏗️ アーキテクチャ準拠性検証中..."
-forbidden_imports=$(find src/application/ -name "*.py" -exec grep -l "^import.*infrastructure\\|^from.*infrastructure\\|^import.*presentation\\|^from.*presentation" {} \; 2>/dev/null || echo "")
-
-if [[ -n "$forbidden_imports" ]]; then
-    echo "    ⚠️  禁止された依存関係が発見されました:"
-    echo "$forbidden_imports" | head -3
-    echo "    💡 アプリケーション層の依存関係を見直してください"
-else
-    echo "    ✅ アーキテクチャ準拠性: 適切な層分離"
-fi
-
-echo "✅ エージェント実装結果検証完了"
-```
-
-### 4. Display Success Summary
-
-```bash
-# 🎉 Display comprehensive success summary
-echo ""
-echo "🎉 アプリケーション層実装完了!"
-echo "============================================="
-echo "🔄 機能: ${feature_name:-"auto-detected"}"
-echo "🎫 対象イシュー: $(printf '#%s ' "${issue_numbers[@]}")"
-echo ""
-echo "📊 実装されたコンポーネント:"
-usecase_count=$(echo "$app_usecase_files" | wc -l)
-dto_count=$(echo "$app_dto_files" | wc -l)
-exception_count=$(echo "$app_exception_files" | wc -l)
-echo "   ユースケース: $usecase_count 個"
-echo "   DTOs: $dto_count 個"
-echo "   例外クラス: $exception_count 個"
-echo ""
-echo "🟢 テスト状況:"
-echo "   - ユースケーステスト: TDD GREEN フェーズ"
-echo "   - ドメインテスト: 引き続き通過"
-echo "   - テスト実装: 成功 ${passed_tests:-"N/A"} / 失敗 ${failed_tests:-"N/A"}"
-echo ""
-echo "🏛️ アーキテクチャ準拠:"
-echo "   - クリーンアーキテクチャ原則: ✅"
-echo "   - レイヤー分離: ✅"
-echo "   - ドメインロジック orchestration: ✅"
-echo "   - 依存性注入パターン: ✅"
-echo ""
-echo "🤖 エージェント活用:"
-echo "   - 専門エージェント: 07-implement-usecase"
-echo "   - テンプレートベース実装: ✅"
-echo "   - 一貫性のあるコード生成: ✅"
-echo "   - 統一された開発パターン: ✅"
-echo ""
-echo "🚀 次のステップ:"
-echo "   1. インフラ層実装: /implement-infra $(printf '%s,' "${issue_numbers[@]}" | sed 's/,$//')"
-echo "   2. 進捗確認: /use-case-status $(printf '%s,' "${issue_numbers[@]}" | sed 's/,$//')"
-echo "   3. 統合テスト実行（インフラ層完成後）"
-echo ""
-echo "🚨 TDD原則リマインダー:"
-echo "   ⚠️ 実装中にテストを変更した場合、それはTDD違反です"
-echo "   ✅ 正解: シナリオ → テスト → 実装の順序で進める"
-echo "   ❌ 禁止: 実装を正としてテストを変更する"
-echo ""
-echo "💡 実装品質:"
-echo "   - ビジネスフロー orchestration: ✅"
-echo "   - 型安全なデータ転送: ✅"
-echo "   - 包括的なエラーハンドリング: ✅"
-echo "   - テスト可能な設計: ✅"
-echo "   - テンプレートベースの一貫性: ✅"
-echo ""
-echo "✅ アプリケーション層実装完了 - インフラ層実装準備完了!"
-echo ""
-echo "🚨 MANDATORY FOR CLAUDE CODE: SCENARIO EVOLUTION CHECK"
-echo "   ユースケース実装中に新要件・エラー・エッジケース発見時は"
-echo "   作業を中断して /evolve-scenarios <feature-name> を実行すること"
-echo "   CRITICAL: ユースケース変更は全レイヤーに影響します"
-echo ""
-echo "🔴 TDD守則（絶対遵守）:"
-echo "   1. シナリオがテストを決める"
-echo "   2. テストが実装を決める" 
-echo "   3. 実装がテストを決めてはならない"
-echo "   4. この順序を逆転させた場合、TDD失敗となる"
-```
-
-**Important Notes:**
-- Use cases orchestrate, don't contain business logic
-- Keep use cases thin and focused  
-- Use DTOs for input/output, not domain objects
-- Handle cross-cutting concerns (logging, auth)
-- Mock repositories for testing
-- Template system ensures consistency and maintainability
-- All user-facing output must be in JAPANESE
+4. **Display Success Summary**:
+   ```bash
+   # 🎉 Display comprehensive success summary
+   echo ""
+   echo "🎉 アプリケーション層実装完了!"
+   echo "================================="
+   echo ""
+   echo "📊 実行サマリー:"
+   echo "  📂 対象Issues: $(printf '#%s ' "${ISSUES[@]}")"
+   echo "  🏗️ ユースケースファイル: ${usecase_files}個"
+   echo "  📦 DTOファイル: ${dto_files}個"
+   echo "  🔄 更新メタデータ: ${metadata_updated}個"
+   echo ""
+   
+   # Show created files summary
+   echo "📁 実装されたファイル:"
+   if [[ $usecase_files -gt 0 ]]; then
+       echo "   ✅ ユースケース: ${usecase_files}個のファイル"
+       echo "     └── src/application/use_cases/"
+   fi
+   if [[ $dto_files -gt 0 ]]; then
+       echo "   ✅ DTO: ${dto_files}個のファイル"
+       echo "     └── src/application/dtos/"
+   fi
+   
+   echo ""
+   echo "🎯 TDD GREEN フェーズ完了状況:"
+   echo "   ✅ ドメイン層: 実装済み (前提条件)"
+   echo "   ✅ アプリケーション層: 実装完了"
+   echo "   ⏭️ インフラストラクチャ層: 次のステップ"
+   echo "   ⏭️ プレゼンテーション層: 後続ステップ"
+   
+   echo ""
+   echo "📋 推奨次のステップ:"
+   issue_list=$(IFS=,; echo "${ISSUES[*]}")
+   echo "   1. インフラストラクチャ層実装: /implement-infra $issue_list"
+   echo "   2. プレゼンテーション層実装: /implement-presentation $issue_list"
+   echo "   3. 全テスト実行: /run-all-tests $issue_list"
+   echo "   4. リファクタリング: /refactor $issue_list"
+   
+   echo ""
+   echo "📁 生成ファイル:"
+   for issue_num in "${ISSUES[@]}"; do
+       metadata_file=$(find docs/use_cases -name "issue-${issue_num}-*.json" | head -1)
+       if [[ -f "$metadata_file" ]]; then
+           echo "  🔄 メタデータ: $metadata_file"
+       fi
+   done
+   echo ""
+   echo "🎯 アプリケーション層実装が正常に完了しました!"
+   echo ""
+   echo "✅ TDD GREEN状態でアプリケーション層実装完了!"
+   ```
 

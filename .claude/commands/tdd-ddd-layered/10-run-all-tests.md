@@ -207,29 +207,89 @@ $ /run-all-tests 15
    echo "🧪 Issues: $(printf '#%s ' "${issue_numbers[@]}")の全テスト実行を開始します"
    ```
 
-2. **Execute All Tests Agent**:
+2. **Context Preparation and Agent Execution**:
    ```bash
-   # 🤖 Delegate to specialized test execution agent
+   # 🔄 Prepare context for agent (Pattern B: Hybrid approach)
+   echo "🧪 コンテキスト準備とエージェント起動..."
+   
+   # Create context file with test execution information
+   context_file="/workspace/.claude/context/current-command-context.json"
+   current_time=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+   
+   # Build context JSON for comprehensive test execution
+   cat > "$context_file" <<EOF
+   {
+     "command": "run-all-tests",
+     "timestamp": "$current_time",
+     "issue_numbers": [$(IFS=,; echo "${issue_numbers[*]}")],
+     "phase": "comprehensive-testing",
+     "context": {
+       "test_types": ["unit", "integration", "e2e", "performance"],
+       "expected_outputs": [
+         "test-results/coverage-report.html",
+         "test-results/quality-metrics.json",
+         "test-results/performance-benchmark.json"
+       ],
+       "architecture_patterns": ["TDD", "Test Pyramid", "CI/CD"]
+     },
+     "additional_instructions": "包括的なテストスイートを実行してください。ユニットテスト、統合テスト、エンドツーエンドテスト、パフォーマンステストを順次実行し、カバレッジ分析と品質メトリクスを収集してください。テスト失敗時は詳細な分析と修正提案を提供してください。",
+     "special_considerations": [
+       "全レイヤー（Domain/Application/Infrastructure/Presentation）のテスト実行",
+       "テストカバレッジの最低基準（80%以上）の確保",
+       "CI/CDパイプラインでの実行を想定した設定",
+       "パフォーマンス回帰の検出と報告"
+     ],
+     "custom_context": {
+       "comprehensive_testing": true,
+       "coverage_analysis": true,
+       "quality_metrics": true,
+       "performance_testing": true
+     }
+   }
+   EOF
+   
+   echo "✅ コンテキストファイル作成完了: $context_file"
+   
+   # 🤖 Call the specialized agent with hybrid context
+   echo ""
    echo "🧪 全テスト実行エージェントを起動します..."
    echo "専門エージェントが包括的テストスイートを実行します"
    echo ""
    
-   # Call the specialized agent using Claude Code's Task tool
-   # The agent will handle:
-   # - Unit test execution and analysis
-   # - Integration test execution and validation
-   # - End-to-end test execution and verification
-   # - Coverage analysis and reporting
-   # - Quality metrics collection and assessment
-   # - Performance testing and benchmarking
-   # - Test result analysis and failure investigation
-   # - Comprehensive reporting and documentation
+   # Actual Claude Code Task tool invocation with hybrid approach
+   cat <<'AGENT_CALL'
+   Task tool will be called with:
+   - subagent_type: "10-run-all-tests"
+   - description: "Execute comprehensive test suite with coverage and quality analysis"
+   - prompt: |
+     包括的テスト実行タスクを実行してください。
+     
+     ## コンテキスト情報の取得
+     1. 一時コンテキスト（イシュー情報）:
+        - /workspace/.claude/context/current-command-context.json を読み込み
+     
+     2. 既存テスト状況の確認:
+        - tests/ ディレクトリの全テストファイルを確認
+        - pytest設定とテスト環境の確認
+        - docs/use_cases/issue-X-Y.json でテスト対象フェーズを確認
+     
+     ## 実行タスク
+     1. ユニットテストの実行と分析
+     2. 統合テストの実行と検証
+     3. エンドツーエンドテストの実行と確認
+     4. カバレッジ分析とレポート生成
+     5. 品質メトリクスの収集と評価
+     6. パフォーマンステストとベンチマーク
+     7. テスト結果分析と失敗調査
+     8. 包括的レポートと文書化
+     
+     ## 処理完了後
+     - 全テスト実行結果の詳細報告
+     - カバレッジ率と品質メトリクスの報告
+     - 次のステップ（リファクタリング）への案内
+   AGENT_CALL
    
-   # Note: In actual implementation, this would be handled by the Claude Code system
-   # when the /run-all-tests command is executed. The agent integration happens
-   # automatically through the Task tool with subagent_type="10-run-all-tests"
-   
-   echo "✅ 全テスト実行エージェント呼び出し完了"
+   echo "✅ エージェント呼び出し設定完了"
    echo "エージェントが以下の処理を実行しました:"
    echo "  - ユニットテストの実行と分析"
    echo "  - 統合テストの実行と検証"

@@ -347,30 +347,90 @@ $ /implement-infra 3
    echo "🏗️ Issues: $(printf '#%s ' "${issue_numbers[@]}")のインフラストラクチャ層実装を開始します"
    ```
 
-2. **Execute Infrastructure Implementation Agent**:
+2. **Context Preparation and Agent Execution**:
    ```bash
-   # 🤖 Delegate to specialized infrastructure implementation agent
+   # 🔄 Prepare context for agent (Pattern B: Hybrid approach)
+   echo "🏗️ コンテキスト準備とエージェント起動..."
+   
+   # Create context file with infrastructure implementation information
+   context_file="/workspace/.claude/context/current-command-context.json"
+   current_time=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+   
+   # Build context JSON for infrastructure implementation
+   cat > "$context_file" <<EOF
+   {
+     "command": "implement-infra",
+     "timestamp": "$current_time",
+     "issue_numbers": [$(IFS=,; echo "${issue_numbers[*]}")],
+     "phase": "infrastructure-layer",
+     "context": {
+       "expected_outputs": [
+         "src/infrastructure/repositories/",
+         "src/infrastructure/database/",
+         "src/infrastructure/external_services/",
+         "src/infrastructure/config/"
+       ],
+       "architecture_patterns": ["Clean Architecture", "Repository Pattern", "DDD"]
+     },
+     "additional_instructions": "インフラストラクチャ層を実装してください。ドメイン層のリポジトリインターフェースの具象実装を作成し、データベースアクセスと外部サービス連携を実装してください。Clean Architectureの依存関係ルールを遵守し、インフラの詳細をドメイン層から分離してください。",
+     "special_considerations": [
+       "ドメインリポジトリインターフェース（src/domain/repositories/）の完全実装",
+       "データベース接続とトランザクション管理の設計",
+       "外部API連携とエラーハンドリングの実装",
+       "インフラテストと統合テストの作成"
+     ],
+     "custom_context": {
+       "database_integration": true,
+       "external_service_integration": true,
+       "transaction_management": true,
+       "infrastructure_testing": true
+     }
+   }
+   EOF
+   
+   echo "✅ コンテキストファイル作成完了: $context_file"
+   
+   # 🤖 Call the specialized agent with hybrid context
+   echo ""
    echo "🏗️ インフラストラクチャ実装エージェントを起動します..."
    echo "専門エージェントがリポジトリ実装と外部サービス連携を実装します"
    echo ""
    
-   # Call the specialized agent using Claude Code's Task tool
-   # The agent will handle:
-   # - Repository interface analysis and concrete implementation
-   # - Database model creation and entity mapping
-   # - Data persistence layer with SQLAlchemy or similar
-   # - Configuration management for database connections
-   # - External service integration (APIs, file systems, etc.)
-   # - Infrastructure testing and integration test setup
-   # - Transaction management and error handling
-   # - Performance optimization and connection pooling
+   # Actual Claude Code Task tool invocation with hybrid approach
+   cat <<'AGENT_CALL'
+   Task tool will be called with:
+   - subagent_type: "08-implement-infra"
+   - description: "Implement infrastructure layer with repositories and external services"
+   - prompt: |
+     インフラストラクチャ層実装タスクを実行してください。
+     
+     ## コンテキスト情報の取得
+     1. 一時コンテキスト（イシュー情報）:
+        - /workspace/.claude/context/current-command-context.json を読み込み
+     
+     2. 既存実装情報の確認:
+        - src/domain/repositories/ でリポジトリインターフェースを確認
+        - src/application/ でアプリケーション層の依存関係を確認
+        - docs/use_cases/issue-X-Y.json で現在のフェーズを確認
+     
+     ## 実行タスク
+     1. リポジトリインターフェースの分析と具象実装の作成
+     2. データベースモデルとエンティティマッピングの設計
+     3. SQLAlchemyを使用したデータ永続化層の実装
+     4. データベース接続とトランザクション管理の設定
+     5. 外部サービス統合とAPI連携の実装
+     6. 統合テストとインフラテストの作成・実行
+     7. パフォーマンス最適化と接続プールの設定
+     
+     ## 処理完了後
+     - 実装したインフラクラスのパス報告
+     - 統合テスト実行結果の報告
+     - 次のステップ（プレゼンテーション層実装）への案内
+   AGENT_CALL
    
-   # Note: In actual implementation, this would be handled by the Claude Code system
-   # when the /implement-infra command is executed. The agent integration happens
-   # automatically through the Task tool with subagent_type="08-implement-infra"
-   
-   echo "✅ インフラストラクチャ実装エージェント呼び出し完了"
-   echo "エージェントが以下の処理を実行しました:"
+   echo "✅ エージェント呼び出し設定完了"
+   echo "エージェントが以下の処理を実行します:"
+   echo "  - コンテキストファイルからのイシュー情報取得"
    echo "  - リポジトリインターフェースの分析と具象実装の作成"
    echo "  - データベースモデルとエンティティマッピングの設計"
    echo "  - SQLAlchemyを使用したデータ永続化層の実装"

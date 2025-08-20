@@ -184,28 +184,87 @@ Follow these steps:
    fi
    ```
 
-2. **Execute Vision Creation Agent**:
+2. **Context Preparation and Agent Execution**:
    ```bash
-   # 🤖 Delegate to specialized vision creation agent
+   # 🔄 Prepare context for agent (Pattern B: Hybrid approach)
+   echo "🎯 コンテキスト準備とエージェント起動..."
+   
+   # Create context file with command arguments and project information
+   context_file="/workspace/.claude/context/current-command-context.json"
+   current_time=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+   
+   # Build context JSON for vision creation
+   cat > "$context_file" <<EOF
+   {
+     "command": "create-vision",
+     "timestamp": "$current_time",
+     "project_name": "$project_name",
+     "phase": "vision-creation",
+     "context": {
+       "git_repo": $(git rev-parse --is-inside-work-tree 2>/dev/null && echo "true" || echo "false"),
+       "expected_outputs": [
+         "docs/vision/project-vision.md",
+         "docs/use_cases/core/index.md",
+         "docs/use_cases/index.md"
+       ],
+       "architecture_patterns": ["TDD", "DDD", "Layered Architecture"]
+     },
+     "additional_instructions": "プロジェクトビジョンを作成し、TDD/DDD/レイヤードアーキテクチャに基づいた開発基盤を構築してください。コアシナリオの定義とユビキタス言語の確立を重視してください。",
+     "special_considerations": [
+       "対話型の情報収集によるビジョン精緻化",
+       "bounded contextの明確な定義",
+       "Given-When-Thenシナリオの品質確保",
+       "プロジェクト全体の整合性維持"
+     ],
+     "custom_context": {
+       "interactive_mode": true,
+       "documentation_focus": "high",
+       "architecture_validation": true
+     }
+   }
+   EOF
+   
+   echo "✅ コンテキストファイル作成完了: $context_file"
+   
+   # 🤖 Call the specialized agent with hybrid context
+   echo ""
    echo "🎯 ビジョン作成エージェントを起動します..."
    echo "専門エージェントがTDD/DDD/レイヤードアーキテクチャに基づいてビジョンを作成します"
    echo ""
    
-   # Call the specialized agent using Claude Code's Task tool
-   # The agent will handle:
-   # - Interactive information gathering
-   # - Vision document creation
-   # - Core scenarios definition
-   # - Steering documents creation
-   # - Directory structure setup
-   # - Git commit with proper message
+   # Actual Claude Code Task tool invocation with hybrid approach
+   cat <<'AGENT_CALL'
+   Task tool will be called with:
+   - subagent_type: "00-create-vision"
+   - description: "Create project vision with TDD/DDD/Layered Architecture foundation"
+   - prompt: |
+     プロジェクトビジョン作成タスクを実行してください。
+     
+     ## コンテキスト情報の取得
+     1. 一時コンテキスト（引数情報）:
+        - /workspace/.claude/context/current-command-context.json を読み込み
+     
+     2. プロジェクト状況の確認:
+        - 既存のdocs/構造があれば現在の状況を確認
+        - Gitリポジトリの状態確認
+     
+     ## 実行タスク
+     1. インタラクティブな情報収集
+     2. プロジェクトビジョン文書作成
+     3. コアシナリオ定義（Given-When-Then形式）
+     4. ユビキタス言語の確立
+     5. ステアリング文書作成
+     6. 必要なディレクトリ構造の作成
+     7. Gitコミットと整合性チェック
+     
+     ## 処理完了後
+     - 作成したファイルのパスを報告
+     - 次のステップ（プロジェクト構造初期化）への案内
+   AGENT_CALL
    
-   # Note: In actual implementation, this would be handled by the Claude Code system
-   # when the /create-vision command is executed. The agent integration happens
-   # automatically through the Task tool with subagent_type="00-create-vision"
-   
-   echo "✅ ビジョン作成エージェント呼び出し完了"
-   echo "エージェントが以下の処理を実行しました:"
+   echo "✅ エージェント呼び出し設定完了"
+   echo "エージェントが以下の処理を実行します:"
+   echo "  - コンテキストファイルからのプロジェクト情報取得"
    echo "  - インタラクティブな情報収集"
    echo "  - プロジェクトビジョン文書作成"
    echo "  - コアシナリオ定義"
@@ -261,6 +320,14 @@ Follow these steps:
    fi
    
    echo "✅ エージェント実行結果検証完了"
+   
+   # Clean up context file after successful execution
+   if [[ -f "$context_file" ]]; then
+       # Archive context to execution history
+       echo "{\"timestamp\":\"$(date -Iseconds)\",\"command\":\"create-vision\",\"project\":\"$project_name\",\"status\":\"completed\"}" >> /workspace/.claude/context/execution-history.jsonl
+       rm -f "$context_file"
+       echo "📝 コンテキストを実行履歴に記録し、一時ファイルをクリーンアップしました"
+   fi
    ```
 
 4. **Display Success Summary**:

@@ -169,7 +169,9 @@ $ /evolve-scenarios user-management
 
 ## Task Details
 
-**Agent Integration Pattern - 4 Steps:**
+**🤖 Agent Integration**: This command uses the specialized `12-evolve-scenarios` agent for optimal scenario evolution and requirements adaptation.
+
+Follow these steps:
 
 1. **Pre-execution Validation**:
    ```bash
@@ -205,245 +207,142 @@ $ /evolve-scenarios user-management
    echo "✅ 前提条件確認完了: シナリオ進化準備完了"
    ```
 
-2. **Execute Specialized Agent**:
+2. **Context Preparation and Agent Execution**:
    ```bash
-   # 🤖 Call specialized agent with Task tool for scenario evolution
-   echo "🤖 専用エージェント実行中: 12-evolve-scenarios"
+   # 🔄 Prepare context for agent (Pattern B: Hybrid approach)
+   echo "🌱 コンテキスト準備とエージェント起動..."
    
-   # Build comprehensive task context
-   task_context="Scenario Evolution Request:
+   # Create context file with scenario evolution information
+   context_file="/workspace/.claude/context/current-command-context.json"
+   current_time=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
    
-   Feature: $feature_name
-   $(if [[ ${#issue_numbers[@]} -gt 0 ]]; then echo "Issues: $(printf '#%s ' "${issue_numbers[@]}")"; fi)
+   # Build context JSON for scenario evolution
+   cat > "$context_file" <<EOF
+   {
+     "command": "evolve-scenarios",
+     "timestamp": "$current_time",
+     "feature_name": "$feature_name",
+     "issue_numbers": [$(if [[ ${#issue_numbers[@]} -gt 0 ]]; then IFS=,; echo "${issue_numbers[*]}"; fi)],
+     "phase": "scenario-evolution",
+     "context": {
+       "expected_outputs": [
+         "docs/use_cases/evolved/",
+         "docs/analysis/feedback-analysis.md",
+         "docs/analysis/scenario-traceability.md"
+       ],
+       "architecture_patterns": ["Given-When-Then", "BDD", "Requirements Discovery"]
+     },
+     "additional_instructions": "スプリントフィードバックと開発で発見された要件に基づいてシナリオを進化させてください。エッジケース、エラーハンドリング、パフォーマンス、セキュリティ要件を含む新しいGiven-When-Thenシナリオを作成し、既存のビジョンとの整合性を保ってください。",
+     "special_considerations": [
+       "スプリントレトロスペクティブフィードバックの詳細分析",
+       "実装フェーズ（06-09）で発見された要件の抽出",
+       "エッジケースとエラーシナリオの体系的特定",
+       "既存ビジョンとシナリオの一貫性維持"
+     ],
+     "custom_context": {
+       "feedback_analysis": true,
+       "requirements_discovery": true,
+       "scenario_expansion": true,
+       "traceability_documentation": true
+     }
+   }
+   EOF
    
-   Request: Comprehensive scenario evolution based on feedback and requirements discovery
+   echo "✅ コンテキストファイル作成完了: $context_file"
    
-   COMPREHENSIVE TASK CHECKLIST:
+   # 🤖 Call the specialized agent with hybrid context
+   echo ""
+   echo "🌱 シナリオ進化エージェントを起動します..."
+   echo "専門エージェントがフィードバックに基づくシナリオ進化を実行します"
+   echo ""
    
-   🔴 Required Tasks:
+   # Actual Claude Code Task tool invocation with hybrid approach
+   cat <<'AGENT_CALL'
+   Task tool will be called with:
+   - subagent_type: "12-evolve-scenarios"
+   - description: "Evolve scenarios based on sprint feedback and requirements discovery"
+   - prompt: |
+     シナリオ進化タスクを実行してください。
+     
+     ## コンテキスト情報の取得
+     1. 一時コンテキスト（フィーチャー情報）:
+        - /workspace/.claude/context/current-command-context.json を読み込み
+     
+     2. 既存シナリオ情報の確認:
+        - docs/use_cases/core/ で既存コアシナリオを確認
+        - docs/analysis/ でスプリントフィードバックを確認
+        - docs/vision/ でプロジェクトビジョンとの整合性を確認
+     
+     ## 実行タスク
+     1. スプリントフィードバック分析と要件発見
+     2. エッジケースとエラーシナリオの特定
+     3. パフォーマンス・セキュリティ要件の抽出
+     4. 新しいGiven-When-Thenシナリオの作成
+     5. ドメインモデル影響評価と更新提案
+     6. 優先度・複雑度分析とスプリント計画への統合
+     7. シナリオトレーサビリティ文書の作成
+     8. ビジョン整合性の検証と品質保証
+     
+     ## 処理完了後
+     - 進化したシナリオファイルのパス報告
+     - フィードバック分析結果の要約報告
+     - 次のステップ（イシューレビュー・実装）への案内
+   AGENT_CALL
    
-   🔍 Feedback & Discovery Analysis:
-   - Review sprint retrospective feedback from completed sprint
-   - Parse development findings from implementation phases (06-09)
-   - Review GitHub issue comments for mentioned edge cases
-   - Analyze user feedback from stakeholders and end users
-   
-   📝 New Scenario Identification:
-   - Identify edge cases and boundary conditions not covered
-   - Define error scenarios for error handling and failure modes
-   - Extract performance scenarios and performance requirements
-   - Define security scenarios and authorization requirements
-   
-   📋 Given-When-Then Scenario Creation:
-   - Write new Given-When-Then scenarios for each requirement
-   - Define preconditions and system state requirements
-   - Document expected outcomes and clear success criteria
-   - Specify acceptance criteria that are testable
-   
-   🟡 Recommended Tasks:
-   
-   🏗️ Domain Impact Assessment:
-   - Assess domain model changes (entities, value objects, services)
-   - Identify new domain concepts and business terms discovered
-   - Update ubiquitous language with new terminology
-   - Assess aggregate boundaries and design impacts
-   - Identify repository changes and data access patterns
-   - Evaluate service impacts on domain and application services
-   
-   📊 Priority & Impact Analysis:
-   - Assign business priority (High/Medium/Low business value)
-   - Assess technical complexity and implementation difficulty
-   - Estimate effort for implementing each scenario
-   - Identify dependencies between scenarios and existing features
-   - Assess timeline impact on current sprint and release plans
-   - Risk assessment for implementing or deferring scenarios
-   
-   📁 Scenario Documentation Creation:
-   - Create evolved scenario files in docs/use_cases/evolved/
-   - Update scenario metadata in relevant issue-X-Y.json files
-   - Cross-reference scenarios to original requirements
-   - Document traceability between discovery source and scenarios
-   
-   🟢 Optional Tasks:
-   
-   🔗 Integration Preparation:
-   - Update sprint backlog for integration into product backlog
-   - Create GitHub issue templates for new scenarios
-   - Plan implementation sequence and optimal order
-   - Identify quick wins that can be implemented rapidly
-   - Document blockers and external dependencies
-   - Prepare stakeholder communication summary
-   
-   📈 Quality & Validation:
-   - Validate scenario completeness and requirement capture
-   - Review scenario quality (testable and clear)
-   - Validate acceptance criteria (specific and measurable)
-   - Check scenario consistency with existing vision
-   - Review test failures for revealed scenarios
-   - Document integration challenges and system interactions
-   - Identify integration scenarios for external systems
-   - Document usability scenarios and user experience requirements
-   - Add alternative flows and decision points
-   - Include error conditions and expected behavior
-   - Create implementation notes for future guidance
-   - Generate summary report for sprint planning overview
-   - Validate business alignment and value delivery
-   - Review technical feasibility and achievability
-   
-   OUTPUT REQUIREMENTS:
-   - Generate evolved scenario documents in docs/use_cases/evolved/
-   - Update metadata files with evolution tracking
-   - Create feedback analysis reports in docs/analysis/
-   - Document scenario traceability and cross-references
-   - Focus on requirements discovery and documentation only
-   - No feature implementation - documentation phase only
-   - Maintain scenario consistency with existing vision
-   - Integrate findings with sprint planning process"
-   
-   # Execute the specialized agent
-   claude_task="$task_context" \
-       claude_agent="12-evolve-scenarios" \
-       claude_working_dir="$(pwd)" \
-       claude_feature_name="$feature_name" \
-       $(if [[ ${#issue_numbers[@]} -gt 0 ]]; then echo "claude_issues=\"$(printf '%s,' "${issue_numbers[@]}" | sed 's/,$//')\""'; fi) \
-       claude --agent
-   
-   agent_exit_code=$?
-   echo "✅ 専用エージェント実行完了 (終了コード: $agent_exit_code)"
+   echo "✅ エージェント呼び出し設定完了"
+   echo "エージェントが以下の処理を実行します:"
+   echo "  - コンテキストファイルからのフィーチャー情報取得"
+   echo "  - スプリントフィードバック分析と要件発見"
+   echo "  - 新しいエッジケースとエラーシナリオ特定"
+   echo "  - Given-When-Thenシナリオ生成（発見要件）"
+   echo "  - 既存シナリオドキュメント更新"
+   echo "  - 包括的トレーサビリティ文書生成"
+   echo "  - 機能横断的シナリオ影響分析"
    ```
 
 3. **Agent Result Verification**:
    ```bash
    # 🔍 Verify agent execution results
-   echo "🔍 エージェント結果検証中..."
-   
-   verification_issues=()
+   echo "🔍 エージェント実行結果を検証中..."
    
    # Check that evolved scenarios were created
-   evolved_files=()
+   evolved_files=$(find docs/use_cases/evolved/ -name "*${feature_name}*.md" 2>/dev/null | wc -l)
+   existing_files=$(find docs/use_cases/ -name "*${feature_name}*.md" 2>/dev/null | wc -l)
    
-   # Look for evolved scenario documents
-   scenario_pattern="docs/use_cases/evolved/*${feature_name}*.md"
-   if ls $scenario_pattern 2>/dev/null | head -1 >/dev/null; then
-       scenario_files=$(ls $scenario_pattern 2>/dev/null)
-       for file in $scenario_files; do
-           evolved_files+=("$file")
-           echo "  ✅ 進化シナリオ: $(basename "$file")"
-       done
-   else
-       # Check for updated existing scenario
-       existing_pattern="docs/use_cases/*${feature_name}*.md"
-       if ls $existing_pattern 2>/dev/null | head -1 >/dev/null; then
-           existing_files=$(ls $existing_pattern 2>/dev/null)
-           for file in $existing_files; do
-               evolved_files+=("$file")
-               echo "  ✅ 既存シナリオ更新: $(basename "$file")"
-           done
-       else
-           verification_issues+=("シナリオドキュメントが見つかりません")
-       fi
-   fi
-   
-   # Check metadata update
-   if [[ -f "$metadata_file" ]] && command -v jq >/dev/null 2>&1; then
-       evolution_status=$(jq -r '.phases.scenario_evolution.evolved // false' "$metadata_file" 2>/dev/null)
-       if [[ "$evolution_status" == "true" ]]; then
-           echo "  ✅ メタデータ更新完了"
-       else
-           verification_issues+=("メタデータ更新が未確認")
-       fi
-   fi
-   
-   # Check for analysis reports
-   analysis_pattern="docs/analysis/*${feature_name}*evolution*.json"
-   if ls $analysis_pattern 2>/dev/null | head -1 >/dev/null; then
-       echo "  ✅ フィードバック分析レポート"
-   else
-       verification_issues+=("フィードバック分析レポートが見つかりません")
-   fi
-   
-   # Check agent exit code
-   if [[ $agent_exit_code -ne 0 ]]; then
-       verification_issues+=("エージェント実行エラー (終了コード: $agent_exit_code)")
-   fi
-   
-   # Report validation results
-   if [[ ${#evolved_files[@]} -eq 0 ]]; then
-       verification_issues+=("シナリオ進化ドキュメントが作成されていません")
-   fi
-   
-   if [[ ${#verification_issues[@]} -eq 0 ]]; then
-       echo "✅ エージェント結果検証完了"
-   else
-       echo "❌ エージェント結果検証で問題が発見されました:"
-       printf '  - %s\n' "${verification_issues[@]}"
+   # Validate evolution results
+   if [[ $evolved_files -eq 0 && $existing_files -eq 0 ]]; then
+       echo "❌ エージェント実行検証失敗:"
+       echo "  シナリオ進化ドキュメントが見つかりません"
        exit 1
    fi
+   
+   echo "✅ エージェント実行結果検証完了"
+   echo "  - 進化シナリオファイル: ${evolved_files}個"
+   echo "  - 更新既存ファイル: ${existing_files}個"
    ```
 
 4. **Display Success Summary**:
    ```bash
-   # 🎉 Display comprehensive success summary
+   # 📊 Display comprehensive success summary
    echo ""
    echo "🎉 シナリオ進化完了!"
-   echo ""
+   echo "====================="
+   
+   # Show summary information
    echo "📊 実行サマリー:"
    echo "  🌱 対象フィーチャー: $feature_name"
-   $(if [[ ${#issue_numbers[@]} -gt 0 ]]; then echo "  📂 関連Issues: $(printf '#%s ' "${issue_numbers[@]}")"; fi)
-   echo "  📝 進化ファイル: ${#evolved_files[@]} 個"
-   echo "  🔄 メタデータ: $metadata_file"
-   echo ""
-   
-   # Show evolved scenario files
-   echo "📁 進化したシナリオファイル:"
-   for file in "${evolved_files[@]}"; do
-       if [[ -f "$file" ]]; then
-           echo "   ✅ $file"
-       fi
-   done
-   
-   # Show evolution summary from metadata
-   if [[ -f "$metadata_file" ]] && command -v jq >/dev/null 2>&1; then
-       evolution_count=$(jq -r '.phases.scenario_evolution.evolution_count // 0' "$metadata_file" 2>/dev/null)
-       scenario_type=$(jq -r '.phases.scenario_evolution.scenario_type // "unknown"' "$metadata_file" 2>/dev/null)
-       urgency=$(jq -r '.phases.scenario_evolution.urgency // "unknown"' "$metadata_file" 2>/dev/null)
-       
-       echo ""
-       echo "🌱 シナリオ進化サマリー:"
-       echo "   📊 進化回数: $evolution_count"
-       echo "   📊 シナリオタイプ: $scenario_type"
-       echo "   📊 緊急度: $urgency"
+   if [[ -n "$issue_number" ]]; then
+       echo "  📂 関連Issue: #$issue_number"
    fi
-   
+   echo "  📝 進化ファイル: ${evolved_files}個"
+   echo "  📝 更新ファイル: ${existing_files}個"
    echo ""
-   echo "📋 次のステップ (実装・スプリント計画):"
-   if [[ ${#issue_numbers[@]} -gt 0 ]]; then
-       echo "   💡 /create-use-case $(IFS=','; echo "${issue_numbers[*]}")"
-       echo "   💡 /sprint-planning $(IFS=','; echo "${issue_numbers[*]}")"
-   else
-       echo "   💡 /sprint-planning <next-sprint-number>"
-   fi
-   echo "   💡 /use-case-status $feature_name"
-   
+   echo "📋 次のステップ:"
+   echo "   1. スプリント計画更新: /sprint-planning 次のスプリント番号"
+   echo "   2. 新規イシュー作成（必要に応じて）"
+   echo "   3. 開発サイクル実行: /create-use-case <new-issue-number>"
    echo ""
-   echo "📁 生成ファイル:"
-   for file in "${evolved_files[@]}"; do
-       echo "  📝 シナリオ: $file"
-   done
-   echo "  🔄 メタデータ: $metadata_file"
-   
-   echo ""
-   echo "🔗 関連リソース:"
-   if [[ ${#issue_numbers[@]} -gt 0 ]]; then
-       for issue_num in "${issue_numbers[@]}"; do
-           echo "   - Issue #$issue_num: gh issue view $issue_num"
-       done
-   else
-       echo "   - Feature: $feature_name"
-   fi
-   
-   echo ""
-   echo "🎯 シナリオ進化が正常に完了しました!"
+   echo "✅ シナリオ進化完了 - 継続的改善サイクル継続中!"
    ```
 
 **💡 Key Benefits of Scenario Evolution:**

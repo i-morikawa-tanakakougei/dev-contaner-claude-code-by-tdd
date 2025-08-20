@@ -112,28 +112,89 @@ Create a Given-When-Then use case specification from GitHub issues.
    echo "📋 Issues: $(printf '#%s ' "${issue_numbers[@]}")のユースケース仕様作成を開始します"
    ```
 
-2. **Execute Use Case Creation Agent**:
+2. **Context Preparation and Agent Execution**:
    ```bash
-   # 🤖 Delegate to specialized use case creation agent
+   # 🔄 Prepare context for agent (Pattern B: Hybrid approach)
+   echo "📋 コンテキスト準備とエージェント起動..."
+   
+   # Create context file with command arguments and additional instructions
+   context_file="/workspace/.claude/context/current-command-context.json"
+   
+   # Get current timestamp
+   current_time=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+   
+   # Build context JSON with flexibility for additional instructions
+   cat > "$context_file" <<EOF
+   {
+     "command": "create-use-case",
+     "timestamp": "$current_time",
+     "issue_numbers": [$(IFS=,; echo "${issue_numbers[*]}")],
+     "feature_name": "$feature_name",
+     "phase": "use-case-specification",
+     "context": {
+       "github_cli_available": $(command -v gh >/dev/null 2>&1 && echo "true" || echo "false"),
+       "expected_outputs": [
+         "docs/use_cases/issue-X-Y.md",
+         "docs/use_cases/issue-X-Y.json"
+       ]
+     },
+     "additional_instructions": "GitHub Issueから要件を抽出し、Given-When-Thenシナリオを作成してください。既存のdocs/use_cases/構造に従い、TDD/DDDプロセスに準拠した仕様を作成してください。",
+     "special_considerations": [
+       "既存のコアシナリオ（docs/use_cases/core/）との整合性確認",
+       "ユビキタス言語の一貫性維持",
+       "受け入れ条件の明確化"
+     ],
+     "custom_context": {
+       "github_issue_analysis": true,
+       "given_when_then_scenarios": true,
+       "use_case_specification": true,
+       "ubiquitous_language": true
+     }
+   }
+   EOF
+   
+   echo "✅ コンテキストファイル作成完了: $context_file"
+   
+   # 🤖 Call the specialized agent with hybrid context
+   echo ""
    echo "📋 ユースケース作成エージェントを起動します..."
    echo "専門エージェントがGitHub IssueからGiven-When-Then仕様を作成します"
    echo ""
    
-   # Call the specialized agent using Claude Code's Task tool
-   # The agent will handle:
-   # - GitHub issue analysis and requirements extraction
-   # - Given-When-Then scenario creation
-   # - Domain language and ubiquitous language establishment
-   # - Use case specification documentation
-   # - Metadata file creation and phase tracking setup
-   # - Feature branch creation and project index updates
+   # Actual Claude Code Task tool invocation with hybrid approach
+   # This will be executed by Claude Code when the command runs
+   cat <<'AGENT_CALL'
+   Task tool will be called with:
+   - subagent_type: "03-create-use-case"
+   - description: "Create use case specifications from GitHub issues"
+   - prompt: |
+     ユースケース仕様作成タスクを実行してください。
+     
+     ## コンテキスト情報の取得
+     1. 一時コンテキスト（引数情報）:
+        - /workspace/.claude/context/current-command-context.json を読み込み
+     
+     2. 既存TDD/DDDメタデータ（永続情報）の確認:
+        - docs/use_cases/index.md で実装状況を確認
+        - 該当するissue-X-Y.jsonがあれば現在のフェーズを確認
+     
+     ## 実行タスク
+     1. GitHub Issueの詳細分析と要件抽出
+     2. Given-When-Thenシナリオの作成
+     3. ドメイン言語とユビキタス言語の確立
+     4. ユースケース仕様書（.md）の生成
+     5. メタデータファイル（.json）の作成
+     6. フィーチャーブランチの作成
+     7. docs/use_cases/index.mdの更新
+     
+     ## 処理完了後
+     - 作成したファイルのパスを報告
+     - 次のステップ（domain-modeling）への案内
+   AGENT_CALL
    
-   # Note: In actual implementation, this would be handled by the Claude Code system
-   # when the /create-use-case command is executed. The agent integration happens
-   # automatically through the Task tool with subagent_type="03-create-use-case"
-   
-   echo "✅ ユースケース作成エージェント呼び出し完了"
-   echo "エージェントが以下の処理を実行しました:"
+   echo "✅ エージェント呼び出し設定完了"
+   echo "エージェントが以下の処理を実行します:"
+   echo "  - コンテキストファイルからの引数情報取得"
    echo "  - GitHub Issueの詳細分析と要件抽出"
    echo "  - Given-When-Thenシナリオの作成とドメイン言語の確立"
    echo "  - ユースケース仕様書の生成と受け入れ条件の定義"
@@ -203,6 +264,16 @@ Create a Given-When-Then use case specification from GitHub issues.
    fi
    
    echo "✅ エージェント実行結果検証完了"
+   
+   # Clean up context file after successful execution
+   if [[ -f "$context_file" ]]; then
+       # Archive context to execution history
+       if [[ -f "$context_file" ]]; then
+           echo "{\"timestamp\":\"$(date -Iseconds)\",\"command\":\"create-use-case\",\"issues\":\"${issue_numbers[*]}\",\"status\":\"completed\"}" >> /workspace/.claude/context/execution-history.jsonl
+           rm -f "$context_file"
+           echo "📝 コンテキストを実行履歴に記録し、一時ファイルをクリーンアップしました"
+       fi
+   fi
    ```
 
 4. **Display Use Case Creation Success Summary**:

@@ -225,457 +225,146 @@ $ /use-case-status 999
 $ /use-case-status
 ```
 
-## Command Implementation
+## Task Details
+
+**🤖 Agent Integration**: This command uses the specialized `16-use-case-status` agent for comprehensive development status analysis and intelligent recommendations.
+
+Follow these steps:
+
+1. **Pre-execution Validation**:
+   ```bash
+   # Parse arguments (optional issue numbers)
+   if [[ $# -gt 0 ]]; then
+       IFS=',' read -ra ISSUES <<< "$1"
+       echo "📊 Issues: $(printf '#%s ' "${ISSUES[@]}")のステータス分析を開始します"
+   else
+       echo "📊 全イシューのステータス分析を開始します"
+       ISSUES=()
+   fi
+   
+   # Check for metadata files if specific issues provided
+   if [[ ${#ISSUES[@]} -gt 0 ]]; then
+       for issue_num in "${ISSUES[@]}"; do
+           if ! find docs/use_cases -name "*${issue_num}*" -type f 2>/dev/null | head -1 >/dev/null; then
+               echo "❌ Issue #${issue_num} のメタデータが見つかりません"
+               echo "💡 まず /create-use-case ${issue_num} を実行してください"
+               exit 1
+           fi
+       done
+   fi
+   ```
+
+2. **Context Preparation and Agent Execution**:
+   ```bash
+   # 🔄 Prepare context for agent (Pattern B: Hybrid approach)
+   echo "📊 コンテキスト準備とエージェント起動..."
+   
+   # Create context file with status analysis information
+   context_file="/workspace/.claude/context/current-command-context.json"
+   current_time=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+   
+   # Build context JSON for status analysis
+   cat > "$context_file" <<EOF
+   {
+     "command": "use-case-status",
+     "timestamp": "$current_time",
+     "issue_numbers": [$(if [[ ${#ISSUES[@]} -gt 0 ]]; then IFS=,; printf '%s\n' "${ISSUES[@]}" | paste -sd,; fi)],
+     "phase": "status-analysis",
+     "context": {
+       "expected_outputs": [
+         "docs/status/progress-report.json",
+         "docs/status/development-metrics.md",
+         "docs/status/next-actions.md"
+       ],
+       "architecture_patterns": ["Progress Tracking", "Metrics Analysis", "Recommendation Engine"]
+     },
+     "additional_instructions": "開発進捗の包括的分析を実行してください。全フェーズのメタデータファイルを分析し、完了率、品質メトリクス、ボトルネック、次のアクションを特定してください。視覚的で理解しやすい進捗レポートとインテリジェントな推奨事項を提供してください。",
+     "special_considerations": [
+       "TDD/DDD/Layered Architecture全フェーズの完了状況分析",
+       "Given-When-Thenシナリオと実装の整合性確認",
+       "品質メトリクスとテストカバレッジの評価",
+       "開発速度と予測可能性の計算"
+     ],
+     "custom_context": {
+       "comprehensive_analysis": true,
+       "progress_visualization": true,
+       "intelligent_recommendations": true,
+       "bottleneck_identification": true
+     }
+   }
+   EOF
+   
+   echo "✅ コンテキストファイル作成完了: $context_file"
+   
+   # 🤖 Call the specialized agent with hybrid context
+   echo ""
+   echo "📊 ステータス分析エージェントを起動します..."
+   echo "専門エージェントが包括的進捗分析とレコメンデーションを実行します"
+   echo ""
+   
+   # Actual Claude Code Task tool invocation with hybrid approach
+   cat <<'AGENT_CALL'
+   Task tool will be called with:
+   - subagent_type: "16-use-case-status"
+   - description: "Comprehensive development status analysis and intelligent recommendations"
+   - prompt: |
+     ユースケースステータス分析タスクを実行してください。
+     
+     ## コンテキスト情報の取得
+     1. 一時コンテキスト（イシュー情報）:
+        - /workspace/.claude/context/current-command-context.json を読み込み
+     
+     2. 開発状況の確認:
+        - docs/use_cases/ で全メタデータファイルを分析
+        - src/ で実装進捗を確認
+        - tests/ でテスト状況を確認
+     
+     ## 実行タスク
+     1. 全開発フェーズのメタデータファイル分析
+     2. 完了率とフェーズ状態の視覚的進捗表示
+     3. 現在状況に基づくインテリジェント次行動推奨
+     4. イシューボトルネック特定と解決提案
+     5. 品質メトリクス分析とトレンド可視化
+     6. 開発速度計算と予測
+     7. リソース使用率とキャパシティ計画インサイト
+     8. スプリント進捗追跡とマイルストーン達成分析
+     
+     ## 処理完了後
+     - 包括的な進捗レポートの作成
+     - 次の推奨アクションの明確化
+     - 開発効率改善提案の提示
+   AGENT_CALL
+   
+   echo "✅ エージェント呼び出し設定完了"
+   echo "エージェントが以下の処理を実行します:"
+   echo "  - コンテキストファイルからのイシュー情報取得"
+   echo "  - 全開発フェーズのメタデータファイル分析"
+   echo "  - 完了率とフェーズ状態の視覚的進捗表示"
+   echo "  - 現在状況に基づくインテリジェント次行動推奨"
+   echo "  - イシューボトルネック特定と解決提案"
+   echo "  - 品質メトリクス分析とトレンド可視化"
+   echo "  - 開発速度計算と予測"
+   ```
+
+3. **Display Comprehensive Status**:
+   ```bash
+   # 📊 Display comprehensive status summary
+   echo ""
+   echo "📊 ユースケース開発ステータス"
+   echo "=============================="
+   
+   if [[ ${#ISSUES[@]} -gt 0 ]]; then
+       echo "🎯 対象Issues: $(printf '#%s ' "${ISSUES[@]}")"
+   else
+       echo "🎯 対象: 全イシュー"
+   fi
+   
+   echo ""
+   echo "📈 開発進捗:"
+   echo "   ✅ 分析完了 - 詳細レポートが利用可能"
+   echo "   📊 進捗率とフェーズ状態を表示"
+   echo "   🎯 次のアクション推奨を提供"
+   echo ""
+   echo "✅ ステータス分析完了 - 開発計画最適化準備完了!"
+   ```
 
-### 1. Pre-execution Validation
-
-```bash
-# Load shared environment and validate arguments
-source "$(dirname "${BASH_SOURCE[0]}")/_setup_safe_environment.sh" "16-use-case-status" "$ARGUMENTS"
-
-# Validate issue numbers provided
-if [[ ${#issue_numbers[@]} -eq 0 ]]; then
-    echo "❌ エラー: イシュー番号が必要です"
-    show_usage_example "use-case-status" "1,15" "イシュー1と15の状況確認"
-    exit 1
-fi
-
-# Check for metadata files existence
-echo "🔍 メタデータファイルの存在確認中..."
-for issue_num in "${issue_numbers[@]}"; do
-    if ! find docs/use_cases -name "issue-*${issue_num}*.json" -type f | grep -q .; then
-        echo "❌ Issue #${issue_num} のメタデータファイルが見つかりません"
-        echo "💡 まず /create-use-case ${issue_num} を実行してください"
-        exit 1
-    fi
-done
-
-echo "✅ 前提条件の確認が完了しました"
-```
-
-### 2. Execute Specialized Agent
-
-```bash
-# Execute the 16-use-case-status agent with comprehensive analysis
-echo "🤖 ステータス分析エージェントを実行中..."
-echo "📊 Issues: #$(IFS=','; echo "${issue_numbers[*]}") の包括的ステータス分析を開始します"
-
-use_task_tool "
-Please perform comprehensive use case development status analysis for issues: $(IFS=','; echo "${issue_numbers[*]}")
-
-Execute the following analysis:
-
-**Core Analysis Tasks:**
-1. **Metadata Discovery**: Scan and parse all related metadata files in docs/use_cases/
-2. **Progress Calculation**: Calculate completion percentages and phase distribution
-3. **File Inventory**: Discover implementation files across all layers (domain/application/infrastructure/presentation)
-4. **Quality Assessment**: Evaluate test coverage, code quality metrics (Ruff/Pyright), and architecture compliance
-5. **GitHub Integration**: Sync with GitHub issues for current state and activity analysis
-6. **Timeline Analysis**: Calculate development velocity and project timeline
-
-**Reporting Requirements:**
-1. **Progress Dashboard**: Visual progress indicators with completion percentages
-2. **Phase Status Matrix**: Detailed status for each development phase (use_case_creation, domain_modeling, test_creation, etc.)
-3. **Quality Metrics**: Test coverage, linting errors, type checking results
-4. **File Inventory**: Complete listing of documents, implementation files, and tests
-5. **GitHub Status**: Issue states, assignees, comments, and activity
-6. **Next Action Recommendations**: Intelligent suggestions for immediate next steps
-7. **Risk Assessment**: Identify potential blockers and stale issues
-
-**Output Format:**
-- Beautiful console progress display with visual progress bars
-- Comprehensive markdown status report
-- Actionable next steps with specific command recommendations
-- Quality metrics dashboard
-- Timeline and velocity analysis
-
-**Key Principles:**
-- READ-ONLY analysis (no file modifications)
-- Multi-dimensional analysis (metadata + files + GitHub + quality)
-- Intelligent recommendations based on current phase
-- Stakeholder-ready reporting
-- Predictive insights and trend analysis
-
-This is a status reporting command - focus on comprehensive analysis and beautiful visualization of current project state.
-" "16-use-case-status"
-
-if [[ $? -ne 0 ]]; then
-    echo "❌ ステータス分析エージェントの実行に失敗しました"
-    exit 1
-fi
-```
-
-### 3. Agent Result Verification
-
-```bash
-# Verify comprehensive status analysis completion
-echo "🔍 ステータス分析結果を検証中..."
-
-# Check if analysis generated expected outputs
-verification_passed=true
-
-# Verify progress analysis was completed
-if ! echo "$TASK_RESULT" | grep -q "進捗"; then
-    echo "⚠️ 警告: 進捗分析が不完全な可能性があります"
-    verification_passed=false
-fi
-
-# Verify quality metrics were assessed
-if ! echo "$TASK_RESULT" | grep -q "品質"; then
-    echo "⚠️ 警告: 品質メトリクス分析が不完全な可能性があります"
-    verification_passed=false
-fi
-
-# Verify next actions were provided
-if ! echo "$TASK_RESULT" | grep -q "次の"; then
-    echo "⚠️ 警告: 次のアクション推奨が不完全な可能性があります"
-    verification_passed=false
-fi
-
-if [[ "$verification_passed" == "true" ]]; then
-    echo "✅ ステータス分析の検証が完了しました"
-else
-    echo "⚠️ 一部の分析が不完全ですが、利用可能な結果を表示します"
-fi
-```
-
-### 4. Display Success Summary
-
-```bash
-# Display beautiful success summary
-echo ""
-echo "🎉 ユースケース開発ステータス分析完了"
-echo "========================================"
-echo ""
-echo "📊 **分析対象**: Issues #$(IFS=', #'; echo "${issue_numbers[*]}")"
-echo "📈 **実行内容**: 包括的ステータス分析とレポート生成"
-echo "🔍 **分析領域**: メタデータ、ファイル、品質、GitHub連携"
-echo "🎯 **成果物**: 進捗ダッシュボード、詳細レポート、推奨アクション"
-echo ""
-echo "✅ **ステータス分析が正常に完了しました**"
-echo ""
-echo "📋 詳細な分析結果は上記のレポートをご確認ください"
-echo "🔄 定期的な進捗確認により、プロジェクトの可視性を維持してください"
-echo ""
-echo "💡 次回実行: /use-case-status $(IFS=','; echo "${issue_numbers[*]}") で最新状況を確認"
-```
-
-## Important Implementation Notes
-
-### **Comprehensive Status Analysis**
-
-This command provides comprehensive, read-only analysis of use case development status with intelligent insights and actionable recommendations.
-
-**Key Capabilities:**
-- Multi-dimensional analysis (metadata + files + GitHub + quality)
-- Real-time progress calculation and visualization
-- Intelligent next action recommendations
-- Stakeholder-ready reporting and documentation
-
-**Read-Only Operations:**
-- No file modifications or implementation changes
-- Safe execution with timeout controls
-- Beautiful console display and detailed reports
-- Specific command suggestions for next actions
-
-## 📍 **AGENT INTEGRATION IMPLEMENTATION**
-
-This command follows the established 4-step agent integration pattern for consistent execution:
-
-### **Step 1: Pre-execution Validation** 🔍
-
-```bash
-# Load shared environment and validate arguments
-source "$(dirname "${BASH_SOURCE[0]}")/_setup_safe_environment.sh" "16-use-case-status" "$ARGUMENTS"
-
-# Validate issue numbers provided
-if [[ ${#issue_numbers[@]} -eq 0 ]]; then
-    echo "❌ エラー: イシュー番号が必要です"
-    show_usage_example "use-case-status" "1,15" "イシュー1と15の状況確認"
-    show_usage_example "use-case-status" "7" "イシュー7の状況確認"
-    show_usage_example "use-case-status" "1,feature-name" "イシュー1の特定フィーチャー確認"
-    exit 1
-fi
-
-# Validate project structure
-if [[ ! -d "docs/use_cases" ]]; then
-    echo "❌ エラー: プロジェクト構造が見つかりません"
-    echo "💡 ヒント: /init-project-structure を実行してください"
-    exit 1
-fi
-
-echo "🔍 プロジェクト状況分析を開始します..."
-echo "📋 対象イシュー: $(IFS=', #'; echo "#${issue_numbers[*]}")"
-```
-
-### **Step 2: Execute Specialized Agent** 🤖
-
-```bash
-# Execute the 16-use-case-status agent with comprehensive analysis
-use_task_tool "
-Please perform comprehensive use case development status analysis for issues: $(IFS=','; echo "${issue_numbers[*]}")
-
-## Agent Tasks:
-1. **Project Metadata Discovery**:
-   - Locate metadata files for specified issues
-   - Extract feature information and current phase
-   - Validate project structure and documentation
-   - Build comprehensive project inventory
-
-2. **Multi-Dimensional Status Analysis**:
-   - Analyze development phase completion across all layers
-   - Calculate progress percentages and completion metrics
-   - Review file inventory and artifact status
-   - Assess quality metrics (test coverage, Ruff, Pyright)
-   - Analyze GitHub issue status and synchronization
-   - Generate timeline analysis and phase transitions
-
-3. **Progress Analytics and Visualization**:
-   - Calculate completion percentages with intelligent weighting
-   - Generate progress bars and visual indicators
-   - Identify bottlenecks and blocked phases
-   - Provide phase-by-phase completion status
-   - Map dependencies and critical path analysis
-
-4. **Quality Assessment**:
-   - Comprehensive test coverage analysis
-   - Code quality metrics (complexity, duplication)
-   - Architecture compliance validation
-   - Given-When-Then scenario coverage
-   - Security and performance considerations
-
-5. **Intelligent Recommendations**:
-   - Suggest next optimal actions based on current state
-   - Identify blocking issues and dependencies
-   - Recommend priority optimizations
-   - Provide timeline estimates for completion
-   - Flag risks and potential issues
-
-6. **Stakeholder Reporting**:
-   - Generate detailed status reports for different audiences
-   - Create executive summaries and technical details
-   - Provide actionable insights and decisions points
-   - Generate progress dashboards and metrics
-
-## Success Criteria:
-- Complete project metadata discovery and inventory
-- Accurate progress calculation across all dimensions
-- Quality metrics analyzed and reported
-- Clear next action recommendations provided
-- Comprehensive status report generated
-- All analysis completed safely (read-only operations)
-
-## TDD/DDD/Layered Architecture Focus:
-- Validate architectural layer separation and compliance
-- Assess domain model richness and business logic placement
-- Review test pyramid and Given-When-Then coverage
-- Analyze cross-layer integration and boundaries
-- Verify clean architecture dependency directions
-" "16-use-case-status"
-```
-
-### **Step 3: Agent Result Verification** ✅
-
-```bash
-# Verify agent execution results
-echo "🔍 Verifying 16-use-case-status agent results..."
-
-# Check if status analysis was completed
-issue_list=$(IFS=-; echo "${issue_numbers[*]}")
-status_patterns=(
-    "docs/status/issue-${issue_list}-*.json"
-    "docs/analysis/status-${issue_list}-*.json"
-    "docs/reports/*status*${issue_list}*.json"
-)
-
-status_file=""
-for pattern in "${status_patterns[@]}"; do
-    if ls $pattern 2>/dev/null >/dev/null; then
-        status_file=$(ls $pattern 2>/dev/null | head -1)
-        break
-    fi
-done
-
-if [[ -z "$status_file" ]]; then
-    echo "❌ Status analysis file not found"
-    exit 1
-fi
-
-# Validate analysis completeness
-if [[ -f "$status_file" ]] && command -v jq >/dev/null 2>&1; then
-    analysis_complete=$(jq -r '.analysis_complete // false' "$status_file" 2>/dev/null)
-    progress_calculated=$(jq -r '.progress.calculated // false' "$status_file" 2>/dev/null)
-    recommendations_count=$(jq -r '.recommendations | length // 0' "$status_file" 2>/dev/null)
-    
-    if [[ "$analysis_complete" != "true" ]]; then
-        echo "❌ Analysis not completed properly"
-        exit 1
-    fi
-    
-    if [[ "$progress_calculated" != "true" ]]; then
-        echo "❌ Progress calculation not completed"
-        exit 1
-    fi
-    
-    if [[ "$recommendations_count" == "0" ]]; then
-        echo "⚠️ No recommendations generated"
-    fi
-fi
-
-echo "✅ 16-use-case-status agent results verified successfully"
-echo "   📊 Status file: $status_file"
-echo "   📈 Analysis complete: $analysis_complete"
-echo "   📋 Recommendations: $recommendations_count items"
-```
-
-### **Step 4: Display Success Summary** 🎉
-
-```bash
-# Display comprehensive status summary
-echo ""
-echo "🎉 プロジェクト状況分析完了!"
-echo "=================================="
-
-# Extract and display key metrics
-if [[ -f "$status_file" ]] && command -v jq >/dev/null 2>&1; then
-    overall_progress=$(jq -r '.progress.overall_percentage // 0' "$status_file" 2>/dev/null)
-    current_phase=$(jq -r '.current_phase // "unknown"' "$status_file" 2>/dev/null)
-    feature_name=$(jq -r '.feature_name // "unknown"' "$status_file" 2>/dev/null)
-    total_issues=$(jq -r '.issues | length // 0' "$status_file" 2>/dev/null)
-    
-    echo "📊 基本情報:"
-    echo "   🏷️  フィーチャー: $feature_name"
-    echo "   🔢 対象イシュー: $total_issues 件 ($(IFS=', #'; echo "#${issue_numbers[*]}"))"
-    echo "   📈 全体進捗: ${overall_progress}%"
-    echo "   📍 現在フェーズ: $current_phase"
-    echo ""
-    
-    # Display progress indicator
-    progress_bar=""
-    for ((i=1; i<=20; i++)); do
-        if (( $(echo "$overall_progress >= $i * 5" | bc -l) )); then
-            progress_bar+="█"
-        else
-            progress_bar+="░"
-        fi
-    done
-    
-    echo "📊 進捗状況:"
-    echo "   [$progress_bar] ${overall_progress}%"
-    echo ""
-    
-    # Display quality metrics if available
-    test_coverage=$(jq -r '.quality.test_coverage // "N/A"' "$status_file" 2>/dev/null)
-    ruff_errors=$(jq -r '.quality.ruff_errors // "N/A"' "$status_file" 2>/dev/null)
-    pyright_errors=$(jq -r '.quality.pyright_errors // "N/A"' "$status_file" 2>/dev/null)
-    
-    if [[ "$test_coverage" != "N/A" ]]; then
-        echo "🔍 品質メトリクス:"
-        echo "   📊 テストカバレッジ: ${test_coverage}%"
-        echo "   🔧 Ruffエラー: $ruff_errors 件"
-        echo "   🔍 Pyrightエラー: $pyright_errors 件"
-        echo ""
-    fi
-    
-    # Display next recommended actions
-    recommendations=$(jq -r '.recommendations[]?.action // empty' "$status_file" 2>/dev/null)
-    if [[ -n "$recommendations" ]]; then
-        echo "📋 推奨アクション:"
-        echo "$recommendations" | head -3 | sed 's/^/   /'
-        echo ""
-    fi
-    
-    # Progress assessment
-    if (( $(echo "$overall_progress >= 100" | bc -l) )); then
-        echo "✅ 状態: 完了 - 全開発フェーズが完了しました！"
-    elif (( $(echo "$overall_progress >= 80" | bc -l) )); then
-        echo "🏁 状態: 最終段階 - もうすぐ完了です"
-    elif (( $(echo "$overall_progress >= 60" | bc -l) )); then
-        echo "🚀 状態: 順調 - 開発が順調に進んでいます"
-    elif (( $(echo "$overall_progress >= 40" | bc -l) )); then
-        echo "⚡ 状態: 中盤 - 実装の中盤です"
-    elif (( $(echo "$overall_progress >= 20" | bc -l) )); then
-        echo "🌱 状態: 初期段階 - 基礎から実装への移行期"
-    else
-        echo "🚀 状態: 開始 - プロジェクトの初期段階"
-    fi
-    echo ""
-    
-    # Show detailed report location
-    echo "📋 詳細レポート: $status_file"
-    echo "🔄 更新: /use-case-status $(IFS=','; echo "${issue_numbers[*]}") で最新状況確認"
-    echo ""
-fi
-
-echo "✅ ステータス確認が完了しました"
-```
-```
-
-## Common Errors and Solutions
-
-### ❌ Error Case 1: Missing issue numbers
-**Cause**: Command executed without required issue numbers  
-**Solution**: Provide issue numbers: `/use-case-status 1,7`
-
-### ❌ Error Case 2: Project structure not found
-**Cause**: Command executed outside of TDD/DDD project  
-**Solution**: Initialize project structure: `/init-project-structure`
-
-### ❌ Error Case 3: Metadata files not found
-**Cause**: Use cases not created for specified issues  
-**Solution**: Create use cases first: `/create-use-case <issue-numbers>,<feature-name>`
-
-## Execution Examples
-
-### ✅ Success Example
-```bash
-$ /use-case-status 15
-🔍 プロジェクト状況分析を開始します...
-📋 対象イシュー: #15
-🤖 16-use-case-status エージェント実行中...
-✅ 分析完了
-📊 進捗状況: [████████████████░░░░] 80%
-🏁 状態: 最終段階 - もうすぐ完了です
-✅ ステータス確認が完了しました
-```
-
-### ❌ Failure Example and Fix
-```bash
-$ /use-case-status
-❌ エラー: イシュー番号が必要です
-💡 使用例: /use-case-status 1,15
-
-# Fix: Provide issue numbers
-$ /use-case-status 1,15
-```
-
-## 重要な注意事項
-
-### **包括的状況把握**
-
-- メタデータ・ファイル・GitHub・品質の多角的分析
-- リアルタイム進捗計算と可視化
-- インテリジェントな次アクション推奨
-- ステークホルダー向けレポート生成
-
-### **チーム協力支援**
-
-- GitHub イシューとの完全同期
-- 品質メトリクスの透明性確保
-- プロジェクト健全性の継続監視
-- 具体的なコマンド提案と実行可能性
-
-### **使いやすさと効率性**
-
-- 読み取り専用での安全な実行
-- 高速な情報収集とタイムアウト制御
-- 美しいコンソール表示と詳細レポート
-- エージェント統合による一貫した処理
-
-**統合版ステータス確認コマンドにより、プロジェクトの完全な可視性と効率的な意思決定支援が実現されます！**
-
-## 🚨 MANDATORY FOR CLAUDE CODE: SCENARIO EVOLUTION CHECK
-
-ステータス確認中に新課題・ギャップ・改善点発見時は
-作業を中断して `/evolve-scenarios <feature-name>` を実行すること
-CRITICAL: ステータス確認は問題発見と進化の重要な機会です

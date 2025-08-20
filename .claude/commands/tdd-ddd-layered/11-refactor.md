@@ -216,30 +216,90 @@ $ /refactor 15
    echo "🔧 Issues: $(printf '#%s ' "${issue_numbers[@]}")のリファクタリングを開始します"
    ```
 
-2. **Execute Refactoring Agent**:
+2. **Context Preparation and Agent Execution**:
    ```bash
-   # 🤖 Delegate to specialized refactoring agent
+   # 🔄 Prepare context for agent (Pattern B: Hybrid approach)
+   echo "🔧 コンテキスト準備とエージェント起動..."
+   
+   # Create context file with refactoring information
+   context_file="/workspace/.claude/context/current-command-context.json"
+   current_time=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+   
+   # Build context JSON for refactoring
+   cat > "$context_file" <<EOF
+   {
+     "command": "refactor",
+     "timestamp": "$current_time",
+     "issue_numbers": [$(IFS=,; echo "${issue_numbers[*]}")],
+     "phase": "tdd-refactor-phase",
+     "context": {
+       "expected_outputs": [
+         "docs/refactoring/code-quality-improvement.md",
+         "docs/refactoring/refactoring-report.json",
+         "refactored codebase in src/"
+       ],
+       "architecture_patterns": ["TDD", "Clean Code", "SOLID Principles"]
+     },
+     "additional_instructions": "TDD REFACTORフェーズでコード品質を改善してください。全テストをGREEN状態に保ちながら、重複コードの除去、メソッドの分割、デザインパターンの適用、パフォーマンス最適化を行ってください。リファクタリング前後でのメトリクス比較も提供してください。",
+     "special_considerations": [
+       "全テストが引き続きGREEN状態を維持すること",
+       "新機能追加は一切行わない（リファクタリングのみ）",
+       "レイヤー間の責務分離と依存関係の遵守",
+       "コード品質メトリクスの測定と改善報告"
+     ],
+     "custom_context": {
+       "tdd_refactor_phase": true,
+       "quality_improvement": true,
+       "test_preservation": true,
+       "metrics_reporting": true
+     }
+   }
+   EOF
+   
+   echo "✅ コンテキストファイル作成完了: $context_file"
+   
+   # 🤖 Call the specialized agent with hybrid context
+   echo ""
    echo "🔧 リファクタリングエージェントを起動します..."
    echo "専門エージェントがTDD REFACTOR フェーズを実行します"
    echo ""
    
-   # Call the specialized agent using Claude Code's Task tool
-   # The agent will handle:
-   # - Code quality analysis and improvement opportunities identification
-   # - Safe refactoring execution with continuous test verification
-   # - Duplication removal and design pattern application
-   # - Performance optimization and code structure improvement
-   # - Cross-layer consistency and architecture compliance
-   # - Test code refactoring and improvement
-   # - Quality metrics measurement and reporting
-   # - Documentation and commit management
+   # Actual Claude Code Task tool invocation with hybrid approach
+   cat <<'AGENT_CALL'
+   Task tool will be called with:
+   - subagent_type: "11-refactor"
+   - description: "Execute TDD REFACTOR phase with code quality improvement"
+   - prompt: |
+     TDD REFACTORフェーズのリファクタリングタスクを実行してください。
+     
+     ## コンテキスト情報の取得
+     1. 一時コンテキスト（イシュー情報）:
+        - /workspace/.claude/context/current-command-context.json を読み込み
+     
+     2. 既存コード状況の確認:
+        - src/ ディレクトリで実装済みコードを確認
+        - tests/ でテスト状況を確認
+        - docs/use_cases/issue-X-Y.json で現在のフェーズを確認
+     
+     ## 実行タスク
+     1. コード品質分析と改善機会の特定
+     2. 重複コードの除去と共通化
+     3. 長いメソッドの分割と責務の明確化
+     4. デザインパターンの適用と構造改善
+     5. 継続的テスト実行によるGREEN状態維持
+     6. パフォーマンス最適化とコード効率化
+     7. クロスレイヤー一貫性の確保
+     8. リファクタリングメトリクスの測定と報告
+     
+     ## 処理完了後
+     - リファクタリング済みコードの変更箇所報告
+     - 品質改善メトリクスの報告
+     - 次のステップ（シナリオ進化・レビュー）への案内
+   AGENT_CALL
    
-   # Note: In actual implementation, this would be handled by the Claude Code system
-   # when the /refactor command is executed. The agent integration happens
-   # automatically through the Task tool with subagent_type="11-refactor"
-   
-   echo "✅ リファクタリングエージェント呼び出し完了"
-   echo "エージェントが以下の処理を実行しました:"
+   echo "✅ エージェント呼び出し設定完了"
+   echo "エージェントが以下の処理を実行します:"
+   echo "  - コンテキストファイルからのイシュー情報取得"
    echo "  - コード品質分析と改善機会の特定"
    echo "  - 継続的テスト検証付きの安全なリファクタリング実行"
    echo "  - 重複除去とデザインパターンの適用"
@@ -247,7 +307,6 @@ $ /refactor 15
    echo "  - レイヤー間一貫性とアーキテクチャ遵守"
    echo "  - テストコードリファクタリングと改善"
    echo "  - 品質メトリクス測定とレポート作成"
-   echo "  - ドキュメント化とコミット管理"
    ```
 
 3. **Agent Result Verification**:

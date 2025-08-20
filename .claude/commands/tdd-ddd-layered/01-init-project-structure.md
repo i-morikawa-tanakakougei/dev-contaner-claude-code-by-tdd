@@ -138,16 +138,90 @@ $ /init-project-structure
    echo "✅ 前提条件確認完了: プロジェクト構造初期化準備完了"
    ```
 
-2. **Execute Specialized Agent**:
+2. **Context Preparation and Agent Execution**:
    ```bash
-   # 🤖 Delegate to specialized project structure initialization agent
+   # 🔄 Prepare context for agent (Pattern B: Hybrid approach)
+   echo "🏗️ コンテキスト準備とエージェント起動..."
+   
+   # Create context file for project structure initialization
+   context_file="/workspace/.claude/context/current-command-context.json"
+   current_time=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+   
+   # Build context JSON for project structure
+   cat > "$context_file" <<EOF
+   {
+     "command": "init-project-structure",
+     "timestamp": "$current_time",
+     "phase": "project-initialization",
+     "context": {
+       "working_directory": "$(pwd)",
+       "git_repo": $(git rev-parse --is-inside-work-tree 2>/dev/null && echo "true" || echo "false"),
+       "existing_structure": $(ls -la . 2>/dev/null | wc -l),
+       "architecture_patterns": ["TDD", "DDD", "Layered Architecture"]
+     },
+     "additional_instructions": "TDD/DDD/レイヤードアーキテクチャに基づいたプロジェクト構造を作成してください。Clean Architectureの原則に従い、依存関係の方向が適切になるようにディレクトリ構造を設計してください。",
+     "special_considerations": [
+       "既存ファイルとの競合回避",
+       "Python環境の依存関係管理",
+       "テストディレクトリの適切な配置",
+       "ドキュメント構造の初期化"
+     ],
+     "custom_context": {
+       "create_python_packages": true,
+       "setup_development_environment": true,
+       "initialize_testing_framework": true
+     }
+   }
+   EOF
+   
+   echo "✅ コンテキストファイル作成完了: $context_file"
+   
+   # 🤖 Call the specialized agent with hybrid context
+   echo ""
    echo "🏗️ プロジェクト構造初期化エージェントを起動します..."
    echo "専門エージェントがTDD/DDD/レイヤードアーキテクチャの基盤を構築します"
+   echo ""
    
-   # Note: Agent integration happens automatically through Task tool with subagent_type="01-init-project-structure"
+   # Actual Claude Code Task tool invocation with hybrid approach
+   cat <<'AGENT_CALL'
+   Task tool will be called with:
+   - subagent_type: "01-init-project-structure"
+   - description: "Initialize TDD/DDD/Layered Architecture project structure"
+   - prompt: |
+     プロジェクト構造初期化タスクを実行してください。
+     
+     ## コンテキスト情報の取得
+     1. 一時コンテキスト（環境情報）:
+        - /workspace/.claude/context/current-command-context.json を読み込み
+     
+     2. 現在のプロジェクト状況の確認:
+        - 作業ディレクトリの既存ファイル確認
+        - Gitリポジトリの状態確認
+        - 既存の設定ファイル（pyproject.toml等）の確認
+     
+     ## 実行タスク
+     1. TDD/DDD/レイヤードアーキテクチャディレクトリ構造作成
+     2. 各層の適切なディレクトリ配置（Domain/Application/Infrastructure/Presentation）
+     3. Pythonパッケージ構造の初期化
+     4. テストディレクトリとフレームワーク設定
+     5. ドキュメント構造の初期化
+     6. 開発環境設定ファイルの作成
+     
+     ## 処理完了後
+     - 作成したディレクトリ構造の報告
+     - 初期化されたファイル数の報告
+     - 次のステップ（ビジョン作成）への案内
+   AGENT_CALL
    
    agent_exit_code=$?
-   echo "✅ 専用エージェント実行完了 (終了コード: $agent_exit_code)"
+   echo "✅ エージェント呼び出し設定完了 (終了コード: $agent_exit_code)"
+   echo "エージェントが以下の処理を実行します:"
+   echo "  - コンテキストファイルからの環境情報取得"
+   echo "  - TDD/DDD/レイヤードアーキテクチャディレクトリ構造作成"
+   echo "  - Pythonパッケージ構造の初期化"
+   echo "  - テストフレームワーク設定"
+   echo "  - ドキュメント構造初期化"
+   echo "  - 開発環境設定"
    ```
 
 3. **Agent Result Verification**:
@@ -211,6 +285,14 @@ $ /init-project-structure
    # Report verification results
    if [[ ${#verification_issues[@]} -eq 0 ]]; then
        echo "✅ エージェント結果検証完了"
+       
+       # Clean up context file after successful execution
+       if [[ -f "$context_file" ]]; then
+           # Archive context to execution history
+           echo "{\"timestamp\":\"$(date -Iseconds)\",\"command\":\"init-project-structure\",\"directory\":\"$(pwd)\",\"status\":\"completed\"}" >> /workspace/.claude/context/execution-history.jsonl
+           rm -f "$context_file"
+           echo "📝 コンテキストを実行履歴に記録し、一時ファイルをクリーンアップしました"
+       fi
    else
        echo "❌ エージェント結果検証で問題が発見されました:"
        printf '  - %s\n' "${verification_issues[@]}"

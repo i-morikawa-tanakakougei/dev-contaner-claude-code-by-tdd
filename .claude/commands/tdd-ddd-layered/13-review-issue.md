@@ -200,324 +200,170 @@ $ /review-issue 15
 
 ## Task Details
 
-**Agent Integration Pattern - 4 Steps:**
+**🤖 Agent Integration**: This command uses the specialized `13-review-issue` agent for comprehensive implementation review and quality analysis.
+
+Follow these steps:
 
 1. **Pre-execution Validation**:
    ```bash
-   # 🔧 Load all safe operation functions
-   source "$(dirname "${BASH_SOURCE[0]}")/_setup_safe_environment.sh" "13-review-issue" "$ARGUMENTS"
-   
    # Validate issue number requirement
-   if [[ ${#issue_numbers[@]} -eq 0 ]]; then
+   if [[ $# -eq 0 ]]; then
        echo "エラー: 最低1つのイシュー番号が必要です"
-       show_usage_example "review-issue" "1" "単一イシューの実装レビュー"
-       show_usage_example "review-issue" "1,7" "複数イシューの実装レビュー"
-       show_usage_example "review-issue" "1,feature-name" "イシュー + フィーチャー指定"
+       echo "使用例:"
+       echo "  /review-issue 15        # 単一イシューレビュー"
+       echo "  /review-issue 15,23     # 複数イシューレビュー"
        exit 1
    fi
    
-   # Discover feature name and metadata
-   issue_list=$(IFS=-; echo "${issue_numbers[*]}")
-   if [[ ${#other_args[@]} -gt 0 ]]; then
-       feature_name="${other_args[0]}"
-   else
-       # Extract feature name from use case file
-       feature_name=$(find docs/use_cases -name "issue-${issue_list}-*.md" | head -1 | sed 's/.*issue-[0-9-]*-\(.*\)\.md$/\1/')
-       if [[ -z "$feature_name" ]]; then
-           echo "❌ エラー: フィーチャー名を特定できませんでした"
-           echo "💡 使用方法: /review-issue $issue_list,<feature-name>"
-           exit 1
+   # Parse issue numbers
+   IFS=',' read -ra ISSUES <<< "$1"
+   echo "🔍 Issues: $(printf '#%s ' "${ISSUES[@]}")の実装レビューを開始します"
+   
+   # Check implementation exists
+   implementation_found=false
+   for issue_num in "${ISSUES[@]}"; do
+       if find src/ -name "*${issue_num}*" -type f 2>/dev/null | head -1 >/dev/null; then
+           implementation_found=true
+           break
        fi
+   done
+   
+   if [[ "$implementation_found" != "true" ]]; then
+       echo "❌ 実装ファイルが見つかりません"
+       echo "💡 実装完了後にレビューを実行してください"
+       exit 1
    fi
-   
-   metadata_file="docs/use_cases/issue-${issue_list}-${feature_name}.json"
-   
-   echo "🔍 Issues: #$(IFS=' #'; echo "${issue_numbers[*]}") - ${feature_name} の実装レビューを開始します"
-   echo "✅ 前提条件確認完了: 実装レビュー準備完了"
    ```
 
-2. **Execute Specialized Agent**:
+2. **Context Preparation and Agent Execution**:
    ```bash
-   # 🤖 Call specialized agent with Task tool for implementation review
-   echo "🤖 専用エージェント実行中: 13-review-issue"
+   # 🔄 Prepare context for agent (Pattern B: Hybrid approach)
+   echo "🔍 コンテキスト準備とエージェント起動..."
    
-   # Build comprehensive task context
-   task_context="Implementation Review Request:
+   # Create context file with implementation review information
+   context_file="/workspace/.claude/context/current-command-context.json"
+   current_time=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
    
-   Issues: $(printf '#%s ' "${issue_numbers[@]}")
-   Feature: $feature_name
+   # Build context JSON for implementation review
+   cat > "$context_file" <<EOF
+   {
+     "command": "review-issue",
+     "timestamp": "$current_time",
+     "issue_numbers": [$(IFS=,; printf '%s\n' "${ISSUES[@]}" | paste -sd,)],
+     "phase": "implementation-review",
+     "context": {
+       "expected_outputs": [
+         "docs/analysis/quality-report.json",
+         "docs/analysis/architecture-review.md",
+         "docs/analysis/improvement-recommendations.md"
+       ],
+       "architecture_patterns": ["DDD", "Clean Architecture", "TDD"]
+     },
+     "additional_instructions": "実装の包括的品質レビューを実行してください。アーキテクチャ準拠性、コード品質、テストカバレッジ、Given-When-Thenトレーサビリティを詳細に分析し、改善提案を提供してください。TDDサイクル準拠性とClean Architectureの層分離も検証してください。",
+     "special_considerations": [
+       "DDD/Clean Architectureの原則遵守確認",
+       "TDD RED-GREEN-REFACTORサイクル完了検証",
+       "Given-When-Thenシナリオとテストの完全トレーサビリティ",
+       "層間依存関係と責務分離の厳密な検証"
+     ],
+     "custom_context": {
+       "architecture_compliance": true,
+       "code_quality_analysis": true,
+       "test_coverage_assessment": true,
+       "scenario_traceability": true
+     }
+   }
+   EOF
    
-   Request: Comprehensive implementation quality review and analysis
+   echo "✅ コンテキストファイル作成完了: $context_file"
    
-   COMPREHENSIVE TASK CHECKLIST:
+   # 🤖 Call the specialized agent with hybrid context
+   echo ""
+   echo "🔍 実装レビューエージェントを起動します..."
+   echo "専門エージェントが包括的品質分析を実行します"
+   echo ""
    
-   🔴 Required Tasks:
+   # Actual Claude Code Task tool invocation with hybrid approach
+   cat <<'AGENT_CALL'
+   Task tool will be called with:
+   - subagent_type: "13-review-issue"
+   - description: "Comprehensive implementation review and quality analysis"
+   - prompt: |
+     実装レビュータスクを実行してください。
+     
+     ## コンテキスト情報の取得
+     1. 一時コンテキスト（イシュー情報）:
+        - /workspace/.claude/context/current-command-context.json を読み込み
+     
+     2. 実装状況の確認:
+        - src/ ディレクトリで実装済みコードを分析
+        - tests/ でテストカバレッジとトレーサビリティを確認
+        - docs/use_cases/issue-X-Y.json で完了フェーズを確認
+     
+     ## 実行タスク
+     1. アーキテクチャ準拠性分析（DDD/Clean Architecture）
+     2. コード品質メトリクスと静的解析
+     3. テストカバレッジとGiven-When-Thenトレーサビリティ
+     4. TDDサイクル準拠性検証（RED-GREEN-REFACTOR）
+     5. 層分離と依存関係検証
+     6. ドキュメント完全性レビュー
+     7. パフォーマンスとセキュリティの基本チェック
+     8. 保守性と技術的負債の評価
+     
+     ## 処理完了後
+     - 品質レポートと改善提案の作成
+     - アーキテクチャ遵守状況の詳細報告
+     - 次のステップ（フィードバック適用・PR作成）への案内
+   AGENT_CALL
    
-   📖 Given-When-Then Specification Coverage Analysis:
-   - Map scenarios to tests: verify each Given-When-Then scenario has corresponding tests
-   - Validate scenario completeness: ensure all scenarios from issue specification are tested
-   - Check scenario accuracy: verify tests accurately implement the specified scenarios
-   - Assess acceptance criteria coverage: confirm all acceptance criteria have test validation
-   
-   🧪 Test Quality Assessment:
-   - Analyze test structure: review test organization and naming conventions
-   - Evaluate test readability: assess how clearly tests express business intent
-   - Check test isolation: verify tests run independently without side effects
-   - Validate assertion quality: ensure tests verify behavior, not just implementation
-   
-   📊 Test Coverage Analysis:
-   - Generate coverage reports: execute pytest --cov=src --cov-report=html
-   - Analyze line coverage: review code coverage percentages by layer
-   - Assess branch coverage: evaluate decision path coverage in business logic
-   - Identify coverage gaps: find critical untested code paths
-   
-   🟡 Recommended Tasks:
-   
-   🏗️ Architecture Compliance Review:
-   - Validate layer separation: ensure clean separation between domain/application/infrastructure/presentation
-   - Check dependency directions: verify dependencies point inward (Clean Architecture)
-   - Review interface segregation: assess repository interfaces and their implementations
-   - Validate domain purity: ensure domain layer has no external dependencies
-   - Check aggregate boundaries: review aggregate design and transaction boundaries
-   - Assess domain model richness: evaluate business logic placement and organization
-   
-   🎯 Domain-Driven Design Review:
-   - Validate ubiquitous language: check consistency of domain terminology across code
-   - Review entity design: assess entity identity, lifecycle, and behavior
-   - Evaluate value objects: check immutability, validation, and equality implementation
-   - Assess domain services: review complex business logic placement
-   
-   🟢 Optional Tasks:
-   
-   📀 Advanced Test Quality Assessment:
-   - Review edge case coverage: verify edge cases from scenarios are properly tested
-   - Validate error scenario testing: ensure error scenarios have corresponding failure tests
-   - Review test data quality: assess test fixtures and data setup appropriateness
-   - Check test performance: identify slow tests and performance bottlenecks
-   - Review integration coverage: assess cross-layer integration test coverage
-   - Validate e2e coverage: ensure complete user scenarios are tested
-   
-   💻 Code Quality Assessment:
-   - Run static analysis: execute ruff check src/ and analyze results
-   - Check formatting compliance: verify ruff format src/ shows no changes
-   - Validate type annotations: run pyright src/ and review type coverage
-   - Assess code complexity: identify overly complex methods and classes
-   - Review naming conventions: evaluate variable, method, and class naming clarity
-   - Check code duplication: identify and assess duplicate code patterns
-   
-   🔗 Integration Quality Review:
-   - Test repository implementations: verify data access patterns and error handling
-   - Review external service integration: assess third-party service integration patterns
-   - Validate configuration management: review environment and configuration handling
-   - Check error propagation: ensure errors are properly handled across layers
-   - Assess transaction management: review database transaction patterns
-   - Validate monitoring and logging: check observability implementation
-   
-   🌐 Presentation Layer Review:
-   - Validate API design: review REST endpoint design and HTTP status codes
-   - Check input validation: assess request validation and error response quality
-   - Review authentication/authorization: evaluate security implementation
-   - Assess response formatting: check response structure and error handling
-   - Validate API documentation: review endpoint documentation quality
-   - Check CLI usability: evaluate command-line interface user experience
-   
-   🚀 Performance and Scalability Assessment:
-   - Identify performance bottlenecks: review slow code paths and database queries
-   - Assess memory usage: check for memory leaks and inefficient data structures
-   - Review caching strategies: evaluate caching implementation where applicable
-   - Check database optimization: review query performance and indexing
-   - Assess scalability patterns: evaluate code scalability and concurrency handling
-   - Review resource management: check proper resource cleanup and disposal
-   
-   🔒 Security Review:
-   - Validate input sanitization: check protection against injection attacks
-   - Review authentication implementation: assess login/logout security
-   - Check authorization patterns: evaluate access control implementation
-   - Assess data protection: review sensitive data handling and storage
-   - Validate configuration security: check for exposed secrets or credentials
-   - Review error information disclosure: ensure errors don't leak sensitive data
-   
-   📚 Documentation Quality Review:
-   - Review code documentation: assess docstring quality and completeness
-   - Validate API documentation: check endpoint documentation accuracy
-   - Assess architecture documentation: review system design documentation
-   - Check setup instructions: validate project setup and development guides
-   - Review decision records: assess architectural decision documentation
-   - Evaluate user documentation: check end-user facing documentation
-   
-   📊 Business Value Assessment:
-   - Validate requirement fulfillment: confirm all business requirements are met
-   - Assess user experience: evaluate end-user interaction quality
-   - Review business rule implementation: verify business logic correctness
-   - Check acceptance criteria satisfaction: ensure all criteria are met
-   - Validate edge case handling: confirm proper handling of business edge cases
-   - Assess maintainability for business: evaluate ease of future business changes
-   
-   OUTPUT REQUIREMENTS:
-   - Generate comprehensive review report in docs/reviews/
-   - Update metadata files with review status and scores
-   - Create analysis artifacts in docs/analysis/
-   - Focus on quality analysis and assessment only (no code changes)
-   - Provide actionable improvement recommendations
-   - Maintain full traceability to Given-When-Then scenarios
-   - Generate multi-dimensional evaluation scores
-   
-   CRITICAL SCENARIO EVOLUTION CHECK:
-   If new issues, improvements, or requirement changes are discovered during review,
-   immediately interrupt the work and execute /evolve-scenarios <feature-name>
-   Review is a critical opportunity for quality improvement and new requirement discovery"
-   
-   # Execute the specialized agent
-   claude_task="$task_context" \
-       claude_agent="13-review-issue" \
-       claude_working_dir="$(pwd)" \
-       claude_issues="$(printf '%s,' "${issue_numbers[@]}" | sed 's/,$//')" \
-       claude_feature_name="$feature_name" \
-       claude --agent
-   
-   agent_exit_code=$?
-   echo "✅ 専用エージェント実行完了 (終了コード: $agent_exit_code)"
+   echo "✅ エージェント呼び出し設定完了"
+   echo "エージェントが以下の処理を実行します:"
+   echo "  - コンテキストファイルからのイシュー情報取得"
+   echo "  - アーキテクチャ準拠性分析"
+   echo "  - コード品質メトリクスと静的解析"
+   echo "  - テストカバレッジとGiven-When-Thenトレーサビリティ"
+   echo "  - TDD サイクル準拠性検証"
+   echo "  - 層分離と依存関係検証"
+   echo "  - ドキュメント完全性レビュー"
    ```
 
 3. **Agent Result Verification**:
    ```bash
    # 🔍 Verify agent execution results
-   echo "🔍 エージェント結果検証中..."
+   echo "🔍 エージェント実行結果を検証中..."
    
-   verification_issues=()
+   # Check that review reports were created
+   review_files=$(find docs/analysis/ -name "*review*.json" -o -name "*analysis*.md" 2>/dev/null | wc -l)
    
-   # Check that review report was generated
-   review_report_pattern="docs/reviews/*issue*${issue_list}*${feature_name}*review*.md"
-   review_reports=($(ls $review_report_pattern 2>/dev/null))
-   
-   if [[ ${#review_reports[@]} -eq 0 ]]; then
-       # Try alternative pattern
-       review_report_pattern="docs/reviews/*issue*${issue_list}*.md"
-       review_reports=($(ls $review_report_pattern 2>/dev/null))
-   fi
-   
-   if [[ ${#review_reports[@]} -eq 0 ]]; then
-       verification_issues+=("レビューレポートが作成されていません")
-   else
-       review_report="${review_reports[-1]}"  # Get most recent
-       echo "  ✅ レビューレポート: $(basename "$review_report")"
-       
-       # Verify report content completeness
-       if ! grep -q "総合スコア\|Overall Score" "$review_report"; then
-           verification_issues+=("レビューレポートに総合スコアが記載されていません")
-       fi
-       
-       if ! grep -q "アーキテクチャ\|Architecture" "$review_report"; then
-           verification_issues+=("アーキテクチャレビューが不完全です")
-       fi
-   fi
-   
-   # Check metadata update
-   if [[ -f "$metadata_file" ]] && command -v jq >/dev/null 2>&1; then
-       review_status=$(jq -r '.phases.review.reviewed // false' "$metadata_file" 2>/dev/null)
-       if [[ "$review_status" == "true" ]]; then
-           overall_score=$(jq -r '.phases.review.overall_score // "N/A"' "$metadata_file" 2>/dev/null)
-           echo "  ✅ メタデータ更新完了 (総合スコア: $overall_score/100)"
-       else
-           verification_issues+=("メタデータ更新が未確認")
-       fi
-   fi
-   
-   # Check for analysis artifacts
-   analysis_pattern="docs/analysis/*${feature_name}*review*.json"
-   if ls $analysis_pattern 2>/dev/null | head -1 >/dev/null; then
-       echo "  ✅ 分析データファイル"
-   else
-       verification_issues+=("分析データファイルが見つかりません")
-   fi
-   
-   # Check agent exit code
-   if [[ $agent_exit_code -ne 0 ]]; then
-       verification_issues+=("エージェント実行エラー (終了コード: $agent_exit_code)")
-   fi
-   
-   # Report validation results
-   if [[ ${#verification_issues[@]} -eq 0 ]]; then
-       echo "✅ エージェント結果検証完了"
-   else
-       echo "❌ エージェント結果検証で問題が発見されました:"
-       printf '  - %s\n' "${verification_issues[@]}"
+   # Validate review results
+   if [[ $review_files -eq 0 ]]; then
+       echo "❌ エージェント実行検証失敗:"
+       echo "  レビューレポートが見つかりません"
        exit 1
    fi
+   
+   echo "✅ エージェント実行結果検証完了"
+   echo "  - レビューレポート: ${review_files}個"
    ```
 
 4. **Display Success Summary**:
    ```bash
-   # 🎉 Display comprehensive success summary
+   # 📊 Display comprehensive success summary
    echo ""
    echo "🎉 実装レビュー完了!"
-   echo ""
-   echo "📊 実行サマリー:"
-   echo "  📂 対象Issues: $(printf '#%s ' "${issue_numbers[@]}")"
-   echo "  🏷️ フィーチャー: $feature_name"
-   echo "  📝 生成レポート: $review_report"
-   echo "  🔄 メタデータ: $metadata_file"
-   echo ""
+   echo "==================="
    
-   # Show review summary
-   if [[ -f "$metadata_file" ]] && command -v jq >/dev/null 2>&1; then
-       overall_score=$(jq -r '.phases.review.overall_score // "N/A"' "$metadata_file" 2>/dev/null)
-       completeness_score=$(jq -r '.phases.review.completeness_score // "N/A"' "$metadata_file" 2>/dev/null)
-       architecture_score=$(jq -r '.phases.review.architecture_score // "N/A"' "$metadata_file" 2>/dev/null)
-       quality_score=$(jq -r '.phases.review.quality_score // "N/A"' "$metadata_file" 2>/dev/null)
-       scenario_score=$(jq -r '.phases.review.scenario_score // "N/A"' "$metadata_file" 2>/dev/null)
-       
-       echo "🔍 レビューサマリー:"
-       echo "   📊 総合スコア: $overall_score/100"
-       echo "   📊 成果物完成度: $completeness_score/100"
-       echo "   📊 アーキテクチャ: $architecture_score/100"
-       echo "   📊 コード品質: $quality_score/100"
-       echo "   📊 シナリオ実装: $scenario_score/100"
-       
-       # Show quality status
-       if [[ "$overall_score" != "N/A" ]]; then
-           if (( $(echo "$overall_score >= 80" | bc -l 2>/dev/null || echo "0") )); then
-               echo "   ✅ 評価: 優秀 - 本番展開準備完了"
-               next_step="/create-pr ${issue_numbers[*]}"
-           elif (( $(echo "$overall_score >= 70" | bc -l 2>/dev/null || echo "0") )); then
-               echo "   ⚠️ 評価: 良好 - 軽微な改善推奨"
-               next_step="/apply-feedback ${issue_numbers[*]}"
-           elif (( $(echo "$overall_score >= 60" | bc -l 2>/dev/null || echo "0") )); then
-               echo "   📋 評価: 要改善 - フィードバック対応必須"
-               next_step="/apply-feedback ${issue_numbers[*]}"
-           else
-               echo "   ❌ 評価: 不十分 - 包括的改善が必要"
-               next_step="/apply-feedback ${issue_numbers[*]}"
-           fi
-       else
-           next_step="/apply-feedback ${issue_numbers[*]}"
-       fi
-   else
-       next_step="/apply-feedback ${issue_numbers[*]}"
-   fi
-   
+   # Show summary information
+   echo "📊 レビューサマリー:"
+   echo "  🔍 対象Issues: $(printf '#%s ' "${ISSUES[@]}")"
+   echo "  📝 レビューレポート: ${review_files}個"
    echo ""
    echo "📋 次のステップ:"
-   echo "   💡 $next_step"
-   echo "   💡 /use-case-status $(IFS=','; echo "${issue_numbers[*]}")"
-   
+   echo "   1. フィードバック適用: /apply-feedback $1"
+   echo "   2. プルリクエスト作成: /create-pr $1"
+   echo "   3. ステータス確認: /use-case-status"
    echo ""
-   echo "📁 生成ファイル:"
-   echo "  📝 レビューレポート: $review_report"
-   echo "  🔄 メタデータ: $metadata_file"
-   if ls docs/analysis/*${feature_name}*review*.json 2>/dev/null | head -1 >/dev/null; then
-       analysis_file=$(ls docs/analysis/*${feature_name}*review*.json 2>/dev/null | head -1)
-       echo "  📊 分析データ: $analysis_file"
-   fi
-   
-   echo ""
-   echo "🔗 関連リソース:"
-   for issue_num in "${issue_numbers[@]}"; do
-       echo "   - Issue #$issue_num: gh issue view $issue_num"
-   done
-   
-   echo ""
-   echo "🎯 実装レビューが正常に完了しました!"
+   echo "✅ 実装レビュー完了 - フィードバック適用準備完了!"
    ```
 
 **💡 Key Benefits of Implementation Review:**

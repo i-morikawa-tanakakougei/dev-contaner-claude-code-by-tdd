@@ -139,36 +139,96 @@ Implement domain layer to make tests pass (TDD GREEN phase).
    fi
    ```
 
-2. **Execute Domain Implementation Agent**:
+2. **Context Preparation and Agent Execution**:
    ```bash
-   # 🤖 Delegate to specialized domain implementation agent
+   # 🔄 Prepare context for agent (Pattern B: Hybrid approach)
+   echo "🏗️ コンテキスト準備とエージェント起動..."
+   
+   # Create context file with domain implementation information
+   context_file="/workspace/.claude/context/current-command-context.json"
+   current_time=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+   
+   # Build context JSON for domain implementation
+   cat > "$context_file" <<EOF
+   {
+     "command": "implement-domain",
+     "timestamp": "$current_time",
+     "issue_numbers": [$(IFS=,; echo "${issue_numbers[*]}")],
+     "phase": "tdd-green-phase",
+     "context": {
+       "expected_outputs": [
+         "src/domain/entities/",
+         "src/domain/value_objects/",
+         "src/domain/services/",
+         "src/domain/repositories/"
+       ],
+       "architecture_patterns": ["TDD", "DDD", "Clean Architecture"]
+     },
+     "additional_instructions": "TDD GREENフェーズでドメイン層を実装してください。失敗テストを分析し、最小限のコードで全てのテストを成功させる実装を行ってください。ドメインの純粋性を保ち、ビジネスルールと不変条件をドメイン層に適切に配置してください。",
+     "special_considerations": [
+       "失敗テスト（tests/domain/）の詳細分析と要件抽出",
+       "ドメインモデル設計（docs/domain/issue-X-Y.md）との完全一致",
+       "ドメイン純粋性の維持（インフラ依存なし）",
+       "エンティティと値オブジェクトの不変条件の実装"
+     ],
+     "custom_context": {
+       "tdd_green_phase": true,
+       "domain_purity": true,
+       "business_rules_focus": true,
+       "test_driven_implementation": true
+     }
+   }
+   EOF
+   
+   echo "✅ コンテキストファイル作成完了: $context_file"
+   
+   # 🤖 Call the specialized agent with hybrid context
+   echo ""
    echo "🏗️ ドメイン実装エージェントを起動します..."
    echo "専門エージェントがTDD GREEN段階のドメイン層を実装します"
    echo ""
    
-   # Call the specialized agent using Claude Code's Task tool
-   # The agent will handle:
-   # - Failing test analysis
-   # - Domain model design review
-   # - Domain layer implementation (entities, value objects, domain services)
-   # - Repository interface definition
-   # - Business rule implementation
-   # - Test execution and verification
-   # - Metadata updates and git commit
+   # Actual Claude Code Task tool invocation with hybrid approach
+   cat <<'AGENT_CALL'
+   Task tool will be called with:
+   - subagent_type: "06-implement-domain"
+   - description: "Implement domain layer following TDD GREEN phase and DDD principles"
+   - prompt: |
+     ドメイン層実装タスクを実行してください。
+     
+     ## コンテキスト情報の取得
+     1. 一時コンテキスト（イシュー情報）:
+        - /workspace/.claude/context/current-command-context.json を読み込み
+     
+     2. 既存TDD/DDD情報の確認:
+        - tests/domain/test_issue_X_Y.py で失敗テストを分析
+        - docs/domain/issue-X-Y.md でドメインモデル設計を確認
+        - docs/use_cases/issue-X-Y.json で現在のフェーズを確認
+     
+     ## 実行タスク
+     1. 失敗テストの分析とドメイン要件の抽出
+     2. ドメインエンティティとビジネスルールの実装
+     3. 値オブジェクトと不変条件の実装
+     4. ドメインサービスと複雑ビジネスロジックの実装
+     5. リポジトリインターフェースの定義
+     6. テスト実行とGREEN状態の確認
+     7. ドメイン純粋性の検証
+     
+     ## 処理完了後
+     - 実装したドメインクラスのパス報告
+     - テスト成功（GREEN）状態の確認報告
+     - 次のステップ（アプリケーション層実装）への案内
+   AGENT_CALL
    
-   # Note: In actual implementation, this would be handled by the Claude Code system
-   # when the /implement-domain command is executed. The agent integration happens
-   # automatically through the Task tool with subagent_type="06-implement-domain"
-   
-   echo "✅ ドメイン実装エージェント呼び出し完了"
-   echo "エージェントが以下の処理を実行しました:"
+   echo "✅ エージェント呼び出し設定完了"
+   echo "エージェントが以下の処理を実行します:"
+   echo "  - コンテキストファイルからのイシュー情報取得"
    echo "  - 失敗テストの分析とドメイン要件の抽出"
    echo "  - ドメインエンティティとビジネスルールの実装"
    echo "  - 値オブジェクトと不変条件の実装"
    echo "  - ドメインサービスと複雑ビジネスロジックの実装"
    echo "  - リポジトリインターフェースの定義"
    echo "  - テスト実行とGREEN状態の確認"
-   echo "  - メタデータ更新とGitコミット"
    ```
 
 3. **Agent Result Verification**:

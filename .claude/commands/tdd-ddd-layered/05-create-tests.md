@@ -135,32 +135,95 @@ Create TDD tests based on Given-When-Then specifications and domain model.
    echo "🧪 Issues: $(printf '#%s ' "${issue_numbers[@]}")のTDDテスト作成を開始します（RED phase）"
    ```
 
-2. **Execute Test Creation Agent**:
+2. **Context Preparation and Agent Execution**:
    ```bash
-   # 🤖 Delegate to specialized test creation agent
+   # 🔄 Prepare context for agent (Pattern B: Hybrid approach)
+   echo "🧪 コンテキスト準備とエージェント起動..."
+   
+   # Create context file with TDD test creation information
+   context_file="/workspace/.claude/context/current-command-context.json"
+   current_time=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+   
+   # Build context JSON for TDD test creation
+   cat > "$context_file" <<EOF
+   {
+     "command": "create-tests",
+     "timestamp": "$current_time",
+     "issue_numbers": [$(IFS=,; echo "${issue_numbers[*]}")],
+     "feature_name": "$feature_name",
+     "phase": "tdd-red-phase",
+     "context": {
+       "expected_outputs": [
+         "tests/domain/test_issue_X_Y.py",
+         "tests/application/test_issue_X_Y.py",
+         "tests/integration/test_issue_X_Y.py"
+       ],
+       "architecture_patterns": ["TDD", "DDD", "Clean Architecture"]
+     },
+     "additional_instructions": "TDD REDフェーズの失敗テストを作成してください。Given-When-Thenシナリオを適切なテストケースに変換し、ドメイン駆動の原則に従ったテスト構造を設計してください。外部依存関係は適切にモック化し、テストの独立性を保証してください。",
+     "special_considerations": [
+       "既存のユースケース仕様（docs/use_cases/issue-X-Y.md）の完全なカバレッジ",
+       "ドメインモデル（docs/domain/issue-X-Y.md）との整合性確認",
+       "TDD REDフェーズの確実な実行（全テスト失敗状態）",
+       "テストデータとモックの適切な設計"
+     ],
+     "custom_context": {
+       "tdd_red_phase": true,
+       "domain_driven_tests": true,
+       "mock_external_dependencies": true,
+       "test_independence": true
+     }
+   }
+   EOF
+   
+   echo "✅ コンテキストファイル作成完了: $context_file"
+   
+   # 🤖 Call the specialized agent with hybrid context
+   echo ""
    echo "🧪 TDDテスト作成エージェントを起動します..."
-   echo "専門エージェントがTDD RED段階の失敗テストを作成します"
+   echo "専門エージェントがTDD RED フェーズの失敗テストを作成します"
    echo ""
    
-   # Call the specialized agent using Claude Code's Task tool
-   # The agent will handle:
-   # - Use case specification analysis
-   # - Domain model review
-   # - Failing test creation (RED phase)
-   # - Test structure organization
-   # - Prerequisites validation
-   # - Test execution and failure verification
-   # - Metadata updates and git commit
+   # Actual Claude Code Task tool invocation with hybrid approach
+   cat <<'AGENT_CALL'
+   Task tool will be called with:
+   - subagent_type: "05-create-tests"
+   - description: "Create failing tests for TDD RED phase following DDD principles"
+   - prompt: |
+     TDD テスト作成タスクを実行してください。
+     
+     ## コンテキスト情報の取得
+     1. 一時コンテキスト（イシュー情報）:
+        - /workspace/.claude/context/current-command-context.json を読み込み
+     
+     2. 既存TDD/DDD情報の確認:
+        - docs/use_cases/issue-X-Y.md でユースケース仕様を確認
+        - docs/domain/issue-X-Y.md でドメインモデルを確認
+        - docs/use_cases/issue-X-Y.json で現在のフェーズを確認
+     
+     ## 実行タスク
+     1. ユースケース仕様の分析とテストシナリオの抽出
+     2. Given-When-Thenシナリオのテストケースへの変換
+     3. ドメイン駆動のテスト構造とファイル編成の作成
+     4. 外部依存関係のモック・スタブ設定
+     5. テストデータ準備とテストヘルパーユーティリティの作成
+     6. TDD REDフェーズの検証（全テスト失敗確認）
+     
+     ## 処理完了後
+     - 作成したテストファイルのパス報告
+     - テストケース数と失敗確認の報告
+     - 次のステップ（ドメイン実装）への案内
+   AGENT_CALL
    
-   # Note: In actual implementation, this would be handled by the Claude Code system
-   # when the /create-tests command is executed. The agent integration happens
-   # automatically through the Task tool with subagent_type="05-create-tests"
-   
-   echo "✅ TDDテスト作成エージェント呼び出し完了"
-   echo "エージェントが以下の処理を実行しました:"
-   echo "  - ユースケース仕様の解析とGiven-When-Thenシナリオのテスト化"
-   echo "  - ドメインモデルを反映したエンティティ/値オブジェクトテスト作成"
-   echo "  - アプリケーションサービスのユースケーステスト作成"
+   echo "✅ エージェント呼び出し設定完了"
+   echo "エージェントが以下の処理を実行します:"
+   echo "  - コンテキストファイルからのイシュー情報取得"
+   echo "  - ユースケース仕様の分析とテストシナリオの抽出"
+   echo "  - Given-When-Thenシナリオのテストケースへの変換"
+   echo "  - ドメイン駆動のテスト構造とファイル編成の作成"
+   echo "  - 外部依存関係のモック・スタブ設定"
+   echo "  - テストデータ準備とテストヘルパーユーティリティの作成"
+   echo "  - TDD REDフェーズの検証（全テスト失敗確認）"
    echo "  - 失敗テストの実行確認（TDD RED段階）"
    echo "  - メタデータ更新とGitコミット"
    ```
@@ -213,6 +276,14 @@ Create TDD tests based on Given-When-Then specifications and domain model.
    fi
    
    echo "✅ エージェント実行結果検証完了"
+   
+   # Clean up context file after successful execution
+   if [[ -f "$context_file" ]]; then
+       # Archive context to execution history
+       echo "{\"timestamp\":\"$(date -Iseconds)\",\"command\":\"create-tests\",\"issues\":\"${issue_numbers[*]}\",\"status\":\"completed\"}" >> /workspace/.claude/context/execution-history.jsonl
+       rm -f "$context_file"
+       echo "📝 コンテキストを実行履歴に記録し、一時ファイルをクリーンアップしました"
+   fi
    ```
 
 4. **Display TDD RED Phase Success Summary**:
