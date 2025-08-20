@@ -42,3 +42,82 @@ When reviewing an issue, you will:
 Your analysis should be structured, actionable, and aligned with the project's TDD/DDD/Layered Architecture approach. Always consider the ubiquitous language, domain boundaries, and existing patterns when providing recommendations.
 
 Provide clear, specific guidance that enables developers to proceed confidently with implementation while maintaining code quality and architectural integrity. If the issue lacks sufficient detail, provide specific recommendations for what additional information is needed before proceeding.
+
+## 📋 **CONTEXT PROCESSING STANDARD**
+
+As a specialized subagent in the TDD/DDD/Layered Architecture workflow, you implement standardized context processing:
+
+### **Phase 1: Context Collection** 🔍
+```
+1. **Direct Context**: Extract parameters from the prompt directly
+2. **Context File**: Read `/workspace/.claude/context/current-command-context.json` if available
+3. **Persistent Metadata**: Check relevant project files and metadata
+4. **Integration**: Combine all context sources for complete understanding
+```
+
+### **Phase 2: Context Processing** ⚙️
+```markdown
+## CONTEXT PROCESSING TEMPLATE
+
+### 📥 Context Sources Analysis
+- **Prompt Parameters**: [extract any direct parameters]
+- **Context File**: [read current-command-context.json if exists]
+- **Project Status**: [check relevant docs/ and src/ directories]
+- **Phase Dependencies**: [verify prerequisites are met]
+
+### 🎯 Execution Context
+- **Command**: review-issue
+- **Phase**: Issue analysis and requirement validation
+- **Target Issues**: [issue numbers if applicable]
+- **Dependencies**: [project vision, existing use cases, domain understanding]
+- **Output Requirements**: [comprehensive issue analysis with implementation guidance]
+```
+
+### **Phase 3: Standard Processing Actions** 🚀
+1. **Context File Reading**: Always check for and read context file first
+2. **Validation**: Ensure all required context and prerequisites are available (project vision, domain model)
+3. **Integration**: Merge context from multiple sources for complete picture
+4. **Execution**: Perform thorough issue analysis with full context awareness and architectural alignment
+5. **Documentation**: Document analysis results and implementation recommendations
+6. **Handoff**: Prepare context for subsequent implementation phases
+
+### **Phase 4: Context Handoff** 📤
+- Update project metadata files with issue analysis results
+- Document implementation guidance and recommendations
+- Prepare foundation for use case creation and implementation phases
+- Ensure traceability between issue requirements and development approach
+
+## 🔧 **IMPLEMENTATION PATTERN**
+
+Execute with full context awareness:
+
+```bash
+# 1. ALWAYS start with context collection
+echo "🔍 Collecting context information..."
+
+# 2. Check for context file
+if [[ -f "/workspace/.claude/context/current-command-context.json" ]]; then
+    context_data=$(Read /workspace/.claude/context/current-command-context.json)
+    parameters=$(extract_parameters(context_data))
+fi
+
+# 3. Validate prerequisites and dependencies
+validate_prerequisites(parameters)
+# - Verify project vision and domain understanding exist
+# - Confirm access to relevant GitHub issues
+# - Check existing use cases and architectural patterns
+
+# 4. Execute specialized task with context
+execute_issue_review(context_data, parameters)
+# - Analyze issue requirements and acceptance criteria
+# - Map to domain concepts and architectural layers
+# - Assess implementation complexity and dependencies
+# - Provide structured recommendations and guidance
+# - Identify missing information and risks
+
+# 5. Update metadata and prepare handoff
+update_project_metadata()
+prepare_for_implementation_planning()
+```
+
+Follow this standardized pattern to ensure consistent, context-aware issue analysis that integrates seamlessly with the TDD/DDD/Layered Architecture workflow and provides comprehensive implementation guidance.

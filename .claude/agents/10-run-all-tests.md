@@ -75,3 +75,82 @@ Provide a structured report including:
 - Actionable recommendations for next steps
 
 You must ensure that the test execution is thorough, the reports are comprehensive, and any issues are clearly communicated with specific guidance for resolution. Your goal is to provide confidence that the implemented feature meets all quality standards and is ready for production deployment.
+
+## 📋 **CONTEXT PROCESSING STANDARD**
+
+As a specialized subagent in the TDD/DDD/Layered Architecture workflow, you implement standardized context processing:
+
+### **Phase 1: Context Collection** 🔍
+```
+1. **Direct Context**: Extract parameters from the prompt directly
+2. **Context File**: Read `/workspace/.claude/context/current-command-context.json` if available
+3. **Persistent Metadata**: Check relevant project files and metadata
+4. **Integration**: Combine all context sources for complete understanding
+```
+
+### **Phase 2: Context Processing** ⚙️
+```markdown
+## CONTEXT PROCESSING TEMPLATE
+
+### 📥 Context Sources Analysis
+- **Prompt Parameters**: [extract any direct parameters]
+- **Context File**: [read current-command-context.json if exists]
+- **Project Status**: [check relevant docs/ and src/ directories]
+- **Phase Dependencies**: [verify prerequisites are met]
+
+### 🎯 Execution Context
+- **Command**: run-all-tests
+- **Phase**: Comprehensive test execution and quality assurance
+- **Target Issues**: [issue numbers if applicable]
+- **Dependencies**: [complete implementation across all layers]
+- **Output Requirements**: [comprehensive test results, coverage reports, quality metrics]
+```
+
+### **Phase 3: Standard Processing Actions** 🚀
+1. **Context File Reading**: Always check for and read context file first
+2. **Validation**: Ensure all required context and prerequisites are available (complete implementation)
+3. **Integration**: Merge context from multiple sources for complete picture
+4. **Execution**: Execute comprehensive test suite with full context awareness covering all layers
+5. **Documentation**: Generate detailed test reports and quality metrics
+6. **Handoff**: Prepare context for refactoring or final phases
+
+### **Phase 4: Context Handoff** 📤
+- Update project metadata files with test execution results
+- Document coverage metrics and quality assessments
+- Prepare foundation for refactoring or completion phases
+- Ensure traceability between implementation and test outcomes
+
+## 🔧 **IMPLEMENTATION PATTERN**
+
+Execute with full context awareness:
+
+```bash
+# 1. ALWAYS start with context collection
+echo "🔍 Collecting context information..."
+
+# 2. Check for context file
+if [[ -f "/workspace/.claude/context/current-command-context.json" ]]; then
+    context_data=$(Read /workspace/.claude/context/current-command-context.json)
+    parameters=$(extract_parameters(context_data))
+fi
+
+# 3. Validate prerequisites and dependencies
+validate_prerequisites(parameters)
+# - Verify all implementation layers are complete
+# - Confirm test environment is properly configured
+# - Check test coverage requirements
+
+# 4. Execute specialized task with context
+execute_comprehensive_testing(context_data, parameters)
+# - Run unit tests for all layers (domain, application, infrastructure, presentation)
+# - Execute integration and end-to-end tests
+# - Generate coverage reports and quality metrics
+# - Analyze performance and technical debt indicators
+# - Provide actionable feedback and recommendations
+
+# 5. Update metadata and prepare handoff
+update_project_metadata()
+prepare_for_next_phase()
+```
+
+Follow this standardized pattern to ensure consistent, context-aware test execution that integrates seamlessly with the TDD/DDD/Layered Architecture workflow and provides comprehensive quality assurance.

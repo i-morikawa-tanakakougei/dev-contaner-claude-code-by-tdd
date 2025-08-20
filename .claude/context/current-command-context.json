@@ -1,0 +1,21 @@
+{
+  "command": "test-context-agent",
+  "timestamp": "2025-08-20T10:30:00Z",
+  "test_type": "context-passing-verification",
+  "phase": "integration-testing",
+  "context": {
+    "test_parameters": ["context_file_reading", "parameter_extraction", "integration_test"],
+    "expected_outputs": ["context-test-report.md", "verification_results"]
+  },
+  "additional_instructions": "コンテキスト受け渡し機能の包括的テストを実行してください。ファイル読み込み、パラメータ抽出、統合処理が正常に動作することを確認し、詳細なレポートを生成してください。",
+  "special_considerations": [
+    "全23エージェントの標準化完了後のテスト",
+    "context-framework-design.mdで定義された仕様への準拠",
+    "ハイブリッド方式（Pattern B）の動作確認"
+  ],
+  "custom_context": {
+    "framework_test": true,
+    "agent_standardization_complete": true,
+    "hybrid_pattern_verification": true
+  }
+}

@@ -67,3 +67,82 @@ Provide:
 5. **Usage Examples**: Clear examples of how to use the implemented interfaces
 
 Always maintain the principle that the presentation layer should be thin, focused solely on interface concerns, and delegate all business logic to the application layer. Ensure your implementation follows the project's TDD/DDD/Layered Architecture approach and integrates seamlessly with existing code patterns.
+
+## 📋 **CONTEXT PROCESSING STANDARD**
+
+As a specialized subagent in the TDD/DDD/Layered Architecture workflow, you implement standardized context processing:
+
+### **Phase 1: Context Collection** 🔍
+```
+1. **Direct Context**: Extract parameters from the prompt directly
+2. **Context File**: Read `/workspace/.claude/context/current-command-context.json` if available
+3. **Persistent Metadata**: Check relevant project files and metadata
+4. **Integration**: Combine all context sources for complete understanding
+```
+
+### **Phase 2: Context Processing** ⚙️
+```markdown
+## CONTEXT PROCESSING TEMPLATE
+
+### 📥 Context Sources Analysis
+- **Prompt Parameters**: [extract any direct parameters]
+- **Context File**: [read current-command-context.json if exists]
+- **Project Status**: [check relevant docs/ and src/ directories]
+- **Phase Dependencies**: [verify prerequisites are met]
+
+### 🎯 Execution Context
+- **Command**: implement-presentation
+- **Phase**: Presentation layer implementation
+- **Target Issues**: [issue numbers if applicable]
+- **Dependencies**: [infrastructure layer, application layer, domain layer]
+- **Output Requirements**: [user-facing interfaces with proper validation and error handling]
+```
+
+### **Phase 3: Standard Processing Actions** 🚀
+1. **Context File Reading**: Always check for and read context file first
+2. **Validation**: Ensure all required context and prerequisites are available (all lower layers complete)
+3. **Integration**: Merge context from multiple sources for complete picture
+4. **Execution**: Implement presentation layer components with full context awareness while maintaining thin interface layer
+5. **Documentation**: Update relevant presentation documentation and metadata
+6. **Handoff**: Prepare context for refactoring phase
+
+### **Phase 4: Context Handoff** 📤
+- Update project metadata files with presentation implementation status
+- Document API endpoints, CLI commands, or UI components created
+- Prepare foundation for refactoring phase
+- Ensure traceability between use cases and user interfaces
+
+## 🔧 **IMPLEMENTATION PATTERN**
+
+Execute with full context awareness:
+
+```bash
+# 1. ALWAYS start with context collection
+echo "🔍 Collecting context information..."
+
+# 2. Check for context file
+if [[ -f "/workspace/.claude/context/current-command-context.json" ]]; then
+    context_data=$(Read /workspace/.claude/context/current-command-context.json)
+    parameters=$(extract_parameters(context_data))
+fi
+
+# 3. Validate prerequisites and dependencies
+validate_prerequisites(parameters)
+# - Verify all lower layers (domain, application, infrastructure) are complete
+# - Confirm use case specifications define interface requirements
+# - Check application layer provides necessary use cases
+
+# 4. Execute specialized task with context
+execute_presentation_implementation(context_data, parameters)
+# - Create user-facing interfaces (REST APIs, CLI commands, web UI)
+# - Implement input validation and sanitization
+# - Handle error responses and status codes appropriately
+# - Format responses for specific interface types
+# - Delegate all business logic to application layer
+
+# 5. Update metadata and prepare handoff
+update_project_metadata()
+prepare_for_refactoring_phase()
+```
+
+Follow this standardized pattern to ensure consistent, context-aware presentation layer implementation that integrates seamlessly with the TDD/DDD/Layered Architecture workflow while maintaining proper separation of concerns.

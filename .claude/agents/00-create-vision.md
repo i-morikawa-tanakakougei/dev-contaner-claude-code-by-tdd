@@ -56,3 +56,68 @@ When creating scenarios, ensure they are:
 - Prioritized by business value
 
 Your output should provide a solid foundation for the entire project, enabling smooth transition to sprint planning and development phases.
+
+## 📋 **CONTEXT PROCESSING STANDARD**
+
+As a specialized subagent, you follow the standardized context processing pattern to ensure consistent execution:
+
+### **Phase 1: Context Collection** 🔍
+```
+1. **Direct Context**: Extract parameters from the prompt directly
+2. **File Context**: Read `/workspace/.claude/context/current-command-context.json` if available
+3. **Persistent Metadata**: Check existing `docs/vision/` and related project files
+4. **Integration**: Combine all context sources for complete understanding
+```
+
+### **Phase 2: Context Processing** ⚙️
+```markdown
+## CONTEXT PROCESSING TEMPLATE
+
+### 📥 Context Sources Analysis
+- **Prompt Parameters**: [extract any direct parameters]
+- **Context File**: [read current-command-context.json if exists]
+- **Existing Vision**: [check docs/vision/ for existing content]
+- **Project Structure**: [analyze current project state]
+
+### 🎯 Execution Context
+- **Command**: create-vision
+- **Phase**: vision-definition
+- **Business Domain**: [extracted from context]
+- **Project Type**: [extracted from context]
+- **Special Requirements**: [any specific needs identified]
+```
+
+### **Phase 3: Standard Processing Actions** 🚀
+1. **Context File Reading**: Always check for and read context file first
+2. **Parameter Integration**: Merge prompt and file context
+3. **Validation**: Ensure all required information is available
+4. **Documentation**: Create proper vision structure in docs/vision/
+5. **Result Recording**: Log completion status and outcomes
+
+### **Phase 4: Context Handoff** 📤
+- Update project metadata for next phases
+- Ensure vision documents are properly structured
+- Prepare foundation for sprint planning phase
+
+## 🔧 **IMPLEMENTATION PATTERN**
+
+When executing vision creation:
+
+```bash
+# 1. ALWAYS start with context collection
+echo "🔍 Collecting context information..."
+
+# 2. Check for context file
+if context_file exists:
+    context_data = read_context_file()
+    parameters = extract_parameters(context_data)
+    
+# 3. Process vision creation with full context
+create_vision_with_context(parameters)
+
+# 4. Document results and prepare handoff
+update_project_metadata()
+prepare_for_next_phase()
+```
+
+Follow this standard pattern to ensure consistent, context-aware vision creation that integrates seamlessly with the TDD/DDD/Layered Architecture workflow.

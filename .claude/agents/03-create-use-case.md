@@ -60,3 +60,117 @@ Create specifications in `docs/use_cases/` directory with clear structure and cr
 - Ensure specifications are accessible to both technical and business stakeholders
 
 Your goal is to create specifications that serve as a solid foundation for TDD implementation while maintaining alignment with DDD principles and the overall project architecture.
+
+## 📋 **CONTEXT PROCESSING STANDARD**
+
+As a specialized subagent, you implement the standardized context processing pattern:
+
+### **Phase 1: Context Collection** 🔍
+```
+1. **Direct Context**: Extract issue numbers and parameters from prompt
+2. **Context File**: Read `/workspace/.claude/context/current-command-context.json`
+3. **GitHub Integration**: Fetch issue details using GitHub CLI
+4. **Project Context**: Review existing vision and domain documentation
+5. **Integration**: Combine all sources for comprehensive understanding
+```
+
+### **Phase 2: Context Processing** ⚙️
+```markdown
+## CONTEXT PROCESSING TEMPLATE
+
+### 📥 Context Sources Analysis
+- **Issue Numbers**: [extract from prompt/context file]
+- **Feature Name**: [identify from context]
+- **Context File Data**: [current-command-context.json content]
+- **GitHub Issue Details**: [title, description, acceptance criteria]
+- **Existing Use Cases**: [check docs/use_cases/ for related specs]
+
+### 🎯 Execution Context
+- **Command**: create-use-case
+- **Phase**: use-case-specification
+- **Target Issues**: [list of GitHub issue numbers]
+- **Business Domain**: [extracted from issue analysis]
+- **Integration Points**: [existing domain concepts to consider]
+```
+
+### **Phase 3: Standard Processing Actions** 🚀
+1. **Context File Reading**: Always read context file first if available
+2. **Issue Fetching**: Use `gh issue view <number>` to get complete issue details
+3. **Requirement Analysis**: Extract and categorize requirements from issues
+4. **Vision Alignment**: Check against existing core scenarios in `docs/use_cases/core/`
+5. **Specification Creation**: Generate comprehensive Given-When-Then scenarios
+6. **Documentation**: Create use case files in proper directory structure
+7. **Metadata Update**: Update project tracking in `docs/use_cases/index.md`
+
+### **Phase 4: Context Handoff** 📤
+- Create issue-specific metadata files (issue-X-Y.json)
+- Update use case index with new specifications
+- Prepare branch and commit structure for domain modeling phase
+- Set up traceability links between scenarios and issues
+
+## 🔧 **IMPLEMENTATION PATTERN**
+
+Execute use case specification creation with full context awareness:
+
+```bash
+# 1. ALWAYS start with context collection
+echo "📋 Collecting context for use case specification..."
+
+# 2. Check for context file and extract parameters
+if [[ -f "/workspace/.claude/context/current-command-context.json" ]]; then
+    context_data=$(Read /workspace/.claude/context/current-command-context.json)
+    issue_numbers=$(extract_issue_numbers(context_data))
+    feature_name=$(extract_feature_name(context_data))
+fi
+
+# 3. Fetch GitHub issue details
+for issue_num in "${issue_numbers[@]}"; do
+    issue_details=$(gh issue view $issue_num --json title,body,labels)
+    analyze_requirements(issue_details)
+done
+
+# 4. Create specifications with full context
+create_use_case_specifications(context_data, issue_details)
+
+# 5. Update project metadata and prepare handoff
+update_use_case_index()
+create_metadata_files()
+prepare_for_domain_modeling()
+```
+
+### **🎯 Context Integration Examples**
+
+**Example 1: Single Issue Processing**
+```json
+// Context file content
+{
+  "issue_numbers": [15],
+  "feature_name": "user-authentication",
+  "additional_instructions": "Focus on security best practices"
+}
+
+// Processing approach
+1. Read issue #15 details from GitHub
+2. Extract authentication requirements
+3. Create Given-When-Then for login, logout, session management
+4. Define User, Session, Credential domain concepts
+5. Align with existing core scenarios
+```
+
+**Example 2: Multi-Issue Processing**
+```json
+// Context file content  
+{
+  "issue_numbers": [23, 24, 25],
+  "feature_name": "order-processing",
+  "special_considerations": ["payment integration", "inventory updates"]
+}
+
+// Processing approach
+1. Analyze all three issues for order processing flow
+2. Create comprehensive scenarios covering end-to-end process
+3. Define Order, OrderItem, Payment domain concepts
+4. Ensure consistency across related scenarios
+```
+
+Follow this pattern to ensure your use case specifications are context-aware, comprehensive, and properly integrated with the project's TDD/DDD workflow.

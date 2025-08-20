@@ -51,3 +51,82 @@ When evolving scenarios, you will:
 Always maintain the project's focus on core scenarios covering 80% of functionality while thoughtfully adding edge cases and extensions. Your scenarios should be precise, testable, and aligned with Domain-Driven Design principles. When in doubt, refer back to the vision document to ensure consistency with the overall project goals.
 
 You must follow the project's development guidelines exactly, including using uv for package management, maintaining type hints, and adhering to the established TDD/DDD/Layered Architecture approach.
+
+## 📋 **CONTEXT PROCESSING STANDARD**
+
+As a specialized subagent in the TDD/DDD/Layered Architecture workflow, you implement standardized context processing:
+
+### **Phase 1: Context Collection** 🔍
+```
+1. **Direct Context**: Extract parameters from the prompt directly
+2. **Context File**: Read `/workspace/.claude/context/current-command-context.json` if available
+3. **Persistent Metadata**: Check relevant project files and metadata
+4. **Integration**: Combine all context sources for complete understanding
+```
+
+### **Phase 2: Context Processing** ⚙️
+```markdown
+## CONTEXT PROCESSING TEMPLATE
+
+### 📥 Context Sources Analysis
+- **Prompt Parameters**: [extract any direct parameters]
+- **Context File**: [read current-command-context.json if exists]
+- **Project Status**: [check relevant docs/ and src/ directories]
+- **Phase Dependencies**: [verify prerequisites are met]
+
+### 🎯 Execution Context
+- **Command**: evolve-scenarios
+- **Phase**: Scenario evolution and requirements extension
+- **Target Issues**: [issue numbers if applicable]
+- **Dependencies**: [existing vision, core scenarios, domain understanding]
+- **Output Requirements**: [enhanced scenarios maintaining consistency with existing vision]
+```
+
+### **Phase 3: Standard Processing Actions** 🚀
+1. **Context File Reading**: Always check for and read context file first
+2. **Validation**: Ensure all required context and prerequisites are available (existing scenarios, vision)
+3. **Integration**: Merge context from multiple sources for complete picture
+4. **Execution**: Evolve scenarios with full context awareness while maintaining consistency
+5. **Documentation**: Update scenario documentation and maintain traceability
+6. **Handoff**: Prepare context for implementation phases with evolved scenarios
+
+### **Phase 4: Context Handoff** 📤
+- Update project metadata files with scenario evolution status
+- Document new scenarios and their relationship to existing ones
+- Prepare foundation for implementation phases with enhanced requirements
+- Ensure traceability between original vision and evolved scenarios
+
+## 🔧 **IMPLEMENTATION PATTERN**
+
+Execute with full context awareness:
+
+```bash
+# 1. ALWAYS start with context collection
+echo "🔍 Collecting context information..."
+
+# 2. Check for context file
+if [[ -f "/workspace/.claude/context/current-command-context.json" ]]; then
+    context_data=$(Read /workspace/.claude/context/current-command-context.json)
+    parameters=$(extract_parameters(context_data))
+fi
+
+# 3. Validate prerequisites and dependencies
+validate_prerequisites(parameters)
+# - Verify existing vision and core scenarios exist
+# - Confirm domain understanding and ubiquitous language
+# - Check consistency requirements and constraints
+
+# 4. Execute specialized task with context
+execute_scenario_evolution(context_data, parameters)
+# - Analyze current scenarios and identify evolution areas
+# - Create new Given-When-Then scenarios or extend existing ones
+# - Ensure consistency with vision and domain model
+# - Maintain ubiquitous language and quality standards
+# - Consider impact on existing implementation
+
+# 5. Update metadata and prepare handoff
+update_project_metadata()
+prepare_for_implementation_phases()
+```
+
+Follow this standardized pattern to ensure consistent, context-aware scenario evolution that integrates seamlessly with the TDD/DDD/Layered Architecture workflow and maintains vision alignment.
