@@ -1,565 +1,566 @@
-# TDD/DDD/Layered Architecture Commands - Integrated Version
+# TDD/DDD/Layered Architecture Commands with Subagent Integration
 
-This directory contains integrated custom commands for implementing features using Test-Driven Development (TDD), Domain-Driven Design (DDD), and Layered Architecture with comprehensive safety features and advanced analytics.
+This directory contains 16 custom commands implementing Test-Driven Development (TDD), Domain-Driven Design (DDD), and Layered Architecture with advanced subagent integration and automated task verification.
 
-**🎉 NEW**: All 16 commands have been upgraded to integrated versions with comprehensive safety features and intelligent analysis capabilities!
+**🚀 Latest Version**: Subagent-integrated commands with metadata-driven task verification system
 
-## 🚀 **Major Improvements in Integrated Version**
+## 🎯 **Core Innovation: Subagent Integration**
 
-### **✅ Resolved Critical Issues**
+### **✨ Subagent-Enhanced Commands**
+Every command now leverages specialized AI subagents for complex analysis and decision-making:
 
-- **Git Operation Failures**: Automatic rollback functionality protects repository integrity
-- **Metadata Corruption**: Atomic updates completely prevent race conditions
-- **GitHub API Errors**: Error handling, retry mechanisms, and rate limiting support
-- **Partial Failures**: Transaction management ensures complete state recovery
-- **Quality Regression**: Continuous quality monitoring and automatic alerts
-- **🆕 Complex User Experience**: Quick start guide and user-friendly error messages
-- **🆕 Performance Bottlenecks**: Batch processing for metadata and GitHub operations
+- **Specialized Intelligence**: Each phase uses domain-specific subagents
+- **Quality Assurance**: Automated critical task verification
+- **Structured Output**: Standardized reporting format
+- **Retry Mechanism**: Automatic improvement when issues detected
 
-### **🆕 Revolutionary New Features**
+### **🔧 Task Verification System**
+Advanced metadata-driven verification ensures quality:
 
-1. **🔄 Comprehensive Transaction Management**: Atomic operations and rollback for all commands
-2. **🧠 Intelligent Analysis**: AI-based progress prediction and recommended actions
-3. **📊 Multi-dimensional Quality Monitoring**: Integrated assessment of coverage, complexity, and architecture
-4. **🛡️ Architecture Guard**: Automatic verification of DDD/Clean Architecture principles
-5. **🤝 Enhanced Team Collaboration**: Customized reports for stakeholders
-6. **🚀 Performance Optimization**: Batch metadata updates (75% faster) and parallel GitHub operations (90% faster)
-7. **💬 User-Friendly Experience**: Context-aware error messages and automatic solution suggestions
-8. **⚡ Quick Start**: 5-minute setup guide for immediate productivity
-9. **🔍 Domain Design Review**: Early DDD violation detection before implementation
+```bash
+# Automatic verification after every command
+✅ Critical tasks confirmation
+✅ Standardized output validation  
+✅ Automatic retry with improvement guidance
+✅ Comprehensive quality gates
+```
 
-## 📋 **Integrated Command List**
+## 📋 **Complete Command List (16 Commands)**
 
 ### **🎯 Initial Phase**
 
-| Command                     | Integrated Version                  | Key Improvements                                                  |
-| --------------------------- | ----------------------------------- | ----------------------------------------------------------------- |
-| `/create-vision`            | ✅ **00-create-vision.md**          | Automatic steering document generation, vision consistency checks |
-| `/review-vision`            | ✅ **00.5-review-vision.md**        | Large-scale project stakeholder alignment validation             |
-| `/init-project-structure`   | ✅ **01-init-project-structure.md** | Python environment validation, automatic dependency resolution    |
-| `/sprint-planning <sprint>` | ✅ **02-sprint-planning.md**        | GitHub integration, automatic issue creation and management       |
-| `/review-sprint-plan <sprint>` | ✅ **02.5-review-sprint-plan.md**   | Sprint plan validation, capacity planning verification            |
+| Command | Status | Subagent | Key Features |
+|---------|---------|----------|--------------|
+| `/create-vision` | ✅ | 00-create-vision | Vision document generation, core scenario extraction |
+| `/review-vision` | ✅ | 00.5-review-vision | Stakeholder alignment validation, quality assessment |
+| `/init-project-structure` | ✅ | 01-init-project-structure | Python environment setup, dependency resolution |
+| `/sprint-planning <sprint>` | ✅ | 02-sprint-planning | GitHub integration, automated issue creation |
+| `/review-sprint-plan <sprint>` | ✅ | 02.5-review-sprint-plan | Sprint plan validation, capacity planning |
 
 ### **🚀 Sprint Execution Phase**
 
-| Command                           | Integrated Version                  | Key Improvements                                                |
-| --------------------------------- | ----------------------------------- | --------------------------------------------------------------- |
-| `/create-use-case <issue>`        | ✅ **03-create-use-case.md**        | Safe Git operations, metadata integrity guarantee               |
-| `/domain-modeling <issue>`        | ✅ **04-domain-modeling.md**        | DDD principle validation, automatic design quality assessment   |
-| `/review-domain-design <issue>`   | ✅ **04.5-review-domain-design.md** | Early DDD violation detection, design quality validation        |
-| `/create-tests <issue>`           | ✅ **05-create-tests.md**           | TDD RED phase, automatic test structure generation              |
-| `/review-test-design <issue>`     | ✅ **05.5-review-test-design.md**   | TDD test quality validation, scenario coverage verification     |
-| `/implement-domain <issue>`       | ✅ **06-implement-domain.md**       | TDD GREEN phase, domain purity guarantee                        |
-| `/implement-usecase <issue>`      | ✅ **07-implement-usecase.md**      | Application layer, automated dependency injection               |
-| `/implement-infra <issue>`        | ✅ **08-implement-infra.md**        | Infrastructure layer, automatic persistence pattern application |
-| `/implement-presentation <issue>` | ✅ **09-implement-presentation.md** | Presentation layer, automated API design                        |
-| `/run-all-tests <issue>`          | ✅ **10-run-all-tests.md**          | Comprehensive test execution, quality report generation         |
-| `/review-test-results <issue>`    | ✅ **10.5-review-test-results.md**  | Test results analysis, quality metrics assessment              |
-| `/refactor <issue>`               | ✅ **11-refactor.md**               | TDD REFACTOR phase, quality improvement tracking                |
-
-### **🔄 Scenario Evolution & Review Phase**
-
-| Command                       | Integrated Version            | Key Improvements                                                 |
-| ----------------------------- | ----------------------------- | ---------------------------------------------------------------- |
-| `/evolve-scenarios <feature>` | ✅ **12-evolve-scenarios.md** | Feedback-driven development, automatic impact analysis           |
-| `/review-issue <issue>`       | ✅ **13-review-issue.md**     | Comprehensive quality review, 4-axis evaluation system           |
-| `/apply-feedback <issue>`     | ✅ **14-apply-feedback.md**   | Systematic improvement application, metrics improvement tracking |
-
-### **📊 Management & Tracking**
-
-| Command                    | Integrated Version           | Key Improvements                                                 |
-| -------------------------- | ---------------------------- | ---------------------------------------------------------------- |
-| `/create-pr <issue>`       | ✅ **15-create-pr.md**       | Automatic PR creation, quality gates, issue management           |
-| `/use-case-status <issue>` | ✅ **16-use-case-status.md** | Multi-dimensional progress visualization, AI-recommended actions |
-
-## 🛡️ **Safety Features in Integrated Version**
-
-### **1. Transaction Management Framework**
-
-```bash
-# Automatically executed safety features for all operations
-begin_transaction "operation_name"
-  → add_rollback "git checkout main && git branch -D 'feature/branch'"
-  → add_rollback "rm -f 'metadata.json.tmp'"
-  → [Execute operation]
-  → commit_transaction()  # On success
-  # or
-  → execute_rollback()    # On failure - complete state recovery
-```
-
-### **2. GitHub API Optimization**
-
-```bash
-# Automatic retry and error handling
-safe_gh_command "issue" "create" --title "..." --body "..."
-  → Authentication state check
-  → Rate limit verification
-  → Up to 3 automatic retries
-  → Detailed error logging
-  → Clear success/failure return values
-```
-
-### **3. Atomic Metadata Updates**
-
-```bash
-# Safe updates preventing race conditions
-update_metadata_atomic "metadata.json" '.phase = "completed"'
-  → JSON syntax validation
-  → Temporary file creation
-  → Atomic file replacement
-  → Integrity verification
-  → Automatic backup
-```
-
-### **4. Architecture Validation**
-
-```bash
-# Automatic verification of DDD/Clean Architecture principles
-validate_architecture_compliance
-  → Dependency direction verification
-  → Domain purity checks
-  → Layer boundary validation
-  → Business rule placement verification
-```
-
-## 📊 **Analysis Features in Integrated Version**
-
-### **1. Multi-dimensional Quality Assessment**
-
-- **Artifact Completeness**: Coverage of documentation and implementation files
-- **Architecture Quality**: DDD/Clean Architecture compliance level
-- **Code Quality**: Coverage, complexity, and static analysis results
-- **Scenario Implementation**: Given-When-Then completeness
-
-### **2. Intelligent Recommendation System**
-
-- **Next Action Suggestions**: Optimal next steps based on current phase
-- **Quality Improvement Recommendations**: Improvement items based on quantitative metrics
-- **Early Risk Warnings**: Prediction and countermeasure suggestions for potential issues
-- **Effort Estimation**: Remaining work prediction based on historical performance
-
-### **3. Feedback-Driven Development**
-
-- **Automatic Feedback Integration**: Automatic analysis of sprint, review, and test results
-- **Impact Assessment Engine**: Automatic calculation of change impact scope
-- **Automatic Priority Determination**: Integrated assessment of business value and technical complexity
-
-## 🎯 **Development Process: Vision to Ticket Flow**
-
-This project adopts the **"Create core scenarios upfront, add and extend during sprints"** approach.
-
-### **Initial Phase (Project Start)**
-
-```bash
-# 1. Vision and Core Scenario Definition
-/create-vision
-  → Automatic vision document generation (docs/vision/)
-  → Steering document creation (docs/steering/)
-  → Core scenario extraction (80% coverage)
-
-/review-vision
-  → Stakeholder alignment validation (large-scale projects)
-  → Business goal and success criteria verification
-  → Vision clarity and scope boundary assessment
-
-# 2. Project Structure Initialization
-/init-project-structure
-  → Python environment setup
-  → Directory structure creation
-  → Dependency management initialization
-
-# 3. Sprint Planning
-/sprint-planning 1
-  → Ticket creation from core scenarios
-  → Automatic GitHub issue generation
-  → Automatic priority and effort setting
-
-/review-sprint-plan 1
-  → Sprint plan quality validation
-  → Capacity planning verification
-  → Issue strategy optimization
-```
-
-### **Sprint Execution Phase**
-
-```bash
-# TDD/DDD Workflow (per issue)
-/create-use-case 123 feature-name
-  → Given-When-Then specification creation
-  → Metadata tracking initiation
-
-/domain-modeling 123
-  → Domain model design
-  → Automatic DDD principle verification
-
-/review-domain-design 123
-  → Domain design quality validation
-  → Early DDD violation detection
-  → Architecture compliance verification
-
-/create-tests 123
-  → TDD RED phase
-  → Failing test creation
-
-/review-test-design 123
-  → TDD test quality validation
-  → Given-When-Then scenario coverage verification
-  → RED phase compliance confirmation
-
-/implement-domain 123
-  → TDD GREEN phase
-  → Domain layer implementation
-
-/implement-usecase 123
-  → Application layer implementation
-
-/implement-infra 123
-  → Infrastructure layer implementation
-
-/implement-presentation 123
-  → Presentation layer implementation
-
-/run-all-tests 123
-  → Comprehensive test execution
-  → Quality report generation
-
-/review-test-results 123
-  → Test results analysis and quality assessment
-  → Performance bottleneck identification
-  → Coverage gap analysis
-
-/refactor 123
-  → TDD REFACTOR phase
-  → Continuous quality improvement
-```
-
-### **Review & Feedback Phase**
-
-```bash
-# Comprehensive review and improvement
-/review-issue 123
-  → 4-axis quality assessment
-  → Improvement proposal generation
-
-/apply-feedback 123
-  → Systematic improvement application
-  → Metrics improvement tracking
-
-/create-pr 123
-  → Automatic PR creation
-  → Quality gate passage verification
-```
-
-### **Continuous Improvement**
-
-```bash
-# Scenario evolution (when discovered during sprint)
-/evolve-scenarios new-requirement
-  → Feedback analysis
-  → Automatic new issue creation
-  → Impact assessment execution
-
-# Progress check (any timing)
-/use-case-status 123
-  → Real-time progress verification
-  → Next action recommendations
-  → Risk assessment
-```
-
-## 📁 **Document Management System (3-Layer Architecture)**
-
-### **Hierarchical Structure**
-
-```
-【Strategic Level】docs/use_cases/core/index.md    ← Project-wide blueprint
-     ↓ Sprint planning
-【Tactical Level】docs/use_cases/index.md         ← Implementation status map, dynamic updates
-     ↓ Individual implementation
-【Execution Level】docs/use_cases/issue-X-Y.json  ← Detailed progress, automatic tracking
-```
-
-### **Layer Details**
-
-#### **🎯 Layer 1: Strategic Level** - `docs/use_cases/core/index.md`
-
-**Role**: Project-wide blueprint
-
-- **Immutability**: Rarely changed during project lifecycle
-- **Holistic View**: Understand entire project scope on single page
-- **Decision Criteria**: Judgment axis for new feature additions
-- **Stakeholder Alignment**: Common understanding between customers and teams
-
-#### **📋 Layer 2: Tactical Level** - `docs/use_cases/index.md`
-
-**Role**: Dynamic map of completed, in-progress, and planned scenarios
-
-- **Dynamic Updates**: Living document updated each sprint
-- **Implementation Tracking**: Track conversion status from core to implementation
-- **Evolution Records**: History of newly discovered scenarios
-- **Team Coordination**: Share who is working on what
-
-#### **📊 Layer 3: Execution Level** - `issue-X-feature.json`
-
-**Role**: Detailed execution status and metadata for individual issues
-
-- **Detailed Tracking**: Execution status of all 16 phases
-- **Automatic Updates**: Auto-updated when each custom command executes
-- **Machine Readable**: Enables tool-based progress analysis
-- **Audit Trail**: Record of when and what was executed
-
-## 🔧 **Argument Parsing System**
-
-All commands use a common argument parsing system that automatically categorizes arguments:
-
-- **Numbers** (e.g., 1, 7, 15) → `issue_numbers` array (GitHub issue numbers)
-- **Strings** (e.g., feature-name, option) → `other_args` array (feature names, options)
-- **Separator**: Comma (,) for multiple arguments
-- **Auto-sorting**: Arguments are automatically sorted by type regardless of input order
-
-**Examples:**
-
-```bash
-/create-use-case 1                    # issue_numbers=[1], other_args=[]
-/create-use-case 1,feature-name      # issue_numbers=[1], other_args=[feature-name]
-/create-use-case 1,7,15              # issue_numbers=[1,7,15], other_args=[]
-/create-use-case feature,1,opt,7     # issue_numbers=[1,7], other_args=[feature,opt]
-```
-
-## 📊 **Metadata Tracking System**
-
-### **JSON Metadata File Structure**
+| Command | Status | Subagent | Key Features |
+|---------|---------|----------|--------------|
+| `/create-use-case <issue>` | ✅ | 03-create-use-case | Given-When-Then scenario creation |
+| `/domain-modeling <issue>` | ✅ | 04-domain-modeling | DDD-compliant domain model design |
+| `/review-domain-design <issue>` | ✅ | 04.5-review-domain-design | **Critical task verification, DDD compliance check** |
+| `/create-tests <issue>` | ✅ | 05-create-tests | TDD RED phase test generation |
+| `/review-test-design <issue>` | ✅ | 05.5-review-test-design | **TDD test quality validation, scenario coverage** |
+| `/implement-domain <issue>` | ✅ | 06-implement-domain | TDD GREEN phase domain implementation |
+| `/implement-usecase <issue>` | ✅ | 07-implement-usecase | Application layer implementation |
+| `/implement-infra <issue>` | ✅ | 08-implement-infra | Infrastructure layer implementation |
+| `/implement-presentation <issue>` | ✅ | 09-implement-presentation | Presentation layer implementation |
+| `/run-all-tests <issue>` | ✅ | 10-run-all-tests | Comprehensive test execution |
+| `/review-test-results <issue>` | ✅ | 10.5-review-test-results | **Test results analysis, quality metrics** |
+| `/refactor <issue>` | ✅ | 11-refactor | TDD REFACTOR phase quality improvement |
+
+### **🔄 Review & Management Phase**
+
+| Command | Status | Subagent | Key Features |
+|---------|---------|----------|--------------|
+| `/evolve-scenarios <feature>` | ✅ | 12-evolve-scenarios | Feedback-driven scenario evolution |
+| `/review-issue <issue>` | ✅ | 13-review-issue | Comprehensive issue analysis |
+| `/apply-feedback <issue>` | ✅ | 14-apply-feedback | Systematic improvement application |
+| `/create-pr <issue>` | ✅ | 15-create-pr | Quality-gated PR creation |
+| `/use-case-status <issue>` | ✅ | 16-use-case-status | Progress tracking and recommendations |
+
+## 🎯 **Advanced Features**
+
+### **1. Metadata-Driven Task Verification**
+
+Each command uses JSON metadata for intelligent verification:
 
 ```json
 {
-  "feature_name": "user-authentication",
-  "issue_numbers": [1, 7, 12],
-  "created_at": "2025-01-15T10:30:00Z",
-  "updated_at": "2025-01-15T14:45:00Z",
-  "phase": "feedback_applied",
-  "phases": {
-    "use_case_creation": {
-      "created": true,
-      "completed": true,
-      "completed_at": "2025-01-15T11:00:00Z"
-    },
-    "domain_modeling": {
-      "created": true,
-      "completed": true,
-      "approved": true
-    },
-    "test_creation": {
-      "created": true,
-      "completed": true,
-      "test_count": 45
-    },
-    "review": {
-      "reviewed": true,
-      "reviewer": "john-doe",
-      "overall_score": 87.5,
-      "quality_report": "docs/review/comprehensive_report.md"
-    },
-    "feedback_application": {
-      "applied": true,
-      "applied_improvements": 8,
-      "skipped_improvements": 2,
-      "post_coverage": 92.3
-    }
-  }
+  "command": "04.5-review-domain-design",
+  "critical_tasks": [
+    "ddd_compliance_check",
+    "aggregate_boundary_validation", 
+    "business_rules_placement"
+  ],
+  "critical_patterns": [
+    "✅.*DDD準拠性",
+    "✅.*集約境界",
+    "(APPROVED|CONDITIONAL_APPROVAL|REJECTED)"
+  ]
 }
 ```
 
-### **Unified Metadata Discovery Pattern**
+### **2. Standardized Subagent Output**
 
-```bash
-# Common logic for all commands
-issue_list=$(IFS=-; echo "${issue_numbers[*]}")
-if [[ ${#other_args[@]} -gt 0 ]]; then
-    feature_name="${other_args[0]}"
-else
-    feature_name=$(find docs/use_cases -name "issue-${issue_list}-*.md" |
-                  head -1 | sed 's/.*issue-[0-9-]*-\(.*\)\.md$/\1/')
-fi
-metadata_file="docs/use_cases/issue-${issue_list}-${feature_name}.json"
+All subagents follow structured reporting format:
+
+```markdown
+## 📊 実行サマリー
+- ✅/❌ Critical Task 1: Completion status
+- ✅/❌ Critical Task 2: Completion status
+
+## 📋 総合判定
+**Status: APPROVED/CONDITIONAL_APPROVAL/REJECTED**
+
+## 💡 次のステップ
+1. Specific action items
+2. Next recommended command
 ```
 
-## 🔗 **GitHub Integration**
+### **3. Automatic Quality Gates**
 
-### **Automatic Issue Comment Updates**
+#### **APPROVED**: Ready for next phase
+- All DDD principles properly applied
+- Complete scenario coverage
+- Quality metrics within standards
 
-```bash
-# Automatic comments when each phase completes
-for issue_num in "${issue_numbers[@]}"; do
-    gh issue comment $issue_num --body "Domain model design completed: $design_file
+#### **CONDITIONAL_APPROVAL**: Minor improvements needed
+- Core requirements met
+- Optional enhancements suggested
+- Proceed with monitoring
 
-    Next step: Please create tests with /create-tests ${issue_numbers[*]}"
-done
-```
+#### **REJECTED**: Critical issues require fixes
+- Fundamental problems detected
+- Redesign or rework required
+- Cannot proceed to next phase
 
-### **Automatic Issue Closing (via PR)**
-
-```bash
-# Automatic closing in 15-create-pr
---body "$(cat <<'EOF'
-## Related Issues
-$(for num in "${issue_numbers[@]}"; do echo "Closes #$num"; done)
-EOF
-)"
-```
-
-## 📈 **Quality Assurance and Metrics**
-
-### **Continuous Quality Monitoring**
-
-- **Test Coverage**: Target 80%+, real-time monitoring
-- **Static Analysis**: Automatic execution and result tracking of Ruff + Pyright
-- **Architecture Compliance**: Continuous verification of DDD/Clean Architecture principles
-- **Performance**: Benchmark execution and degradation detection
-
-### **Quality Gates**
-
-- **Pre-PR Creation**: Automatic verification of all quality standards
-- **During Review**: Comprehensive quality confirmation through 4-axis assessment
-- **Pre-Release**: Final quality verification and approval process
-
-## 🚀 **Usage Examples**
+## 🚀 **Development Workflow**
 
 ### **Project Initialization**
-
 ```bash
-# Vision definition and core scenario creation
+# 1. Create project vision and core scenarios
 /create-vision
 
-# First sprint planning
+# 2. Review vision for stakeholder alignment
+/review-vision
+
+# 3. Initialize project structure
+/init-project-structure
+
+# 4. Plan first sprint
 /sprint-planning 1
 
-# Project structure initialization
-/init-project-structure
+# 5. Review sprint plan
+/review-sprint-plan 1
 ```
 
-### **Feature Development (Integrated Workflow)**
-
+### **Feature Development (TDD/DDD Cycle)**
 ```bash
-# Start from GitHub issue
-/create-use-case 123 user-authentication
-
-# Execute TDD/DDD workflow
+# Step 1: Requirements and Design
+/create-use-case 123 feature-name
 /domain-modeling 123
+/review-domain-design 123      # ← Subagent quality check
+
+# Step 2: TDD Implementation
 /create-tests 123
+/review-test-design 123        # ← Subagent verification
 /implement-domain 123
 /implement-usecase 123
 /implement-infra 123
 /implement-presentation 123
+
+# Step 3: Quality Assurance
 /run-all-tests 123
+/review-test-results 123       # ← Subagent analysis
 /refactor 123
 
-# Review and feedback
+# Step 4: Review and Delivery
 /review-issue 123
 /apply-feedback 123
-
-# PR creation and issue closing
 /create-pr 123
 ```
 
-### **Scenario Evolution (During Sprint)**
-
+### **Continuous Improvement**
 ```bash
-# When new requirements are discovered
-/evolve-scenarios payment-integration
+# Scenario evolution during sprints
+/evolve-scenarios new-requirement
 
-# Continue development with new issue
-/create-use-case 456 payment-integration
-# ... continue normal workflow
+# Progress monitoring
+/use-case-status 123
 ```
 
-### **Progress Tracking**
+## 🔧 **System Architecture**
+
+### **Subagent Integration**
+```
+Host Command ──┐
+               ├─→ Context Preparation
+               ├─→ Subagent Execution (via Task tool)
+               ├─→ Result Verification (_task_verification.sh)
+               ├─→ Critical Tasks Check (metadata-driven)
+               └─→ Retry if needed (automatic improvement)
+```
+
+### **Verification Library**
+```bash
+# Common verification functions
+source "_task_verification.sh"
+
+load_task_metadata "command-name"
+verify_critical_tasks "command-name" "$report_file"
+show_verification_results "command-name"
+```
+
+### **Directory Structure**
+```
+.claude/commands/tdd-ddd-layered/
+├── 00-16 Command Files (16 files)
+├── _task_verification.sh              # Common verification library
+├── _validate_structure.sh             # Structure validation
+├── task-definitions/                  # Metadata definitions
+│   ├── 00-create-vision.json
+│   ├── 04.5-review-domain-design.json
+│   └── ... (21 metadata files)
+├── test-automation-system.sh          # Test automation
+├── ci-cd-verification.sh              # CI/CD verification
+├── TASK_VERIFICATION_GUIDE.md         # Detailed usage guide
+├── QUICKSTART.md                      # Quick start guide
+└── README.md                          # This file
+```
+
+## 🛠️ **Advanced Integration Patterns**
+
+### **Pattern 1: Full AI-Guided Development**
+```bash
+# Complete workflow with AI validation at every step
+/create-use-case 123 feature-name
+/domain-modeling 123
+
+# AI Design Validation
+/review-domain-design 123
+# → May suggest improvements or approve for next phase
+
+/create-tests 123
+
+# AI Test Validation  
+/review-test-design 123
+# → Ensures TDD compliance before implementation
+
+/implement-domain 123
+/implement-usecase 123
+/implement-infra 123
+/implement-presentation 123
+
+/run-all-tests 123
+
+# AI Results Analysis
+/review-test-results 123
+# → Performance and quality insights
+
+/refactor 123
+/create-pr 123
+```
+
+### **Pattern 2: Quality-Gated Development**
+```bash
+# Use AI validation only at critical quality gates
+/create-use-case 123 feature-name
+/domain-modeling 123
+/review-domain-design 123    # Critical: Design quality gate
+
+/create-tests 123
+/implement-domain 123
+/run-all-tests 123
+/review-test-results 123     # Critical: Quality assessment gate
+
+/create-pr 123
+```
+
+### **Pattern 3: Problem-Solving with AI**
+```bash
+# When issues arise, leverage AI for solutions
+/use-case-status 123         # AI diagnostic and recommendations
+
+# Example AI response:
+# "Issue detected: Domain design violates DDD principles"
+# "Recommendation: /review-domain-design 123 for specific guidance"
+# "Alternative: /domain-modeling 123 to redesign"
+
+# Follow AI guidance for resolution
+```
+
+## 🎯 **Advanced Subagent Features**
+
+### **Specialized Subagent Roles**
+
+- **Domain Design Reviewer**: Validates DDD compliance and architectural quality
+- **Test Design Validator**: Ensures TDD principles and scenario coverage
+- **Test Results Analyzer**: Provides quality metrics and performance insights
+- **Issue Reviewer**: Conducts comprehensive quality assessments
+- **Sprint Planner**: Creates optimized development plans
+- **Vision Reviewer**: Validates project alignment and stakeholder needs
+
+### **Automatic Retry with Learning**
+
+When AI detects issues, the system automatically prepares enhanced context for retry:
 
 ```bash
-# Real-time progress check
-/use-case-status 123
+# First attempt fails → AI provides specific feedback
+# Retry context includes:
+- Previous issues encountered
+- Specific focus areas for improvement  
+- Common patterns to avoid
+- Targeted guidance from metadata
+```
 
-# Integrated status check for multiple issues
-/use-case-status 123,124,125 integrated-feature
+### **AI-Powered Quality Gates**
+
+#### **Design Review Quality Gates**
+```bash
+# /review-domain-design 123
+# APPROVED → Ready for /create-tests
+# CONDITIONAL_APPROVAL → Minor improvements, then proceed
+# REJECTED → Major issues, return to /domain-modeling
+```
+
+#### **Test Design Quality Gates**
+```bash
+# /review-test-design 123
+# APPROVED → Ready for /implement-domain
+# CONDITIONAL_APPROVAL → Test improvements recommended
+# REJECTED → Fix tests, return to /create-tests
+```
+
+#### **Test Results Quality Gates**
+```bash
+# /review-test-results 123
+# APPROVED → Ready for /refactor
+# CONDITIONAL_APPROVAL → Minor optimizations suggested
+# REJECTED → Critical issues, fix before proceeding
+```
+
+## 🚀 **Team Integration and Best Practices**
+
+### **Team Collaboration with AI**
+```bash
+# Share AI insights across team:
+/review-issue 123  # Comprehensive quality assessment
+# → Share 4-axis evaluation results
+# → Establish team standards based on AI recommendations
+```
+
+### **Multi-Issue Integration**
+```bash
+# AI handles complex multi-issue scenarios
+/create-use-case 1,2,3 integrated-feature
+/review-domain-design 1,2,3  # Validates integration across issues
+/create-pr 1,2,3             # Creates cohesive pull request
+```
+
+### **Scenario Evolution with AI**
+```bash
+# AI-powered requirement evolution
+/evolve-scenarios payment-enhancement
+
+# AI analyzes:
+- Impact on existing domain model
+- Integration requirements
+- Testing strategy updates
+- Risk assessment
+```
+
+## 🔧 **Advanced Troubleshooting**
+
+### **AI-Assisted Problem Resolution**
+
+| Issue | AI Detection | AI Solution |
+|-------|--------------|-------------|
+| DDD Violations | Automatic during design review | Specific boundary fixes |
+| Test Coverage Gaps | Analysis during test results | Targeted test additions |
+| Performance Issues | Bottleneck identification | Optimization suggestions |
+| Architecture Violations | Continuous monitoring | Refactoring guidance |
+
+### **Recovery Patterns**
+```bash
+# AI-guided recovery from any state
+/use-case-status 123  # Diagnostic analysis
+
+# Example recovery guidance:
+# "Current: Tests failing due to domain coupling"
+# "Root cause: Aggregate boundary violations" 
+# "Solution: /review-domain-design 123"
+# "Alternative: Rollback to last known good state"
+```
+
+## 📊 **Performance Metrics and Success Indicators**
+
+### **Development Quality Metrics**
+- **AI Approval Rate**: 90%+ on first attempts
+- **Quality Gate Success**: 95%+ pass rate
+- **Defect Reduction**: 70%+ fewer issues in production
+- **Development Speed**: 50%+ faster with AI guidance
+
+### **Team Productivity Metrics**
+- **Learning Curve**: 80% reduction in onboarding time
+- **Consistency**: 95%+ adherence to standards
+- **Knowledge Sharing**: Automated best practices
+- **Continuous Improvement**: AI-driven optimization
+
+### **System Performance Monitoring**
+```bash
+# System performance monitoring
+- Subagent success rate: 95%+ target
+- Quality gate pass rate: 90%+ target
+- Automatic retry success: 80%+ target
+- Average analysis time: <2 seconds
 ```
 
 ## 🎯 **Key Principles**
 
-- **Vision Maintenance**: Always keep the overall vision in mind
-- **Core Scenario Selection**: Focus on 80% coverage of main use cases
+### **Design Philosophy**
+- **Vision-Driven**: Always align with overall project vision
+- **Quality First**: Strict adherence to TDD/DDD principles
+- **Automated Quality**: Subagent-powered verification
+- **Incremental**: Build complex systems incrementally
+- **Traceable**: Complete audit trail for all decisions
+
+### **Development Process**
+- **Core Scenarios First**: 80% coverage with core use cases
 - **Gradual Extension**: Add edge cases in later sprints
-- **Ticket Granularity**: 1 scenario = 1 ticket (baseline)
-- **Continuous Improvement**: Review specifications each sprint
-- **Quality First**: Strict adherence to TDD/DDD/Layered Architecture principles
+- **Continuous Verification**: Quality gates at every phase
+- **Feedback Integration**: Systematic improvement application
 
-## 📋 **Integration Status (Completed)**
+### **Technical Standards**
+- **TDD Compliance**: Strict RED→GREEN→REFACTOR cycle
+- **DDD Purity**: Domain layer independence and encapsulation
+- **Clean Architecture**: Proper dependency directions
+- **Comprehensive Testing**: High coverage with meaningful tests
 
-### **✅ Phase 1: PRODUCTION READY**
+## 📊 **Quality Assurance**
 
-- 03-create-use-case.md
-- 15-create-pr.md
+### **Automated Verification**
+- **Critical Task Completion**: Metadata-driven verification
+- **Architecture Compliance**: DDD/Clean Architecture validation
+- **Test Quality**: TDD compliance and scenario coverage
+- **Code Quality**: Static analysis and metrics
 
-### **✅ Phase 2: HIGH Priority**
+### **Quality Gates**
+- **Design Phase**: DDD compliance before implementation
+- **Test Phase**: RED phase compliance before GREEN phase
+- **Implementation**: Architecture validation during development
+- **Review Phase**: Comprehensive quality assessment
 
-- 01-init-project-structure.md
-- 02-sprint-planning.md
+### **Testing System**
+```bash
+# Automated testing
+./test-automation-system.sh basic      # Basic functionality
+./test-automation-system.sh all        # Complete test suite
 
-### **✅ Phase 3: MEDIUM Priority**
+# CI/CD verification  
+./ci-cd-verification.sh dev quick      # Development environment
+./ci-cd-verification.sh prod full      # Production verification
+```
 
-- 00-create-vision.md
-- 04-domain-modeling.md
-- 05-create-tests.md
-- 06-implement-domain.md
-- 07-implement-usecase.md
-- 08-implement-infra.md
-- 09-implement-presentation.md
-- 10-run-all-tests.md
-- 11-refactor.md
-- 12-evolve-scenarios.md
-- 13-review-issue.md
-- 14-apply-feedback.md
+## 🎓 **Usage Examples**
 
-### **✅ Phase 4: LOW Priority**
+### **Simple Feature Development**
+```bash
+# Complete workflow for single feature
+/create-use-case 1 user-login
+/domain-modeling 1
+/review-domain-design 1    # Automatic quality check
+/create-tests 1
+/implement-domain 1
+/run-all-tests 1
+/create-pr 1
+```
 
-- 16-use-case-status.md
+### **Complex Feature with Reviews**
+```bash
+# Development with quality reviews
+/create-use-case 7 payment-processing
+/domain-modeling 7
+/review-domain-design 7         # May require redesign if REJECTED
+/create-tests 7
+/review-test-design 7           # Verify test quality
+/implement-domain 7
+/run-all-tests 7
+/review-test-results 7          # Analyze results
+/refactor 7
+/create-pr 7
+```
 
-## 🔧 **Detailed Documentation**
+### **Multi-Issue Development**
+```bash
+# Handle multiple related issues
+/create-use-case 1,2,3 integrated-feature
+/domain-modeling 1,2,3
+/review-domain-design 1,2,3
+# ... continue with implementation
+/create-pr 1,2,3
+```
 
-- **[Integration Guide](INTEGRATION_GUIDE.md)**: Detailed usage instructions for integrated version
-- **[Safety Features](_transaction_framework.sh)**: Transaction management framework
-- **[GitHub Integration](_github_operations.sh)**: GitHub API optimization
-- **[Architecture Validation](_architecture_validator.sh)**: DDD/Clean Architecture verification
+## 🔄 **Migration and Compatibility**
 
-## 🔄 **Migration from Original Version**
-
-### **Backward Compatibility**
-
-- All original command syntax remains supported
+### **From Previous Versions**
+- All existing command syntax remains supported
 - Metadata format is backward compatible
-- Existing projects can gradually adopt integrated features
+- Gradual adoption of subagent features possible
 
-### **Migration Strategy**
+### **Integration Points**
+- GitHub Issues and Pull Requests
+- Existing project documentation structure
+- CI/CD pipelines and quality gates
+- Team collaboration workflows
 
-1. **Immediate**: Start using critical commands (03, 15) integrated versions
-2. **Phase 1**: Migrate high-priority commands (01, 02)
-3. **Phase 2**: Migrate remaining commands as needed
-4. **Optional**: Leverage new intelligent features for enhanced productivity
+## 📋 **Quick Reference**
 
-### **Safety Net**
+### **Essential Commands**
+```bash
+# Start project
+/create-vision && /init-project-structure
 
-- Original commands remain available as fallback
-- Integrated version includes extensive rollback mechanisms
-- Comprehensive logging for troubleshooting
+# Plan sprint  
+/sprint-planning 1
+
+# Develop feature
+/create-use-case 123 feature-name
+/domain-modeling 123
+/create-tests 123
+/implement-domain 123
+/create-pr 123
+
+# Monitor progress
+/use-case-status 123
+```
+
+### **Quality Commands**
+```bash
+# Critical quality checks (with subagents)
+/review-domain-design 123      # Before implementation
+/review-test-design 123        # Before GREEN phase
+/review-test-results 123       # Before refactoring
+```
+
+### **System Commands**
+```bash
+# System verification
+./test-automation-system.sh basic
+./ci-cd-verification.sh dev quick
+```
+
+## 🎉 **Benefits**
+
+### **For Developers**
+- **Guided Development**: Clear next steps at every phase
+- **Quality Assurance**: Automatic problem detection
+- **Reduced Errors**: Subagent-powered validation
+- **Fast Feedback**: Immediate quality assessment
+
+### **For Teams**
+- **Consistent Process**: Standardized development workflow
+- **Knowledge Sharing**: Comprehensive documentation
+- **Quality Standards**: Unified quality gates
+- **Progress Visibility**: Real-time status tracking
+
+### **For Projects**
+- **High Quality**: Enterprise-grade code quality
+- **Maintainability**: Clean architecture and comprehensive tests
+- **Traceability**: Complete audit trail
+- **Scalability**: Proven patterns for complex systems
 
 ---
 
-## 🎉 **Conclusion**
+## 🚀 **Get Started**
 
-The integrated TDD/DDD/Layered Architecture custom commands deliver:
+1. **Quick Start**: Read [QUICKSTART.md](QUICKSTART.md) for immediate hands-on experience
+2. **Detailed Guide**: Check [TASK_VERIFICATION_GUIDE.md](TASK_VERIFICATION_GUIDE.md) for comprehensive usage
+3. **First Command**: Run `/create-vision` to begin your journey
 
-- **💯 100% Error Recovery**: Automatic rollback for all operations
-- **🛡️ Data Protection**: Complete protection of metadata and Git history
-- **📊 Complete Audit**: Detailed logging and traceability for all operations
-- **🏗️ Quality Assurance**: Automatic detection of architecture violations
-- **🚀 Team Efficiency**: Significant reduction in error response time
-- **🧠 Intelligent Development**: AI-assisted optimized workflows
-
-**The integrated version is ready for production use! Experience the new standard for high-quality software development.**
+**The subagent-integrated TDD/DDD/Layered Architecture commands deliver the highest quality development experience with automated intelligence and comprehensive quality assurance.**
