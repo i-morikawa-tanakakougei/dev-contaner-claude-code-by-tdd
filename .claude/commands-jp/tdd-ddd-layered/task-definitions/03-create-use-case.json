@@ -1,0 +1,70 @@
+{
+  "command": "03-create-use-case",
+  "description": "Create detailed use case specifications from GitHub issues following TDD/DDD/Layered Architecture principles",
+  "phase": "use-case-specification-phase",
+  "category": "specification",
+  "priority": "high",
+  "critical_tasks": [
+    "github_issue_analysis",
+    "given_when_then_scenarios_creation",
+    "domain_concepts_identification",
+    "ubiquitous_language_definition",
+    "acceptance_criteria_refinement",
+    "use_case_documentation"
+  ],
+  "output_requirements": {
+    "critical_patterns": [
+      "✅.*GitHub.*イシュー分析",
+      "✅.*Given-When-Then.*シナリオ作成",
+      "✅.*ドメイン概念.*特定",
+      "✅.*共通言語.*定義",
+      "✅.*受入基準.*精緻化",
+      "✅.*ユースケース.*文書化",
+      "(USE_CASE_CREATED|SCENARIOS_DEFINED|READY_FOR_DOMAIN_MODELING)"
+    ],
+    "required_sections": [
+      "📊 実行サマリー",
+      "📋 総合判定",
+      "📖 ユースケース仕様作成結果",
+      "🎯 Given-When-Thenシナリオ確認",
+      "➡️ 次のステップ"
+    ],
+    "success_indicators": [
+      "ユースケース仕様完成度",
+      "シナリオ数とカバレッジ",
+      "ドメイン概念明確性"
+    ]
+  },
+  "prerequisites": [
+    "github_issue_exists",
+    "sprint_plan_approved",
+    "vision_document_available"
+  ],
+  "retry_context": {
+    "common_issues": [
+      "Incomplete Given-When-Then scenario coverage",
+      "Unclear domain concept identification",
+      "Missing edge case scenarios",
+      "Inadequate acceptance criteria detail"
+    ],
+    "enhanced_guidance": [
+      "包括的なGiven-When-Thenシナリオによる要件の完全カバレッジ",
+      "ドメイン駆動設計原則に基づく概念の明確な特定",
+      "実装チームが理解しやすい具体的な受入基準定義",
+      "エッジケースと例外シナリオの適切な網羅"
+    ],
+    "special_focus": "ユースケース仕様がTDD実装とドメインモデリングの確固とした基盤となることの確保"
+  },
+  "dependencies": {
+    "previous_commands": ["02-sprint-planning"],
+    "next_commands": ["04-domain-modeling"],
+    "required_files": [
+      "GitHub issue",
+      "docs/vision/"
+    ],
+    "output_files": [
+      "docs/use_cases/issue-X-Y.md",
+      "docs/use_cases/issue-X-Y.json"
+    ]
+  }
+}

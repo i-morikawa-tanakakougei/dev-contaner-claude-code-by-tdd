@@ -1,0 +1,100 @@
+{
+  "command": "12-evolve-scenarios",
+  "description": "Evolve scenarios based on sprint feedback and requirements discovery",
+  "phase": "scenario-evolution",
+  "critical_tasks": [
+    "feedback_analysis",
+    "new_scenario_identification",
+    "given_when_then_creation",
+    "evolved_scenario_documentation",
+    "traceability_maintenance"
+  ],
+  "important_tasks": [
+    "domain_impact_assessment", 
+    "priority_impact_analysis",
+    "integration_preparation",
+    "stakeholder_communication",
+    "sprint_backlog_update"
+  ],
+  "optional_tasks": [
+    "quick_wins_identification",
+    "blocker_documentation", 
+    "implementation_sequencing",
+    "github_issue_templating"
+  ],
+  "output_requirements": {
+    "format": "structured_sections",
+    "required_sections": [
+      "実行サマリー",
+      "総合判定",
+      "次のステップ"
+    ],
+    "critical_patterns": [
+      "✅.*フィードバック分析",
+      "✅.*新シナリオ特定",
+      "✅.*Given-When-Then.*作成",
+      "✅.*進化シナリオ文書化",
+      "(完了|COMPLETED|SUCCESS)"
+    ],
+    "success_indicators": [
+      "シナリオ進化完了",
+      "新しいシナリオ.*追加",
+      "Given-When-Then.*作成",
+      "evolved.*ファイル.*作成",
+      "トレーサビリティ.*維持"
+    ],
+    "failure_indicators": [
+      "シナリオが見つからない",
+      "進化.*失敗",
+      "フィードバック.*解析.*エラー",
+      "文書化.*問題"
+    ]
+  },
+  "quality_gates": {
+    "approved": {
+      "description": "Scenario Evolution Completed Successfully",
+      "criteria": [
+        "All feedback properly analyzed",
+        "New scenarios properly documented",
+        "Given-When-Then scenarios created",
+        "Traceability maintained with original requirements"
+      ]
+    },
+    "conditional_approval": {
+      "description": "Minor Documentation Issues",
+      "criteria": [
+        "Core scenarios documented",
+        "Minor formatting improvements needed",
+        "Traceability mostly maintained"
+      ]
+    },
+    "rejected": {
+      "description": "Major Issues Require Rework",
+      "criteria": [
+        "Feedback analysis incomplete",
+        "Scenarios poorly documented",
+        "Missing Given-When-Then structure",
+        "Traceability lost"
+      ]
+    }
+  },
+  "next_steps": {
+    "approved": "Integrate scenarios into /sprint-planning",
+    "conditional_approval": "Apply improvements then integrate scenarios",
+    "rejected": "/evolve-scenarios (rework required)"
+  },
+  "retry_context": {
+    "focus_areas": [
+      "Thorough feedback analysis and extraction",
+      "Clear Given-When-Then scenario structure",
+      "Comprehensive scenario documentation",
+      "Traceability link maintenance"
+    ],
+    "common_issues": [
+      "Incomplete feedback analysis",
+      "Poor Given-When-Then structure",
+      "Missing scenario documentation",
+      "Lost traceability to original requirements"
+    ]
+  }
+}

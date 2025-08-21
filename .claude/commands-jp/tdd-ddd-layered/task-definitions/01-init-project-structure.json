@@ -1,0 +1,72 @@
+{
+  "command": "01-init-project-structure",
+  "description": "Initialize project structure following TDD/DDD/Layered Architecture principles",
+  "phase": "project-initialization-phase",
+  "category": "foundation",
+  "priority": "critical",
+  "critical_tasks": [
+    "directory_structure_creation",
+    "tdd_framework_setup",
+    "ddd_layer_organization",
+    "configuration_files_creation",
+    "development_environment_setup",
+    "documentation_structure_initialization"
+  ],
+  "output_requirements": {
+    "critical_patterns": [
+      "✅.*ディレクトリ構造.*作成",
+      "✅.*TDDフレームワーク.*セットアップ",
+      "✅.*DDD層.*編成",
+      "✅.*設定ファイル.*作成",
+      "✅.*開発環境.*セットアップ",
+      "✅.*ドキュメント構造.*初期化",
+      "(PROJECT_STRUCTURE_CREATED|READY_FOR_DEVELOPMENT|ENVIRONMENT_CONFIGURED)"
+    ],
+    "required_sections": [
+      "📊 実行サマリー",
+      "📋 総合判定",
+      "📁 プロジェクト構造作成結果",
+      "🔧 開発環境設定確認",
+      "➡️ 次のステップ"
+    ],
+    "success_indicators": [
+      "ディレクトリ構造完成度",
+      "設定ファイル作成数",
+      "開発環境準備確認"
+    ]
+  },
+  "prerequisites": [
+    "project_vision_available",
+    "development_requirements_defined"
+  ],
+  "retry_context": {
+    "common_issues": [
+      "Incomplete directory structure creation",
+      "Missing configuration files",
+      "Framework setup failures",
+      "Development environment configuration issues"
+    ],
+    "enhanced_guidance": [
+      "TDD/DDD/Layered Architecture原則に基づくディレクトリ構造",
+      "開発効率を最大化する設定ファイルの完全配置",
+      "チーム開発に適した標準化された環境構成",
+      "継続的統合に対応したプロジェクト設定"
+    ],
+    "special_focus": "プロジェクト構造がTDD/DDD開発フローを最適にサポートすることの確保"
+  },
+  "dependencies": {
+    "previous_commands": ["00-create-vision"],
+    "next_commands": ["02-sprint-planning"],
+    "required_files": [
+      "docs/vision/"
+    ],
+    "output_files": [
+      "src/domain/",
+      "src/application/",
+      "src/infrastructure/",
+      "src/presentation/",
+      "tests/",
+      "docs/"
+    ]
+  }
+}

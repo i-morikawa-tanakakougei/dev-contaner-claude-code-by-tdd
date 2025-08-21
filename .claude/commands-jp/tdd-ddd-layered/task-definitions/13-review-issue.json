@@ -1,0 +1,67 @@
+{
+  "command": "13-review-issue",
+  "description": "GitHub issue review and analysis for requirements understanding and implementation guidance",
+  "phase": "issue-analysis-phase",
+  "category": "analysis",
+  "priority": "medium",
+  "critical_tasks": [
+    "issue_content_analysis",
+    "requirements_extraction",
+    "acceptance_criteria_validation",
+    "implementation_scope_definition",
+    "dependency_identification",
+    "complexity_assessment"
+  ],
+  "output_requirements": {
+    "critical_patterns": [
+      "✅.*イシュー内容.*分析",
+      "✅.*要件.*抽出",
+      "✅.*受入基準.*検証",
+      "✅.*実装範囲.*定義",
+      "✅.*依存関係.*特定",
+      "✅.*複雑性.*評価",
+      "(READY_FOR_IMPLEMENTATION|REQUIRES_CLARIFICATION|NEEDS_BREAKDOWN)"
+    ],
+    "required_sections": [
+      "📊 実行サマリー",
+      "📋 総合判定",
+      "🔍 イシュー分析結果",
+      "🎯 実装ガイダンス",
+      "➡️ 次のステップ"
+    ],
+    "success_indicators": [
+      "要件明確性評価",
+      "実装可能性確認",
+      "依存関係特定完了"
+    ]
+  },
+  "prerequisites": [
+    "github_issue_exists",
+    "issue_content_accessible"
+  ],
+  "retry_context": {
+    "common_issues": [
+      "Ambiguous or incomplete issue description",
+      "Missing acceptance criteria",
+      "Unclear technical requirements",
+      "Insufficient context for implementation"
+    ],
+    "enhanced_guidance": [
+      "イシュー記述の詳細分析と要件の明確化",
+      "受入基準の完全性と実装可能性の評価",
+      "技術要件と制約の特定と文書化",
+      "実装アプローチの提案と検証"
+    ],
+    "special_focus": "イシューがTDD/DDD/Layered Architecture実装に適した形で定義されていることの確認"
+  },
+  "dependencies": {
+    "previous_commands": [],
+    "next_commands": ["03-create-use-case", "04-domain-modeling"],
+    "required_files": [
+      "GitHub issue"
+    ],
+    "output_files": [
+      "issue_analysis_report.md"
+    ]
+  }
+}

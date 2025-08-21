@@ -1,0 +1,69 @@
+{
+  "command": "02.5-review-sprint-plan",
+  "description": "Sprint plan review and validation for TDD/DDD/Layered Architecture development process",
+  "phase": "sprint-planning-review-phase",
+  "category": "quality-assurance",
+  "priority": "medium",
+  "critical_tasks": [
+    "sprint_plan_analysis",
+    "ticket_structure_validation",
+    "acceptance_criteria_review",
+    "priority_assessment",
+    "dependency_verification",
+    "workload_validation"
+  ],
+  "output_requirements": {
+    "critical_patterns": [
+      "✅.*スプリント計画.*分析",
+      "✅.*チケット構造.*検証",
+      "✅.*受入基準.*レビュー",
+      "✅.*優先度.*評価",
+      "✅.*依存関係.*検証",
+      "✅.*作業負荷.*確認",
+      "(PLAN_APPROVED|REQUIRES_ADJUSTMENT|NEEDS_REVISION)"
+    ],
+    "required_sections": [
+      "📊 実行サマリー",
+      "📋 総合判定",
+      "📋 スプリント計画評価",
+      "🎯 チケット品質確認",
+      "➡️ 次のステップ"
+    ],
+    "success_indicators": [
+      "スプリント計画品質",
+      "チケット粒度適正性",
+      "受入基準完全性"
+    ]
+  },
+  "prerequisites": [
+    "sprint_plan_exists",
+    "github_issues_created",
+    "acceptance_criteria_defined"
+  ],
+  "retry_context": {
+    "common_issues": [
+      "Inadequate acceptance criteria definition",
+      "Poor ticket granularity",
+      "Missing dependency identification",
+      "Unrealistic workload estimation"
+    ],
+    "enhanced_guidance": [
+      "スプリント計画の構造と内容の詳細評価",
+      "Given-When-Thenシナリオベースの受入基準確認",
+      "チケット間の依存関係と順序の適切性検証",
+      "実装可能性と作業負荷の現実的評価"
+    ],
+    "special_focus": "スプリント計画がTDD/DDD原則に従い、実装可能なチケット粒度で構成されていることの確認"
+  },
+  "dependencies": {
+    "previous_commands": ["02-sprint-planning"],
+    "next_commands": ["03-create-use-case"],
+    "required_files": [
+      "docs/sprints/sprint-X-plan.md",
+      "GitHub issues"
+    ],
+    "output_files": [
+      "sprint_plan_review_report.md"
+    ]
+  }
+}

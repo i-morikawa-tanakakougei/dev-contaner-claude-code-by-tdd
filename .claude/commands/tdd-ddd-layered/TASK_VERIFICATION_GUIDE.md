@@ -2,11 +2,12 @@
 
 ## 📖 概要
 
-このシステムは、TDD/DDD/Layered Architecture開発プロセスにおいて、各コマンドの実行結果を自動的に検証し、品質を保証するための統合システムです。
+このシステムは、TDD/DDD/Layered Architecture 開発プロセスにおいて、各コマンドの実行結果を自動的に検証し、品質を保証するための統合システムです。
 
 ### 🎯 主要機能
-- **メタデータ駆動検証**: JSONファイルに基づく動的なタスク確認
-- **Critical Tasks確認**: 最重要項目の確実な検証
+
+- **メタデータ駆動検証**: JSON ファイルに基づく動的なタスク確認
+- **Critical Tasks 確認**: 最重要項目の確実な検証
 - **自動再試行機能**: 問題検出時の改善指示付き再実行
 - **標準化出力**: サブエージェントの統一された構造化レポート
 - **包括的テスト自動化**: 継続的品質保証
@@ -14,6 +15,7 @@
 ## 🚀 クイックスタート
 
 ### 1. システム状態確認
+
 ```bash
 # 基本機能テスト
 .claude/commands/tdd-ddd-layered/test-automation-system.sh basic
@@ -22,7 +24,8 @@
 .claude/commands/tdd-ddd-layered/test-automation-system.sh all
 ```
 
-### 2. CI/CD確認
+### 2. CI/CD 確認
+
 ```bash
 # 開発環境でクイックチェック
 .claude/commands/tdd-ddd-layered/ci-cd-verification.sh dev quick
@@ -32,6 +35,7 @@
 ```
 
 ### 3. コマンド実行（自動検証付き）
+
 ```bash
 # ドメイン設計レビュー（自動検証あり）
 /review-domain-design 15
@@ -46,6 +50,7 @@
 ## 🔧 システム構成
 
 ### ライブラリ構造
+
 ```
 .claude/commands/tdd-ddd-layered/
 ├── _task_verification.sh          # 共通検証ライブラリ
@@ -60,6 +65,7 @@
 ```
 
 ### サブエージェント拡張
+
 ```
 .claude/agents/
 ├── 04.5-review-domain-design.md   # 標準化出力対応
@@ -72,6 +78,7 @@
 ### ライブラリの使用方法
 
 #### 基本的な使用パターン
+
 ```bash
 # コマンドファイル内での使用例
 source "$(dirname "${BASH_SOURCE[0]}")/_task_verification.sh"
@@ -94,6 +101,7 @@ prepare_retry_context "command-name" "1" "問題1" "問題2"
 ```
 
 #### メタデータ駆動確認
+
 ```bash
 # メタデータ読み込み
 load_task_metadata "04.5-review-domain-design"
@@ -114,7 +122,7 @@ load_task_metadata "04.5-review-domain-design"
   "phase": "domain-design-review",
   "critical_tasks": [
     "ddd_compliance_check",
-    "aggregate_boundary_validation", 
+    "aggregate_boundary_validation",
     "business_rules_placement"
   ],
   "output_requirements": {
@@ -123,20 +131,11 @@ load_task_metadata "04.5-review-domain-design"
       "✅.*集約境界",
       "(APPROVED|CONDITIONAL_APPROVAL|REJECTED)"
     ],
-    "success_indicators": [
-      "ドメイン設計レビュー完了",
-      "✅.*適切"
-    ],
-    "failure_indicators": [
-      "DDD違反",
-      "設計修正が必要"
-    ]
+    "success_indicators": ["ドメイン設計レビュー完了", "✅.*適切"],
+    "failure_indicators": ["DDD違反", "設計修正が必要"]
   },
   "retry_context": {
-    "focus_areas": [
-      "DDD compliance validation",
-      "Aggregate boundary design"
-    ],
+    "focus_areas": ["DDD compliance validation", "Aggregate boundary design"],
     "common_issues": [
       "Direct entity references across aggregates",
       "Business rules in wrong layer"
@@ -150,6 +149,7 @@ load_task_metadata "04.5-review-domain-design"
 ### 日常運用
 
 #### 開発者向け運用
+
 ```bash
 # 毎日の開発開始時
 .claude/commands/tdd-ddd-layered/test-automation-system.sh basic
@@ -162,6 +162,7 @@ load_task_metadata "04.5-review-domain-design"
 ```
 
 #### チームリーダー向け運用
+
 ```bash
 # 週次品質確認
 .claude/commands/tdd-ddd-layered/ci-cd-verification.sh dev full
@@ -177,7 +178,8 @@ load_task_metadata "04.5-review-domain-design"
 
 #### よくある問題と解決方法
 
-**Q1: Critical tasks確認で問題が検出される**
+**Q1: Critical tasks 確認で問題が検出される**
+
 ```bash
 # 問題確認
 grep -n "verification_issues" /workspace/.claude/test-automation/test-automation.log
@@ -190,6 +192,7 @@ jq '.critical_patterns' .claude/commands/tdd-ddd-layered/task-definitions/[comma
 ```
 
 **Q2: サブエージェントの出力形式が不適切**
+
 - サブエージェントファイルで `STANDARDIZED OUTPUT REQUIREMENTS` セクションを確認
 - 以下の構造が含まれているか確認:
   - `📊 実行サマリー`
@@ -197,6 +200,7 @@ jq '.critical_patterns' .claude/commands/tdd-ddd-layered/task-definitions/[comma
   - `💡 次のステップ`
 
 **Q3: メタデータファイルが見つからない**
+
 ```bash
 # メタデータディレクトリ確認
 ls .claude/commands/tdd-ddd-layered/task-definitions/
@@ -209,6 +213,7 @@ cp .claude/commands/tdd-ddd-layered/task-definitions/04.5-review-domain-design.j
 ### パフォーマンス最適化
 
 #### 高速化のヒント
+
 1. **メタデータキャッシュ**: 同じコマンドの連続実行では自動キャッシュ
 2. **並列実行**: 複数のテスト実行時は並列実行可能
 3. **選択的テスト**: 必要な部分のみテスト実行
@@ -225,27 +230,31 @@ wait
 ### 成功指標
 
 #### システムレベル
+
 - **検証成功率**: 95%以上
 - **自動修正率**: 80%以上
-- **平均確認時間**: 2秒以内
+- **平均確認時間**: 2 秒以内
 
 #### 開発プロセス
-- **エラー検出率**: 早期発見30%向上
+
+- **エラー検出率**: 早期発見 30%向上
 - **再作業時間**: 50%削減
-- **品質指標**: クリティカル問題0件
+- **品質指標**: クリティカル問題 0 件
 
 ### ログとレポート
 
 #### ログファイル
+
 ```bash
 # テスト自動化ログ
 /workspace/.claude/test-automation/test-automation.log
 
-# CI/CDログ  
+# CI/CDログ
 /workspace/.claude/ci-reports/ci-cd-[timestamp].log
 ```
 
 #### レポートファイル
+
 ```bash
 # テストレポート
 /workspace/.claude/test-automation/reports/
@@ -259,6 +268,7 @@ wait
 ### 新しいコマンドの追加
 
 1. **メタデータファイル作成**
+
 ```bash
 # テンプレートをコピー
 cp .claude/commands/tdd-ddd-layered/task-definitions/04.5-review-domain-design.json \
@@ -269,6 +279,7 @@ vim .claude/commands/tdd-ddd-layered/task-definitions/[new-command].json
 ```
 
 2. **コマンドファイル更新**
+
 ```bash
 # Agent Result Verification セクションに追加
 source "$(dirname "${BASH_SOURCE[0]}")/_task_verification.sh"
@@ -277,11 +288,14 @@ show_verification_results "[new-command]"
 ```
 
 3. **サブエージェント更新**（該当する場合）
+
 ```markdown
 ## 🎯 **STANDARDIZED OUTPUT REQUIREMENTS**
 
 ### **📊 実行サマリー**
-### **📋 総合判定**  
+
+### **📋 総合判定**
+
 ### **💡 次のステップ**
 ```
 
@@ -301,24 +315,28 @@ show_verification_results "[new-command]"
 ## 🛡️ セキュリティとベストプラクティス
 
 ### セキュリティガイドライン
+
 1. **機密情報の除外**: メタデータファイルに機密情報を含めない
 2. **実行権限**: 必要最小限の実行権限のみ付与
 3. **ログのサニタイゼ**: ログファイルから機密情報を除外
 
 ### ベストプラクティス
+
 1. **定期的なメタデータ更新**: 要件変更に応じたメタデータの更新
-2. **テストの自動実行**: CI/CDパイプラインへの統合
+2. **テストの自動実行**: CI/CD パイプラインへの統合
 3. **チーム共有**: メトリクスとレポートの共有
 4. **継続的改善**: 定期的な効果測定と改善
 
 ## 🤝 サポートとコミュニティ
 
 ### 問題報告
+
 - システムの問題や改善提案
 - パフォーマンス問題の報告
 - 新機能のリクエスト
 
 ### ドキュメント更新
+
 このガイドは継続的に更新されます。最新版は常にプロジェクトルートで確認してください。
 
 ---
