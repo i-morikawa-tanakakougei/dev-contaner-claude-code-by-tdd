@@ -1,0 +1,98 @@
+{
+  "command": "10.5-review-test-results",
+  "description": "Comprehensive test execution results analysis and quality metrics assessment",
+  "phase": "test-results-review",
+  "critical_tasks": [
+    "test_execution_results_analysis",
+    "coverage_analysis_assessment", 
+    "scenario_implementation_validation",
+    "quality_metrics_evaluation",
+    "performance_bottleneck_identification"
+  ],
+  "important_tasks": [
+    "test_success_rate_review",
+    "business_rule_testing_validation",
+    "architectural_compliance_check",
+    "error_scenario_coverage_review",
+    "maintainability_assessment"
+  ],
+  "optional_tasks": [
+    "test_execution_performance",
+    "code_duplication_analysis", 
+    "refactoring_opportunity_identification",
+    "technical_debt_assessment"
+  ],
+  "output_requirements": {
+    "format": "structured_sections",
+    "required_sections": [
+      "実行サマリー",
+      "総合判定",
+      "次のステップ"
+    ],
+    "critical_patterns": [
+      "✅.*テスト実行結果",
+      "✅.*カバレッジ分析",
+      "✅.*品質メトリクス", 
+      "(APPROVED|CONDITIONAL_APPROVAL|REJECTED)"
+    ],
+    "success_indicators": [
+      "テスト結果レビュー完了",
+      "テスト成功率.*100%",
+      "カバレッジ.*80%",
+      "品質メトリクス.*良好"
+    ],
+    "failure_indicators": [
+      "テストが失敗",
+      "カバレッジ不足",
+      "性能問題",
+      "品質問題.*検出"
+    ]
+  },
+  "quality_gates": {
+    "approved": {
+      "description": "Ready for Refactoring",
+      "criteria": [
+        "All tests passing with good success rate",
+        "Adequate code coverage (80%+)",
+        "Quality metrics within acceptable range",
+        "Performance meets requirements"
+      ]
+    },
+    "conditional_approval": {
+      "description": "Minor Quality Issues",
+      "criteria": [
+        "Minor quality improvements recommended",
+        "Coverage could be enhanced",
+        "Performance acceptable with room for improvement"
+      ]
+    },
+    "rejected": {
+      "description": "Critical Issues Require Fixes",
+      "criteria": [
+        "Failing tests detected",
+        "Insufficient code coverage",
+        "Performance issues identified",
+        "Quality metrics below standards"
+      ]
+    }
+  },
+  "next_steps": {
+    "approved": "/refactor",
+    "conditional_approval": "Apply improvements then /refactor",
+    "rejected": "Fix critical issues then re-run tests"
+  },
+  "retry_context": {
+    "focus_areas": [
+      "Test execution results analysis",
+      "Coverage gap identification",
+      "Quality metrics assessment",
+      "Performance bottleneck detection"
+    ],
+    "common_issues": [
+      "Low test coverage",
+      "Performance bottlenecks",
+      "High code complexity",
+      "Failing or unstable tests"
+    ]
+  }
+}

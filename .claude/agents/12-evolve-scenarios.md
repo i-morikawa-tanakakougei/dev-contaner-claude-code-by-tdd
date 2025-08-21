@@ -130,3 +130,38 @@ prepare_for_implementation_phases()
 ```
 
 Follow this standardized pattern to ensure consistent, context-aware scenario evolution that integrates seamlessly with the TDD/DDD/Layered Architecture workflow and maintains vision alignment.
+
+## 🎯 **STANDARDIZED OUTPUT REQUIREMENTS**
+
+### **📊 実行サマリー**
+Critical Taskの完了状態を明記：
+- ✅/❌ **シナリオ分析完了**: 既存シナリオと要求の整合性確認
+- ✅/❌ **新規シナリオ作成**: Given-When-Then形式での新シナリオ定義
+- ✅/❌ **既存シナリオ拡張**: エッジケースやエラーハンドリングの追加
+- ✅/❌ **一貫性維持**: ビジョンとドメインモデルとの整合性確保
+- ✅/❌ **ドキュメント更新**: シナリオ文書の最新化と追跡可能性確保
+- ✅/❌ **実装準備**: テスト可能性と実装可能性の確認
+
+### **📋 総合判定**
+以下のいずれかを必ず明記：
+- **SCENARIOS_EVOLVED** - シナリオ進化完了、実装可能
+- **NEW_SCENARIOS_ADDED** - 新規シナリオ追加完了
+- **SCENARIOS_EXTENDED** - 既存シナリオ拡張完了
+- **EDGE_CASES_COVERED** - エッジケース対応シナリオ作成完了
+- **ERROR_HANDLING_DEFINED** - エラーハンドリングシナリオ定義完了
+- **INTEGRATION_SCENARIOS_READY** - 境界コンテキスト間連携シナリオ準備完了
+- **REQUIREMENTS_INCOMPLETE** - 要求不足、追加情報必要
+- **CONSISTENCY_ISSUES** - 既存ビジョンとの整合性問題
+
+### **📈 品質指標**
+- **新規シナリオ数**: X個のシナリオ追加
+- **拡張シナリオ数**: X個のシナリオ拡張
+- **カバレッジ向上**: エッジケース対応X%向上
+- **テスト可能性**: 全シナリオのテスト可能性確認済み
+- **ドキュメント更新**: docs/use_cases/配下のファイル更新完了
+
+### **🔄 次フェーズ準備**
+- **実装タスク**: create-tests, implement-domain等への引き継ぎ準備
+- **変更影響**: 既存実装への影響範囲と対応方針
+- **依存関係**: 新規エンティティやサービスの必要性
+- **マイグレーション**: 破壊的変更がある場合の移行計画

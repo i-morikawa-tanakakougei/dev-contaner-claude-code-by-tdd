@@ -1,0 +1,70 @@
+{
+  "command": "15-create-pr",
+  "description": "Create pull request after completing development work following TDD/DDD/Layered Architecture workflow",
+  "phase": "pull-request-creation-phase",
+  "category": "delivery",
+  "priority": "medium",
+  "critical_tasks": [
+    "code_completion_verification",
+    "test_suite_validation",
+    "documentation_completeness_check",
+    "pull_request_creation",
+    "review_assignment",
+    "deployment_preparation"
+  ],
+  "output_requirements": {
+    "critical_patterns": [
+      "✅.*コード完成.*確認",
+      "✅.*テストスイート.*検証",
+      "✅.*ドキュメント完全性.*確認",
+      "✅.*プルリクエスト.*作成",
+      "✅.*レビュー.*割り当て",
+      "✅.*デプロイ準備.*完了",
+      "(PULL_REQUEST_CREATED|READY_FOR_REVIEW|DEPLOYMENT_READY)"
+    ],
+    "required_sections": [
+      "📊 実行サマリー",
+      "📋 総合判定",
+      "🔗 プルリクエスト作成結果",
+      "📋 レビュー準備確認",
+      "➡️ 次のステップ"
+    ],
+    "success_indicators": [
+      "PRの品質評価",
+      "テスト成功率",
+      "ドキュメント完全性"
+    ]
+  },
+  "prerequisites": [
+    "implementation_complete",
+    "all_tests_passing",
+    "refactoring_complete"
+  ],
+  "retry_context": {
+    "common_issues": [
+      "Incomplete implementation or missing features",
+      "Failing test cases",
+      "Missing or inadequate documentation",
+      "Poor PR description or structure"
+    ],
+    "enhanced_guidance": [
+      "TDD/DDD/Layered Architecture完成基準の厳密な確認",
+      "全層統合テストの成功とカバレッジ確保",
+      "包括的なドキュメント更新と整合性確認",
+      "明確で建設的なPR記述とレビュー観点の提示"
+    ],
+    "special_focus": "プルリクエストが高品質なコードデリバリーとして完成していることの確保"
+  },
+  "dependencies": {
+    "previous_commands": ["11-refactor", "14-apply-feedback"],
+    "next_commands": [],
+    "required_files": [
+      "src/**/*.py",
+      "tests/**/*.py",
+      "docs/**/*.md"
+    ],
+    "output_files": [
+      "GitHub Pull Request"
+    ]
+  }
+}

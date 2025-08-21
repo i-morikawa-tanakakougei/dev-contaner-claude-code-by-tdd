@@ -366,6 +366,29 @@ Follow these steps:
    echo "✅ 実装レビュー完了 - フィードバック適用準備完了!"
    ```
 
+4. **Advanced Task Verification**:
+   ```bash
+   # 🔧 Load advanced task verification library
+   source "$(dirname "${BASH_SOURCE[0]}")/_task_verification.sh"
+   
+   # ✨ New: Advanced task verification with retry capability
+   echo "🔍 Critical tasks確認中..."
+   if ! verify_critical_tasks "13-review-issue" "$latest_report"; then
+       echo "⚠️ Critical tasks確認で問題が検出されました - 再実行を試行します"
+       prepare_retry_context "13-review-issue" "1" "${verification_issues[@]}"
+       
+       # Enhanced context for retry
+       echo "🔄 再実行用の強化コンテキスト準備中..."
+       prepare_enhanced_context "13-review-issue" "$context_file" "${verification_issues[@]}"
+       
+       echo "💡 推奨アクション: エージェントを再実行してください"
+       echo "   重点項目: $(IFS='|'; echo "${verification_issues[*]}")"
+       exit 1
+   fi
+   
+   echo "✅ Critical tasks確認完了 - 全項目クリア"
+   ```
+
 **💡 Key Benefits of Implementation Review:**
 - **Quality Gate Validation**: Ensure implementation meets quality standards before PR
 - **Architecture Compliance**: Validate adherence to DDD/Clean Architecture principles

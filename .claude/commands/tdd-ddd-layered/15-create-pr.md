@@ -379,6 +379,26 @@ Follow these steps:
    fi
    
    echo "✅ エージェント実行結果検証完了"
+   
+   # 🔧 Load advanced task verification library
+   source "$(dirname "${BASH_SOURCE[0]}")/_task_verification.sh"
+   
+   # ✨ New: Advanced task verification with retry capability
+   echo "🔍 Critical tasks確認中..."
+   if ! verify_critical_tasks "15-create-pr" "$latest_report"; then
+       echo "⚠️ Critical tasks確認で問題が検出されました - 再実行を試行します"
+       prepare_retry_context "15-create-pr" "1" "${verification_issues[@]}"
+       
+       # Enhanced context for retry
+       echo "🔄 再実行用の強化コンテキスト準備中..."
+       prepare_enhanced_context "15-create-pr" "$context_file" "${verification_issues[@]}"
+       
+       echo "💡 推奨アクション: エージェントを再実行してください"
+       echo "   重点項目: $(IFS='|'; echo "${verification_issues[*]}")"
+       exit 1
+   fi
+   
+   echo "✅ Critical tasks確認完了 - 全項目クリア"
    echo "  - プルリクエスト: 作成完了"
    echo "  - イシューリンク: 設定完了"
    ```

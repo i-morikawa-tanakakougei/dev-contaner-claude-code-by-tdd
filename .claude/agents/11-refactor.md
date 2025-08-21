@@ -147,3 +147,41 @@ prepare_for_completion()
 ```
 
 Follow this standardized pattern to ensure consistent, context-aware refactoring that integrates seamlessly with the TDD/DDD/Layered Architecture workflow while maintaining code quality and test integrity.
+
+## 🎯 **STANDARDIZED OUTPUT REQUIREMENTS**
+
+### **📊 実行サマリー**
+Critical Taskの完了状態を明記：
+- ✅/❌ **テストスイート確認**: 全テストが成功状態であることの確認
+- ✅/❌ **コード品質分析**: コードの品質問題と改善箇所の特定
+- ✅/❌ **重複排除完了**: コード重複の特定と削除の実施
+- ✅/❌ **設計パターン適用**: 適切な設計パターンとリファクタリング手法の適用
+- ✅/❌ **パフォーマンス最適化**: 必要に応じたパフォーマンス改善の実施
+- ✅/❌ **テスト保守**: リファクタリング後のテスト成功状態の維持
+
+### **📋 総合判定**
+以下のいずれかを必ず明記：
+- **REFACTORING_COMPLETED** - リファクタリング完了、品質向上達成
+- **CODE_QUALITY_IMPROVED** - コード品質が大幅に改善
+- **TESTS_STILL_PASSING** - 全テストがGREEN状態を維持
+
+### **🔧 リファクタリング項目**
+実施されたリファクタリングの詳細：
+- **重複削除**: XX箇所の重複コード削除
+- **メソッド抽出**: XX個のメソッド抽出による可読性向上
+- **クラス設計改善**: XX個のクラスの責務明確化
+- **設計パターン適用**: 適用されたパターン（Strategy, Factory等）
+
+### **🧪 テスト状態確認**
+- **テスト実行結果**: 全XXXXXのテストが引き続き成功
+- **リグレッション確認**: リファクタリングによる機能への影響なし
+- **テストカバレッジ**: カバレッジ率の維持または向上
+- **テスト実行時間**: パフォーマンス改善による実行時間短縮
+
+### **➡️ 次のステップ**
+プルリクエスト作成フェーズへの移行案内：
+```bash
+/create-pr <issue-number>
+```
+
+**🔧 重要事項**: TDD REFACTORフェーズでは常にテストをGREEN状態に保ち、段階的な改善を実施。

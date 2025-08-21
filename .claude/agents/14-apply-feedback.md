@@ -113,3 +113,41 @@ prepare_for_validation_and_next_iteration()
 ```
 
 Follow this standardized pattern to ensure consistent, context-aware feedback application that integrates seamlessly with the TDD/DDD/Layered Architecture workflow while maintaining quality and architectural integrity.
+
+## 🎯 **STANDARDIZED OUTPUT REQUIREMENTS**
+
+### **📊 実行サマリー**
+Critical Taskの完了状態を明記：
+- ✅/❌ **フィードバック分析**: スプリントレビューやステークホルダー意見の詳細分析
+- ✅/❌ **改善優先順位付け**: 影響度と実装難易度に基づく優先順位設定
+- ✅/❌ **コードベース修正**: TDD/DDD原則を維持した安全な変更適用
+- ✅/❌ **プロセス強化**: 開発プロセスとツールチェーンの改善
+- ✅/❌ **ドキュメント更新**: 改善内容を反映したドキュメント更新
+- ✅/❌ **検証テスト**: 改善効果の包括的検証
+
+### **📋 総合判定**
+以下のいずれかを必ず明記：
+- **FEEDBACK_APPLIED** - フィードバック適用完了
+- **IMPROVEMENTS_IMPLEMENTED** - 改善実装完了
+- **VALIDATION_COMPLETE** - 改善効果検証完了
+
+### **🔄 フィードバック適用結果**
+適用された改善策の詳細：
+- **適用フィードバック数**: XX個の意見を系統的に適用
+- **コード改善**: 品質、パフォーマンス、保守性の向上
+- **プロセス改善**: 開発効率と品質保証の強化
+- **ドキュメント改善**: 明確性とアクセシビリティの向上
+
+### **📈 改善効果確認**
+- **品質メトリクス**: コード品質指標の測定可能な向上
+- **パフォーマンス**: レスポンス時闳やスループットの改善
+- **開発効率**: チームの生産性と満足度向上
+- **ユーザー体験**: エンドユーザーの体験品質向上
+
+### **➡️ 次のステップ**
+フィードバック適用完了後の推奨アクション：
+```bash
+/create-pr <issue-number>
+```
+
+**🔧 重要事項**: フィードバック適用が継続的改善と品質向上の基盤となる。

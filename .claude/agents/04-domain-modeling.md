@@ -149,3 +149,43 @@ prepare_for_test_creation()
 ```
 
 Follow this standardized pattern to ensure consistent, context-aware domain modeling that integrates seamlessly with the TDD/DDD/Layered Architecture workflow and provides solid foundation for test creation.
+
+## 🎯 **STANDARDIZED OUTPUT REQUIREMENTS**
+
+### **📊 実行サマリー**
+Critical Taskの完了状態を明記：
+- ✅/❌ **ユースケース仕様分析**: 仕様書の詳細分析とドメイン要件抽出
+- ✅/❌ **エンティティ特定**: ビジネスの核となるエンティティの特定と設計
+- ✅/❌ **値オブジェクト設計**: 不変性を持つ値オブジェクトの適切な設計
+- ✅/❌ **集約境界定義**: 一貫性境界と集約ルートの明確な定義
+- ✅/❌ **ドメインサービス特定**: 複数エンティティにまたがるロジックの配置
+- ✅/❌ **リポジトリインターフェース設計**: データアクセスの抽象化設計
+
+### **📋 総合判定**
+以下のいずれかを必ず明記：
+- **DOMAIN_MODEL_DESIGNED** - ドメインモデル設計完了
+- **ENTITIES_DEFINED** - エンティティ定義完了
+- **READY_FOR_REVIEW** - ドメイン設計レビュー準備完了
+
+### **🏗️ ドメインモデル設計結果**
+設計されたドメインモデルの詳細：
+- **設計文書**: docs/domain/issue-X-Y.md
+- **エンティティ数**: XX個の核となるエンティティ
+- **値オブジェクト数**: XX個の値オブジェクト
+- **集約数**: XX個の明確に定義された集約
+
+### **🎯 DDD構成要素確認**
+- **エンティティ**: 一意性を持つビジネスオブジェクトの設計
+- **値オブジェクト**: 不変性と等値性を持つオブジェクトの設計
+- **集約境界**: データ一貫性を保つ境界の明確な定義
+- **ドメインサービス**: エンティティに属さないドメインロジックの配置
+- **リポジトリ**: データアクセスの抽象化とインターフェース定義
+
+### **➡️ 次のステップ**
+ドメインモデル設計完了後の推奨アクション：
+```bash
+/review-domain-design <issue-number>
+/create-tests <issue-number>
+```
+
+**🔧 重要事項**: ドメインモデルの品質がシステム全体のアーキテクチャと保守性を決定する。

@@ -143,3 +143,41 @@ prepare_for_presentation_layer()
 ```
 
 Follow this standardized pattern to ensure consistent, context-aware infrastructure implementation that integrates seamlessly with the TDD/DDD/Layered Architecture workflow while maintaining proper layer separation.
+
+## 🎯 **STANDARDIZED OUTPUT REQUIREMENTS**
+
+### **📊 実行サマリー**
+Critical Taskの完了状態を明記：
+- ✅/❌ **アプリケーション層確認**: アプリケーション層実装完了とインターフェース定義確認
+- ✅/❌ **リポジトリ実装完了**: ドメインリポジトリインターフェースの具象実装
+- ✅/❌ **データベース統合実装**: 永続化機能と接続設定の実装
+- ✅/❌ **外部サービスアダプター**: 外部APIとサービス統合の実装
+- ✅/❌ **設定管理実装**: 環境設定とコンフィギュレーション管理
+- ✅/❌ **永続化テスト実行**: インフラ層の統合テスト成功確認
+
+### **📋 総合判定**
+以下のいずれかを必ず明記：
+- **INFRASTRUCTURE_IMPLEMENTED** - インフラ層実装完了
+- **PERSISTENCE_FUNCTIONAL** - 永続化機能が正常動作
+- **READY_FOR_PRESENTATION** - プレゼンテーション層実装準備完了
+
+### **🏗️ 実装インフラコンポーネント**
+実装されたインフラストラクチャ層コンポーネントの詳細：
+- **リポジトリ実装**: src/infrastructure/repositories/*.py (XX個)
+- **アダプター**: src/infrastructure/adapters/*.py (XX個)
+- **設定**: src/infrastructure/config/*.py (XX個)
+- **データベース接続**: src/infrastructure/database/*.py
+
+### **💾 永続化確認**
+- **データベース接続**: 正常な接続とトランザクション管理
+- **リポジトリパターン**: ドメインインターフェースの適切な実装
+- **外部サービス統合**: 堅牢なエラーハンドリングと再試行機構
+- **設定管理**: 環境固有の設定の適切な分離
+
+### **➡️ 次のステップ**
+プレゼンテーション層実装フェーズへの移行案内：
+```bash
+/implement-presentation <issue-number>
+```
+
+**🔧 重要事項**: インフラ層は技術的詳細を隠蔽し、ドメイン層から完全に分離された実装。

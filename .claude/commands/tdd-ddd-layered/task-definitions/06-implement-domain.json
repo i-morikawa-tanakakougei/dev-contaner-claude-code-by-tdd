@@ -1,0 +1,92 @@
+{
+  "command": "06-implement-domain",
+  "description": "TDD GREEN phase implementation - implement domain layer to make failing tests pass",
+  "phase": "tdd-green-phase",
+  "category": "implementation",
+  "priority": "high",
+  "critical_tasks": [
+    "failing_test_analysis",
+    "domain_entities_implementation",
+    "value_objects_implementation", 
+    "domain_services_implementation",
+    "domain_purity_validation",
+    "test_success_verification"
+  ],
+  "output_requirements": {
+    "critical_patterns": [
+      "✅.*テスト分析.*完了",
+      "✅.*エンティティ実装.*完了",
+      "✅.*値オブジェクト.*実装",
+      "✅.*ドメインサービス.*実装",
+      "✅.*ドメイン純粋性.*確認",
+      "✅.*テスト成功.*検証",
+      "(DOMAIN_IMPLEMENTED|TESTS_PASSING|READY_FOR_APPLICATION_LAYER)"
+    ],
+    "required_sections": [
+      "📊 実行サマリー",
+      "📋 総合判定",
+      "🏗️ 実装ドメインオブジェクト",
+      "🟢 TDD GREEN状態確認",
+      "➡️ 次のステップ"
+    ],
+    "success_indicators": [
+      "ドメインファイル数",
+      "テスト成功率",
+      "ドメイン純粋性確認"
+    ]
+  },
+  "prerequisites": [
+    "failing_tests_exist",
+    "domain_model_documented",
+    "test_framework_setup"
+  ],
+  "retry_context": {
+    "common_issues": [
+      "Tests not properly failing before implementation",
+      "Domain purity violations (infrastructure dependencies)",
+      "Missing business rule implementations",
+      "Inadequate value object validation"
+    ],
+    "enhanced_guidance": [
+      "失敗テストの詳細分析と要件抽出を重視",
+      "ドメインの純粋性を厳密に維持（I/O操作禁止）",
+      "ビジネスルールの完全な実装",
+      "エンティティと値オブジェクトの不変条件実装"
+    ],
+    "special_focus": "TDD GREENフェーズの原則に従い、最小限のコードでテストを成功させながらドメインの純粋性を保つことに集中"
+  },
+  "dependencies": {
+    "previous_commands": ["05-create-tests", "05.5-review-test-design"],
+    "next_commands": ["07-implement-usecase"],
+    "required_files": [
+      "tests/unit/domain/test_*.py",
+      "docs/domain/issue-X-Y.md"
+    ],
+    "output_files": [
+      "src/domain/entities/*.py",
+      "src/domain/value_objects/*.py",
+      "src/domain/services/*.py",
+      "src/domain/repositories/__init__.py"
+    ]
+  },
+  "validation_rules": {
+    "domain_file_patterns": [
+      "src/domain/entities/.*\\.py",
+      "src/domain/value_objects/.*\\.py",
+      "src/domain/services/.*\\.py"
+    ],
+    "content_validation": [
+      "class.*Entity",
+      "class.*ValueObject", 
+      "class.*DomainService",
+      "def.*__init__",
+      "raise.*DomainException"
+    ],
+    "purity_validation": [
+      "no.*import.*requests",
+      "no.*import.*database",
+      "no.*import.*sqlalchemy",
+      "no.*open\\("
+    ]
+  }
+}

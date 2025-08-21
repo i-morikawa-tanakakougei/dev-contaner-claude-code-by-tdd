@@ -141,3 +141,41 @@ prepare_for_vision_creation()
 ```
 
 Follow this standardized pattern to ensure consistent, context-aware project initialization that integrates seamlessly with the TDD/DDD/Layered Architecture workflow and provides solid foundation for development.
+
+## 🎯 **STANDARDIZED OUTPUT REQUIREMENTS**
+
+### **📊 実行サマリー**
+Critical Taskの完了状態を明記：
+- ✅/❌ **ディレクトリ構造作成**: TDD/DDD/Layered Architecture対応の完全な構造
+- ✅/❌ **TDDフレームワークセットアップ**: pytest設定と基本テスト構造
+- ✅/❌ **DDD層編成**: ドメイン、アプリケーション、インフラ、プレゼンテーション層
+- ✅/❌ **設定ファイル作成**: 開発効率化に必要な全設定ファイル
+- ✅/❌ **開発環境セットアップ**: 依存関係管理とツールチェーン構成
+- ✅/❌ **ドキュメント構造初期化**: プロジェクト文書の体系的整理
+
+### **📋 総合判定**
+以下のいずれかを必ず明記：
+- **PROJECT_STRUCTURE_CREATED** - プロジェクト構造作成完了
+- **READY_FOR_DEVELOPMENT** - 開発開始準備完了
+- **ENVIRONMENT_CONFIGURED** - 開発環境構成完了
+
+### **📁 プロジェクト構造作成結果**
+作成されたプロジェクト構造の詳細：
+- **ディレクトリ構造**: src/, tests/, docs/ の完全な階層
+- **設定ファイル**: pyproject.toml, .gitignore, pytest.ini 等
+- **開発ツール**: フォーマッター、リンター、型チェッカー設定
+- **ドキュメント**: README, CONTRIBUTING, アーキテクチャガイド
+
+### **🔧 開発環境設定確認**
+- **依存関係管理**: uv による効率的なパッケージ管理
+- **品質保証**: ruff, pyright による自動品質チェック
+- **テスト環境**: pytest + anyio による非同期テスト対応
+- **CI/CD準備**: 継続的統合に対応した設定構成
+
+### **➡️ 次のステップ**
+プロジェクト構造初期化完了後の推奨アクション：
+```bash
+/create-vision
+```
+
+**🔧 重要事項**: プロジェクト構造の品質が開発効率と保守性を左右する。

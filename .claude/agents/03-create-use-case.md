@@ -174,3 +174,41 @@ prepare_for_domain_modeling()
 ```
 
 Follow this pattern to ensure your use case specifications are context-aware, comprehensive, and properly integrated with the project's TDD/DDD workflow.
+
+## 🎯 **STANDARDIZED OUTPUT REQUIREMENTS**
+
+### **📊 実行サマリー**
+Critical Taskの完了状態を明記：
+- ✅/❌ **GitHubイシュー分析**: イシュー内容の詳細分析と要件抽出
+- ✅/❌ **Given-When-Thenシナリオ作成**: 包括的なシナリオカバレッジ
+- ✅/❌ **ドメイン概念特定**: ビジネスルールとドメインオブジェクトの特定
+- ✅/❌ **共通言語定義**: ユビキタス言語の精緻化と一貫性確保
+- ✅/❌ **受入基準精緻化**: 実装チームが理解しやすい具体的基準
+- ✅/❌ **ユースケース文書化**: 完全なトレーサビリティを持つ仕様書
+
+### **📋 総合判定**
+以下のいずれかを必ず明記：
+- **USE_CASE_CREATED** - ユースケース仕様作成完了
+- **SCENARIOS_DEFINED** - シナリオ定義完了
+- **READY_FOR_DOMAIN_MODELING** - ドメインモデリング開始準備完了
+
+### **📖 ユースケース仕様作成結果**
+作成されたユースケース仕様の詳細：
+- **仕様書**: docs/use_cases/issue-X-Y.md
+- **メタデータ**: docs/use_cases/issue-X-Y.json
+- **シナリオ数**: XX個のGiven-When-Thenシナリオ
+- **ドメイン概念**: XX個の特定されたドメインオブジェクト
+
+### **🎯 Given-When-Thenシナリオ確認**
+- **メインシナリオ**: 正常フローの完全カバレッジ
+- **代替シナリオ**: エラーケースと例外処理
+- **エッジケース**: 境界値とコーナーケースの対応
+- **ビジネスルール**: ドメイン固有のルールと制約
+
+### **➡️ 次のステップ**
+ユースケース仕様作成完了後の推奨アクション：
+```bash
+/domain-modeling <issue-number>
+```
+
+**🔧 重要事項**: ユースケース仕様の品質がTDD実装とドメイン設計の成功を左右する。

@@ -121,3 +121,42 @@ prepare_for_next_phase()
 ```
 
 Follow this standard pattern to ensure consistent, context-aware vision creation that integrates seamlessly with the TDD/DDD/Layered Architecture workflow.
+
+## 🎯 **STANDARDIZED OUTPUT REQUIREMENTS**
+
+### **📊 実行サマリー**
+Critical Taskの完了状態を明記：
+- ✅/❌ **プロジェクト範囲定義**: プロジェクトの明確な境界と目標設定
+- ✅/❌ **境界コンテキスト特定**: ドメインの適切な境界コンテキスト分割
+- ✅/❌ **コアシナリオ作成**: 80%カバレッジのGiven-When-Thenシナリオ作成
+- ✅/❌ **共通言語確立**: ユビキタス言語の定義と一貫性確保
+- ✅/❌ **アーキテクチャビジョン**: TDD/DDD/Layered Architecture原則の適用
+- ✅/❌ **Given-When-Thenシナリオ**: 実装可能な具体的シナリオの作成
+
+### **📋 総合判定**
+以下のいずれかを必ず明記：
+- **VISION_CREATED** - ビジョン文書作成完了、開発開始可能
+- **SCENARIOS_DEFINED** - コアシナリオ定義完了
+- **READY_FOR_SPRINT_PLANNING** - スプリント計画開始準備完了
+
+### **📖 ビジョン文書作成結果**
+作成されたビジョン文書の詳細：
+- **ビジョン文書**: docs/vision/ (包括的なプロジェクトビジョン)
+- **境界コンテキスト**: XX個の明確に定義された境界
+- **コアシナリオ**: XX個のGiven-When-Thenシナリオ
+- **共通言語**: ドメイン固有の用語定義集
+
+### **🏗️ 境界コンテキスト定義**
+- **主要境界**: 特定された境界コンテキストと責務
+- **統合ポイント**: 境界間の連携と統合方式
+- **データ設計**: 境界をまたぐデータ管理方針
+- **実装方針**: 各境界の実装アプローチとパターン
+
+### **➡️ 次のステップ**
+ビジョン作成完了後の推奨アクション：
+```bash
+/init-project-structure
+/sprint-planning 1
+```
+
+**🔧 重要事項**: ビジョンの品質がプロジェクト全体の成功を決定する。

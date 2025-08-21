@@ -134,3 +134,40 @@ prepare_for_sprint_planning()
 ```
 
 Follow this standardized pattern to ensure consistent, context-aware status tracking that integrates seamlessly with the TDD/DDD/Layered Architecture workflow and supports effective project management.
+
+## 🎯 **STANDARDIZED OUTPUT REQUIREMENTS**
+
+### **📊 実行サマリー**
+Critical Taskの完了状態を明記：
+- ✅/❌ **ユースケースインベントリ分析**: 全ユースケースの網羅的棍卓と状態把握
+- ✅/❌ **実装状態評価**: TDD/DDDフェーズ別の進捗状態評価
+- ✅/❌ **進捗追跡**: スプリント目標に対する進捗率とマイルストーン
+- ✅/❌ **カバレッジ分析**: コードカバレッジとテスト品質の定量分析
+- ✅/❌ **ボトルネック特定**: 開発阻害要因の特定と分析
+- ✅/❌ **状態レポート生成**: 包括的なプロジェクト状態レポート作成
+
+### **📋 総合判定**
+以下のいずれかを必ず明記：
+- **STATUS_ANALYZED** - 状態分析完了
+- **PROGRESS_TRACKED** - 進捗追跡完了
+- **REPORT_GENERATED** - ステータスレポート生成完了
+
+### **📈 ユースケース実装状態**
+ユースケース実装の総合状態：
+- **総ユースケース数**: XX個のユースケース
+- **完了率**: XX% (完全実装済み)
+- **進行中**: XX個 (各フェーズ別分布)
+- **未着手**: XX個 (優先度別分類)
+
+### **🎯 進捗分析結果**
+- **TDDフェーズ別進捗**: RED/GREEN/REFACTORごとの状態
+- **DDD層別進捗**: Domain/Application/Infrastructure/Presentation層の完成度
+- **品質メトリクス**: テストカバレッジ、コード品質指標
+- **パフォーマンス**: 開発速度と品質のバランス
+
+### **➡️ 次のステップ**
+ステータス分析完了後の推奨アクション：
+- **スプリント計画調整**: 進捗状態を反映した計画更新
+- **リソース再配置**: ボトルネック解消のためのリソース調整
+
+**🔧 重要事項**: 継続的な状態監視がプロジェクトの成功を左右する。

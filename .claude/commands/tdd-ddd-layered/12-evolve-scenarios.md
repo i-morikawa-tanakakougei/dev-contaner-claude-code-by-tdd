@@ -354,17 +354,66 @@ Follow these steps:
 
 3. **Agent Result Verification**:
    ```bash
-   # 🔍 Verify agent execution results
+   # 🔧 Load advanced task verification library
+   source "$(dirname "${BASH_SOURCE[0]}")/_task_verification.sh"
+   
+   # 🔍 Verify agent execution results with advanced task checking
    echo "🔍 エージェント実行結果を検証中..."
+   
+   verification_issues=()
    
    # Check that evolved scenarios were created
    evolved_files=$(find docs/use_cases/evolved/ -name "*${feature_name}*.md" 2>/dev/null | wc -l)
    existing_files=$(find docs/use_cases/ -name "*${feature_name}*.md" 2>/dev/null | wc -l)
    
-   # Validate evolution results
+   # Find latest scenario evolution report
+   latest_report=$(find docs/reports/scenario-evolution/ -name "*${feature_name}*.md" 2>/dev/null | sort | tail -1)
+   
+   if [[ -n "$latest_report" && -f "$latest_report" ]]; then
+       echo "  ✅ シナリオ進化レポート: $latest_report"
+       
+       # ✨ New: Advanced task verification with retry capability
+       echo "🔍 Critical tasks確認中..."
+       if ! verify_critical_tasks "12-evolve-scenarios" "$latest_report"; then
+           echo "⚠️ Critical tasks確認で問題が検出されました - 再実行を試行します"
+           
+           # Prepare retry context with specific issues
+           prepare_retry_context "12-evolve-scenarios" "1" "${verification_issues[@]}"
+           
+           echo "🔄 エージェント再実行を準備中..."
+           echo "💡 手動での再実行が必要です: /evolve-scenarios $feature_name"
+           
+           # For now, show the issues and continue
+           echo "❌ 以下の問題が検出されました:"
+           for issue in "${verification_issues[@]}"; do
+               echo "  - $issue"
+           done
+       else
+           echo "✅ Critical tasks確認完了"
+       fi
+   else
+       verification_issues+=("シナリオ進化レポートが見つかりません")
+       echo "❌ シナリオ進化レポートが見つかりません"
+   fi
+   
+   # Basic file validation
    if [[ $evolved_files -eq 0 && $existing_files -eq 0 ]]; then
+       verification_issues+=("シナリオ進化ドキュメントが見つかりません")
+   fi
+   
+   # ✨ Show comprehensive verification results
+   show_verification_results "12-evolve-scenarios"
+   
+   # Final decision based on verification results
+   if [[ ${#verification_issues[@]} -eq 0 ]]; then
+       echo "✅ エージェント結果検証完了"
+   else
        echo "❌ エージェント実行検証失敗:"
-       echo "  シナリオ進化ドキュメントが見つかりません"
+       printf '  - %s\n' "${verification_issues[@]}"
+       echo ""
+       echo "💡 問題解決のための推奨アクション:"
+       echo "  1. シナリオ進化の要件再確認"
+       echo "  2. /evolve-scenarios $feature_name での再実行"
        exit 1
    fi
    

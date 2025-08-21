@@ -146,3 +146,41 @@ prepare_for_refactoring_phase()
 ```
 
 Follow this standardized pattern to ensure consistent, context-aware presentation layer implementation that integrates seamlessly with the TDD/DDD/Layered Architecture workflow while maintaining proper separation of concerns.
+
+## 🎯 **STANDARDIZED OUTPUT REQUIREMENTS**
+
+### **📊 実行サマリー**
+Critical Taskの完了状態を明記：
+- ✅/❌ **インフラ層確認**: インフラ層実装完了と永続化機能の動作確認
+- ✅/❌ **APIエンドポイント設計**: RESTfulエンドポイントまたはCLIコマンドの設計
+- ✅/❌ **入力検証実装**: ユーザー入力の検証とサニタイゼーション実装
+- ✅/❌ **エラーレスポンス処理**: 統一されたエラーレスポンス形式の実装
+- ✅/❌ **プレゼンテーションテスト**: ユーザーインターフェースのテスト実行
+- ✅/❌ **統合検証実行**: エンドツーエンドでの統合動作確認
+
+### **📋 総合判定**
+以下のいずれかを必ず明記：
+- **PRESENTATION_IMPLEMENTED** - プレゼンテーション層実装完了
+- **ENDPOINTS_FUNCTIONAL** - エンドポイントが正常に機能
+- **READY_FOR_TESTING** - 全層統合テスト準備完了
+
+### **🌐 実装プレゼンテーション層**
+実装されたプレゼンテーション層コンポーネントの詳細：
+- **APIエンドポイント**: src/presentation/api/*.py (XX個)
+- **CLIコマンド**: src/presentation/cli/*.py (XX個)
+- **スキーマ**: src/presentation/schemas/*.py (XX個)
+- **ミドルウェア**: src/presentation/middleware/*.py
+
+### **🔌 エンドポイント確認**
+- **入力検証**: 全エンドポイントでの適切な入力検証実装
+- **エラーハンドリング**: 統一されたエラーレスポンス形式
+- **レスポンス形式**: 一貫したAPI仕様とレスポンス構造
+- **認証・認可**: セキュリティ要件の適切な実装
+
+### **➡️ 次のステップ**
+全層統合テストフェーズへの移行案内：
+```bash
+/run-all-tests <issue-number>
+```
+
+**🔧 重要事項**: プレゼンテーション層はビジネスロジックを含まず、入力検証とレスポンス形式のみを責務とする。

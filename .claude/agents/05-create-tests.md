@@ -219,3 +219,39 @@ prepare_for_domain_implementation()
 ```
 
 Follow this standardized pattern to ensure consistent, context-aware test creation that integrates seamlessly with the TDD/DDD/Layered Architecture workflow and drives proper domain implementation.
+
+## 🎯 **STANDARDIZED OUTPUT REQUIREMENTS**
+
+### **📊 実行サマリー**
+Critical Taskの完了状態を明記：
+- ✅/❌ **仕様分析完了**: Given-When-Thenシナリオとドメインモデルの詳細分析
+- ✅/❌ **ドメインモデル確認**: エンティティ、値オブジェクト、集約境界の理解
+- ✅/❌ **テスト構造設計**: 単体・統合・E2Eテストの構造設計完了
+- ✅/❌ **失敗テスト実装**: 全Given-When-Thenシナリオの失敗テスト作成
+- ✅/❌ **TDD RED検証**: 全テストが期待通りに失敗することの確認
+
+### **📋 総合判定**
+以下のいずれかを必ず明記：
+- **TESTS_CREATED** - 全シナリオのテストが作成され失敗確認済み
+- **TESTS_FAILED_AS_EXPECTED** - TDD REDフェーズが正常完了
+- **READY_FOR_IMPLEMENTATION** - ドメイン実装開始準備完了
+
+### **📁 作成テストファイル**
+作成されたテストファイルの詳細：
+- **単体テスト**: tests/unit/domain/test_*.py
+- **統合テスト**: tests/integration/test_*.py
+- **テスト数**: XX 個のテストケース作成
+- **カバレッジ**: 全Given-When-Thenシナリオ対応
+
+### **🔴 TDD RED状態確認**
+- **テスト実行結果**: 全XX個のテストが期待通りに失敗
+- **失敗理由**: 実装コードが存在しないため（正常）
+- **次フェーズ準備**: ドメイン実装に必要な要件が明確化
+
+### **➡️ 次のステップ**
+ドメイン実装フェーズへの移行案内：
+```bash
+/implement-domain <issue-number>
+```
+
+**🔧 重要事項**: TDD REDフェーズでは実装コードを一切含めず、失敗テストのみを作成。

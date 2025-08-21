@@ -1,0 +1,70 @@
+{
+  "command": "10-run-all-tests",
+  "description": "Comprehensive test suite execution for specific issue with coverage and quality metrics",
+  "phase": "comprehensive-testing-phase",
+  "category": "quality-assurance",
+  "priority": "medium",
+  "critical_tasks": [
+    "test_environment_setup",
+    "unit_test_execution",
+    "integration_test_execution",
+    "e2e_test_execution",
+    "coverage_analysis",
+    "quality_metrics_generation"
+  ],
+  "output_requirements": {
+    "critical_patterns": [
+      "✅.*テスト環境.*セットアップ",
+      "✅.*単体テスト.*実行",
+      "✅.*統合テスト.*実行",
+      "✅.*E2Eテスト.*実行",
+      "✅.*カバレッジ.*分析",
+      "✅.*品質メトリクス.*生成",
+      "(ALL_TESTS_PASS|TESTS_FAILED|COVERAGE_ADEQUATE)"
+    ],
+    "required_sections": [
+      "📊 実行サマリー",
+      "📋 総合判定",
+      "🧪 テスト実行結果",
+      "📈 カバレッジレポート",
+      "➡️ 次のステップ"
+    ],
+    "success_indicators": [
+      "全テスト成功率",
+      "コードカバレッジ率",
+      "品質メトリクス評価"
+    ]
+  },
+  "prerequisites": [
+    "all_layers_implemented",
+    "test_framework_configured",
+    "implementation_complete"
+  ],
+  "retry_context": {
+    "common_issues": [
+      "Test environment configuration issues",
+      "Failed test cases requiring investigation",
+      "Insufficient code coverage",
+      "Performance regression detected"
+    ],
+    "enhanced_guidance": [
+      "テスト環境の完全なセットアップと検証",
+      "失敗テストの詳細分析と根本原因特定",
+      "カバレッジ不足箇所の特定と改善提案",
+      "品質メトリクスの包括的評価と改善指針"
+    ],
+    "special_focus": "全ての実装層における包括的なテスト実行と品質保証の確保"
+  },
+  "dependencies": {
+    "previous_commands": ["09-implement-presentation"],
+    "next_commands": ["11-refactor", "15-create-pr"],
+    "required_files": [
+      "tests/**/*.py",
+      "src/**/*.py"
+    ],
+    "output_files": [
+      "test-results/",
+      "coverage-report.html"
+    ]
+  }
+}

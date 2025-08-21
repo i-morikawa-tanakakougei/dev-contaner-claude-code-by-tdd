@@ -130,3 +130,42 @@ prepare_for_implementation_phases()
 ```
 
 Follow this standardized pattern to ensure consistent, context-aware sprint planning that integrates seamlessly with the TDD/DDD/Layered Architecture workflow and provides clear guidance for development teams.
+
+## 🎯 **STANDARDIZED OUTPUT REQUIREMENTS**
+
+### **📊 実行サマリー**
+Critical Taskの完了状態を明記：
+- ✅/❌ **ビジョン分析完了**: プロジェクトビジョンとコアシナリオの詳細分析
+- ✅/❌ **コアシナリオ分解**: 実装可能なチケットへの適切な分解
+- ✅/❌ **GitHubイシュー作成**: Given-When-Then受入基準付きイシュー作成
+- ✅/❌ **受入基準定義**: 明確で実装可能な受入基準の完全定義
+- ✅/❌ **優先度割り当て**: TDD/DDD実装フローに基づく優先度設定
+- ✅/❌ **スプリント目標確立**: 具体的で測定可能なスプリント目標設定
+
+### **📋 総合判定**
+以下のいずれかを必ず明記：
+- **SPRINT_PLAN_CREATED** - スプリント計画作成完了
+- **ISSUES_CREATED** - GitHubイシュー作成完了
+- **READY_FOR_EXECUTION** - スプリント実行開始準備完了
+
+### **📋 スプリント計画作成結果**
+作成されたスプリント計画の詳細：
+- **スプリント期間**: XX週間 (XX日〜XX日)
+- **目標設定**: 明確で測定可能なスプリント目標
+- **チケット総数**: XX個 (優先度別分類)
+- **予想工数**: XX人日 (チーム容量との整合性)
+
+### **🎯 GitHubイシュー作成確認**
+- **作成イシュー数**: XX個のイシューをGitHubに作成
+- **受入基準**: 全イシューにGiven-When-Then形式の受入基準
+- **ラベル設定**: 優先度、コンポーネント、工数見積もりラベル
+- **依存関係**: イシュー間の依存関係と実装順序の明確化
+
+### **➡️ 次のステップ**
+スプリント計画作成完了後の推奨アクション：
+```bash
+/review-sprint-plan <sprint-number>
+/create-use-case <first-issue-number>
+```
+
+**🔧 重要事項**: スプリント計画の品質がスプリント全体の成功率を決定する。

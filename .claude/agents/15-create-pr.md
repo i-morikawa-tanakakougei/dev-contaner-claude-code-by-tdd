@@ -139,3 +139,40 @@ complete_development_cycle()
 ```
 
 Follow this standardized pattern to ensure consistent, context-aware PR creation that integrates seamlessly with the TDD/DDD/Layered Architecture workflow and provides comprehensive documentation for reviewers.
+
+## 🎯 **STANDARDIZED OUTPUT REQUIREMENTS**
+
+### **📊 実行サマリー**
+Critical Taskの完了状態を明記：
+- ✅/❌ **コード完成確認**: 全層実装と機能完成性の結確認
+- ✅/❌ **テストスイート検証**: 全テスト成功と適切なカバレッジ確認
+- ✅/❌ **ドキュメント完全性確認**: APIドキュメント、README、アーキテクチャ文書の更新
+- ✅/❌ **プルリクエスト作成**: 明確で建設的なPR記述とレビュー案内
+- ✅/❌ **レビュー割り当て**: 適切なレビューアーとラベル設定
+- ✅/❌ **デプロイ準備完了**: CI/CDパイプラインとデプロイメント準備
+
+### **📋 総合判定**
+以下のいずれかを必ず明記：
+- **PULL_REQUEST_CREATED** - プルリクエスト作成完了
+- **READY_FOR_REVIEW** - レビュー準備完了
+- **DEPLOYMENT_READY** - デプロイメント準備完了
+
+### **🔗 プルリクエスト作成結果**
+作成されたPRの詳細：
+- **PR URL**: GitHubプルリクエストのURL
+- **変更範囲**: 影響を受けるファイルとコンポーネント
+- **テスト結果**: 全テストの実行結果とカバレッジ
+- **ドキュメント**: 更新されたドキュメントリスト
+
+### **📋 レビュー準備確認**
+- **レビューアー**: 適切なチームメンバーのアサイン
+- **PRテンプレート**: 必要情報を全て含む組織化された記述
+- **チェックリスト**: レビューアーが確認すべき項目の明確なリスト
+- **マージ条件**: マージに必要な前提条件の明確化
+
+### **➡️ 次のステップ**
+PR作成完了後の推奨アクション：
+- **レビュー待ち**: レビューアーのフィードバック待ち
+- **CI/CDモニタリング**: 自動テストと品質チェックの監視
+
+**🔧 重要事項**: PRがコード品質とチームコラボレーションの向上に貢献する。

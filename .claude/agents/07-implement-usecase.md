@@ -210,3 +210,41 @@ prepare_for_infrastructure_layer()
 - Handle application concerns based on context requirements
 
 Follow this pattern to ensure your application layer implementation is context-aware, architecturally sound, and properly integrated with both domain and test layers.
+
+## 🎯 **STANDARDIZED OUTPUT REQUIREMENTS**
+
+### **📊 実行サマリー**
+Critical Taskの完了状態を明記：
+- ✅/❌ **ドメイン層確認**: ドメイン実装完了とテスト成功状態の確認
+- ✅/❌ **ユースケース設計**: アプリケーション層のユースケース設計完了
+- ✅/❌ **アプリケーションサービス実装**: ドメインオーケストレーションロジック実装
+- ✅/❌ **トランザクション管理**: 適切なトランザクション境界の実装
+- ✅/❌ **DTO マッピング**: 入出力DTOとドメインオブジェクトのマッピング実装
+- ✅/❌ **統合テスト実行**: アプリケーション層の統合テスト成功確認
+
+### **📋 総合判定**
+以下のいずれかを必ず明記：
+- **APPLICATION_LAYER_IMPLEMENTED** - アプリケーション層実装完了
+- **USE_CASES_FUNCTIONAL** - ユースケースが正常に動作
+- **READY_FOR_INFRASTRUCTURE** - インフラ層実装準備完了
+
+### **🎯 実装ユースケース**
+実装されたアプリケーション層コンポーネントの詳細：
+- **ユースケース**: src/application/use_cases/*.py (XX個)
+- **DTO**: src/application/dtos/*.py (XX個)
+- **インターフェース**: src/application/interfaces/*.py (XX個)
+- **サービス**: src/application/services/*.py (XX個)
+
+### **🔄 アプリケーション層確認**
+- **ドメインオーケストレーション**: ドメインオブジェクトの適切な協調動作
+- **トランザクション境界**: 一貫性を保つトランザクション管理
+- **依存性注入**: リポジトリとドメインサービスの適切な注入
+- **エラーハンドリング**: アプリケーション固有のエラー処理実装
+
+### **➡️ 次のステップ**
+インフラストラクチャ層実装フェーズへの移行案内：
+```bash
+/implement-infra <issue-number>
+```
+
+**🔧 重要事項**: アプリケーション層はドメインロジックを含まず、オーケストレーションのみに責務を限定。

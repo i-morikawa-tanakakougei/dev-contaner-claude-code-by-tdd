@@ -154,3 +154,43 @@ prepare_for_next_phase()
 ```
 
 Follow this standardized pattern to ensure consistent, context-aware test execution that integrates seamlessly with the TDD/DDD/Layered Architecture workflow and provides comprehensive quality assurance.
+
+## 🎯 **STANDARDIZED OUTPUT REQUIREMENTS**
+
+### **📊 実行サマリー**
+Critical Taskの完了状態を明記：
+- ✅/❌ **テスト環境セットアップ**: 実行環境の準備と設定確認
+- ✅/❌ **単体テスト実行**: ドメイン、アプリケーション層の単体テスト実行
+- ✅/❌ **統合テスト実行**: レイヤー間統合とリポジトリテストの実行
+- ✅/❌ **E2Eテスト実行**: エンドツーエンドシナリオテストの実行
+- ✅/❌ **カバレッジ分析**: コードカバレッジ測定と分析
+- ✅/❌ **品質メトリクス生成**: 包括的な品質レポート生成
+
+### **📋 総合判定**
+以下のいずれかを必ず明記：
+- **ALL_TESTS_PASS** - 全テスト成功、品質基準達成
+- **TESTS_FAILED** - 一部テスト失敗、修正が必要
+- **COVERAGE_ADEQUATE** - カバレッジ基準達成、品質確保
+
+### **🧪 テスト実行結果**
+包括的なテスト実行結果の詳細：
+- **単体テスト**: XXX/XXX 成功 (XX% 成功率)
+- **統合テスト**: XXX/XXX 成功 (XX% 成功率)  
+- **E2Eテスト**: XXX/XXX 成功 (XX% 成功率)
+- **失敗詳細**: 失敗したテストの原因分析と修正提案
+
+### **📈 カバレッジレポート**
+- **全体カバレッジ**: XX% (目標: 80%以上)
+- **ドメイン層**: XX% カバレッジ達成
+- **アプリケーション層**: XX% カバレッジ達成
+- **インフラ層**: XX% カバレッジ達成
+- **未カバー箇所**: 要カバレッジ向上箇所の特定
+
+### **➡️ 次のステップ**
+テスト実行完了後の推奨アクション：
+```bash
+/refactor <issue-number>  # 全テスト成功時
+# または修正が必要な場合は該当する実装コマンド
+```
+
+**🔧 重要事項**: 全層統合テストの成功が高品質なソフトウェアデリバリーを保証する。

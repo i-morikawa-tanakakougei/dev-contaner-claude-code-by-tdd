@@ -1,0 +1,88 @@
+{
+  "command": "11-refactor",
+  "description": "TDD REFACTOR phase - improve code quality while maintaining passing tests",
+  "phase": "tdd-refactor-phase",
+  "category": "quality-improvement",
+  "priority": "high",
+  "critical_tasks": [
+    "test_suite_verification",
+    "code_quality_analysis",
+    "duplication_elimination",
+    "design_pattern_application",
+    "performance_optimization",
+    "test_maintenance"
+  ],
+  "output_requirements": {
+    "critical_patterns": [
+      "✅.*テストスイート.*確認",
+      "✅.*コード品質.*分析",
+      "✅.*重複排除.*完了",
+      "✅.*設計パターン.*適用",
+      "✅.*パフォーマンス.*最適化",
+      "✅.*テスト.*保守",
+      "(REFACTORING_COMPLETED|CODE_QUALITY_IMPROVED|TESTS_STILL_PASSING)"
+    ],
+    "required_sections": [
+      "📊 実行サマリー",
+      "📋 総合判定",
+      "🔧 リファクタリング項目",
+      "🧪 テスト状態確認", 
+      "➡️ 次のステップ"
+    ],
+    "success_indicators": [
+      "リファクタリング項目数",
+      "テスト成功率維持",
+      "コード品質向上確認"
+    ]
+  },
+  "prerequisites": [
+    "all_tests_passing",
+    "feature_implementation_complete",
+    "code_quality_issues_identified"
+  ],
+  "retry_context": {
+    "common_issues": [
+      "Tests failing during refactoring",
+      "Over-refactoring leading to complexity",
+      "Breaking changes introduced",
+      "Performance regressions"
+    ],
+    "enhanced_guidance": [
+      "テストの継続的実行によるリグレッション防止",
+      "小さな変更の反復による安全なリファクタリング",
+      "設計パターンの適切な適用による保守性向上",
+      "パフォーマンスとコード品質のバランス"
+    ],
+    "special_focus": "TDD REFACTORフェーズの原則に従い、テストを常にGREEN状態に保ちながらコード品質を改善することに集中"
+  },
+  "dependencies": {
+    "previous_commands": ["09-implement-presentation", "10-run-all-tests"],
+    "next_commands": ["15-create-pr"],
+    "required_files": [
+      "tests/**/*.py",
+      "src/**/*.py"
+    ],
+    "output_files": [
+      "src/**/*.py (refactored)",
+      "tests/**/*.py (updated if needed)"
+    ]
+  },
+  "validation_rules": {
+    "refactoring_patterns": [
+      "extract.*method",
+      "eliminate.*duplication",
+      "improve.*naming",
+      "apply.*pattern"
+    ],
+    "test_preservation": [
+      "all.*tests.*pass",
+      "coverage.*maintained",
+      "behavior.*preserved"
+    ],
+    "quality_improvement": [
+      "cyclomatic.*complexity.*reduced",
+      "duplication.*removed",
+      "maintainability.*improved"
+    ]
+  }
+}

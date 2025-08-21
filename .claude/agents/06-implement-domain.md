@@ -187,3 +187,40 @@ prepare_for_application_layer()
 ```
 
 Follow this standardized pattern to ensure consistent, context-aware domain implementation that integrates seamlessly with the TDD/DDD/Layered Architecture workflow and provides solid foundation for application layer.
+
+## 🎯 **STANDARDIZED OUTPUT REQUIREMENTS**
+
+### **📊 実行サマリー**
+Critical Taskの完了状態を明記：
+- ✅/❌ **テスト分析完了**: 失敗テストの要件分析と実装目標の明確化
+- ✅/❌ **エンティティ実装完了**: ドメインエンティティとビジネスルールの実装
+- ✅/❌ **値オブジェクト実装**: 不変性と検証ロジックを持つ値オブジェクト作成
+- ✅/❌ **ドメインサービス実装**: 複数エンティティにまたがるビジネスロジック実装
+- ✅/❌ **ドメイン純粋性確認**: I/O依存なしのドメイン層純粋性維持
+- ✅/❌ **テスト成功検証**: 全ドメインテストがGREEN状態になることを確認
+
+### **📋 総合判定**
+以下のいずれかを必ず明記：
+- **DOMAIN_IMPLEMENTED** - ドメイン層実装完了、全テスト成功
+- **TESTS_PASSING** - TDD GREENフェーズ正常完了
+- **READY_FOR_APPLICATION_LAYER** - アプリケーション層実装準備完了
+
+### **🏗️ 実装ドメインオブジェクト**
+実装されたドメインコンポーネントの詳細：
+- **エンティティ**: src/domain/entities/*.py (XX個)
+- **値オブジェクト**: src/domain/value_objects/*.py (XX個) 
+- **ドメインサービス**: src/domain/services/*.py (XX個)
+- **リポジトリインターフェース**: src/domain/repositories/__init__.py
+
+### **🟢 TDD GREEN状態確認**
+- **テスト実行結果**: 全XX個のテストが成功
+- **ドメイン純粋性**: 外部依存なし、ビジネスロジックのみ実装
+- **ビジネスルール**: 不変条件とドメインルールの完全実装
+
+### **➡️ 次のステップ**
+アプリケーション層実装フェーズへの移行案内：
+```bash
+/implement-usecase <issue-number>
+```
+
+**🔧 重要事項**: ドメイン層ではI/O操作を一切含まず、純粋なビジネスロジックのみ実装。
