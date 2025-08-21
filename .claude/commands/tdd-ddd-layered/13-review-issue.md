@@ -284,37 +284,44 @@ Follow these steps:
    echo ""
    
    # Actual Claude Code Task tool invocation with hybrid approach
-   cat <<'AGENT_CALL'
-   Task tool will be called with:
-   - subagent_type: "13-review-issue"
-   - description: "Comprehensive implementation review and quality analysis"
-   - prompt: |
-     実装レビュータスクを実行してください。
-     
-     ## コンテキスト情報の取得
-     1. 一時コンテキスト（イシュー情報）:
-        - /workspace/.claude/context/current-command-context.json を読み込み
-     
-     2. 実装状況の確認:
-        - src/ ディレクトリで実装済みコードを分析
-        - tests/ でテストカバレッジとトレーサビリティを確認
-        - docs/use_cases/issue-X-Y.json で完了フェーズを確認
-     
-     ## 実行タスク
-     1. アーキテクチャ準拠性分析（DDD/Clean Architecture）
-     2. コード品質メトリクスと静的解析
-     3. テストカバレッジとGiven-When-Thenトレーサビリティ
-     4. TDDサイクル準拠性検証（RED-GREEN-REFACTOR）
-     5. 層分離と依存関係検証
-     6. ドキュメント完全性レビュー
-     7. パフォーマンスとセキュリティの基本チェック
-     8. 保守性と技術的負債の評価
-     
-     ## 処理完了後
-     - 品質レポートと改善提案の作成
-     - アーキテクチャ遵守状況の詳細報告
-     - 次のステップ（フィードバック適用・PR作成）への案内
-   AGENT_CALL
+   # Task tool execution with comprehensive prompt
+   task_prompt="タスクを実行してください。
+
+## コンテキスト情報の取得
+1. 一時コンテキスト（プロジェクト情報）:
+   - /workspace/.claude/context/current-command-context.json を読み込み
+
+2. プロジェクト状況の確認:
+   - 必要な文書やファイルを確認
+   - 既存の実装や設計を参照
+
+## 実行タスク
+[13-review-issue固有のタスクを実行]
+
+## 重要: 標準化出力形式の遵守
+レポートは必ず以下の構造化セクションで終了してください：
+
+### 📊 実行サマリー
+各Critical Taskの完了状態を✅/❌で明記
+
+### 📋 総合判定
+APPROVED/CONDITIONAL_APPROVAL/REJECTED/COMPLETED のいずれかを明記
+
+### 💡 次のステップ
+判定に基づく具体的なアクションアイテムを列挙
+
+## 処理完了後
+- 実行結果の報告
+- 次のステップへの案内"
+
+   # Execute Task tool
+   Task \
+     --subagent_type "13-review-issue" \
+     --description "Execute 13-review-issue task" \
+     --prompt "$task_prompt"
+   
+   agent_exit_code=$?
+   echo "✅ 専用エージェント実行完了 (終了コード: $agent_exit_code)"
    
    echo "✅ エージェント呼び出し設定完了"
    echo "エージェントが以下の処理を実行します:"

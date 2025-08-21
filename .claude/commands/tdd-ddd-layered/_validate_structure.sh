@@ -173,7 +173,7 @@ main() {
 }
 
 # スクリプトが直接実行された場合
-if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+if [[ "${BASH_SOURCE[0]:-}" == "${0}" ]]; then
     main "$@"
 fi
 

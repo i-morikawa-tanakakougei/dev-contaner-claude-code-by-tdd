@@ -163,34 +163,44 @@ Create a Given-When-Then use case specification from GitHub issues.
    
    # Actual Claude Code Task tool invocation with hybrid approach
    # This will be executed by Claude Code when the command runs
-   cat <<'AGENT_CALL'
-   Task tool will be called with:
-   - subagent_type: "03-create-use-case"
-   - description: "Create use case specifications from GitHub issues"
-   - prompt: |
-     ユースケース仕様作成タスクを実行してください。
-     
-     ## コンテキスト情報の取得
-     1. 一時コンテキスト（引数情報）:
-        - /workspace/.claude/context/current-command-context.json を読み込み
-     
-     2. 既存TDD/DDDメタデータ（永続情報）の確認:
-        - docs/use_cases/index.md で実装状況を確認
-        - 該当するissue-X-Y.jsonがあれば現在のフェーズを確認
-     
-     ## 実行タスク
-     1. GitHub Issueの詳細分析と要件抽出
-     2. Given-When-Thenシナリオの作成
-     3. ドメイン言語とユビキタス言語の確立
-     4. ユースケース仕様書（.md）の生成
-     5. メタデータファイル（.json）の作成
-     6. フィーチャーブランチの作成
-     7. docs/use_cases/index.mdの更新
-     
-     ## 処理完了後
-     - 作成したファイルのパスを報告
-     - 次のステップ（domain-modeling）への案内
-   AGENT_CALL
+   # Task tool execution with comprehensive prompt
+   task_prompt="タスクを実行してください。
+
+## コンテキスト情報の取得
+1. 一時コンテキスト（プロジェクト情報）:
+   - /workspace/.claude/context/current-command-context.json を読み込み
+
+2. プロジェクト状況の確認:
+   - 必要な文書やファイルを確認
+   - 既存の実装や設計を参照
+
+## 実行タスク
+[03-create-use-case固有のタスクを実行]
+
+## 重要: 標準化出力形式の遵守
+レポートは必ず以下の構造化セクションで終了してください：
+
+### 📊 実行サマリー
+各Critical Taskの完了状態を✅/❌で明記
+
+### 📋 総合判定
+APPROVED/CONDITIONAL_APPROVAL/REJECTED/COMPLETED のいずれかを明記
+
+### 💡 次のステップ
+判定に基づく具体的なアクションアイテムを列挙
+
+## 処理完了後
+- 実行結果の報告
+- 次のステップへの案内"
+
+   # Execute Task tool
+   Task \
+     --subagent_type "03-create-use-case" \
+     --description "Execute 03-create-use-case task" \
+     --prompt "$task_prompt"
+   
+   agent_exit_code=$?
+   echo "✅ 専用エージェント実行完了 (終了コード: $agent_exit_code)"
    
    echo "✅ エージェント呼び出し設定完了"
    echo "エージェントが以下の処理を実行します:"

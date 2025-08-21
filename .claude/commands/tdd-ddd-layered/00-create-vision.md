@@ -232,35 +232,50 @@ Follow these steps:
    echo "専門エージェントがTDD/DDD/レイヤードアーキテクチャに基づいてビジョンを作成します"
    echo ""
    
-   # Actual Claude Code Task tool invocation with hybrid approach
-   cat <<'AGENT_CALL'
-   Task tool will be called with:
-   - subagent_type: "00-create-vision"
-   - description: "Create project vision with TDD/DDD/Layered Architecture foundation"
-   - prompt: |
-     プロジェクトビジョン作成タスクを実行してください。
-     
-     ## コンテキスト情報の取得
-     1. 一時コンテキスト（引数情報）:
-        - /workspace/.claude/context/current-command-context.json を読み込み
-     
-     2. プロジェクト状況の確認:
-        - 既存のdocs/構造があれば現在の状況を確認
-        - Gitリポジトリの状態確認
-     
-     ## 実行タスク
-     1. インタラクティブな情報収集
-     2. プロジェクトビジョン文書作成
-     3. コアシナリオ定義（Given-When-Then形式）
-     4. ユビキタス言語の確立
-     5. ステアリング文書作成
-     6. 必要なディレクトリ構造の作成
-     7. Gitコミットと整合性チェック
-     
-     ## 処理完了後
-     - 作成したファイルのパスを報告
-     - 次のステップ（プロジェクト構造初期化）への案内
-   AGENT_CALL
+   # Task tool execution with comprehensive prompt
+   task_prompt="プロジェクトビジョン作成タスクを実行してください。
+
+## コンテキスト情報の取得
+1. 一時コンテキスト（引数情報）:
+   - /workspace/.claude/context/current-command-context.json を読み込み
+
+2. プロジェクト状況の確認:
+   - 既存のdocs/構造があれば現在の状況を確認
+   - Gitリポジトリの状態確認
+
+## 実行タスク
+1. インタラクティブな情報収集
+2. プロジェクトビジョン文書作成
+3. コアシナリオ定義（Given-When-Then形式）
+4. ユビキタス言語の確立
+5. ステアリング文書作成
+6. 必要なディレクトリ構造の作成
+7. Gitコミットと整合性チェック
+
+## 重要: 標準化出力形式の遵守
+レポートは必ず以下の構造化セクションで終了してください：
+
+### 📊 実行サマリー
+各Critical Taskの完了状態を✅/❌で明記
+
+### 📋 総合判定
+COMPLETED/APPROVED のいずれかを明記
+
+### 💡 次のステップ
+判定に基づく具体的なアクションアイテムを列挙
+
+## 処理完了後
+- 作成したファイルのパスを報告
+- 次のステップ（プロジェクト構造初期化）への案内"
+
+   # Execute Task tool
+   Task \
+     --subagent_type "00-create-vision" \
+     --description "Create project vision with TDD/DDD/Layered Architecture foundation" \
+     --prompt "$task_prompt"
+   
+   agent_exit_code=$?
+   echo "✅ 専用エージェント実行完了 (終了コード: $agent_exit_code)"
    
    echo "✅ エージェント呼び出し設定完了"
    echo "エージェントが以下の処理を実行します:"

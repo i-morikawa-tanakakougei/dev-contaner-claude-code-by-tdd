@@ -308,48 +308,53 @@ Follow these steps:
    echo "専門エージェントがフィードバックに基づくシナリオ進化を実行します"
    echo ""
    
-   # Actual Claude Code Task tool invocation with hybrid approach
-   cat <<'AGENT_CALL'
-   Task tool will be called with:
-   - subagent_type: "12-evolve-scenarios"
-   - description: "Evolve scenarios based on sprint feedback and requirements discovery"
-   - prompt: |
-     シナリオ進化タスクを実行してください。
-     
-     ## コンテキスト情報の取得
-     1. 一時コンテキスト（フィーチャー情報）:
-        - /workspace/.claude/context/current-command-context.json を読み込み
-     
-     2. 既存シナリオ情報の確認:
-        - docs/use_cases/core/ で既存コアシナリオを確認
-        - docs/analysis/ でスプリントフィードバックを確認
-        - docs/vision/ でプロジェクトビジョンとの整合性を確認
-     
-     ## 実行タスク
-     1. スプリントフィードバック分析と要件発見
-     2. エッジケースとエラーシナリオの特定
-     3. パフォーマンス・セキュリティ要件の抽出
-     4. 新しいGiven-When-Thenシナリオの作成
-     5. ドメインモデル影響評価と更新提案
-     6. 優先度・複雑度分析とスプリント計画への統合
-     7. シナリオトレーサビリティ文書の作成
-     8. ビジョン整合性の検証と品質保証
-     
-     ## 処理完了後
-     - 進化したシナリオファイルのパス報告
-     - フィードバック分析結果の要約報告
-     - 次のステップ（イシューレビュー・実装）への案内
-   AGENT_CALL
+   # Task tool execution with comprehensive prompt
+   task_prompt="シナリオ進化タスクを実行してください。
+
+## コンテキスト情報の取得
+1. 一時コンテキスト（フィーチャー情報）:
+   - /workspace/.claude/context/current-command-context.json を読み込み
+
+2. 既存シナリオ情報の確認:
+   - docs/use_cases/core/ で既存コアシナリオを確認
+   - docs/analysis/ でスプリントフィードバックを確認
+   - docs/vision/ でプロジェクトビジョンとの整合性を確認
+
+## 実行タスク
+1. スプリントフィードバック分析と要件発見
+2. エッジケースとエラーシナリオの特定
+3. パフォーマンス・セキュリティ要件の抽出
+4. 新しいGiven-When-Thenシナリオの作成
+5. ドメインモデル影響評価と更新提案
+6. 優先度・複雑度分析とスプリント計画への統合
+7. シナリオトレーサビリティ文書の作成
+8. ビジョン整合性の検証と品質保証
+
+## 重要: 標準化出力形式の遵守
+レポートは必ず以下の構造化セクションで終了してください：
+
+### 📊 実行サマリー
+各Critical Taskの完了状態を✅/❌で明記
+
+### 📋 総合判定
+COMPLETED/APPROVED/CONDITIONAL_APPROVAL のいずれかを明記
+
+### 💡 次のステップ
+判定に基づく具体的なアクションアイテムを列挙
+
+## 処理完了後
+- 進化したシナリオファイルのパス報告
+- フィードバック分析結果の要約報告
+- 次のステップ（イシューレビュー・実装）への案内"
+
+   # Execute Task tool
+   Task \
+     --subagent_type "12-evolve-scenarios" \
+     --description "Evolve scenarios based on sprint feedback and requirements discovery" \
+     --prompt "$task_prompt"
    
-   echo "✅ エージェント呼び出し設定完了"
-   echo "エージェントが以下の処理を実行します:"
-   echo "  - コンテキストファイルからのフィーチャー情報取得"
-   echo "  - スプリントフィードバック分析と要件発見"
-   echo "  - 新しいエッジケースとエラーシナリオ特定"
-   echo "  - Given-When-Thenシナリオ生成（発見要件）"
-   echo "  - 既存シナリオドキュメント更新"
-   echo "  - 包括的トレーサビリティ文書生成"
-   echo "  - 機能横断的シナリオ影響分析"
+   agent_exit_code=$?
+   echo "✅ 専用エージェント実行完了 (終了コード: $agent_exit_code)"
    ```
 
 3. **Agent Result Verification**:

@@ -163,37 +163,44 @@ Design domain models based on the Given-When-Then specification.
    echo ""
    
    # Actual Claude Code Task tool invocation with hybrid approach
-   cat <<'AGENT_CALL'
-   Task tool will be called with:
-   - subagent_type: "04-domain-modeling"
-   - description: "Design domain model using DDD principles"
-   - prompt: |
-     ドメインモデル設計タスクを実行してください。
-     
-     ## コンテキスト情報の取得
-     1. 一時コンテキスト（イシュー情報）:
-        - /workspace/.claude/context/current-command-context.json を読み込み
-     
-     2. 既存TDD/DDD情報の確認:
-        - docs/use_cases/issue-X-Y.md でユースケース仕様を確認
-        - docs/use_cases/issue-X-Y.json で現在のフェーズを確認
-        - docs/vision/project-vision.md でドメイン境界を確認
-     
-     ## 実行タスク
-     1. ユースケース仕様の分析とドメイン概念の抽出
-     2. エンティティと値オブジェクトの識別・設計
-     3. アグリゲート境界の定義と整合性ルールの確立
-     4. ドメインサービスと複雑なビジネスロジックの設計
-     5. リポジトリインターフェースの定義
-     6. ドメインイベントの識別
-     7. ユビキタス言語の確立
-     8. ドメインモデル文書の作成
-     
-     ## 処理完了後
-     - 作成したドメインモデル文書のパス報告
-     - 設計されたエンティティ・値オブジェクト数の報告
-     - 次のステップ（テスト作成）への案内
-   AGENT_CALL
+   # Task tool execution with comprehensive prompt
+   task_prompt="タスクを実行してください。
+
+## コンテキスト情報の取得
+1. 一時コンテキスト（プロジェクト情報）:
+   - /workspace/.claude/context/current-command-context.json を読み込み
+
+2. プロジェクト状況の確認:
+   - 必要な文書やファイルを確認
+   - 既存の実装や設計を参照
+
+## 実行タスク
+[04-domain-modeling固有のタスクを実行]
+
+## 重要: 標準化出力形式の遵守
+レポートは必ず以下の構造化セクションで終了してください：
+
+### 📊 実行サマリー
+各Critical Taskの完了状態を✅/❌で明記
+
+### 📋 総合判定
+APPROVED/CONDITIONAL_APPROVAL/REJECTED/COMPLETED のいずれかを明記
+
+### 💡 次のステップ
+判定に基づく具体的なアクションアイテムを列挙
+
+## 処理完了後
+- 実行結果の報告
+- 次のステップへの案内"
+
+   # Execute Task tool
+   Task \
+     --subagent_type "04-domain-modeling" \
+     --description "Execute 04-domain-modeling task" \
+     --prompt "$task_prompt"
+   
+   agent_exit_code=$?
+   echo "✅ 専用エージェント実行完了 (終了コード: $agent_exit_code)"
    
    echo "✅ エージェント呼び出し設定完了"
    echo "エージェントが以下の処理を実行します:"

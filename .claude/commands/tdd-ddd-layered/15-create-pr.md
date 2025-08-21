@@ -320,37 +320,44 @@ Follow these steps:
    echo ""
    
    # Actual Claude Code Task tool invocation with hybrid approach
-   cat <<'AGENT_CALL'
-   Task tool will be called with:
-   - subagent_type: "15-create-pr"
-   - description: "Create comprehensive pull request with full traceability"
-   - prompt: |
-     プルリクエスト作成タスクを実行してください。
-     
-     ## コンテキスト情報の取得
-     1. 一時コンテキスト（イシュー情報）:
-        - /workspace/.claude/context/current-command-context.json を読み込み
-     
-     2. PR情報の確認:
-        - docs/use_cases/ でシナリオとトレーサビリティを確認
-        - docs/analysis/ で品質レポートとテスト結果を確認
-        - src/ で実装内容を確認
-     
-     ## 実行タスク
-     1. GitHubリポジトリステータス検証とブランチ管理
-     2. Given-When-Thenトレーサビリティを含む包括的PR説明生成
-     3. テスト結果検証と品質メトリクス包含
-     4. イシューリンクと自動クローズ準備
-     5. レビュアー割り当てとマイルストーン管理
-     6. ブランチ保護ルール準拠性検証
-     7. CI/CDステータスチェック実行
-     8. ドキュメント更新とchangelog更新
-     
-     ## 処理完了後
-     - 作成されたPR URLの報告
-     - PR説明内容のサマリー報告
-     - 次のステップ（レビュー・マージ）への案内
-   AGENT_CALL
+   # Task tool execution with comprehensive prompt
+   task_prompt="タスクを実行してください。
+
+## コンテキスト情報の取得
+1. 一時コンテキスト（プロジェクト情報）:
+   - /workspace/.claude/context/current-command-context.json を読み込み
+
+2. プロジェクト状況の確認:
+   - 必要な文書やファイルを確認
+   - 既存の実装や設計を参照
+
+## 実行タスク
+[15-create-pr固有のタスクを実行]
+
+## 重要: 標準化出力形式の遵守
+レポートは必ず以下の構造化セクションで終了してください：
+
+### 📊 実行サマリー
+各Critical Taskの完了状態を✅/❌で明記
+
+### 📋 総合判定
+APPROVED/CONDITIONAL_APPROVAL/REJECTED/COMPLETED のいずれかを明記
+
+### 💡 次のステップ
+判定に基づく具体的なアクションアイテムを列挙
+
+## 処理完了後
+- 実行結果の報告
+- 次のステップへの案内"
+
+   # Execute Task tool
+   Task \
+     --subagent_type "15-create-pr" \
+     --description "Execute 15-create-pr task" \
+     --prompt "$task_prompt"
+   
+   agent_exit_code=$?
+   echo "✅ 専用エージェント実行完了 (終了コード: $agent_exit_code)"
    
    echo "✅ エージェント呼び出し設定完了"
    echo "エージェントが以下の処理を実行します:"

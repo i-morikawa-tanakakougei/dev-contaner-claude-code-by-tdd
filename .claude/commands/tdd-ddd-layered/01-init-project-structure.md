@@ -165,35 +165,44 @@ $ /init-project-structure
    echo ""
    
    # Actual Claude Code Task tool invocation with hybrid approach
-   cat <<'AGENT_CALL'
-   Task tool will be called with:
-   - subagent_type: "01-init-project-structure"
-   - description: "Initialize TDD/DDD/Layered Architecture project structure"
-   - prompt: |
-     プロジェクト構造初期化タスクを実行してください。
-     
-     ## コンテキスト情報の取得
-     1. 一時コンテキスト（環境情報）:
-        - /workspace/.claude/context/current-command-context.json を読み込み
-     
-     2. 現在のプロジェクト状況の確認:
-        - 作業ディレクトリの既存ファイル確認
-        - Gitリポジトリの状態確認
-        - 既存の設定ファイル（pyproject.toml等）の確認
-     
-     ## 実行タスク
-     1. TDD/DDD/レイヤードアーキテクチャディレクトリ構造作成
-     2. 各層の適切なディレクトリ配置（Domain/Application/Infrastructure/Presentation）
-     3. Pythonパッケージ構造の初期化
-     4. テストディレクトリとフレームワーク設定
-     5. ドキュメント構造の初期化
-     6. 開発環境設定ファイルの作成
-     
-     ## 処理完了後
-     - 作成したディレクトリ構造の報告
-     - 初期化されたファイル数の報告
-     - 次のステップ（ビジョン作成）への案内
-   AGENT_CALL
+   # Task tool execution with comprehensive prompt
+   task_prompt="タスクを実行してください。
+
+## コンテキスト情報の取得
+1. 一時コンテキスト（プロジェクト情報）:
+   - /workspace/.claude/context/current-command-context.json を読み込み
+
+2. プロジェクト状況の確認:
+   - 必要な文書やファイルを確認
+   - 既存の実装や設計を参照
+
+## 実行タスク
+[01-init-project-structure固有のタスクを実行]
+
+## 重要: 標準化出力形式の遵守
+レポートは必ず以下の構造化セクションで終了してください：
+
+### 📊 実行サマリー
+各Critical Taskの完了状態を✅/❌で明記
+
+### 📋 総合判定
+APPROVED/CONDITIONAL_APPROVAL/REJECTED/COMPLETED のいずれかを明記
+
+### 💡 次のステップ
+判定に基づく具体的なアクションアイテムを列挙
+
+## 処理完了後
+- 実行結果の報告
+- 次のステップへの案内"
+
+   # Execute Task tool
+   Task \
+     --subagent_type "01-init-project-structure" \
+     --description "Execute 01-init-project-structure task" \
+     --prompt "$task_prompt"
+   
+   agent_exit_code=$?
+   echo "✅ 専用エージェント実行完了 (終了コード: $agent_exit_code)"
    
    agent_exit_code=$?
    echo "✅ エージェント呼び出し設定完了 (終了コード: $agent_exit_code)"

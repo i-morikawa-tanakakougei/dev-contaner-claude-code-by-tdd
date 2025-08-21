@@ -151,36 +151,44 @@ Plan sprint and create tickets from core scenarios.
    echo ""
    
    # Actual Claude Code Task tool invocation with hybrid approach
-   cat <<'AGENT_CALL'
-   Task tool will be called with:
-   - subagent_type: "02-sprint-planning"
-   - description: "Create sprint plan and GitHub issues for TDD/DDD development"
-   - prompt: |
-     スプリント計画作成タスクを実行してください。
-     
-     ## コンテキスト情報の取得
-     1. 一時コンテキスト（スプリント情報）:
-        - /workspace/.claude/context/current-command-context.json を読み込み
-     
-     2. 既存プロジェクト情報の確認:
-        - docs/use_cases/core/index.md でコアシナリオを確認
-        - docs/vision/project-vision.md でプロジェクトビジョンを確認
-        - 既存のスプリント状況（docs/sprints/）を確認
-     
-     ## 実行タスク
-     1. コアシナリオの分析と優先度付け
-     2. スプリント容量の見積もりと目標設定
-     3. チケット分割と依存関係の定義
-     4. GitHub Issue作成（Given-When-Then受け入れ条件付き）
-     5. スプリントバックログドキュメント作成
-     6. マイルストーンとラベル管理
-     7. 進捗管理体制の設定
-     
-     ## 処理完了後
-     - 作成したスプリント文書のパス報告
-     - 作成されたGitHub Issue数の報告
-     - 次のステップ（ユースケース作成）への案内
-   AGENT_CALL
+   # Task tool execution with comprehensive prompt
+   task_prompt="タスクを実行してください。
+
+## コンテキスト情報の取得
+1. 一時コンテキスト（プロジェクト情報）:
+   - /workspace/.claude/context/current-command-context.json を読み込み
+
+2. プロジェクト状況の確認:
+   - 必要な文書やファイルを確認
+   - 既存の実装や設計を参照
+
+## 実行タスク
+[02-sprint-planning固有のタスクを実行]
+
+## 重要: 標準化出力形式の遵守
+レポートは必ず以下の構造化セクションで終了してください：
+
+### 📊 実行サマリー
+各Critical Taskの完了状態を✅/❌で明記
+
+### 📋 総合判定
+APPROVED/CONDITIONAL_APPROVAL/REJECTED/COMPLETED のいずれかを明記
+
+### 💡 次のステップ
+判定に基づく具体的なアクションアイテムを列挙
+
+## 処理完了後
+- 実行結果の報告
+- 次のステップへの案内"
+
+   # Execute Task tool
+   Task \
+     --subagent_type "02-sprint-planning" \
+     --description "Execute 02-sprint-planning task" \
+     --prompt "$task_prompt"
+   
+   agent_exit_code=$?
+   echo "✅ 専用エージェント実行完了 (終了コード: $agent_exit_code)"
    
    echo "✅ エージェント呼び出し設定完了"
    echo "エージェントが以下の処理を実行します:"

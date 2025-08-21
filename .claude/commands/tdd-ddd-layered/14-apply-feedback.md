@@ -296,37 +296,44 @@ Follow these steps:
    echo ""
    
    # Actual Claude Code Task tool invocation with hybrid approach
-   cat <<'AGENT_CALL'
-   Task tool will be called with:
-   - subagent_type: "14-apply-feedback"
-   - description: "Apply review feedback systematically with quality improvements"
-   - prompt: |
-     フィードバック適用タスクを実行してください。
-     
-     ## コンテキスト情報の取得
-     1. 一時コンテキスト（イシュー情報）:
-        - /workspace/.claude/context/current-command-context.json を読み込み
-     
-     2. フィードバック情報の確認:
-        - docs/reviews/ でレビューフィードバックを確認
-        - docs/analysis/ で品質分析結果を確認
-        - src/ で現在の実装状況を確認
-     
-     ## 実行タスク
-     1. レビューフィードバック分析と優先度付け
-     2. 全レイヤーでの体系的フィードバック実装
-     3. コード品質改善とリファクタリング
-     4. アーキテクチャ準拠性修正
-     5. テストカバレッジ向上とシナリオ整合
-     6. ドキュメント更新と改善
-     7. パフォーマンス最適化（該当箇所）
-     8. セキュリティ課題解決と強化
-     
-     ## 処理完了後
-     - 改善実装結果の詳細報告
-     - before/after品質メトリクス比較
-     - 次のステップ（テスト実行・PR作成）への案内
-   AGENT_CALL
+   # Task tool execution with comprehensive prompt
+   task_prompt="タスクを実行してください。
+
+## コンテキスト情報の取得
+1. 一時コンテキスト（プロジェクト情報）:
+   - /workspace/.claude/context/current-command-context.json を読み込み
+
+2. プロジェクト状況の確認:
+   - 必要な文書やファイルを確認
+   - 既存の実装や設計を参照
+
+## 実行タスク
+[14-apply-feedback固有のタスクを実行]
+
+## 重要: 標準化出力形式の遵守
+レポートは必ず以下の構造化セクションで終了してください：
+
+### 📊 実行サマリー
+各Critical Taskの完了状態を✅/❌で明記
+
+### 📋 総合判定
+APPROVED/CONDITIONAL_APPROVAL/REJECTED/COMPLETED のいずれかを明記
+
+### 💡 次のステップ
+判定に基づく具体的なアクションアイテムを列挙
+
+## 処理完了後
+- 実行結果の報告
+- 次のステップへの案内"
+
+   # Execute Task tool
+   Task \
+     --subagent_type "14-apply-feedback" \
+     --description "Execute 14-apply-feedback task" \
+     --prompt "$task_prompt"
+   
+   agent_exit_code=$?
+   echo "✅ 専用エージェント実行完了 (終了コード: $agent_exit_code)"
    
    echo "✅ エージェント呼び出し設定完了"
    echo "エージェントが以下の処理を実行します:"

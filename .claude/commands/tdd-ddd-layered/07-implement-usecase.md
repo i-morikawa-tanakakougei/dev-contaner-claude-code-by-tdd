@@ -404,37 +404,44 @@ Follow these steps:
    echo ""
    
    # Actual Claude Code Task tool invocation with hybrid approach
-   cat <<'AGENT_CALL'
-   Task tool will be called with:
-   - subagent_type: "07-implement-usecase"
-   - description: "TDD GREEN phase application layer implementation"
-   - prompt: |
-     アプリケーション層実装タスクを実行してください。
-     
-     ## コンテキスト情報の取得
-     1. 一時コンテキスト（イシュー情報）:
-        - /workspace/.claude/context/current-command-context.json を読み込み
-     
-     2. ドメイン層の確認:
-        - src/domain/ でドメイン実装を確認
-        - tests/ でテスト仕様を確認
-        - docs/use_cases/ でユースケース仕様を確認
-     
-     ## 実行タスク
-     1. ユースケース実装（ドメインエンティティ・サービスの協調）
-     2. DTOs作成（境界での入出力データ変換）
-     3. アプリケーションサービス実装（横断的関心事処理）
-     4. リポジトリインターフェース依存関係の設定
-     5. エラーハンドリングと検証ロジック
-     6. テスト実行によるGREEN状態確保
-     7. Clean Architecture原則の遵守確認
-     8. 実装完了確認とファイル構造検証
-     
-     ## 処理完了後
-     - アプリケーション層実装の完了確認
-     - すべてのテストGREEN状態の確保
-     - 次のステップ（インフラ層実装）への案内
-   AGENT_CALL
+   # Task tool execution with comprehensive prompt
+   task_prompt="タスクを実行してください。
+
+## コンテキスト情報の取得
+1. 一時コンテキスト（プロジェクト情報）:
+   - /workspace/.claude/context/current-command-context.json を読み込み
+
+2. プロジェクト状況の確認:
+   - 必要な文書やファイルを確認
+   - 既存の実装や設計を参照
+
+## 実行タスク
+[07-implement-usecase固有のタスクを実行]
+
+## 重要: 標準化出力形式の遵守
+レポートは必ず以下の構造化セクションで終了してください：
+
+### 📊 実行サマリー
+各Critical Taskの完了状態を✅/❌で明記
+
+### 📋 総合判定
+APPROVED/CONDITIONAL_APPROVAL/REJECTED/COMPLETED のいずれかを明記
+
+### 💡 次のステップ
+判定に基づく具体的なアクションアイテムを列挙
+
+## 処理完了後
+- 実行結果の報告
+- 次のステップへの案内"
+
+   # Execute Task tool
+   Task \
+     --subagent_type "07-implement-usecase" \
+     --description "Execute 07-implement-usecase task" \
+     --prompt "$task_prompt"
+   
+   agent_exit_code=$?
+   echo "✅ 専用エージェント実行完了 (終了コード: $agent_exit_code)"
    
    echo "✅ エージェント呼び出し設定完了"
    echo "エージェントが以下の処理を実行します:"

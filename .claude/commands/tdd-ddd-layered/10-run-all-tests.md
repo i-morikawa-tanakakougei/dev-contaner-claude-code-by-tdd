@@ -257,37 +257,44 @@ $ /run-all-tests 15
    echo ""
    
    # Actual Claude Code Task tool invocation with hybrid approach
-   cat <<'AGENT_CALL'
-   Task tool will be called with:
-   - subagent_type: "10-run-all-tests"
-   - description: "Execute comprehensive test suite with coverage and quality analysis"
-   - prompt: |
-     包括的テスト実行タスクを実行してください。
-     
-     ## コンテキスト情報の取得
-     1. 一時コンテキスト（イシュー情報）:
-        - /workspace/.claude/context/current-command-context.json を読み込み
-     
-     2. 既存テスト状況の確認:
-        - tests/ ディレクトリの全テストファイルを確認
-        - pytest設定とテスト環境の確認
-        - docs/use_cases/issue-X-Y.json でテスト対象フェーズを確認
-     
-     ## 実行タスク
-     1. ユニットテストの実行と分析
-     2. 統合テストの実行と検証
-     3. エンドツーエンドテストの実行と確認
-     4. カバレッジ分析とレポート生成
-     5. 品質メトリクスの収集と評価
-     6. パフォーマンステストとベンチマーク
-     7. テスト結果分析と失敗調査
-     8. 包括的レポートと文書化
-     
-     ## 処理完了後
-     - 全テスト実行結果の詳細報告
-     - カバレッジ率と品質メトリクスの報告
-     - 次のステップ（リファクタリング）への案内
-   AGENT_CALL
+   # Task tool execution with comprehensive prompt
+   task_prompt="タスクを実行してください。
+
+## コンテキスト情報の取得
+1. 一時コンテキスト（プロジェクト情報）:
+   - /workspace/.claude/context/current-command-context.json を読み込み
+
+2. プロジェクト状況の確認:
+   - 必要な文書やファイルを確認
+   - 既存の実装や設計を参照
+
+## 実行タスク
+[10-run-all-tests固有のタスクを実行]
+
+## 重要: 標準化出力形式の遵守
+レポートは必ず以下の構造化セクションで終了してください：
+
+### 📊 実行サマリー
+各Critical Taskの完了状態を✅/❌で明記
+
+### 📋 総合判定
+APPROVED/CONDITIONAL_APPROVAL/REJECTED/COMPLETED のいずれかを明記
+
+### 💡 次のステップ
+判定に基づく具体的なアクションアイテムを列挙
+
+## 処理完了後
+- 実行結果の報告
+- 次のステップへの案内"
+
+   # Execute Task tool
+   Task \
+     --subagent_type "10-run-all-tests" \
+     --description "Execute 10-run-all-tests task" \
+     --prompt "$task_prompt"
+   
+   agent_exit_code=$?
+   echo "✅ 専用エージェント実行完了 (終了コード: $agent_exit_code)"
    
    echo "✅ エージェント呼び出し設定完了"
    echo "エージェントが以下の処理を実行しました:"
