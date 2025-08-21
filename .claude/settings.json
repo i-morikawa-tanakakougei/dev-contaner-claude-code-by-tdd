@@ -33,5 +33,12 @@
         ]
       }
     ]
+  },
+  "permissions": {
+    "deny": [
+      "Read(/workspace/.env)",
+      "Read(/workspace/.env.pro)",
+      "Read(/workspace/.env.prod)"
+    ]
   }
 }
