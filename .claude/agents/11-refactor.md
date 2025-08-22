@@ -171,43 +171,43 @@ Make judgments aligned with metadata-defined quality gates:
 ```markdown
 1. Reference task-definitions/11-refactor.json during context reading
 2. Use critical_tasks as execution checklist
-3. Report each critical_task completion status in 📊実行サマリー
-4. Provide judgment based on quality_gates in 📋総合判定
-5. Present ➡️次のステップ aligned with metadata next_steps
+3. Report each critical_task completion status in 📊 Execution Summary
+4. Provide judgment based on quality_gates in 📋 Overall Assessment
+5. Present ➡️ Next Steps aligned with metadata next_steps
 ```
 
 ## 🎯 **STANDARDIZED OUTPUT REQUIREMENTS**
 
-### **📊 実行サマリー**
-Critical Taskの完了状態を明記：
-- ✅/❌ **テストスイート確認**: 全テストが成功状態であることの確認
-- ✅/❌ **コード品質分析**: コードの品質問題と改善箇所の特定
-- ✅/❌ **重複排除完了**: コード重複の特定と削除の実施
-- ✅/❌ **設計パターン適用**: 適切な設計パターンとリファクタリング手法の適用
-- ✅/❌ **パフォーマンス最適化**: 必要に応じたパフォーマンス改善の実施
-- ✅/❌ **テスト保守**: リファクタリング後のテスト成功状態の維持
+### **📊 Execution Summary**
+Critical Task completion status:
+- ✅/❌ **Test Suite Verification**: Confirmation that all tests are in successful state
+- ✅/❌ **Code Quality Analysis**: Identification of code quality issues and improvement areas
+- ✅/❌ **Duplication Elimination Complete**: Identification and removal of code duplication
+- ✅/❌ **Design Pattern Application**: Application of appropriate design patterns and refactoring techniques
+- ✅/❌ **Performance Optimization**: Implementation of necessary performance improvements
+- ✅/❌ **Test Maintenance**: Maintaining test success state after refactoring
 
-### **📋 総合判定**
-以下のいずれかを必ず明記：
-- **REFACTORING_COMPLETED** - リファクタリング完了、品質向上達成
-- **CODE_QUALITY_IMPROVED** - コード品質が大幅に改善
-- **TESTS_STILL_PASSING** - 全テストがGREEN状態を維持
+### **📋 Overall Assessment**
+Must specify one of the following:
+- **REFACTORING_COMPLETED** - Refactoring completed, quality improvements achieved
+- **CODE_QUALITY_IMPROVED** - Code quality significantly improved
+- **TESTS_STILL_PASSING** - All tests maintain GREEN state successfully
 
-### **🔧 リファクタリング項目**
-実施されたリファクタリングの詳細：
-- **重複削除**: XX箇所の重複コード削除
-- **メソッド抽出**: XX個のメソッド抽出による可読性向上
-- **クラス設計改善**: XX個のクラスの責務明確化
-- **設計パターン適用**: 適用されたパターン（Strategy, Factory等）
+### **🔧 Refactoring Items**
+Details of implemented refactoring:
+- **Duplication Removal**: Removal of XX instances of duplicate code
+- **Method Extraction**: XX method extractions for improved readability
+- **Class Design Improvement**: Clarification of responsibilities for XX classes
+- **Design Pattern Application**: Applied patterns (Strategy, Factory, etc.)
 
-### **🧪 テスト状態確認**
-- **テスト実行結果**: 全XXXXXのテストが引き続き成功
-- **リグレッション確認**: リファクタリングによる機能への影響なし
-- **テストカバレッジ**: カバレッジ率の維持または向上
-- **テスト実行時間**: パフォーマンス改善による実行時間短縮
+### **🧪 Test Status Verification**
+- **Test Execution Results**: All XXXXX tests continue to succeed
+- **Regression Verification**: No impact on functionality from refactoring
+- **Test Coverage**: Maintained or improved coverage rate
+- **Test Execution Time**: Execution time reduction through performance improvements
 
-### **➡️ 次のステップ**
-プルリクエスト作成フェーズへの移行案内：
+### **➡️ Next Steps**
+Guidance for transitioning to pull request creation phase:
 ```bash
 /create-pr <issue-number>
 ```

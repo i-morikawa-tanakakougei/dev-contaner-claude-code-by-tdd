@@ -75,9 +75,9 @@ Make judgments aligned with metadata-defined quality gates:
 ```markdown
 1. Reference task-definitions/02-sprint-planning.json during context reading
 2. Use critical_tasks as execution checklist
-3. Report each critical_task completion status in 📊実行サマリー
-4. Provide judgment based on quality_gates in 📋総合判定
-5. Present ➡️次のステップ aligned with metadata next_steps
+3. Report each critical_task completion status in 📊 Execution Summary
+4. Provide judgment based on quality_gates in 📋 Overall Assessment
+5. Present ➡️ Next Steps aligned with metadata next_steps
 ```
 
 ## 📋 **CONTEXT PROCESSING STANDARD**
@@ -161,36 +161,36 @@ Follow this standardized pattern to ensure consistent, context-aware sprint plan
 
 ## 🎯 **STANDARDIZED OUTPUT REQUIREMENTS**
 
-### **📊 実行サマリー**
-Critical Taskの完了状態を明記：
-- ✅/❌ **ビジョン分析完了**: プロジェクトビジョンとコアシナリオの詳細分析
-- ✅/❌ **コアシナリオ分解**: 実装可能なチケットへの適切な分解
-- ✅/❌ **GitHubイシュー作成**: Given-When-Then受入基準付きイシュー作成
-- ✅/❌ **受入基準定義**: 明確で実装可能な受入基準の完全定義
-- ✅/❌ **優先度割り当て**: TDD/DDD実装フローに基づく優先度設定
-- ✅/❌ **スプリント目標確立**: 具体的で測定可能なスプリント目標設定
+### **📊 Execution Summary**
+Critical task completion status:
+- ✅/❌ **Vision Analysis Completed**: Detailed analysis of project vision and core scenarios
+- ✅/❌ **Core Scenario Breakdown**: Appropriate breakdown into implementable tickets
+- ✅/❌ **GitHub Issues Created**: Issue creation with Given-When-Then acceptance criteria
+- ✅/❌ **Acceptance Criteria Definition**: Complete definition of clear and implementable acceptance criteria
+- ✅/❌ **Priority Assignment**: Priority setting based on TDD/DDD implementation flow
+- ✅/❌ **Sprint Goal Establishment**: Setting specific and measurable sprint goals
 
-### **📋 総合判定**
-以下のいずれかを必ず明記：
-- **SPRINT_PLAN_CREATED** - スプリント計画作成完了
-- **ISSUES_CREATED** - GitHubイシュー作成完了
-- **READY_FOR_EXECUTION** - スプリント実行開始準備完了
+### **📋 Overall Assessment**
+Must specify one of the following:
+- **SPRINT_PLAN_CREATED** - Sprint plan creation completed
+- **ISSUES_CREATED** - GitHub issue creation completed
+- **READY_FOR_EXECUTION** - Sprint execution preparation completed
 
-### **📋 スプリント計画作成結果**
-作成されたスプリント計画の詳細：
-- **スプリント期間**: XX週間 (XX日〜XX日)
-- **目標設定**: 明確で測定可能なスプリント目標
-- **チケット総数**: XX個 (優先度別分類)
-- **予想工数**: XX人日 (チーム容量との整合性)
+### **📋 Sprint Plan Creation Results**
+Details of the created sprint plan:
+- **Sprint Duration**: XX weeks (XX date to XX date)
+- **Goal Setting**: Clear and measurable sprint goals
+- **Total Tickets**: XX tickets (classified by priority)
+- **Estimated Effort**: XX person-days (alignment with team capacity)
 
-### **🎯 GitHubイシュー作成確認**
-- **作成イシュー数**: XX個のイシューをGitHubに作成
-- **受入基準**: 全イシューにGiven-When-Then形式の受入基準
-- **ラベル設定**: 優先度、コンポーネント、工数見積もりラベル
-- **依存関係**: イシュー間の依存関係と実装順序の明確化
+### **🎯 GitHub Issue Creation Verification**
+- **Created Issues Count**: XX issues created in GitHub
+- **Acceptance Criteria**: All issues have Given-When-Then format acceptance criteria
+- **Label Configuration**: Priority, component, and effort estimation labels
+- **Dependencies**: Clear definition of inter-issue dependencies and implementation order
 
-### **➡️ 次のステップ**
-スプリント計画作成完了後の推奨アクション：
+### **➡️ Next Steps**
+Recommended actions after sprint plan creation completion:
 ```bash
 /review-sprint-plan <sprint-number>
 /create-use-case <first-issue-number>

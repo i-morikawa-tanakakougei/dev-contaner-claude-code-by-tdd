@@ -153,7 +153,7 @@ Follow this standardized pattern to ensure consistent, context-aware presentatio
 
 ### **Critical Tasks Reference**
 Ensure completion of the following critical_tasks during execution:
-- `infrastructure_layer_verification` - インフラ層実装完了と永続化機能の動作確認
+- `infrastructure_layer_verification` - Infrastructure layer implementation completion and persistence functionality operation verification
 - `api_endpoint_design` - RESTfulエンドポイントまたはCLIコマンドの設計
 - `input_validation_implementation` - ユーザー入力の検証とサニタイゼーション実装
 - `error_response_handling` - 統一されたエラーレスポンス形式の実装
@@ -162,51 +162,51 @@ Ensure completion of the following critical_tasks during execution:
 
 ### **Quality Gates Alignment**
 Make judgments aligned with metadata-defined quality gates:
-- PRESENTATION_IMPLEMENTED - プレゼンテーション層実装完了
-- ENDPOINTS_FUNCTIONAL - エンドポイントが正常に機能
-- READY_FOR_TESTING - 全層統合テスト準備完了
+- PRESENTATION_IMPLEMENTED - Presentation layer implementation completed
+- ENDPOINTS_FUNCTIONAL - Endpoints functioning normally
+- READY_FOR_TESTING - Full layer integration testing preparation completed
 
 ### **Implementation Pattern**
 ```markdown
 1. Reference task-definitions/09-implement-presentation.json during context reading
 2. Use critical_tasks as execution checklist
-3. Report each critical_task completion status in 📊実行サマリー
-4. Provide judgment based on quality_gates in 📋総合判定
-5. Present ➡️次のステップ aligned with metadata next_steps
+3. Report each critical_task completion status in 📊 Execution Summary
+4. Provide judgment based on quality_gates in 📋 Overall Assessment
+5. Present ➡️ Next Steps aligned with metadata next_steps
 ```
 
 ## 🎯 **STANDARDIZED OUTPUT REQUIREMENTS**
 
-### **📊 実行サマリー**
-Critical Taskの完了状態を明記：
-- ✅/❌ **インフラ層確認**: インフラ層実装完了と永続化機能の動作確認
-- ✅/❌ **APIエンドポイント設計**: RESTfulエンドポイントまたはCLIコマンドの設計
-- ✅/❌ **入力検証実装**: ユーザー入力の検証とサニタイゼーション実装
-- ✅/❌ **エラーレスポンス処理**: 統一されたエラーレスポンス形式の実装
-- ✅/❌ **プレゼンテーションテスト**: ユーザーインターフェースのテスト実行
-- ✅/❌ **統合検証実行**: エンドツーエンドでの統合動作確認
+### **📊 Execution Summary**
+Critical Task completion status:
+- ✅/❌ **Infrastructure Layer Verification**: Infrastructure layer implementation completion and persistence functionality verification
+- ✅/❌ **API Endpoint Design**: Design of RESTful endpoints or CLI commands
+- ✅/❌ **Input Validation Implementation**: Implementation of user input validation and sanitization
+- ✅/❌ **Error Response Handling**: Implementation of unified error response format
+- ✅/❌ **Presentation Testing**: User interface testing execution
+- ✅/❌ **Integration Verification Execution**: End-to-end integration operation verification
 
-### **📋 総合判定**
-以下のいずれかを必ず明記：
-- **PRESENTATION_IMPLEMENTED** - プレゼンテーション層実装完了
-- **ENDPOINTS_FUNCTIONAL** - エンドポイントが正常に機能
-- **READY_FOR_TESTING** - 全層統合テスト準備完了
+### **📋 Overall Assessment**
+Must specify one of the following:
+- **PRESENTATION_IMPLEMENTED** - Presentation layer implementation completed
+- **ENDPOINTS_FUNCTIONAL** - Endpoints functioning normally
+- **READY_FOR_TESTING** - Ready for full layer integration testing
 
-### **🌐 実装プレゼンテーション層**
-実装されたプレゼンテーション層コンポーネントの詳細：
-- **APIエンドポイント**: src/presentation/api/*.py (XX個)
-- **CLIコマンド**: src/presentation/cli/*.py (XX個)
-- **スキーマ**: src/presentation/schemas/*.py (XX個)
-- **ミドルウェア**: src/presentation/middleware/*.py
+### **🌐 Implemented Presentation Layer**
+Details of implemented presentation layer components:
+- **API Endpoints**: src/presentation/api/*.py (XX items)
+- **CLI Commands**: src/presentation/cli/*.py (XX items)
+- **Schemas**: src/presentation/schemas/*.py (XX items)
+- **Middleware**: src/presentation/middleware/*.py
 
-### **🔌 エンドポイント確認**
-- **入力検証**: 全エンドポイントでの適切な入力検証実装
-- **エラーハンドリング**: 統一されたエラーレスポンス形式
-- **レスポンス形式**: 一貫したAPI仕様とレスポンス構造
-- **認証・認可**: セキュリティ要件の適切な実装
+### **🔌 Endpoint Verification**
+- **Input Validation**: Proper input validation implementation across all endpoints
+- **Error Handling**: Unified error response format
+- **Response Format**: Consistent API specifications and response structure
+- **Authentication & Authorization**: Proper implementation of security requirements
 
-### **➡️ 次のステップ**
-全層統合テストフェーズへの移行案内：
+### **➡️ Next Steps**
+Guidance for transitioning to full layer integration testing phase:
 ```bash
 /run-all-tests <issue-number>
 ```

@@ -82,9 +82,9 @@ Make judgments aligned with metadata-defined quality gates:
 ```markdown
 1. Reference task-definitions/04-domain-modeling.json during context reading
 2. Use critical_tasks as execution checklist
-3. Report each critical_task completion status in 📊実行サマリー
-4. Provide judgment based on quality_gates in 📋総合判定
-5. Present ➡️次のステップ aligned with metadata next_steps
+3. Report each critical_task completion status in 📊 Execution Summary
+4. Provide judgment based on quality_gates in 📋 Overall Assessment
+5. Present ➡️ Next Steps aligned with metadata next_steps
 ```
 - Follow Python typing best practices with proper type hints
 - Adhere to the project's coding standards (120 char line length, comprehensive docstrings)
@@ -180,37 +180,37 @@ Follow this standardized pattern to ensure consistent, context-aware domain mode
 
 ## 🎯 **STANDARDIZED OUTPUT REQUIREMENTS**
 
-### **📊 実行サマリー**
-Critical Taskの完了状態を明記：
-- ✅/❌ **ユースケース仕様分析**: 仕様書の詳細分析とドメイン要件抽出
-- ✅/❌ **エンティティ特定**: ビジネスの核となるエンティティの特定と設計
-- ✅/❌ **値オブジェクト設計**: 不変性を持つ値オブジェクトの適切な設計
-- ✅/❌ **集約境界定義**: 一貫性境界と集約ルートの明確な定義
-- ✅/❌ **ドメインサービス特定**: 複数エンティティにまたがるロジックの配置
-- ✅/❌ **リポジトリインターフェース設計**: データアクセスの抽象化設計
+### **📊 Execution Summary**
+Critical task completion status:
+- ✅/❌ **Use Case Specification Analysis**: Detailed analysis of specifications and domain requirement extraction
+- ✅/❌ **Entity Identification**: Identification and design of core business entities
+- ✅/❌ **Value Object Design**: Appropriate design of immutable value objects
+- ✅/❌ **Aggregate Boundary Definition**: Clear definition of consistency boundaries and aggregate roots
+- ✅/❌ **Domain Service Identification**: Placement of logic spanning multiple entities
+- ✅/❌ **Repository Interface Design**: Abstraction design for data access
 
-### **📋 総合判定**
-以下のいずれかを必ず明記：
-- **DOMAIN_MODEL_DESIGNED** - ドメインモデル設計完了
-- **ENTITIES_DEFINED** - エンティティ定義完了
-- **READY_FOR_REVIEW** - ドメイン設計レビュー準備完了
+### **📋 Overall Assessment**
+Must specify one of the following:
+- **DOMAIN_MODEL_DESIGNED** - Domain model design completed
+- **ENTITIES_DEFINED** - Entity definition completed
+- **READY_FOR_REVIEW** - Domain design review preparation completed
 
-### **🏗️ ドメインモデル設計結果**
-設計されたドメインモデルの詳細：
-- **設計文書**: docs/domain/issue-X-Y.md
-- **エンティティ数**: XX個の核となるエンティティ
-- **値オブジェクト数**: XX個の値オブジェクト
-- **集約数**: XX個の明確に定義された集約
+### **🏗️ Domain Model Design Results**
+Details of the designed domain model:
+- **Design Document**: docs/domain/issue-X-Y.md
+- **Number of Entities**: XX core entities
+- **Number of Value Objects**: XX value objects
+- **Number of Aggregates**: XX clearly defined aggregates
 
-### **🎯 DDD構成要素確認**
-- **エンティティ**: 一意性を持つビジネスオブジェクトの設計
-- **値オブジェクト**: 不変性と等値性を持つオブジェクトの設計
-- **集約境界**: データ一貫性を保つ境界の明確な定義
-- **ドメインサービス**: エンティティに属さないドメインロジックの配置
-- **リポジトリ**: データアクセスの抽象化とインターフェース定義
+### **🎯 DDD Component Verification**
+- **Entities**: Design of business objects with unique identity
+- **Value Objects**: Design of objects with immutability and equality
+- **Aggregate Boundaries**: Clear definition of boundaries that maintain data consistency
+- **Domain Services**: Placement of domain logic that doesn't belong to entities
+- **Repositories**: Data access abstraction and interface definition
 
-### **➡️ 次のステップ**
-ドメインモデル設計完了後の推奨アクション：
+### **➡️ Next Steps**
+Recommended actions after domain model design completion:
 ```bash
 /review-domain-design <issue-number>
 /create-tests <issue-number>

@@ -132,9 +132,9 @@ Make judgments aligned with metadata-defined quality gates:
 ```markdown
 1. Reference task-definitions/06-implement-domain.json during context reading
 2. Use critical_tasks as execution checklist
-3. Report each critical_task completion status in 📊実行サマリー
-4. Provide judgment based on quality_gates in 📋総合判定
-5. Present ➡️次のステップ aligned with metadata next_steps
+3. Report each critical_task completion status in 📊 Execution Summary
+4. Provide judgment based on quality_gates in 📋 Overall Assessment
+5. Present ➡️ Next Steps aligned with metadata next_steps
 ```
 
 ## 📋 **CONTEXT PROCESSING STANDARD**
@@ -218,35 +218,35 @@ Follow this standardized pattern to ensure consistent, context-aware domain impl
 
 ## 🎯 **STANDARDIZED OUTPUT REQUIREMENTS**
 
-### **📊 実行サマリー**
-Critical Taskの完了状態を明記：
-- ✅/❌ **テスト分析完了**: 失敗テストの要件分析と実装目標の明確化
-- ✅/❌ **エンティティ実装完了**: ドメインエンティティとビジネスルールの実装
-- ✅/❌ **値オブジェクト実装**: 不変性と検証ロジックを持つ値オブジェクト作成
-- ✅/❌ **ドメインサービス実装**: 複数エンティティにまたがるビジネスロジック実装
-- ✅/❌ **ドメイン純粋性確認**: I/O依存なしのドメイン層純粋性維持
-- ✅/❌ **テスト成功検証**: 全ドメインテストがGREEN状態になることを確認
+### **📊 Execution Summary**
+Critical task completion status:
+- ✅/❌ **Test Analysis Completed**: Requirement analysis of failing tests and clarification of implementation goals
+- ✅/❌ **Entity Implementation Completed**: Implementation of domain entities and business rules
+- ✅/❌ **Value Object Implementation**: Creation of value objects with immutability and validation logic
+- ✅/❌ **Domain Service Implementation**: Implementation of business logic spanning multiple entities
+- ✅/❌ **Domain Purity Verification**: Maintaining domain layer purity without I/O dependencies
+- ✅/❌ **Test Success Verification**: Verification that all domain tests become GREEN
 
-### **📋 総合判定**
-以下のいずれかを必ず明記：
-- **DOMAIN_IMPLEMENTED** - ドメイン層実装完了、全テスト成功
-- **TESTS_PASSING** - TDD GREENフェーズ正常完了
-- **READY_FOR_APPLICATION_LAYER** - アプリケーション層実装準備完了
+### **📋 Overall Assessment**
+Must specify one of the following:
+- **DOMAIN_IMPLEMENTED** - Domain layer implementation completed, all tests successful
+- **TESTS_PASSING** - TDD GREEN phase completed successfully
+- **READY_FOR_APPLICATION_LAYER** - Application layer implementation preparation completed
 
-### **🏗️ 実装ドメインオブジェクト**
-実装されたドメインコンポーネントの詳細：
-- **エンティティ**: src/domain/entities/*.py (XX個)
-- **値オブジェクト**: src/domain/value_objects/*.py (XX個) 
-- **ドメインサービス**: src/domain/services/*.py (XX個)
-- **リポジトリインターフェース**: src/domain/repositories/__init__.py
+### **🏗️ Implemented Domain Objects**
+Details of implemented domain components:
+- **Entities**: src/domain/entities/*.py (XX items)
+- **Value Objects**: src/domain/value_objects/*.py (XX items)
+- **Domain Services**: src/domain/services/*.py (XX items)
+- **Repository Interfaces**: src/domain/repositories/__init__.py
 
-### **🟢 TDD GREEN状態確認**
-- **テスト実行結果**: 全XX個のテストが成功
-- **ドメイン純粋性**: 外部依存なし、ビジネスロジックのみ実装
-- **ビジネスルール**: 不変条件とドメインルールの完全実装
+### **🟢 TDD GREEN State Verification**
+- **Test Execution Results**: All XX tests successful
+- **Domain Purity**: No external dependencies, only business logic implemented
+- **Business Rules**: Complete implementation of invariant conditions and domain rules
 
-### **➡️ 次のステップ**
-アプリケーション層実装フェーズへの移行案内：
+### **➡️ Next Steps**
+Transition guidance to application layer implementation phase:
 ```bash
 /implement-usecase <issue-number>
 ```

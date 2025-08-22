@@ -137,43 +137,43 @@ Make judgments aligned with metadata-defined quality gates:
 ```markdown
 1. Reference task-definitions/14-apply-feedback.json during context reading
 2. Use critical_tasks as execution checklist
-3. Report each critical_task completion status in 📊実行サマリー
-4. Provide judgment based on quality_gates in 📋総合判定
-5. Present ➡️次のステップ aligned with metadata next_steps
+3. Report each critical_task completion status in 📊 Execution Summary
+4. Provide judgment based on quality_gates in 📋 Overall Assessment
+5. Present ➡️ Next Steps aligned with metadata next_steps
 ```
 
 ## 🎯 **STANDARDIZED OUTPUT REQUIREMENTS**
 
-### **📊 実行サマリー**
-Critical Taskの完了状態を明記：
-- ✅/❌ **フィードバック分析**: スプリントレビューやステークホルダー意見の詳細分析
-- ✅/❌ **改善優先順位付け**: 影響度と実装難易度に基づく優先順位設定
-- ✅/❌ **コードベース修正**: TDD/DDD原則を維持した安全な変更適用
-- ✅/❌ **プロセス強化**: 開発プロセスとツールチェーンの改善
-- ✅/❌ **ドキュメント更新**: 改善内容を反映したドキュメント更新
-- ✅/❌ **検証テスト**: 改善効果の包括的検証
+### **📊 Execution Summary**
+Specify completion status of critical tasks:
+- ✅/❌ **Feedback Analysis**: Detailed analysis of sprint review and stakeholder feedback
+- ✅/❌ **Improvement Prioritization**: Priority setting based on impact and implementation difficulty
+- ✅/❌ **Codebase Modification**: Safe change application maintaining TDD/DDD principles
+- ✅/❌ **Process Enhancement**: Development process and toolchain improvements
+- ✅/❌ **Documentation Updates**: Documentation updates reflecting improvements
+- ✅/❌ **Validation Testing**: Comprehensive validation of improvement effectiveness
 
-### **📋 総合判定**
-以下のいずれかを必ず明記：
-- **FEEDBACK_APPLIED** - フィードバック適用完了
-- **IMPROVEMENTS_IMPLEMENTED** - 改善実装完了
-- **VALIDATION_COMPLETE** - 改善効果検証完了
+### **📋 Overall Assessment**
+Must specify one of the following:
+- **FEEDBACK_APPLIED** - Feedback application completed
+- **IMPROVEMENTS_IMPLEMENTED** - Improvements implementation completed
+- **VALIDATION_COMPLETE** - Improvement effectiveness validation completed
 
-### **🔄 フィードバック適用結果**
-適用された改善策の詳細：
-- **適用フィードバック数**: XX個の意見を系統的に適用
-- **コード改善**: 品質、パフォーマンス、保守性の向上
-- **プロセス改善**: 開発効率と品質保証の強化
-- **ドキュメント改善**: 明確性とアクセシビリティの向上
+### **🔄 Feedback Application Results**
+Details of applied improvement measures:
+- **Applied Feedback Count**: XX feedback items systematically applied
+- **Code Improvements**: Quality, performance, and maintainability enhancements
+- **Process Improvements**: Development efficiency and quality assurance strengthening
+- **Documentation Improvements**: Clarity and accessibility enhancements
 
-### **📈 改善効果確認**
-- **品質メトリクス**: コード品質指標の測定可能な向上
-- **パフォーマンス**: レスポンス時闳やスループットの改善
-- **開発効率**: チームの生産性と満足度向上
-- **ユーザー体験**: エンドユーザーの体験品質向上
+### **📈 Improvement Effectiveness Verification**
+- **Quality Metrics**: Measurable improvement in code quality indicators
+- **Performance**: Improvements in response time and throughput
+- **Development Efficiency**: Team productivity and satisfaction improvements
+- **User Experience**: End-user experience quality improvements
 
-### **➡️ 次のステップ**
-フィードバック適用完了後の推奨アクション：
+### **➡️ Next Steps**
+Recommended actions after feedback application completion:
 ```bash
 /create-pr <issue-number>
 ```

@@ -164,9 +164,9 @@ Make judgments aligned with metadata-defined quality gates:
 ```markdown
 1. Reference task-definitions/05-create-tests.json during context reading
 2. Use critical_tasks as execution checklist
-3. Report each critical_task completion status in 📊実行サマリー
-4. Provide judgment based on quality_gates in 📋総合判定
-5. Present ➡️次のステップ aligned with metadata next_steps
+3. Report each critical_task completion status in 📊 Execution Summary
+4. Provide judgment based on quality_gates in 📋 Overall Assessment
+5. Present ➡️ Next Steps aligned with metadata next_steps
 ```
 
 ## 📋 **CONTEXT PROCESSING STANDARD**
@@ -249,34 +249,34 @@ Follow this standardized pattern to ensure consistent, context-aware test creati
 
 ## 🎯 **STANDARDIZED OUTPUT REQUIREMENTS**
 
-### **📊 実行サマリー**
-Critical Taskの完了状態を明記：
-- ✅/❌ **仕様分析完了**: Given-When-Thenシナリオとドメインモデルの詳細分析
-- ✅/❌ **ドメインモデル確認**: エンティティ、値オブジェクト、集約境界の理解
-- ✅/❌ **テスト構造設計**: 単体・統合・E2Eテストの構造設計完了
-- ✅/❌ **失敗テスト実装**: 全Given-When-Thenシナリオの失敗テスト作成
-- ✅/❌ **TDD RED検証**: 全テストが期待通りに失敗することの確認
+### **📊 Execution Summary**
+Critical task completion status:
+- ✅/❌ **Specification Analysis Completed**: Detailed analysis of Given-When-Then scenarios and domain models
+- ✅/❌ **Domain Model Verification**: Understanding of entities, value objects, and aggregate boundaries
+- ✅/❌ **Test Structure Design**: Completed design structure for unit, integration, and E2E tests
+- ✅/❌ **Failing Test Implementation**: Creation of failing tests for all Given-When-Then scenarios
+- ✅/❌ **TDD RED Validation**: Verification that all tests fail as expected
 
-### **📋 総合判定**
-以下のいずれかを必ず明記：
-- **TESTS_CREATED** - 全シナリオのテストが作成され失敗確認済み
-- **TESTS_FAILED_AS_EXPECTED** - TDD REDフェーズが正常完了
-- **READY_FOR_IMPLEMENTATION** - ドメイン実装開始準備完了
+### **📋 Overall Assessment**
+Must specify one of the following:
+- **TESTS_CREATED** - Tests for all scenarios created and failure verified
+- **TESTS_FAILED_AS_EXPECTED** - TDD RED phase completed successfully
+- **READY_FOR_IMPLEMENTATION** - Domain implementation preparation completed
 
-### **📁 作成テストファイル**
-作成されたテストファイルの詳細：
-- **単体テスト**: tests/unit/domain/test_*.py
-- **統合テスト**: tests/integration/test_*.py
-- **テスト数**: XX 個のテストケース作成
-- **カバレッジ**: 全Given-When-Thenシナリオ対応
+### **📁 Created Test Files**
+Details of created test files:
+- **Unit Tests**: tests/unit/domain/test_*.py
+- **Integration Tests**: tests/integration/test_*.py
+- **Number of Tests**: XX test cases created
+- **Coverage**: All Given-When-Then scenarios covered
 
-### **🔴 TDD RED状態確認**
-- **テスト実行結果**: 全XX個のテストが期待通りに失敗
-- **失敗理由**: 実装コードが存在しないため（正常）
-- **次フェーズ準備**: ドメイン実装に必要な要件が明確化
+### **🔴 TDD RED State Verification**
+- **Test Execution Results**: All XX tests fail as expected
+- **Failure Reason**: No implementation code exists (normal)
+- **Next Phase Preparation**: Requirements needed for domain implementation clarified
 
-### **➡️ 次のステップ**
-ドメイン実装フェーズへの移行案内：
+### **➡️ Next Steps**
+Transition guidance to domain implementation phase:
 ```bash
 /implement-domain <issue-number>
 ```

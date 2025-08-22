@@ -66,9 +66,9 @@ Make judgments aligned with metadata-defined quality gates:
 ```markdown
 1. Reference task-definitions/13-review-issue.json during context reading
 2. Use critical_tasks as execution checklist
-3. Report each critical_task completion status in 📊実行サマリー
-4. Provide judgment based on quality_gates in 📋総合判定
-5. Present ➡️次のステップ aligned with metadata next_steps
+3. Report each critical_task completion status in 📊 Execution Summary
+4. Provide judgment based on quality_gates in 📋 Overall Assessment
+5. Present ➡️ Next Steps aligned with metadata next_steps
 ```
 
 ## 📋 **CONTEXT PROCESSING STANDARD**
@@ -152,36 +152,36 @@ Follow this standardized pattern to ensure consistent, context-aware issue analy
 
 ## 🎯 **STANDARDIZED OUTPUT REQUIREMENTS**
 
-### **📊 実行サマリー**
-Critical Taskの完了状態を明記：
-- ✅/❌ **イシュー内容分析**: GitHub issueの詳細内容分析と理解
-- ✅/❌ **要件抽出**: 機能要件と非機能要件の明確化
-- ✅/❌ **受入基準検証**: Given-When-Then形式の受入基準確認
-- ✅/❌ **実装範囲定義**: 実装対象の明確な境界定義
-- ✅/❌ **依存関係特定**: 他のイシューやコンポーネントとの依存関係確認
-- ✅/❌ **複雑性評価**: 実装の複雑さと工数の見積もり
+### **📊 Execution Summary**
+Critical Task completion status:
+- ✅/❌ **Issue Content Analysis**: Detailed content analysis and understanding of GitHub issue
+- ✅/❌ **Requirements Extraction**: Clarification of functional and non-functional requirements
+- ✅/❌ **Acceptance Criteria Validation**: Verification of acceptance criteria in Given-When-Then format
+- ✅/❌ **Implementation Scope Definition**: Clear boundary definition of implementation targets
+- ✅/❌ **Dependency Identification**: Verification of dependencies with other issues and components
+- ✅/❌ **Complexity Assessment**: Estimation of implementation complexity and effort
 
-### **📋 総合判定**
-以下のいずれかを必ず明記：
-- **READY_FOR_IMPLEMENTATION** - 実装開始可能
-- **REQUIRES_CLARIFICATION** - 追加情報や説明が必要
-- **NEEDS_BREAKDOWN** - より小さなイシューへの分割が必要
+### **📋 Overall Assessment**
+Must specify one of the following:
+- **READY_FOR_IMPLEMENTATION** - Ready to start implementation
+- **REQUIRES_CLARIFICATION** - Additional information or explanation needed
+- **NEEDS_BREAKDOWN** - Needs to be broken down into smaller issues
 
-### **🔍 イシュー分析結果**
-GitHub issueの包括的分析結果：
-- **要件明確性**: 要求仕様の明確さと完全性評価
-- **技術的実現性**: 現在のアーキテクチャでの実装可能性
-- **複雑性レベル**: 実装の技術的複雑さと難易度
-- **影響範囲**: 変更が他のコンポーネントに与える影響
+### **🔍 Issue Analysis Results**
+Comprehensive analysis results of GitHub issue:
+- **Requirements Clarity**: Evaluation of requirement specification clarity and completeness
+- **Technical Feasibility**: Implementation feasibility within current architecture
+- **Complexity Level**: Technical complexity and difficulty of implementation
+- **Impact Scope**: Impact that changes will have on other components
 
-### **🎯 実装ガイダンス**
-- **実装アプローチ**: 推奨される実装戦略とアプローチ
-- **アーキテクチャ影響**: TDD/DDD/Layered Architectureへの影響
-- **技術的考慮事項**: 実装時に注意すべき技術的ポイント
-- **テスト戦略**: 必要なテストの種類と範囲
+### **🎯 Implementation Guidance**
+- **Implementation Approach**: Recommended implementation strategy and approach
+- **Architecture Impact**: Impact on TDD/DDD/Layered Architecture
+- **Technical Considerations**: Technical points to note during implementation
+- **Testing Strategy**: Required types and scope of testing
 
-### **➡️ 次のステップ**
-イシュー分析完了後の推奨アクション：
+### **➡️ Next Steps**
+Recommended actions after issue analysis completion:
 ```bash
 /create-use-case <issue-number>
 ```

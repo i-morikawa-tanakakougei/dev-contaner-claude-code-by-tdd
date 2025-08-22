@@ -154,32 +154,32 @@ Make judgments aligned with metadata-defined quality gates:
 ```markdown
 1. Reference task-definitions/12-evolve-scenarios.json during context reading
 2. Use critical_tasks as execution checklist
-3. Report each critical_task completion status in 📊実行サマリー
-4. Provide judgment based on quality_gates in 📋総合判定
-5. Present ➡️次のステップ aligned with metadata next_steps
+3. Report each critical_task completion status in 📊 Execution Summary
+4. Provide judgment based on quality_gates in 📋 Overall Assessment
+5. Present ➡️ Next Steps aligned with metadata next_steps
 ```
 
 ## 🎯 **STANDARDIZED OUTPUT REQUIREMENTS**
 
-### **📊 実行サマリー**
-Critical Taskの完了状態を明記：
-- ✅/❌ **シナリオ分析完了**: 既存シナリオと要求の整合性確認
-- ✅/❌ **新規シナリオ作成**: Given-When-Then形式での新シナリオ定義
-- ✅/❌ **既存シナリオ拡張**: エッジケースやエラーハンドリングの追加
-- ✅/❌ **一貫性維持**: ビジョンとドメインモデルとの整合性確保
-- ✅/❌ **ドキュメント更新**: シナリオ文書の最新化と追跡可能性確保
-- ✅/❌ **実装準備**: テスト可能性と実装可能性の確認
+### **📊 Execution Summary**
+Critical Task completion status:
+- ✅/❌ **Scenario Analysis Complete**: Verification of consistency between existing scenarios and requirements
+- ✅/❌ **New Scenario Creation**: Definition of new scenarios in Given-When-Then format
+- ✅/❌ **Existing Scenario Extension**: Addition of edge cases and error handling
+- ✅/❌ **Consistency Maintenance**: Ensuring consistency with vision and domain model
+- ✅/❌ **Documentation Updates**: Updating scenario documentation and ensuring traceability
+- ✅/❌ **Implementation Readiness**: Verification of testability and implementation feasibility
 
-### **📋 総合判定**
-以下のいずれかを必ず明記：
-- **APPROVED** - シナリオ進化完了、実装可能
-- **CONDITIONAL_APPROVAL** - 軽微な改善後に実装可能
-- **REJECTED** - 重大な問題によりシナリオ修正が必要
+### **📋 Overall Assessment**
+Must specify one of the following:
+- **APPROVED** - Scenario evolution complete, ready for implementation
+- **CONDITIONAL_APPROVAL** - Implementation possible after minor improvements
+- **REJECTED** - Scenario fixes required due to significant issues
 
-### **💡 次のステップ**
-判定に基づく具体的なアクションアイテムを列挙：
-- APPROVEDの場合: 新規シナリオの実装フェーズ開始
-- CONDITIONAL_APPROVALの場合: 指摘事項への対応と改善適用
-- REJECTEDの場合: シナリオの再設計と一貫性確保
+### **💡 Next Steps**
+Specific action items based on assessment:
+- For APPROVED: Start implementation phase for new scenarios
+- For CONDITIONAL_APPROVAL: Address identified issues and apply improvements
+- For REJECTED: Redesign scenarios and ensure consistency
 
 **重要**: このセクション形式に従うことで、ホスト側でのタスク確認とメタデータ駆動検証が正常に動作します。

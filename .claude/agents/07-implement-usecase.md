@@ -226,51 +226,51 @@ Ensure completion of the following critical_tasks during execution:
 
 ### **Quality Gates Alignment**
 Make judgments aligned with metadata-defined quality gates:
-- APPLICATION_LAYER_IMPLEMENTED - アプリケーション層実装完了
-- USE_CASES_FUNCTIONAL - ユースケースが正常に動作
-- READY_FOR_INFRASTRUCTURE - インフラ層実装準備完了
+- APPLICATION_LAYER_IMPLEMENTED - Application layer implementation completed
+- USE_CASES_FUNCTIONAL - Use cases functioning normally
+- READY_FOR_INFRASTRUCTURE - Infrastructure layer implementation preparation completed
 
 ### **Implementation Pattern**
 ```markdown
 1. Reference task-definitions/07-implement-usecase.json during context reading
 2. Use critical_tasks as execution checklist
-3. Report each critical_task completion status in 📊実行サマリー
-4. Provide judgment based on quality_gates in 📋総合判定
-5. Present ➡️次のステップ aligned with metadata next_steps
+3. Report each critical_task completion status in 📊 Execution Summary
+4. Provide judgment based on quality_gates in 📋 Overall Assessment
+5. Present ➡️ Next Steps aligned with metadata next_steps
 ```
 
 ## 🎯 **STANDARDIZED OUTPUT REQUIREMENTS**
 
-### **📊 実行サマリー**
-Critical Taskの完了状態を明記：
-- ✅/❌ **ドメイン層確認**: ドメイン実装完了とテスト成功状態の確認
-- ✅/❌ **ユースケース設計**: アプリケーション層のユースケース設計完了
-- ✅/❌ **アプリケーションサービス実装**: ドメインオーケストレーションロジック実装
-- ✅/❌ **トランザクション管理**: 適切なトランザクション境界の実装
-- ✅/❌ **DTO マッピング**: 入出力DTOとドメインオブジェクトのマッピング実装
-- ✅/❌ **統合テスト実行**: アプリケーション層の統合テスト成功確認
+### **📊 Execution Summary**
+Critical task completion status:
+- ✅/❌ **Domain Layer Verification**: Verification of domain implementation completion and test success status
+- ✅/❌ **Use Case Design**: Completion of application layer use case design
+- ✅/❌ **Application Service Implementation**: Implementation of domain orchestration logic
+- ✅/❌ **Transaction Management**: Implementation of appropriate transaction boundaries
+- ✅/❌ **DTO Mapping**: Implementation of input/output DTO and domain object mapping
+- ✅/❌ **Integration Test Execution**: Verification of application layer integration test success
 
-### **📋 総合判定**
-以下のいずれかを必ず明記：
-- **APPLICATION_LAYER_IMPLEMENTED** - アプリケーション層実装完了
-- **USE_CASES_FUNCTIONAL** - ユースケースが正常に動作
-- **READY_FOR_INFRASTRUCTURE** - インフラ層実装準備完了
+### **📋 Overall Assessment**
+Must specify one of the following:
+- **APPLICATION_LAYER_IMPLEMENTED** - Application layer implementation completed
+- **USE_CASES_FUNCTIONAL** - Use cases operating normally
+- **READY_FOR_INFRASTRUCTURE** - Infrastructure layer implementation preparation completed
 
-### **🎯 実装ユースケース**
-実装されたアプリケーション層コンポーネントの詳細：
-- **ユースケース**: src/application/use_cases/*.py (XX個)
-- **DTO**: src/application/dtos/*.py (XX個)
-- **インターフェース**: src/application/interfaces/*.py (XX個)
-- **サービス**: src/application/services/*.py (XX個)
+### **🎯 Implemented Use Cases**
+Details of implemented application layer components:
+- **Use Cases**: src/application/use_cases/*.py (XX items)
+- **DTOs**: src/application/dtos/*.py (XX items)
+- **Interfaces**: src/application/interfaces/*.py (XX items)
+- **Services**: src/application/services/*.py (XX items)
 
-### **🔄 アプリケーション層確認**
-- **ドメインオーケストレーション**: ドメインオブジェクトの適切な協調動作
-- **トランザクション境界**: 一貫性を保つトランザクション管理
-- **依存性注入**: リポジトリとドメインサービスの適切な注入
-- **エラーハンドリング**: アプリケーション固有のエラー処理実装
+### **🔄 Application Layer Verification**
+- **Domain Orchestration**: Appropriate collaborative operation of domain objects
+- **Transaction Boundaries**: Transaction management maintaining consistency
+- **Dependency Injection**: Appropriate injection of repositories and domain services
+- **Error Handling**: Implementation of application-specific error processing
 
-### **➡️ 次のステップ**
-インフラストラクチャ層実装フェーズへの移行案内：
+### **➡️ Next Steps**
+Transition guidance to infrastructure layer implementation phase:
 ```bash
 /implement-infra <issue-number>
 ```

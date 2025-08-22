@@ -163,44 +163,44 @@ Make judgments aligned with metadata-defined quality gates:
 ```markdown
 1. Reference task-definitions/15-create-pr.json during context reading
 2. Use critical_tasks as execution checklist
-3. Report each critical_task completion status in 📊実行サマリー
-4. Provide judgment based on quality_gates in 📋総合判定
-5. Present ➡️次のステップ aligned with metadata next_steps
+3. Report each critical_task completion status in 📊 Execution Summary
+4. Provide judgment based on quality_gates in 📋 Overall Assessment
+5. Present ➡️ Next Steps aligned with metadata next_steps
 ```
 
 ## 🎯 **STANDARDIZED OUTPUT REQUIREMENTS**
 
-### **📊 実行サマリー**
-Critical Taskの完了状態を明記：
-- ✅/❌ **コード完成確認**: 全層実装と機能完成性の結確認
-- ✅/❌ **テストスイート検証**: 全テスト成功と適切なカバレッジ確認
-- ✅/❌ **ドキュメント完全性確認**: APIドキュメント、README、アーキテクチャ文書の更新
-- ✅/❌ **プルリクエスト作成**: 明確で建設的なPR記述とレビュー案内
-- ✅/❌ **レビュー割り当て**: 適切なレビューアーとラベル設定
-- ✅/❌ **デプロイ準備完了**: CI/CDパイプラインとデプロイメント準備
+### **📊 Execution Summary**
+Critical Task completion status:
+- ✅/❌ **Code Completion Verification**: Verification of all layer implementation and functional completeness
+- ✅/❌ **Test Suite Validation**: All tests successful with adequate coverage verification
+- ✅/❌ **Documentation Completeness Check**: Updates to API documentation, README, and architecture documents
+- ✅/❌ **Pull Request Creation**: Clear and constructive PR description and review guidance
+- ✅/❌ **Reviewer Assignment**: Appropriate reviewer and label assignment
+- ✅/❌ **Deployment Readiness Complete**: CI/CD pipeline and deployment preparation
 
-### **📋 総合判定**
-以下のいずれかを必ず明記：
-- **PULL_REQUEST_CREATED** - プルリクエスト作成完了
-- **READY_FOR_REVIEW** - レビュー準備完了
-- **DEPLOYMENT_READY** - デプロイメント準備完了
+### **📋 Overall Assessment**
+Must specify one of the following:
+- **PULL_REQUEST_CREATED** - Pull request creation completed
+- **READY_FOR_REVIEW** - Review preparation completed
+- **DEPLOYMENT_READY** - Deployment preparation completed
 
-### **🔗 プルリクエスト作成結果**
-作成されたPRの詳細：
-- **PR URL**: GitHubプルリクエストのURL
-- **変更範囲**: 影響を受けるファイルとコンポーネント
-- **テスト結果**: 全テストの実行結果とカバレッジ
-- **ドキュメント**: 更新されたドキュメントリスト
+### **🔗 Pull Request Creation Results**
+Details of created PR:
+- **PR URL**: GitHub pull request URL
+- **Change Scope**: Affected files and components
+- **Test Results**: All test execution results and coverage
+- **Documentation**: List of updated documents
 
-### **📋 レビュー準備確認**
-- **レビューアー**: 適切なチームメンバーのアサイン
-- **PRテンプレート**: 必要情報を全て含む組織化された記述
-- **チェックリスト**: レビューアーが確認すべき項目の明確なリスト
-- **マージ条件**: マージに必要な前提条件の明確化
+### **📋 Review Preparation Verification**
+- **Reviewers**: Assignment of appropriate team members
+- **PR Template**: Organized description containing all necessary information
+- **Checklist**: Clear list of items for reviewers to verify
+- **Merge Conditions**: Clarification of prerequisites for merging
 
-### **➡️ 次のステップ**
-PR作成完了後の推奨アクション：
-- **レビュー待ち**: レビューアーのフィードバック待ち
-- **CI/CDモニタリング**: 自動テストと品質チェックの監視
+### **➡️ Next Steps**
+Recommended actions after PR creation completion:
+- **Awaiting Review**: Waiting for reviewer feedback
+- **CI/CD Monitoring**: Monitoring automated tests and quality checks
 
 **🔧 重要事項**: PRがコード品質とチームコラボレーションの向上に貢献する。

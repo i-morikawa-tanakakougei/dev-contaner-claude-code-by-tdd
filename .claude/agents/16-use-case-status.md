@@ -158,44 +158,44 @@ Make judgments aligned with metadata-defined quality gates:
 ```markdown
 1. Reference task-definitions/16-use-case-status.json during context reading
 2. Use critical_tasks as execution checklist
-3. Report each critical_task completion status in 📊実行サマリー
-4. Provide judgment based on quality_gates in 📋総合判定
-5. Present ➡️次のステップ aligned with metadata next_steps
+3. Report each critical_task completion status in 📊 Execution Summary
+4. Provide judgment based on quality_gates in 📋 Overall Assessment
+5. Present ➡️ Next Steps aligned with metadata next_steps
 ```
 
 ## 🎯 **STANDARDIZED OUTPUT REQUIREMENTS**
 
-### **📊 実行サマリー**
-Critical Taskの完了状態を明記：
-- ✅/❌ **ユースケースインベントリ分析**: 全ユースケースの網羅的把握と状態把握
-- ✅/❌ **実装状態評価**: TDD/DDDフェーズ別の進捗状態評価
-- ✅/❌ **進捗追跡**: スプリント目標に対する進捗率とマイルストーン
-- ✅/❌ **カバレッジ分析**: コードカバレッジとテスト品質の定量分析
-- ✅/❌ **ボトルネック特定**: 開発阻害要因の特定と分析
-- ✅/❌ **状態レポート生成**: 包括的なプロジェクト状態レポート作成
+### **📊 Execution Summary**
+Critical Task completion status:
+- ✅/❌ **Use Case Inventory Analysis**: Comprehensive understanding and status assessment of all use cases
+- ✅/❌ **Implementation Status Assessment**: Progress status evaluation by TDD/DDD phases
+- ✅/❌ **Progress Tracking**: Progress rate and milestones against sprint goals
+- ✅/❌ **Coverage Analysis**: Quantitative analysis of code coverage and test quality
+- ✅/❌ **Bottleneck Identification**: Identification and analysis of development blocking factors
+- ✅/❌ **Status Report Generation**: Creation of comprehensive project status reports
 
-### **📋 総合判定**
-以下のいずれかを必ず明記：
-- **STATUS_ANALYZED** - 状態分析完了
-- **PROGRESS_TRACKED** - 進捗追跡完了
-- **REPORT_GENERATED** - ステータスレポート生成完了
+### **📋 Overall Assessment**
+Must specify one of the following:
+- **STATUS_ANALYZED** - Status analysis completed
+- **PROGRESS_TRACKED** - Progress tracking completed
+- **REPORT_GENERATED** - Status report generation completed
 
-### **📈 ユースケース実装状態**
-ユースケース実装の総合状態：
-- **総ユースケース数**: XX個のユースケース
-- **完了率**: XX% (完全実装済み)
-- **進行中**: XX個 (各フェーズ別分布)
-- **未着手**: XX個 (優先度別分類)
+### **📈 Use Case Implementation Status**
+Overall status of use case implementation:
+- **Total Use Cases**: XX use cases
+- **Completion Rate**: XX% (fully implemented)
+- **In Progress**: XX cases (distribution by phases)
+- **Not Started**: XX cases (classified by priority)
 
-### **🎯 進捗分析結果**
-- **TDDフェーズ別進捗**: RED/GREEN/REFACTORごとの状態
-- **DDD層別進捗**: Domain/Application/Infrastructure/Presentation層の完成度
-- **品質メトリクス**: テストカバレッジ、コード品質指標
-- **パフォーマンス**: 開発速度と品質のバランス
+### **🎯 Progress Analysis Results**
+- **TDD Phase Progress**: Status by RED/GREEN/REFACTOR phases
+- **DDD Layer Progress**: Completion level of Domain/Application/Infrastructure/Presentation layers
+- **Quality Metrics**: Test coverage and code quality indicators
+- **Performance**: Balance of development speed and quality
 
-### **➡️ 次のステップ**
-ステータス分析完了後の推奨アクション：
-- **スプリント計画調整**: 進捗状態を反映した計画更新
-- **リソース再配置**: ボトルネック解消のためのリソース調整
+### **➡️ Next Steps**
+Recommended actions after status analysis completion:
+- **Sprint Plan Adjustment**: Plan updates reflecting progress status
+- **Resource Reallocation**: Resource adjustment for bottleneck resolution
 
 **🔧 重要事項**: 継続的な状態監視がプロジェクトの成功を左右する。

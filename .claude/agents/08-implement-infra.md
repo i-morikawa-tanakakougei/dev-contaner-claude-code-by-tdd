@@ -150,7 +150,7 @@ Follow this standardized pattern to ensure consistent, context-aware infrastruct
 
 ### **Critical Tasks Reference**
 Ensure completion of the following critical_tasks during execution:
-- `application_layer_verification` - アプリケーション層実装完了とインターフェース定義確認
+- `application_layer_verification` - Application layer implementation completion and interface definition verification
 - `repository_implementations` - ドメインリポジトリインターフェースの具象実装
 - `database_integration` - 永続化機能と接続設定の実装
 - `external_service_adapters` - 外部APIとサービス統合の実装
@@ -159,51 +159,51 @@ Ensure completion of the following critical_tasks during execution:
 
 ### **Quality Gates Alignment**
 Make judgments aligned with metadata-defined quality gates:
-- INFRASTRUCTURE_IMPLEMENTED - インフラ層実装完了
-- PERSISTENCE_FUNCTIONAL - 永続化機能が正常動作
-- READY_FOR_PRESENTATION - プレゼンテーション層実装準備完了
+- INFRASTRUCTURE_IMPLEMENTED - Infrastructure layer implementation completed
+- PERSISTENCE_FUNCTIONAL - Persistence functionality operating normally
+- READY_FOR_PRESENTATION - Presentation layer implementation preparation completed
 
 ### **Implementation Pattern**
 ```markdown
 1. Reference task-definitions/08-implement-infra.json during context reading
 2. Use critical_tasks as execution checklist
-3. Report each critical_task completion status in 📊実行サマリー
-4. Provide judgment based on quality_gates in 📋総合判定
-5. Present ➡️次のステップ aligned with metadata next_steps
+3. Report each critical_task completion status in 📊 Execution Summary
+4. Provide judgment based on quality_gates in 📋 Overall Assessment
+5. Present ➡️ Next Steps aligned with metadata next_steps
 ```
 
 ## 🎯 **STANDARDIZED OUTPUT REQUIREMENTS**
 
-### **📊 実行サマリー**
-Critical Taskの完了状態を明記：
-- ✅/❌ **アプリケーション層確認**: アプリケーション層実装完了とインターフェース定義確認
-- ✅/❌ **リポジトリ実装完了**: ドメインリポジトリインターフェースの具象実装
-- ✅/❌ **データベース統合実装**: 永続化機能と接続設定の実装
-- ✅/❌ **外部サービスアダプター**: 外部APIとサービス統合の実装
-- ✅/❌ **設定管理実装**: 環境設定とコンフィギュレーション管理
-- ✅/❌ **永続化テスト実行**: インフラ層の統合テスト成功確認
+### **📊 Execution Summary**
+Critical Task completion status:
+- ✅/❌ **Application Layer Verification**: Confirm application layer implementation completion and interface definition verification
+- ✅/❌ **Repository Implementation Complete**: Concrete implementation of domain repository interfaces
+- ✅/❌ **Database Integration Implementation**: Implementation of persistence functionality and connection configuration
+- ✅/❌ **External Service Adapters**: Implementation of external API and service integration
+- ✅/❌ **Configuration Management Implementation**: Environment configuration and configuration management
+- ✅/❌ **Persistence Testing Execution**: Successful verification of infrastructure layer integration tests
 
-### **📋 総合判定**
-以下のいずれかを必ず明記：
-- **INFRASTRUCTURE_IMPLEMENTED** - インフラ層実装完了
-- **PERSISTENCE_FUNCTIONAL** - 永続化機能が正常動作
-- **READY_FOR_PRESENTATION** - プレゼンテーション層実装準備完了
+### **📋 Overall Assessment**
+Must specify one of the following:
+- **INFRASTRUCTURE_IMPLEMENTED** - Infrastructure layer implementation completed
+- **PERSISTENCE_FUNCTIONAL** - Persistence functionality operating normally
+- **READY_FOR_PRESENTATION** - Ready for presentation layer implementation
 
-### **🏗️ 実装インフラコンポーネント**
-実装されたインフラストラクチャ層コンポーネントの詳細：
-- **リポジトリ実装**: src/infrastructure/repositories/*.py (XX個)
-- **アダプター**: src/infrastructure/adapters/*.py (XX個)
-- **設定**: src/infrastructure/config/*.py (XX個)
-- **データベース接続**: src/infrastructure/database/*.py
+### **🏗️ Implemented Infrastructure Components**
+Details of implemented infrastructure layer components:
+- **Repository Implementations**: src/infrastructure/repositories/*.py (XX items)
+- **Adapters**: src/infrastructure/adapters/*.py (XX items)
+- **Configuration**: src/infrastructure/config/*.py (XX items)
+- **Database Connection**: src/infrastructure/database/*.py
 
-### **💾 永続化確認**
-- **データベース接続**: 正常な接続とトランザクション管理
-- **リポジトリパターン**: ドメインインターフェースの適切な実装
-- **外部サービス統合**: 堅牢なエラーハンドリングと再試行機構
-- **設定管理**: 環境固有の設定の適切な分離
+### **💾 Persistence Verification**
+- **Database Connection**: Proper connection and transaction management
+- **Repository Pattern**: Appropriate implementation of domain interfaces
+- **External Service Integration**: Robust error handling and retry mechanisms
+- **Configuration Management**: Proper separation of environment-specific settings
 
-### **➡️ 次のステップ**
-プレゼンテーション層実装フェーズへの移行案内：
+### **➡️ Next Steps**
+Guidance for transitioning to presentation layer implementation phase:
 ```bash
 /implement-presentation <issue-number>
 ```

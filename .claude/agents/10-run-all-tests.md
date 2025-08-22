@@ -178,47 +178,47 @@ Make judgments aligned with metadata-defined quality gates:
 ```markdown
 1. Reference task-definitions/10-run-all-tests.json during context reading
 2. Use critical_tasks as execution checklist
-3. Report each critical_task completion status in 📊実行サマリー
-4. Provide judgment based on quality_gates in 📋総合判定
-5. Present ➡️次のステップ aligned with metadata next_steps
+3. Report each critical_task completion status in 📊 Execution Summary
+4. Provide judgment based on quality_gates in 📋 Overall Assessment
+5. Present ➡️ Next Steps aligned with metadata next_steps
 ```
 
 ## 🎯 **STANDARDIZED OUTPUT REQUIREMENTS**
 
-### **📊 実行サマリー**
-Critical Taskの完了状態を明記：
-- ✅/❌ **テスト環境セットアップ**: 実行環境の準備と設定確認
-- ✅/❌ **単体テスト実行**: ドメイン、アプリケーション層の単体テスト実行
-- ✅/❌ **統合テスト実行**: レイヤー間統合とリポジトリテストの実行
-- ✅/❌ **E2Eテスト実行**: エンドツーエンドシナリオテストの実行
-- ✅/❌ **カバレッジ分析**: コードカバレッジ測定と分析
-- ✅/❌ **品質メトリクス生成**: 包括的な品質レポート生成
+### **📊 Execution Summary**
+Critical Task completion status:
+- ✅/❌ **Test Environment Setup**: Preparation and configuration verification of execution environment
+- ✅/❌ **Unit Test Execution**: Domain and application layer unit test execution
+- ✅/❌ **Integration Test Execution**: Layer integration and repository test execution
+- ✅/❌ **E2E Test Execution**: End-to-end scenario test execution
+- ✅/❌ **Coverage Analysis**: Code coverage measurement and analysis
+- ✅/❌ **Quality Metrics Generation**: Comprehensive quality report generation
 
-### **📋 総合判定**
-以下のいずれかを必ず明記：
-- **ALL_TESTS_PASS** - 全テスト成功、品質基準達成
-- **TESTS_FAILED** - 一部テスト失敗、修正が必要
-- **COVERAGE_ADEQUATE** - カバレッジ基準達成、品質確保
+### **📋 Overall Assessment**
+Must specify one of the following:
+- **ALL_TESTS_PASS** - All tests successful, quality standards achieved
+- **TESTS_FAILED** - Some tests failed, fixes required
+- **COVERAGE_ADEQUATE** - Coverage standards achieved, quality assured
 
-### **🧪 テスト実行結果**
-包括的なテスト実行結果の詳細：
-- **単体テスト**: XXX/XXX 成功 (XX% 成功率)
-- **統合テスト**: XXX/XXX 成功 (XX% 成功率)  
-- **E2Eテスト**: XXX/XXX 成功 (XX% 成功率)
-- **失敗詳細**: 失敗したテストの原因分析と修正提案
+### **🧪 Test Execution Results**
+Details of comprehensive test execution results:
+- **Unit Tests**: XXX/XXX successful (XX% success rate)
+- **Integration Tests**: XXX/XXX successful (XX% success rate)
+- **E2E Tests**: XXX/XXX successful (XX% success rate)
+- **Failure Details**: Cause analysis and fix suggestions for failed tests
 
-### **📈 カバレッジレポート**
-- **全体カバレッジ**: XX% (目標: 80%以上)
-- **ドメイン層**: XX% カバレッジ達成
-- **アプリケーション層**: XX% カバレッジ達成
-- **インフラ層**: XX% カバレッジ達成
-- **未カバー箇所**: 要カバレッジ向上箇所の特定
+### **📈 Coverage Report**
+- **Overall Coverage**: XX% (Target: 80% or higher)
+- **Domain Layer**: XX% coverage achieved
+- **Application Layer**: XX% coverage achieved
+- **Infrastructure Layer**: XX% coverage achieved
+- **Uncovered Areas**: Identification of areas requiring coverage improvement
 
-### **➡️ 次のステップ**
-テスト実行完了後の推奨アクション：
+### **➡️ Next Steps**
+Recommended actions after test execution completion:
 ```bash
-/refactor <issue-number>  # 全テスト成功時
-# または修正が必要な場合は該当する実装コマンド
+/refactor <issue-number>  # When all tests succeed
+# Or relevant implementation command if fixes are needed
 ```
 
 **🔧 重要事項**: 全層統合テストの成功が高品質なソフトウェアデリバリーを保証する。

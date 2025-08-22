@@ -80,9 +80,9 @@ Make judgments aligned with metadata-defined quality gates:
 ```markdown
 1. Reference task-definitions/00-create-vision.json during context reading
 2. Use critical_tasks as execution checklist
-3. Report each critical_task completion status in 📊実行サマリー
-4. Provide judgment based on quality_gates in 📋総合判定
-5. Present ➡️次のステップ aligned with metadata next_steps
+3. Report each critical_task completion status in 📊 Execution Summary
+4. Provide judgment based on quality_gates in 📋 Overall Assessment
+5. Present ➡️ Next Steps aligned with metadata next_steps
 ```
 
 ## 📋 **CONTEXT PROCESSING STANDARD**
@@ -152,36 +152,36 @@ Follow this standard pattern to ensure consistent, context-aware vision creation
 
 ## 🎯 **STANDARDIZED OUTPUT REQUIREMENTS**
 
-### **📊 実行サマリー**
-Critical Taskの完了状態を明記：
-- ✅/❌ **プロジェクト範囲定義**: プロジェクトの明確な境界と目標設定
-- ✅/❌ **境界コンテキスト特定**: ドメインの適切な境界コンテキスト分割
-- ✅/❌ **コアシナリオ作成**: 80%カバレッジのGiven-When-Thenシナリオ作成
-- ✅/❌ **共通言語確立**: ユビキタス言語の定義と一貫性確保
-- ✅/❌ **アーキテクチャビジョン**: TDD/DDD/Layered Architecture原則の適用
-- ✅/❌ **Given-When-Thenシナリオ**: 実装可能な具体的シナリオの作成
+### **📊 Execution Summary**
+Specify completion status of critical tasks:
+- ✅/❌ **Project Scope Definition**: Clear project boundaries and goal setting
+- ✅/❌ **Bounded Context Identification**: Proper domain bounded context division
+- ✅/❌ **Core Scenario Creation**: Given-When-Then scenarios with 80% coverage
+- ✅/❌ **Ubiquitous Language Establishment**: Definition and consistency of ubiquitous language
+- ✅/❌ **Architecture Vision**: Application of TDD/DDD/Layered Architecture principles
+- ✅/❌ **Given-When-Then Scenarios**: Creation of concrete implementable scenarios
 
-### **📋 総合判定**
-以下のいずれかを必ず明記：
-- **VISION_CREATED** - ビジョン文書作成完了、開発開始可能
-- **SCENARIOS_DEFINED** - コアシナリオ定義完了
-- **READY_FOR_SPRINT_PLANNING** - スプリント計画開始準備完了
+### **📋 Overall Assessment**
+Must specify one of the following:
+- **VISION_CREATED** - Vision document creation completed, development ready to start
+- **SCENARIOS_DEFINED** - Core scenario definition completed
+- **READY_FOR_SPRINT_PLANNING** - Ready to start sprint planning
 
-### **📖 ビジョン文書作成結果**
-作成されたビジョン文書の詳細：
-- **ビジョン文書**: docs/vision/ (包括的なプロジェクトビジョン)
-- **境界コンテキスト**: XX個の明確に定義された境界
-- **コアシナリオ**: XX個のGiven-When-Thenシナリオ
-- **共通言語**: ドメイン固有の用語定義集
+### **📖 Vision Document Creation Results**
+Details of created vision document:
+- **Vision Document**: docs/vision/ (comprehensive project vision)
+- **Bounded Contexts**: XX clearly defined boundaries
+- **Core Scenarios**: XX Given-When-Then scenarios
+- **Ubiquitous Language**: Domain-specific terminology definitions
 
-### **🏗️ 境界コンテキスト定義**
-- **主要境界**: 特定された境界コンテキストと責務
-- **統合ポイント**: 境界間の連携と統合方式
-- **データ設計**: 境界をまたぐデータ管理方針
-- **実装方針**: 各境界の実装アプローチとパターン
+### **🏗️ Bounded Context Definition**
+- **Main Boundaries**: Identified bounded contexts and responsibilities
+- **Integration Points**: Inter-boundary coordination and integration methods
+- **Data Design**: Cross-boundary data management policies
+- **Implementation Strategy**: Implementation approaches and patterns for each boundary
 
-### **➡️ 次のステップ**
-ビジョン作成完了後の推奨アクション：
+### **➡️ Next Steps**
+Recommended actions after vision creation:
 ```bash
 /init-project-structure
 /sprint-planning 1

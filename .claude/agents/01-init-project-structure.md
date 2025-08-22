@@ -165,43 +165,43 @@ Make judgments aligned with metadata-defined quality gates:
 ```markdown
 1. Reference task-definitions/01-init-project-structure.json during context reading
 2. Use critical_tasks as execution checklist
-3. Report each critical_task completion status in 📊実行サマリー
-4. Provide judgment based on quality_gates in 📋総合判定
-5. Present ➡️次のステップ aligned with metadata next_steps
+3. Report each critical_task completion status in 📊 Execution Summary
+4. Provide judgment based on quality_gates in 📋 Overall Assessment
+5. Present ➡️ Next Steps aligned with metadata next_steps
 ```
 
 ## 🎯 **STANDARDIZED OUTPUT REQUIREMENTS**
 
-### **📊 実行サマリー**
-Critical Taskの完了状態を明記：
-- ✅/❌ **ディレクトリ構造作成**: TDD/DDD/Layered Architecture対応の完全な構造
-- ✅/❌ **TDDフレームワークセットアップ**: pytest設定と基本テスト構造
-- ✅/❌ **DDD層編成**: ドメイン、アプリケーション、インフラ、プレゼンテーション層
-- ✅/❌ **設定ファイル作成**: 開発効率化に必要な全設定ファイル
-- ✅/❌ **開発環境セットアップ**: 依存関係管理とツールチェーン構成
-- ✅/❌ **ドキュメント構造初期化**: プロジェクト文書の体系的整理
+### **📊 Execution Summary**
+Critical task completion status:
+- ✅/❌ **Directory Structure Creation**: Complete TDD/DDD/Layered Architecture structure
+- ✅/❌ **TDD Framework Setup**: pytest configuration and basic test structure
+- ✅/❌ **DDD Layer Organization**: Domain, Application, Infrastructure, Presentation layers
+- ✅/❌ **Configuration Files Creation**: All configuration files needed for development efficiency
+- ✅/❌ **Development Environment Setup**: Dependency management and toolchain configuration
+- ✅/❌ **Documentation Structure Initialization**: Systematic organization of project documentation
 
-### **📋 総合判定**
-以下のいずれかを必ず明記：
-- **PROJECT_STRUCTURE_CREATED** - プロジェクト構造作成完了
-- **READY_FOR_DEVELOPMENT** - 開発開始準備完了
-- **ENVIRONMENT_CONFIGURED** - 開発環境構成完了
+### **📋 Overall Assessment**
+Must specify one of the following:
+- **PROJECT_STRUCTURE_CREATED** - Project structure creation completed
+- **READY_FOR_DEVELOPMENT** - Development start preparation completed
+- **ENVIRONMENT_CONFIGURED** - Development environment configuration completed
 
-### **📁 プロジェクト構造作成結果**
-作成されたプロジェクト構造の詳細：
-- **ディレクトリ構造**: src/, tests/, docs/ の完全な階層
-- **設定ファイル**: pyproject.toml, .gitignore, pytest.ini 等
-- **開発ツール**: フォーマッター、リンター、型チェッカー設定
-- **ドキュメント**: README, CONTRIBUTING, アーキテクチャガイド
+### **📁 Project Structure Creation Results**
+Details of the created project structure:
+- **Directory Structure**: Complete hierarchy of src/, tests/, docs/
+- **Configuration Files**: pyproject.toml, .gitignore, pytest.ini, etc.
+- **Development Tools**: Formatter, linter, type checker configurations
+- **Documentation**: README, CONTRIBUTING, architecture guides
 
-### **🔧 開発環境設定確認**
-- **依存関係管理**: uv による効率的なパッケージ管理
-- **品質保証**: ruff, pyright による自動品質チェック
-- **テスト環境**: pytest + anyio による非同期テスト対応
-- **CI/CD準備**: 継続的統合に対応した設定構成
+### **🔧 Development Environment Setup Verification**
+- **Dependency Management**: Efficient package management with uv
+- **Quality Assurance**: Automated quality checks with ruff, pyright
+- **Test Environment**: Asynchronous testing support with pytest + anyio
+- **CI/CD Preparation**: Configuration structure for continuous integration
 
-### **➡️ 次のステップ**
-プロジェクト構造初期化完了後の推奨アクション：
+### **➡️ Next Steps**
+Recommended actions after project structure initialization completion:
 ```bash
 /create-vision
 ```
