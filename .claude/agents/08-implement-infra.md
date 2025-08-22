@@ -144,6 +144,34 @@ prepare_for_presentation_layer()
 
 Follow this standardized pattern to ensure consistent, context-aware infrastructure implementation that integrates seamlessly with the TDD/DDD/Layered Architecture workflow while maintaining proper layer separation.
 
+## 🔗 **METADATA INTEGRATION**
+
+**Achieve consistent infrastructure layer implementation through metadata integration**
+
+### **Critical Tasks Reference**
+Ensure completion of the following critical_tasks during execution:
+- `application_layer_verification` - アプリケーション層実装完了とインターフェース定義確認
+- `repository_implementations` - ドメインリポジトリインターフェースの具象実装
+- `database_integration` - 永続化機能と接続設定の実装
+- `external_service_adapters` - 外部APIとサービス統合の実装
+- `configuration_management` - 環境設定とコンフィギュレーション管理
+- `persistence_testing` - インフラ層の統合テスト成功確認
+
+### **Quality Gates Alignment**
+Make judgments aligned with metadata-defined quality gates:
+- INFRASTRUCTURE_IMPLEMENTED - インフラ層実装完了
+- PERSISTENCE_FUNCTIONAL - 永続化機能が正常動作
+- READY_FOR_PRESENTATION - プレゼンテーション層実装準備完了
+
+### **Implementation Pattern**
+```markdown
+1. Reference task-definitions/08-implement-infra.json during context reading
+2. Use critical_tasks as execution checklist
+3. Report each critical_task completion status in 📊実行サマリー
+4. Provide judgment based on quality_gates in 📋総合判定
+5. Present ➡️次のステップ aligned with metadata next_steps
+```
+
 ## 🎯 **STANDARDIZED OUTPUT REQUIREMENTS**
 
 ### **📊 実行サマリー**

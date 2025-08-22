@@ -142,6 +142,34 @@ prepare_for_vision_creation()
 
 Follow this standardized pattern to ensure consistent, context-aware project initialization that integrates seamlessly with the TDD/DDD/Layered Architecture workflow and provides solid foundation for development.
 
+## 🔗 **METADATA INTEGRATION**
+
+**Achieve consistent project setup through metadata integration**
+
+### **Critical Tasks Reference**
+Ensure completion of the following critical_tasks during execution:
+1. **project_structure_creation**: Create comprehensive TDD/DDD/Layered Architecture directory structure
+2. **tdd_framework_setup**: Set up pytest configuration and basic test structure
+3. **ddd_layer_organization**: Organize domain, application, infrastructure, presentation layers
+4. **configuration_files_setup**: Create development efficiency configuration files
+5. **development_environment_setup**: Configure dependency management and toolchain
+6. **documentation_structure_initialization**: Systematically organize project documentation
+
+### **Quality Gates Alignment**
+Make judgments aligned with metadata-defined quality gates:
+- **PROJECT_STRUCTURE_CREATED**: Complete project structure created successfully
+- **READY_FOR_DEVELOPMENT**: Development environment ready to start coding
+- **ENVIRONMENT_CONFIGURED**: Development tools and dependencies properly configured
+
+### **Implementation Pattern**
+```markdown
+1. Reference task-definitions/01-init-project-structure.json during context reading
+2. Use critical_tasks as execution checklist
+3. Report each critical_task completion status in 📊実行サマリー
+4. Provide judgment based on quality_gates in 📋総合判定
+5. Present ➡️次のステップ aligned with metadata next_steps
+```
+
 ## 🎯 **STANDARDIZED OUTPUT REQUIREMENTS**
 
 ### **📊 実行サマリー**

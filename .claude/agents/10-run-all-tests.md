@@ -155,6 +155,34 @@ prepare_for_next_phase()
 
 Follow this standardized pattern to ensure consistent, context-aware test execution that integrates seamlessly with the TDD/DDD/Layered Architecture workflow and provides comprehensive quality assurance.
 
+## 🔗 **METADATA INTEGRATION**
+
+**Achieve consistent test execution through metadata integration**
+
+### **Critical Tasks Reference**
+Ensure completion of the following critical_tasks during execution:
+1. **test_environment_setup**: Configure test environment and dependencies properly
+2. **unit_test_execution**: Execute unit tests for domain and application layers
+3. **integration_test_execution**: Run integration tests for layer interaction and repositories
+4. **e2e_test_execution**: Execute end-to-end scenario tests comprehensively
+5. **coverage_analysis**: Measure and analyze code coverage metrics
+6. **quality_metrics_generation**: Generate comprehensive quality reports
+
+### **Quality Gates Alignment**
+Make judgments aligned with metadata-defined quality gates:
+- **ALL_TESTS_PASS**: All tests pass successfully, quality standards met
+- **TESTS_FAILED**: Some tests failed, fixes required before proceeding
+- **COVERAGE_ADEQUATE**: Code coverage meets standards, quality assured
+
+### **Implementation Pattern**
+```markdown
+1. Reference task-definitions/10-run-all-tests.json during context reading
+2. Use critical_tasks as execution checklist
+3. Report each critical_task completion status in 📊実行サマリー
+4. Provide judgment based on quality_gates in 📋総合判定
+5. Present ➡️次のステップ aligned with metadata next_steps
+```
+
 ## 🎯 **STANDARDIZED OUTPUT REQUIREMENTS**
 
 ### **📊 実行サマリー**

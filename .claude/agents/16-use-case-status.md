@@ -135,6 +135,34 @@ prepare_for_sprint_planning()
 
 Follow this standardized pattern to ensure consistent, context-aware status tracking that integrates seamlessly with the TDD/DDD/Layered Architecture workflow and supports effective project management.
 
+## 🔗 **METADATA INTEGRATION**
+
+**Achieve consistent status tracking through metadata integration**
+
+### **Critical Tasks Reference**
+Ensure completion of the following critical_tasks during execution:
+1. **use_case_inventory_analysis**: Comprehensive analysis and status identification of all use cases
+2. **implementation_status_assessment**: Evaluate implementation status by TDD/DDD phases
+3. **progress_tracking**: Track progress against sprint goals and milestones
+4. **coverage_analysis**: Quantitative analysis of code coverage and test quality
+5. **bottleneck_identification**: Identify and analyze development blocking factors
+6. **status_report_generation**: Generate comprehensive project status reports
+
+### **Quality Gates Alignment**
+Make judgments aligned with metadata-defined quality gates:
+- **STATUS_ANALYZED**: Status analysis completed successfully
+- **PROGRESS_TRACKED**: Progress tracking completed comprehensively
+- **REPORT_GENERATED**: Status report generated with actionable insights
+
+### **Implementation Pattern**
+```markdown
+1. Reference task-definitions/16-use-case-status.json during context reading
+2. Use critical_tasks as execution checklist
+3. Report each critical_task completion status in 📊実行サマリー
+4. Provide judgment based on quality_gates in 📋総合判定
+5. Present ➡️次のステップ aligned with metadata next_steps
+```
+
 ## 🎯 **STANDARDIZED OUTPUT REQUIREMENTS**
 
 ### **📊 実行サマリー**

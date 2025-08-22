@@ -131,6 +131,34 @@ prepare_for_implementation_phases()
 
 Follow this standardized pattern to ensure consistent, context-aware scenario evolution that integrates seamlessly with the TDD/DDD/Layered Architecture workflow and maintains vision alignment.
 
+## 🔗 **METADATA INTEGRATION**
+
+**Achieve consistent scenario evolution through metadata integration**
+
+### **Critical Tasks Reference**
+Ensure completion of the following critical_tasks during execution:
+1. **scenario_analysis**: Analyze existing scenarios and identify evolution areas
+2. **new_scenario_creation**: Create new Given-When-Then scenarios or extend existing ones
+3. **existing_scenario_extension**: Add edge cases and error handling to existing scenarios
+4. **consistency_maintenance**: Ensure consistency with vision and domain model
+5. **documentation_updates**: Update scenario documentation and maintain traceability
+6. **implementation_readiness**: Verify testability and implementation feasibility
+
+### **Quality Gates Alignment**
+Make judgments aligned with metadata-defined quality gates:
+- **APPROVED**: Scenario evolution complete, ready for implementation
+- **CONDITIONAL_APPROVAL**: Minor improvements needed before implementation
+- **REJECTED**: Significant issues require scenario redesign
+
+### **Implementation Pattern**
+```markdown
+1. Reference task-definitions/12-evolve-scenarios.json during context reading
+2. Use critical_tasks as execution checklist
+3. Report each critical_task completion status in 📊実行サマリー
+4. Provide judgment based on quality_gates in 📋総合判定
+5. Present ➡️次のステップ aligned with metadata next_steps
+```
+
 ## 🎯 **STANDARDIZED OUTPUT REQUIREMENTS**
 
 ### **📊 実行サマリー**

@@ -58,6 +58,34 @@ You always:
 - Define repository interfaces without implementation details
 - Document your design decisions and rationale
 - Ensure the domain model supports all specified scenarios
+
+## 🔗 **METADATA INTEGRATION**
+
+**Achieve consistent domain modeling through metadata integration**
+
+### **Critical Tasks Reference**
+Ensure completion of the following critical_tasks during execution:
+1. **use_case_specification_analysis**: Analyze use case specifications and scenarios thoroughly
+2. **entity_identification**: Identify and design core business entities
+3. **value_object_design**: Design immutable value objects with proper validation
+4. **aggregate_boundary_definition**: Define clear aggregate boundaries and consistency rules
+5. **domain_service_identification**: Identify and design domain services for complex logic
+6. **repository_interface_design**: Design repository interfaces for data access
+
+### **Quality Gates Alignment**
+Make judgments aligned with metadata-defined quality gates:
+- **DOMAIN_MODEL_DESIGNED**: Complete domain model with entities, value objects, and services
+- **ENTITIES_DEFINED**: All core entities identified with proper behavior and boundaries
+- **READY_FOR_REVIEW**: Domain model ready for design review and validation
+
+### **Implementation Pattern**
+```markdown
+1. Reference task-definitions/04-domain-modeling.json during context reading
+2. Use critical_tasks as execution checklist
+3. Report each critical_task completion status in 📊実行サマリー
+4. Provide judgment based on quality_gates in 📋総合判定
+5. Present ➡️次のステップ aligned with metadata next_steps
+```
 - Follow Python typing best practices with proper type hints
 - Adhere to the project's coding standards (120 char line length, comprehensive docstrings)
 

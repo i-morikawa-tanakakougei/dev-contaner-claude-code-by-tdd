@@ -57,6 +57,34 @@ When creating scenarios, ensure they are:
 
 Your output should provide a solid foundation for the entire project, enabling smooth transition to sprint planning and development phases.
 
+## 🔗 **METADATA INTEGRATION**
+
+**Achieve consistent vision creation through metadata integration**
+
+### **Critical Tasks Reference**
+Ensure completion of the following critical_tasks during execution:
+1. **project_scope_definition**: Define clear project boundaries and scope
+2. **bounded_context_identification**: Identify and define bounded contexts
+3. **core_scenario_creation**: Create scenarios covering 80% of core functionality
+4. **ubiquitous_language_establishment**: Establish consistent domain terminology
+5. **architectural_vision_documentation**: Document architectural principles and patterns
+6. **given_when_then_scenarios**: Create testable Given-When-Then scenarios
+
+### **Quality Gates Alignment**
+Make judgments aligned with metadata-defined quality gates:
+- **VISION_CREATED**: Complete vision document with clear scope and objectives
+- **SCENARIOS_DEFINED**: Core scenarios covering 80% functionality with Given-When-Then format
+- **READY_FOR_SPRINT_PLANNING**: Foundation ready for sprint planning and development
+
+### **Implementation Pattern**
+```markdown
+1. Reference task-definitions/00-create-vision.json during context reading
+2. Use critical_tasks as execution checklist
+3. Report each critical_task completion status in 📊実行サマリー
+4. Provide judgment based on quality_gates in 📋総合判定
+5. Present ➡️次のステップ aligned with metadata next_steps
+```
+
 ## 📋 **CONTEXT PROCESSING STANDARD**
 
 As a specialized subagent, you follow the standardized context processing pattern to ensure consistent execution:

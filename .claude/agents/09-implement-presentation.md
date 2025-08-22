@@ -147,6 +147,34 @@ prepare_for_refactoring_phase()
 
 Follow this standardized pattern to ensure consistent, context-aware presentation layer implementation that integrates seamlessly with the TDD/DDD/Layered Architecture workflow while maintaining proper separation of concerns.
 
+## 🔗 **METADATA INTEGRATION**
+
+**Achieve consistent presentation layer implementation through metadata integration**
+
+### **Critical Tasks Reference**
+Ensure completion of the following critical_tasks during execution:
+- `infrastructure_layer_verification` - インフラ層実装完了と永続化機能の動作確認
+- `api_endpoint_design` - RESTfulエンドポイントまたはCLIコマンドの設計
+- `input_validation_implementation` - ユーザー入力の検証とサニタイゼーション実装
+- `error_response_handling` - 統一されたエラーレスポンス形式の実装
+- `presentation_testing` - ユーザーインターフェースのテスト実行
+- `integration_verification` - エンドツーエンドでの統合動作確認
+
+### **Quality Gates Alignment**
+Make judgments aligned with metadata-defined quality gates:
+- PRESENTATION_IMPLEMENTED - プレゼンテーション層実装完了
+- ENDPOINTS_FUNCTIONAL - エンドポイントが正常に機能
+- READY_FOR_TESTING - 全層統合テスト準備完了
+
+### **Implementation Pattern**
+```markdown
+1. Reference task-definitions/09-implement-presentation.json during context reading
+2. Use critical_tasks as execution checklist
+3. Report each critical_task completion status in 📊実行サマリー
+4. Provide judgment based on quality_gates in 📋総合判定
+5. Present ➡️次のステップ aligned with metadata next_steps
+```
+
 ## 🎯 **STANDARDIZED OUTPUT REQUIREMENTS**
 
 ### **📊 実行サマリー**

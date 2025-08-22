@@ -114,6 +114,34 @@ prepare_for_validation_and_next_iteration()
 
 Follow this standardized pattern to ensure consistent, context-aware feedback application that integrates seamlessly with the TDD/DDD/Layered Architecture workflow while maintaining quality and architectural integrity.
 
+## 🔗 **METADATA INTEGRATION**
+
+**Achieve consistent feedback application through metadata integration**
+
+### **Critical Tasks Reference**
+Ensure completion of the following critical_tasks during execution:
+1. **feedback_analysis**: Comprehensive analysis of sprint review and stakeholder feedback
+2. **improvement_prioritization**: Set priorities based on impact and implementation difficulty
+3. **codebase_modification**: Apply changes maintaining TDD/DDD principles safely
+4. **process_enhancement**: Improve development processes and toolchain
+5. **documentation_updates**: Update documentation reflecting improvements
+6. **validation_testing**: Comprehensive validation of improvement effectiveness
+
+### **Quality Gates Alignment**
+Make judgments aligned with metadata-defined quality gates:
+- **FEEDBACK_APPLIED**: Feedback application completed successfully
+- **IMPROVEMENTS_IMPLEMENTED**: Improvements implemented and validated
+- **VALIDATION_COMPLETE**: Improvement effectiveness verified
+
+### **Implementation Pattern**
+```markdown
+1. Reference task-definitions/14-apply-feedback.json during context reading
+2. Use critical_tasks as execution checklist
+3. Report each critical_task completion status in 📊実行サマリー
+4. Provide judgment based on quality_gates in 📋総合判定
+5. Present ➡️次のステップ aligned with metadata next_steps
+```
+
 ## 🎯 **STANDARDIZED OUTPUT REQUIREMENTS**
 
 ### **📊 実行サマリー**

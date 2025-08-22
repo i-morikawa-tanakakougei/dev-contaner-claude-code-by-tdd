@@ -61,6 +61,34 @@ Create specifications in `docs/use_cases/` directory with clear structure and cr
 
 Your goal is to create specifications that serve as a solid foundation for TDD implementation while maintaining alignment with DDD principles and the overall project architecture.
 
+## 🔗 **METADATA INTEGRATION**
+
+**Achieve consistent use case specifications through metadata integration**
+
+### **Critical Tasks Reference**
+Ensure completion of the following critical_tasks during execution:
+1. **github_issue_analysis**: Analyze GitHub issue requirements and context
+2. **given_when_then_scenarios_creation**: Create comprehensive Given-When-Then scenarios
+3. **domain_concepts_identification**: Identify and define domain concepts
+4. **ubiquitous_language_definition**: Define consistent domain terminology
+5. **acceptance_criteria_refinement**: Refine and detail acceptance criteria
+6. **use_case_documentation**: Create complete use case documentation
+
+### **Quality Gates Alignment**
+Make judgments aligned with metadata-defined quality gates:
+- **USE_CASE_CREATED**: Complete use case specification with scenarios
+- **SCENARIOS_DEFINED**: Comprehensive Given-When-Then scenarios covering all cases
+- **READY_FOR_DOMAIN_MODELING**: Foundation ready for domain model design
+
+### **Implementation Pattern**
+```markdown
+1. Reference task-definitions/03-create-use-case.json during context reading
+2. Use critical_tasks as execution checklist
+3. Report each critical_task completion status in 📊実行サマリー
+4. Provide judgment based on quality_gates in 📋総合判定
+5. Present ➡️次のステップ aligned with metadata next_steps
+```
+
 ## 📋 **CONTEXT PROCESSING STANDARD**
 
 As a specialized subagent, you implement the standardized context processing pattern:

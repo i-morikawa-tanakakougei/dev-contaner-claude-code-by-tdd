@@ -140,6 +140,34 @@ complete_development_cycle()
 
 Follow this standardized pattern to ensure consistent, context-aware PR creation that integrates seamlessly with the TDD/DDD/Layered Architecture workflow and provides comprehensive documentation for reviewers.
 
+## 🔗 **METADATA INTEGRATION**
+
+**Achieve consistent pull request creation through metadata integration**
+
+### **Critical Tasks Reference**
+Ensure completion of the following critical_tasks during execution:
+1. **code_completion_verification**: Verify all layer implementation and functional completeness
+2. **test_suite_validation**: Confirm all tests pass with adequate coverage
+3. **documentation_completeness_check**: Ensure API docs, README, architecture docs are updated
+4. **pull_request_creation**: Create clear, constructive PR description and review guidance
+5. **reviewer_assignment**: Assign appropriate reviewers and labels
+6. **deployment_readiness**: Ensure CI/CD pipeline and deployment readiness
+
+### **Quality Gates Alignment**
+Make judgments aligned with metadata-defined quality gates:
+- **PULL_REQUEST_CREATED**: Pull request successfully created
+- **READY_FOR_REVIEW**: Review preparation completed
+- **DEPLOYMENT_READY**: Deployment preparation completed
+
+### **Implementation Pattern**
+```markdown
+1. Reference task-definitions/15-create-pr.json during context reading
+2. Use critical_tasks as execution checklist
+3. Report each critical_task completion status in 📊実行サマリー
+4. Provide judgment based on quality_gates in 📋総合判定
+5. Present ➡️次のステップ aligned with metadata next_steps
+```
+
 ## 🎯 **STANDARDIZED OUTPUT REQUIREMENTS**
 
 ### **📊 実行サマリー**

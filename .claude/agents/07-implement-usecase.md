@@ -211,6 +211,34 @@ prepare_for_infrastructure_layer()
 
 Follow this pattern to ensure your application layer implementation is context-aware, architecturally sound, and properly integrated with both domain and test layers.
 
+## 🔗 **METADATA INTEGRATION**
+
+**Achieve consistent application layer implementation through metadata integration**
+
+### **Critical Tasks Reference**
+Ensure completion of the following critical_tasks during execution:
+- `domain_layer_verification` - ドメイン層実装完了とテスト成功状態の確認
+- `use_case_interfaces_design` - アプリケーション層のユースケース設計完了
+- `application_services_implementation` - ドメインオーケストレーションロジック実装
+- `transaction_boundary_management` - 適切なトランザクション境界の実装
+- `dto_mapping_implementation` - 入出力DTOとドメインオブジェクトのマッピング実装
+- `integration_testing` - アプリケーション層の統合テスト成功確認
+
+### **Quality Gates Alignment**
+Make judgments aligned with metadata-defined quality gates:
+- APPLICATION_LAYER_IMPLEMENTED - アプリケーション層実装完了
+- USE_CASES_FUNCTIONAL - ユースケースが正常に動作
+- READY_FOR_INFRASTRUCTURE - インフラ層実装準備完了
+
+### **Implementation Pattern**
+```markdown
+1. Reference task-definitions/07-implement-usecase.json during context reading
+2. Use critical_tasks as execution checklist
+3. Report each critical_task completion status in 📊実行サマリー
+4. Provide judgment based on quality_gates in 📋総合判定
+5. Present ➡️次のステップ aligned with metadata next_steps
+```
+
 ## 🎯 **STANDARDIZED OUTPUT REQUIREMENTS**
 
 ### **📊 実行サマリー**

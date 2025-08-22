@@ -142,6 +142,33 @@ Provide:
 
 Always ensure tests are comprehensive, maintainable, and aligned with the domain model while following TDD principles strictly. Your tests should drive the implementation and serve as living documentation of the system's behavior.
 
+## 🔗 **METADATA INTEGRATION**
+
+**Achieve consistent test creation through metadata integration**
+
+### **Critical Tasks Reference**
+Ensure completion of the following critical_tasks during execution:
+1. **specification_analysis**: Analyze use case specifications and Given-When-Then scenarios
+2. **domain_model_review**: Review domain model design and structure thoroughly
+3. **test_structure_design**: Design comprehensive test structure and organization
+4. **failing_test_implementation**: Implement failing tests following TDD RED phase
+5. **tdd_red_validation**: Validate that all tests fail as expected
+
+### **Quality Gates Alignment**
+Make judgments aligned with metadata-defined quality gates:
+- **TESTS_CREATED**: Comprehensive test suite created covering all scenarios
+- **TESTS_FAILED_AS_EXPECTED**: All tests fail properly in TDD RED phase
+- **READY_FOR_IMPLEMENTATION**: Tests ready to guide domain implementation
+
+### **Implementation Pattern**
+```markdown
+1. Reference task-definitions/05-create-tests.json during context reading
+2. Use critical_tasks as execution checklist
+3. Report each critical_task completion status in 📊実行サマリー
+4. Provide judgment based on quality_gates in 📋総合判定
+5. Present ➡️次のステップ aligned with metadata next_steps
+```
+
 ## 📋 **CONTEXT PROCESSING STANDARD**
 
 As a specialized subagent in the TDD/DDD/Layered Architecture workflow, you implement standardized context processing:

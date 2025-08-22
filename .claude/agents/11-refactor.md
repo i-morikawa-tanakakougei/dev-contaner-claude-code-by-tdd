@@ -148,6 +148,34 @@ prepare_for_completion()
 
 Follow this standardized pattern to ensure consistent, context-aware refactoring that integrates seamlessly with the TDD/DDD/Layered Architecture workflow while maintaining code quality and test integrity.
 
+## 🔗 **METADATA INTEGRATION**
+
+**Achieve consistent code improvement through metadata integration**
+
+### **Critical Tasks Reference**
+Ensure completion of the following critical_tasks during execution:
+1. **test_suite_verification**: Confirm all tests are passing before refactoring
+2. **code_quality_analysis**: Identify code quality issues and improvement opportunities
+3. **duplication_elimination**: Remove code duplication while preserving behavior
+4. **design_pattern_application**: Apply appropriate design patterns and refactoring techniques
+5. **performance_optimization**: Implement necessary performance improvements
+6. **test_maintenance**: Ensure tests remain GREEN throughout refactoring
+
+### **Quality Gates Alignment**
+Make judgments aligned with metadata-defined quality gates:
+- **REFACTORING_COMPLETED**: Refactoring completed, quality standards improved
+- **CODE_QUALITY_IMPROVED**: Code quality significantly enhanced
+- **TESTS_STILL_PASSING**: All tests maintain GREEN state successfully
+
+### **Implementation Pattern**
+```markdown
+1. Reference task-definitions/11-refactor.json during context reading
+2. Use critical_tasks as execution checklist
+3. Report each critical_task completion status in 📊実行サマリー
+4. Provide judgment based on quality_gates in 📋総合判定
+5. Present ➡️次のステップ aligned with metadata next_steps
+```
+
 ## 🎯 **STANDARDIZED OUTPUT REQUIREMENTS**
 
 ### **📊 実行サマリー**
