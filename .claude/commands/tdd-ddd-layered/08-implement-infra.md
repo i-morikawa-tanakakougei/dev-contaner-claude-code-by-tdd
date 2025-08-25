@@ -1,4 +1,4 @@
-Implement infrastructure layer for persistence and external services.
+Use the 08-implement-infra subagent to implement infrastructure layer for persistence and external services. This command MUST USE the specialized 08-implement-infra subagent for optimal infrastructure implementation.
 
 ## Metadata
 - **Prerequisites**: Application layer implementation completed (07-implement-usecase)
@@ -305,7 +305,8 @@ $ /implement-infra 3
 
 ## Task Details
 
-**🤖 Agent Integration**: This command uses the specialized `08-implement-infra` agent for optimal infrastructure layer implementation.
+**🤖 Agent Integration**: This command MUST USE PROACTIVELY the specialized `08-implement-infra` subagent for optimal infrastructure layer implementation.
+ Claude Code should automatically delegate this task to the 08-implement-infra subagent based on the command description.
 
 1. **Pre-execution Validation**:
    ```bash
@@ -427,11 +428,8 @@ APPROVED/CONDITIONAL_APPROVAL/REJECTED/COMPLETED のいずれかを明記
 - 実行結果の報告
 - 次のステップへの案内"
 
-   # Execute Task tool
-   Task \
-     --subagent_type "08-implement-infra" \
-     --description "Execute 08-implement-infra task" \
-     --prompt "$task_prompt"
+   # Execute with specialized 08-implement-infra subagent
+   # The 08-implement-infra subagent will be automatically invoked based on the task description
    
    agent_exit_code=$?
    echo "✅ 専用エージェント実行完了 (終了コード: $agent_exit_code)"

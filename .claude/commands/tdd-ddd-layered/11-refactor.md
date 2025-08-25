@@ -1,4 +1,4 @@
-Refactor code after all tests are GREEN (TDD REFACTOR phase).
+Use the 11-refactor subagent to refactor code after all tests are GREEN (TDD REFACTOR phase). This command MUST USE the specialized 11-refactor subagent for optimal refactoring implementation.
 
 ## Metadata
 - **Prerequisites**: All tests passing (10-run-all-tests)
@@ -174,7 +174,8 @@ $ /refactor 15
 
 ## Task Details
 
-**🤖 Agent Integration**: This command uses the specialized `11-refactor` agent for optimal code refactoring.
+**🤖 Agent Integration**: This command MUST USE PROACTIVELY the specialized `11-refactor` subagent for optimal code refactoring.
+ Claude Code should automatically delegate this task to the 11-refactor subagent based on the command description.
 
 1. **Pre-execution Validation**:
    ```bash
@@ -295,11 +296,8 @@ APPROVED/CONDITIONAL_APPROVAL/REJECTED/COMPLETED のいずれかを明記
 - 実行結果の報告
 - 次のステップへの案内"
 
-   # Execute Task tool
-   Task \
-     --subagent_type "11-refactor" \
-     --description "Execute 11-refactor task" \
-     --prompt "$task_prompt"
+   # Execute with specialized 11-refactor subagent
+   # The 11-refactor subagent will be automatically invoked based on the task description
    
    agent_exit_code=$?
    echo "✅ 専用エージェント実行完了 (終了コード: $agent_exit_code)"

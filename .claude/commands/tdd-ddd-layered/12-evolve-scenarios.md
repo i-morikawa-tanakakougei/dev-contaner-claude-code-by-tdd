@@ -1,4 +1,4 @@
-Evolve scenarios based on sprint feedback and requirements discovery.
+Use the 12-evolve-scenarios subagent to evolve scenarios based on sprint feedback and requirements discovery. This command MUST USE the specialized 12-evolve-scenarios subagent for optimal scenario evolution.
 
 ## Metadata
 - **Prerequisites**: Development cycle in progress or completed
@@ -169,7 +169,8 @@ $ /evolve-scenarios user-management
 
 ## Task Details
 
-**🤖 Agent Integration**: This command uses the specialized `12-evolve-scenarios` agent for optimal scenario evolution and requirements adaptation.
+**🤖 Agent Integration**: This command MUST USE PROACTIVELY the specialized `12-evolve-scenarios` subagent for optimal scenario evolution and requirements adaptation.
+ Claude Code should automatically delegate this task to the 12-evolve-scenarios subagent based on the command description.
 
 Follow these steps:
 
@@ -347,11 +348,8 @@ COMPLETED/APPROVED/CONDITIONAL_APPROVAL のいずれかを明記
 - フィードバック分析結果の要約報告
 - 次のステップ（イシューレビュー・実装）への案内"
 
-   # Execute Task tool
-   Task \
-     --subagent_type "12-evolve-scenarios" \
-     --description "Evolve scenarios based on sprint feedback and requirements discovery" \
-     --prompt "$task_prompt"
+   # Execute with specialized 12-evolve-scenarios subagent
+   # The 12-evolve-scenarios subagent will be automatically invoked based on the task description
    
    agent_exit_code=$?
    echo "✅ 専用エージェント実行完了 (終了コード: $agent_exit_code)"

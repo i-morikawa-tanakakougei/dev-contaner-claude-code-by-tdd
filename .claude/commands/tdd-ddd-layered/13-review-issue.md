@@ -1,4 +1,4 @@
-Review TDD/DDD/Layered Architecture implementation with comprehensive analysis.
+Use the 13-review-issue subagent to review TDD/DDD/Layered Architecture implementation with comprehensive analysis. This command MUST USE the specialized 13-review-issue subagent for optimal issue review.
 
 ## Metadata
 - **Prerequisites**: Implementation completed, all tests passing
@@ -200,7 +200,8 @@ $ /review-issue 15
 
 ## Task Details
 
-**🤖 Agent Integration**: This command uses the specialized `13-review-issue` agent for comprehensive implementation review and quality analysis.
+**🤖 Agent Integration**: This command MUST USE PROACTIVELY the specialized `13-review-issue` subagent for comprehensive implementation review and quality analysis.
+ Claude Code should automatically delegate this task to the 13-review-issue subagent based on the command description.
 
 Follow these steps:
 
@@ -314,11 +315,8 @@ APPROVED/CONDITIONAL_APPROVAL/REJECTED/COMPLETED のいずれかを明記
 - 実行結果の報告
 - 次のステップへの案内"
 
-   # Execute Task tool
-   Task \
-     --subagent_type "13-review-issue" \
-     --description "Execute 13-review-issue task" \
-     --prompt "$task_prompt"
+   # Execute with specialized 13-review-issue subagent
+   # The 13-review-issue subagent will be automatically invoked based on the task description
    
    agent_exit_code=$?
    echo "✅ 専用エージェント実行完了 (終了コード: $agent_exit_code)"

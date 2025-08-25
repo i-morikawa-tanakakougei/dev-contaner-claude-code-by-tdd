@@ -1,4 +1,4 @@
-Create project vision and core scenarios.
+Use the 00-create-vision subagent to create project vision and core scenarios. This command MUST USE the specialized 00-create-vision subagent for optimal project vision creation.
 
 ## Metadata
 - **Prerequisites**: None (Initial project phase)
@@ -158,7 +158,7 @@ $ /create-vision
 
 ## Task Details
 
-**🤖 Agent Integration**: This command uses the specialized `00-create-vision` agent for optimal TDD/DDD/Layered Architecture implementation.
+**🤖 Agent Integration**: This command MUST USE PROACTIVELY the specialized `00-create-vision` subagent for optimal project vision creation. Claude Code should automatically delegate this task to the 00-create-vision subagent based on the command description.
 
 Follow these steps:
 
@@ -268,11 +268,8 @@ COMPLETED/APPROVED のいずれかを明記
 - 作成したファイルのパスを報告
 - 次のステップ（プロジェクト構造初期化）への案内"
 
-   # Execute Task tool
-   Task \
-     --subagent_type "00-create-vision" \
-     --description "Create project vision with TDD/DDD/Layered Architecture foundation" \
-     --prompt "$task_prompt"
+   # Execute with specialized 00-create-vision subagent
+   # The 00-create-vision subagent will be automatically invoked based on the task description
    
    agent_exit_code=$?
    echo "✅ 専用エージェント実行完了 (終了コード: $agent_exit_code)"

@@ -1,4 +1,4 @@
-Initialize project structure for TDD/DDD/Layered Architecture development using specialized agent.
+Use the 01-init-project-structure subagent to initialize project structure for TDD/DDD/Layered Architecture development. This command MUST USE the specialized 01-init-project-structure subagent for optimal project structure initialization.
 
 ## Metadata
 - **Prerequisites**: Vision document should exist (run `/create-vision` first)
@@ -101,7 +101,7 @@ $ /init-project-structure
 
 ## Task Details
 
-**Agent Integration Pattern - 4 Steps:**
+**🤖 Agent Integration**: This command MUST USE PROACTIVELY the specialized `01-init-project-structure` subagent for optimal project structure initialization. Claude Code should automatically delegate this task to the 01-init-project-structure subagent based on the command description.
 
 1. **Pre-execution Validation**:
    ```bash
@@ -195,11 +195,8 @@ APPROVED/CONDITIONAL_APPROVAL/REJECTED/COMPLETED のいずれかを明記
 - 実行結果の報告
 - 次のステップへの案内"
 
-   # Execute Task tool
-   Task \
-     --subagent_type "01-init-project-structure" \
-     --description "Execute 01-init-project-structure task" \
-     --prompt "$task_prompt"
+   # Execute with specialized 01-init-project-structure subagent
+   # The 01-init-project-structure subagent will be automatically invoked based on the task description
    
    agent_exit_code=$?
    echo "✅ 専用エージェント実行完了 (終了コード: $agent_exit_code)"

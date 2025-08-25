@@ -1,4 +1,4 @@
-Plan sprint and create tickets from core scenarios.
+Use the 02-sprint-planning subagent to plan sprint and create tickets from core scenarios. This command MUST USE the specialized 02-sprint-planning subagent for optimal sprint planning implementation.
 
 ## Metadata
 - **Prerequisites**: Project vision and core scenarios (00-create-vision)
@@ -72,7 +72,7 @@ Plan sprint and create tickets from core scenarios.
 
 ## Task Details
 
-**🤖 Agent Integration**: This command uses the specialized `02-sprint-planning` agent for optimal sprint planning implementation.
+**🤖 Agent Integration**: This command MUST USE PROACTIVELY the specialized `02-sprint-planning` subagent for optimal sprint planning implementation. Claude Code should automatically delegate this task to the 02-sprint-planning subagent based on the command description.
 
 1. **Pre-execution Validation**:
    ```bash
@@ -181,11 +181,8 @@ APPROVED/CONDITIONAL_APPROVAL/REJECTED/COMPLETED のいずれかを明記
 - 実行結果の報告
 - 次のステップへの案内"
 
-   # Execute Task tool
-   Task \
-     --subagent_type "02-sprint-planning" \
-     --description "Execute 02-sprint-planning task" \
-     --prompt "$task_prompt"
+   # Execute with specialized 02-sprint-planning subagent
+   # The 02-sprint-planning subagent will be automatically invoked based on the task description
    
    agent_exit_code=$?
    echo "✅ 専用エージェント実行完了 (終了コード: $agent_exit_code)"

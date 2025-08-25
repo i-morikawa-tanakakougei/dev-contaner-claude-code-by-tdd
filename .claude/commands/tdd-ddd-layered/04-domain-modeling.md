@@ -1,4 +1,4 @@
-Design domain models based on the Given-When-Then specification.
+Use the 04-domain-modeling subagent to design domain models based on the Given-When-Then specification. This command MUST USE the specialized 04-domain-modeling subagent for optimal domain modeling implementation.
 
 ## Metadata
 - **Prerequisites**: Use case specifications created (03-create-use-case)
@@ -71,7 +71,8 @@ Design domain models based on the Given-When-Then specification.
 
 ## Task Details
 
-**🤖 Agent Integration**: This command uses the specialized `04-domain-modeling` agent for optimal domain model design.
+**🤖 Agent Integration**: This command MUST USE PROACTIVELY the specialized `04-domain-modeling` subagent for optimal domain model design.
+ Claude Code should automatically delegate this task to the 04-domain-modeling subagent based on the command description.
 
 1. **Pre-execution Validation**:
    ```bash
@@ -193,11 +194,8 @@ APPROVED/CONDITIONAL_APPROVAL/REJECTED/COMPLETED のいずれかを明記
 - 実行結果の報告
 - 次のステップへの案内"
 
-   # Execute Task tool
-   Task \
-     --subagent_type "04-domain-modeling" \
-     --description "Execute 04-domain-modeling task" \
-     --prompt "$task_prompt"
+   # Execute with specialized 04-domain-modeling subagent
+   # The 04-domain-modeling subagent will be automatically invoked based on the task description
    
    agent_exit_code=$?
    echo "✅ 専用エージェント実行完了 (終了コード: $agent_exit_code)"

@@ -1,4 +1,4 @@
-Create TDD tests based on Given-When-Then specifications and domain model.
+Use the 05-create-tests subagent to create TDD tests based on Given-When-Then specifications and domain model. This command MUST USE the specialized 05-create-tests subagent for optimal test creation implementation.
 
 ## 🎯 **TDD/DDD/LAYERED PROCESS CONTEXT**
 
@@ -103,7 +103,8 @@ Create TDD tests based on Given-When-Then specifications and domain model.
 
 ## Task Details
 
-**🤖 Agent Integration**: This command uses the specialized `05-create-tests` agent for optimal TDD RED phase implementation.
+**🤖 Agent Integration**: This command MUST USE PROACTIVELY the specialized `05-create-tests` subagent for optimal TDD RED phase implementation.
+ Claude Code should automatically delegate this task to the 05-create-tests subagent based on the command description.
 
 1. **Pre-execution Validation**:
    ```bash
@@ -215,11 +216,8 @@ APPROVED/CONDITIONAL_APPROVAL/REJECTED/COMPLETED のいずれかを明記
 - 実行結果の報告
 - 次のステップへの案内"
 
-   # Execute Task tool
-   Task \
-     --subagent_type "05-create-tests" \
-     --description "Execute 05-create-tests task" \
-     --prompt "$task_prompt"
+   # Execute with specialized 05-create-tests subagent
+   # The 05-create-tests subagent will be automatically invoked based on the task description
    
    agent_exit_code=$?
    echo "✅ 専用エージェント実行完了 (終了コード: $agent_exit_code)"

@@ -1,4 +1,4 @@
-Create pull request and close related issues.
+Use the 15-create-pr subagent to create pull request and close related issues. This command MUST USE the specialized 15-create-pr subagent for optimal pull request creation.
 
 ## Metadata
 - **Prerequisites**: Feedback applied, all implementations completed
@@ -236,7 +236,8 @@ This command follows the established 4-step agent integration pattern for consis
 
 ## Task Details
 
-**🤖 Agent Integration**: This command uses the specialized `15-create-pr` agent for pull request creation and finalization.
+**🤖 Agent Integration**: This command MUST USE PROACTIVELY the specialized `15-create-pr` subagent for pull request creation and finalization.
+ Claude Code should automatically delegate this task to the 15-create-pr subagent based on the command description.
 
 Follow these steps:
 
@@ -350,11 +351,8 @@ APPROVED/CONDITIONAL_APPROVAL/REJECTED/COMPLETED のいずれかを明記
 - 実行結果の報告
 - 次のステップへの案内"
 
-   # Execute Task tool
-   Task \
-     --subagent_type "15-create-pr" \
-     --description "Execute 15-create-pr task" \
-     --prompt "$task_prompt"
+   # Execute with specialized 15-create-pr subagent
+   # The 15-create-pr subagent will be automatically invoked based on the task description
    
    agent_exit_code=$?
    echo "✅ 専用エージェント実行完了 (終了コード: $agent_exit_code)"

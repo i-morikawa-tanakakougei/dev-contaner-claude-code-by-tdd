@@ -1,4 +1,4 @@
-Implement domain layer to make tests pass (TDD GREEN phase).
+Use the 06-implement-domain subagent to implement domain layer to make tests pass (TDD GREEN phase). This command MUST USE the specialized 06-implement-domain subagent for optimal domain implementation.
 
 ## Metadata
 - **Prerequisites**: TDD tests created and failing (05-create-tests)
@@ -106,7 +106,8 @@ Implement domain layer to make tests pass (TDD GREEN phase).
 
 ## Task Details
 
-**🤖 Agent Integration**: This command uses the specialized `06-implement-domain` agent for optimal TDD GREEN phase implementation.
+**🤖 Agent Integration**: This command MUST USE PROACTIVELY the specialized `06-implement-domain` subagent for optimal TDD GREEN phase implementation.
+ Claude Code should automatically delegate this task to the 06-implement-domain subagent based on the command description.
 
 1. **Pre-execution Validation**:
    ```bash
@@ -219,11 +220,8 @@ APPROVED/CONDITIONAL_APPROVAL/REJECTED/COMPLETED のいずれかを明記
 - 実行結果の報告
 - 次のステップへの案内"
 
-   # Execute Task tool
-   Task \
-     --subagent_type "06-implement-domain" \
-     --description "Execute 06-implement-domain task" \
-     --prompt "$task_prompt"
+   # Execute with specialized 06-implement-domain subagent
+   # The 06-implement-domain subagent will be automatically invoked based on the task description
    
    agent_exit_code=$?
    echo "✅ 専用エージェント実行完了 (終了コード: $agent_exit_code)"

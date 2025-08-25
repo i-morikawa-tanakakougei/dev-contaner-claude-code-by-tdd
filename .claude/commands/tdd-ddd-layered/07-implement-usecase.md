@@ -1,4 +1,4 @@
-Implement application layer use cases to orchestrate domain logic using the 07-implement-usecase agent.
+Use the 07-implement-usecase subagent to implement application layer use cases to orchestrate domain logic. This command MUST USE the specialized 07-implement-usecase subagent for optimal usecase implementation.
 
 ## Metadata
 - **Prerequisites**: Domain layer implementation completed (06-implement-domain)
@@ -316,7 +316,8 @@ git restore tests/unit/application/
 
 ## Task Details
 
-**🤖 Agent Integration**: This command uses the specialized `07-implement-usecase` agent for optimal application layer implementation following TDD GREEN phase principles.
+**🤖 Agent Integration**: This command MUST USE PROACTIVELY the specialized `07-implement-usecase` subagent for optimal application layer implementation following TDD GREEN phase principles.
+ Claude Code should automatically delegate this task to the 07-implement-usecase subagent based on the command description.
 
 Follow these steps:
 
@@ -434,11 +435,8 @@ APPROVED/CONDITIONAL_APPROVAL/REJECTED/COMPLETED のいずれかを明記
 - 実行結果の報告
 - 次のステップへの案内"
 
-   # Execute Task tool
-   Task \
-     --subagent_type "07-implement-usecase" \
-     --description "Execute 07-implement-usecase task" \
-     --prompt "$task_prompt"
+   # Execute with specialized 07-implement-usecase subagent
+   # The 07-implement-usecase subagent will be automatically invoked based on the task description
    
    agent_exit_code=$?
    echo "✅ 専用エージェント実行完了 (終了コード: $agent_exit_code)"

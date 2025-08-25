@@ -1,4 +1,4 @@
-Run all tests and generate comprehensive test report.
+Use the 10-run-all-tests subagent to run all tests and generate comprehensive test report. This command MUST USE the specialized 10-run-all-tests subagent for optimal test execution and reporting.
 
 ## Metadata
 - **Prerequisites**: All implementation layers completed (domain, application, infrastructure, presentation)
@@ -165,7 +165,8 @@ $ /run-all-tests 15
 
 ## Task Details
 
-**🤖 Agent Integration**: This command uses the specialized `10-run-all-tests` agent for optimal test execution and reporting.
+**🤖 Agent Integration**: This command MUST USE PROACTIVELY the specialized `10-run-all-tests` subagent for optimal test execution and reporting.
+ Claude Code should automatically delegate this task to the 10-run-all-tests subagent based on the command description.
 
 1. **Pre-execution Validation**:
    ```bash
@@ -287,11 +288,8 @@ APPROVED/CONDITIONAL_APPROVAL/REJECTED/COMPLETED のいずれかを明記
 - 実行結果の報告
 - 次のステップへの案内"
 
-   # Execute Task tool
-   Task \
-     --subagent_type "10-run-all-tests" \
-     --description "Execute 10-run-all-tests task" \
-     --prompt "$task_prompt"
+   # Execute with specialized 10-run-all-tests subagent
+   # The 10-run-all-tests subagent will be automatically invoked based on the task description
    
    agent_exit_code=$?
    echo "✅ 専用エージェント実行完了 (終了コード: $agent_exit_code)"
