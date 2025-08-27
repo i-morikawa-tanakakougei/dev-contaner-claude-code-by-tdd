@@ -1,25 +1,25 @@
 {
   "project_info": {
-    "name": "TDD/DDD/Layered Architecture Development System",
-    "version": "2.0",
-    "created": "2025-08-27T00:00:00Z",
-    "last_updated": "2025-08-27T00:00:00Z",
-    "description": "Comprehensive development workflow with custom commands and specialized subagents",
+    "name": "New TDD/DDD Project",
+    "version": "1.0",
+    "created": null,
+    "last_updated": null,
+    "description": "TDD/DDD/Layered Architecture development project",
     "architecture": ["Test-Driven Development", "Domain-Driven Design", "Layered Architecture"]
   },
   "current_state": {
-    "active_sprint": 1,
-    "current_phase": "Phase 2: Core Feature Enhancement - Completed",
-    "last_command": "review-implementation",
-    "last_command_timestamp": "2025-08-27T00:00:00Z",
+    "active_sprint": 0,
+    "current_phase": "Project Initialization",
+    "last_command": null,
+    "last_command_timestamp": null,
     "current_issue": null,
-    "development_stage": "Ready for Phase 3"
+    "development_stage": "Ready to Start"
   },
   "sprint_management": {
-    "active_sprint_number": 1,
-    "sprint_start_date": "2025-08-27",
-    "sprint_end_date": "2025-09-10",
-    "sprint_goal": "Complete Phase 2 core feature enhancements and subagent integration",
+    "active_sprint_number": 0,
+    "sprint_start_date": null,
+    "sprint_end_date": null,
+    "sprint_goal": null,
     "total_issues": 0,
     "completed_issues": [],
     "in_progress_issues": [],
@@ -46,18 +46,10 @@
       "external_services": []
     },
     "presentation_layer": {
-      "status": "operational", 
-      "completion_percentage": 85,
+      "status": "initialized", 
+      "completion_percentage": 0,
       "api_endpoints": [],
-      "cli_commands": [
-        "create-vision", "review-vision", "init-project-structure", 
-        "sprint-planning", "review-sprint-plan", "create-use-case",
-        "domain-modeling", "review-domain-design", "create-tests",
-        "review-test-design", "implement-domain", "implement-usecase", 
-        "implement-infra", "implement-presentation", "run-all-tests",
-        "review-test-results", "refactor", "evolve-scenarios", 
-        "review-issue", "apply-feedback", "create-pr", "use-case-status"
-      ]
+      "cli_commands": []
     }
   },
   "quality_metrics": {
@@ -115,18 +107,18 @@
   },
   "documentation_status": {
     "vision_documents": {
-      "project_vision": true,
-      "core_scenarios": true, 
-      "bounded_contexts": true
+      "project_vision": false,
+      "core_scenarios": false, 
+      "bounded_contexts": false
     },
     "specification_documents": {
-      "use_case_specifications": 22,
-      "domain_models": 16,
-      "test_plans": 22
+      "use_case_specifications": 0,
+      "domain_models": 0,
+      "test_plans": 0
     },
     "implementation_tracking": {
-      "issue_metadata_files": 1,
-      "review_reports": 4,
+      "issue_metadata_files": 0,
+      "review_reports": 0,
       "test_reports": 0
     }
   },

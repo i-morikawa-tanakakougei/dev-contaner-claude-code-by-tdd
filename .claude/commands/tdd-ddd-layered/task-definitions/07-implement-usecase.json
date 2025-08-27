@@ -5,7 +5,7 @@
   "category": "implementation", 
   "priority": "high",
   "version": "3.0",
-  "last_updated": "2025-08-27T00:00:00Z",
+  "last_updated": null,
   "required_subagent": "07-implement-usecase",
   "subagent_mandatory": true,
   "phase_3_features": {

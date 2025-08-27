@@ -10,7 +10,7 @@
   "command": "17-project-status",
   "priority": "low",
   "version": "3.0",
-  "last_updated": "2025-08-27T00:00:00Z",
+  "last_updated": null,
   "required_subagent": "17-project-status",
   "subagent_mandatory": true,
   "phase_3_features": {
