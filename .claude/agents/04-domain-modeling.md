@@ -228,3 +228,81 @@ Recommended actions after domain model design completion:
 ```
 
 **🔧 重要事項**: ドメインモデルの品質がシステム全体のアーキテクチャと保守性を決定する。
+
+## 🔄 **PHASE 2: ENHANCED METADATA INTEGRATION**
+
+### **Metadata Update Responsibilities**
+After completing domain modeling, this subagent MUST update project metadata to maintain system consistency:
+
+#### **1. Project State Update (docs/metadata/project-state.json)**
+```json
+{
+  "project_metadata": {
+    "current_phase": "domain-modeling",
+    "last_updated": "2024-01-XX",
+    "active_issues": ["issue-X", "issue-Y"]
+  },
+  "sprint_summary": {
+    "domain_modeling_status": {
+      "issues_modeled": ["issue-X", "issue-Y"],
+      "entities_designed": "XX count",
+      "value_objects_created": "XX count",
+      "aggregates_defined": "XX count",
+      "domain_services_identified": "XX count"
+    }
+  },
+  "architecture_overview": {
+    "domain_layer": {
+      "entities": "designed",
+      "value_objects": "created",
+      "aggregate_boundaries": "defined",
+      "domain_services": "identified",
+      "repository_interfaces": "designed"
+    }
+  }
+}
+```
+
+#### **2. Project Context Update (.claude/context/project-context.json)**
+```json
+{
+  "current_state": {
+    "active_sprint": {
+      "domain_modeling": {
+        "completed": ["issue-X", "issue-Y"],
+        "domain_design_status": "completed",
+        "model_quality": "validated",
+        "next_phase": "review-domain-design"
+      }
+    },
+    "workflow_tracking": {
+      "domain_modeling": {
+        "last_execution": "timestamp",
+        "issues_processed": ["X", "Y"],
+        "modeling_outcomes": ["entities_designed", "aggregates_defined"]
+      }
+    }
+  }
+}
+```
+
+#### **3. Domain Design Documentation (docs/domain/)**
+Create comprehensive domain model documentation with:
+- Detailed entity designs with identity, behavior, and business rules
+- Value object specifications with immutability and validation logic
+- Aggregate boundary definitions and consistency rules
+- Domain service identification for complex business operations
+- Repository interface designs for data access abstraction
+- Ubiquitous language terms and domain concept relationships
+
+### **Context Integration Priority**
+1. **FIRST**: Update project-state.json with domain modeling completion and component metrics
+2. **SECOND**: Update project-context.json with domain design progression status
+3. **THIRD**: Create detailed domain design documentation in docs/domain/
+4. **FOURTH**: Ensure traceability between use case specifications and domain concepts
+
+### **Quality Assurance Integration**
+- Verify all domain entities have clear identity, behavior, and business rules
+- Ensure value objects are immutable with proper validation logic
+- Validate aggregate boundaries maintain consistency and transactional integrity
+- Confirm domain services properly encapsulate complex business operations

@@ -1,4 +1,10 @@
-Use the 02-sprint-planning subagent to plan sprint and create tickets from core scenarios. This command MUST USE the specialized 02-sprint-planning subagent for optimal sprint planning implementation.
+Use the 02-sprint-planning subagent to plan sprint and create tickets from core scenarios. This command MUST USE PROACTIVELY the specialized 02-sprint-planning subagent for optimal sprint planning implementation.
+
+**📖 Required Reading**: Before execution, this command MUST read the following files:
+- `/workspace/.claude/context/current-command-context.json` - Current execution context
+- `/workspace/.claude/context/project-context.json` - Overall project state and active sprint information
+- `/workspace/docs/vision/project-vision.md` - Project vision and core scenarios for sprint planning
+- `/workspace/docs/metadata/project-state.json` - Integrated project status for update
 
 ## Metadata
 - **Prerequisites**: Project vision and core scenarios (00-create-vision)
@@ -395,3 +401,38 @@ $ /sprint-planning 1
 $ /create-vision
 $ /sprint-planning 1
 ```
+
+## 🔄 Metadata Update Requirements
+
+**CRITICAL**: After successful sprint planning completion, you MUST update the following files:
+
+1. **Project State Update**:
+   ```bash
+   # Update docs/metadata/project-state.json
+   # - Update sprint_summary.current_sprint to new sprint number
+   # - Set sprint_summary.total_issues to created issues count
+   # - Update recent_activity.last_command_executed
+   # - Update workflow_statistics.command_execution_stats
+   ```
+
+2. **Project Context Update**:
+   ```bash
+   # Update .claude/context/project-context.json  
+   # - Update current_state.active_sprint to new sprint number
+   # - Update sprint_management.active_sprint_number
+   # - Set sprint dates and goal
+   # - Increment workflow_tracking.command_usage.sprint_planning
+   ```
+
+3. **Sprint Documentation**:
+   ```bash
+   # Create/Update sprint-specific files
+   # - docs/sprints/sprint-X-plan.md (sprint planning document)
+   # - docs/sprints/sprint-X-backlog.md (sprint backlog with GitHub issues)
+   # - Update docs/use_cases/index.md with sprint status
+   ```
+
+**⚠️ Error Handling**: If standard workflow is disrupted:
+- 📖 Consult: [Manual Sync Guide](../../docs/maintenance/manual-sync-guide.md)
+- 🔄 Check Status: `/use-case-status` for current project state
+- 📊 Verify Context: `.claude/context/current-command-context.json`

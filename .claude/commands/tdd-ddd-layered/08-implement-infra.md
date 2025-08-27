@@ -1,4 +1,10 @@
-Use the 08-implement-infra subagent to implement infrastructure layer for persistence and external services. This command MUST USE the specialized 08-implement-infra subagent for optimal infrastructure implementation.
+Use the 08-implement-infra subagent to implement infrastructure layer for persistence and external services. This command MUST USE PROACTIVELY the specialized 08-implement-infra subagent for optimal infrastructure implementation.
+
+**📖 Required Reading**: Before execution, this command MUST read the following files:
+- `/workspace/.claude/context/current-command-context.json` - Current execution context
+- `/workspace/.claude/context/project-context.json` - Overall project state and active sprint information
+- `/workspace/docs/use_cases/issue-X-Y.json` - Issue-specific metadata and implementation status
+- `/workspace/docs/metadata/project-state.json` - Integrated project status for update
 
 ## Metadata
 - **Prerequisites**: Application layer implementation completed (07-implement-usecase)
@@ -621,3 +627,37 @@ Important Notes:
 - Handle connection pooling and transactions properly
 - Consider using repository pattern with Unit of Work
 - All user-facing output must be in JAPANESE
+
+## 🔄 Metadata Update Requirements
+
+**CRITICAL**: After successful infrastructure implementation completion, you MUST update the following files:
+
+1. **Project State Update**:
+   ```bash
+   # Update docs/metadata/project-state.json
+   # - Increment infrastructure_layer.repository_implementations count
+   # - Update architecture_overview.infrastructure_layer.completion_rate
+   # - Add to recent_activity.last_command_executed
+   # - Update workflow_statistics.command_execution_stats
+   ```
+
+2. **Project Context Update**:
+   ```bash
+   # Update .claude/context/project-context.json  
+   # - Update architecture_status.infrastructure_layer.repositories array
+   # - Increment workflow_tracking.command_usage.implement_infra
+   # - Set current_state.last_command and last_command_timestamp
+   ```
+
+3. **Issue-Specific Metadata**:
+   ```bash
+   # Update docs/use_cases/issue-X-Y.json
+   # - Set infrastructure_layer.status to "completed"
+   # - Add implementation_files array with created infrastructure files
+   # - Update completion timestamp
+   ```
+
+**⚠️ Error Handling**: If standard workflow is disrupted:
+- 📖 Consult: [Manual Sync Guide](../../docs/maintenance/manual-sync-guide.md)
+- 🔄 Check Status: `/use-case-status` for current project state
+- 📊 Verify Context: `.claude/context/current-command-context.json`

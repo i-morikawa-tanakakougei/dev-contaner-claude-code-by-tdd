@@ -220,3 +220,92 @@ Guidance for transitioning to pull request creation phase:
 ```
 
 **🔧 重要事項**: TDD REFACTORフェーズでは常にテストをGREEN状態に保ち、段階的な改善を実施。
+
+## 🔄 **PHASE 2: ENHANCED METADATA INTEGRATION**
+
+### **Metadata Update Responsibilities**
+After completing refactoring, this subagent MUST update project metadata to maintain system consistency:
+
+#### **1. Project State Update (docs/metadata/project-state.json)**
+```json
+{
+  "project_metadata": {
+    "current_phase": "refactoring",
+    "last_updated": "2024-01-XX",
+    "active_issues": ["issue-X", "issue-Y"]
+  },
+  "sprint_summary": {
+    "refactoring_status": {
+      "issues_refactored": ["issue-X-Y"],
+      "code_quality_improvements": "completed",
+      "duplication_removal": "executed",
+      "test_suite_status": "green",
+      "refactoring_completion": "ready_for_pr"
+    }
+  },
+  "quality_metrics": {
+    "refactoring": {
+      "duplicate_code_reduction": "XX%",
+      "method_extractions": "XX count",
+      "design_improvements": "XX count",
+      "test_status": "all_passing",
+      "performance_improvements": "achieved"
+    }
+  }
+}
+```
+
+#### **2. Project Context Update (.claude/context/project-context.json)**
+```json
+{
+  "current_state": {
+    "active_sprint": {
+      "refactoring": {
+        "completed": ["issue-X-Y"],
+        "code_quality_status": "improved",
+        "test_suite_status": "green",
+        "performance_status": "optimized",
+        "next_phase": "create-pr"
+      }
+    },
+    "workflow_tracking": {
+      "refactoring": {
+        "last_execution": "timestamp",
+        "issues_processed": ["X", "Y"],
+        "refactoring_outcomes": ["quality_improved", "tests_green"]
+      }
+    }
+  }
+}
+```
+
+#### **3. Issue-Specific Updates (docs/use_cases/issue-X-Y.json)**
+```json
+{
+  "refactoring_status": {
+    "refactoring": {
+      "status": "completed",
+      "completed_date": "2024-01-XX",
+      "improvements": {
+        "duplication_removal": "XX instances",
+        "method_extractions": "XX count",
+        "design_patterns_applied": ["Strategy", "Factory"],
+        "performance_optimizations": "XX improvements"
+      },
+      "test_verification": "all_passing"
+    }
+  }
+}
+```
+
+### **Context Integration Priority**
+1. **FIRST**: Update project-state.json with refactoring completion and quality improvements
+2. **SECOND**: Update project-context.json with code quality and test status
+3. **THIRD**: Update issue-specific metadata with detailed refactoring metrics
+4. **FOURTH**: Document refactoring patterns applied and performance improvements
+
+### **Quality Assurance Integration**
+- Verify all tests remain in GREEN state after refactoring
+- Ensure code quality improvements are measurable and documented
+- Validate that domain layer purity is maintained or enhanced
+- Confirm layer separation and architectural integrity is preserved

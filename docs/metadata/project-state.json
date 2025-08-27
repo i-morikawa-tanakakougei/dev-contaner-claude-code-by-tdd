@@ -1,0 +1,143 @@
+{
+  "project_metadata": {
+    "name": "TDD/DDD/Layered Architecture Development System",
+    "version": "2.0",
+    "last_updated": "2025-08-27T00:00:00Z",
+    "overall_status": "Phase 2: Core Feature Enhancement",
+    "health_score": 85
+  },
+  "sprint_summary": {
+    "current_sprint": 1,
+    "sprint_progress": 0,
+    "total_issues": 0,
+    "completed_issues": 0,
+    "in_progress_issues": 0,
+    "blocked_issues": 0,
+    "sprint_velocity": 0
+  },
+  "architecture_overview": {
+    "domain_layer": {
+      "implemented_entities": 0,
+      "implemented_value_objects": 0,
+      "domain_services": 0,
+      "completion_rate": "0%"
+    },
+    "application_layer": {
+      "implemented_use_cases": 0,
+      "dto_count": 0,
+      "completion_rate": "0%"
+    },
+    "infrastructure_layer": {
+      "repository_implementations": 0,
+      "external_integrations": 0,
+      "completion_rate": "0%"
+    },
+    "presentation_layer": {
+      "api_endpoints": 0,
+      "cli_commands": 21,
+      "completion_rate": "100%"
+    }
+  },
+  "quality_dashboard": {
+    "test_coverage": {
+      "overall_coverage": "0%",
+      "unit_test_coverage": "0%",
+      "integration_test_coverage": "0%",
+      "e2e_test_coverage": "0%"
+    },
+    "code_quality": {
+      "linting_score": "Not assessed",
+      "type_safety_compliance": "Not assessed",
+      "complexity_metrics": "Not assessed"
+    },
+    "tdd_compliance": {
+      "red_green_refactor_cycles": 0,
+      "test_first_percentage": "0%",
+      "refactoring_frequency": "0%"
+    }
+  },
+  "workflow_statistics": {
+    "command_execution_stats": {
+      "most_used_commands": [],
+      "total_command_executions": 0,
+      "success_rate": "100%",
+      "average_execution_time": "0s"
+    },
+    "subagent_performance": {
+      "most_active_agents": [],
+      "total_subagent_calls": 0,
+      "success_rate": "100%",
+      "context_loading_success": "100%"
+    }
+  },
+  "issue_tracking": {
+    "issues_by_status": {
+      "open": 0,
+      "in_progress": 0,
+      "under_review": 0,
+      "completed": 0,
+      "closed": 0
+    },
+    "issues_by_layer": {
+      "domain": 0,
+      "application": 0,
+      "infrastructure": 0,
+      "presentation": 0,
+      "cross_layer": 0
+    },
+    "issue_velocity": {
+      "average_completion_time": "0 days",
+      "throughput_per_sprint": 0,
+      "cycle_time_trends": []
+    }
+  },
+  "documentation_metrics": {
+    "specification_documents": {
+      "vision_documents": 0,
+      "use_case_specifications": 0,
+      "domain_models": 0,
+      "test_plans": 0
+    },
+    "implementation_tracking": {
+      "review_reports": 5,
+      "implementation_reports": 1,
+      "metadata_files": 0
+    },
+    "documentation_coverage": {
+      "api_documentation": "0%",
+      "domain_documentation": "0%",
+      "process_documentation": "100%"
+    }
+  },
+  "system_health": {
+    "command_system": {
+      "total_commands": 21,
+      "active_commands": 21,
+      "deprecated_commands": 0,
+      "system_status": "operational"
+    },
+    "subagent_system": {
+      "total_agents": 16,
+      "active_agents": 16,
+      "context_processing_enabled": true,
+      "system_status": "operational"
+    },
+    "integration_status": {
+      "context_management": "active",
+      "metadata_updates": "active",
+      "dashboard_system": "active",
+      "manual_sync_guides": "available"
+    }
+  },
+  "recent_activity": {
+    "last_command_executed": null,
+    "last_subagent_called": null,
+    "last_issue_updated": null,
+    "last_metadata_update": "2025-08-27T00:00:00Z"
+  },
+  "dependencies_graph": {
+    "cross_layer_dependencies": [],
+    "issue_dependencies": [],
+    "command_dependencies": []
+  }
+}

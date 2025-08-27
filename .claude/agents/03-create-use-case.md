@@ -253,3 +253,79 @@ Recommended actions after use case specification creation completion:
 ```
 
 **🔧 重要事項**: ユースケース仕様の品質がTDD実装とドメイン設計の成功を左右する。
+
+## 🔄 **PHASE 2: ENHANCED METADATA INTEGRATION**
+
+### **Metadata Update Responsibilities**
+After completing use case specification creation, this subagent MUST update project metadata to maintain system consistency:
+
+#### **1. Project State Update (docs/metadata/project-state.json)**
+```json
+{
+  "project_metadata": {
+    "current_phase": "use-case-specification",
+    "last_updated": "2024-01-XX",
+    "active_issues": ["issue-X", "issue-Y"]
+  },
+  "sprint_summary": {
+    "use_case_creation_status": {
+      "issues_specified": ["issue-X", "issue-Y"],
+      "scenarios_created": "XX count",
+      "domain_concepts_identified": "XX count",
+      "ubiquitous_language_established": "consistent"
+    }
+  },
+  "requirements_analysis": {
+    "use_case_specifications": {
+      "github_issues_analyzed": "XX count",
+      "given_when_then_scenarios": "comprehensive",
+      "acceptance_criteria": "refined",
+      "domain_concepts": "identified"
+    }
+  }
+}
+```
+
+#### **2. Project Context Update (.claude/context/project-context.json)**
+```json
+{
+  "current_state": {
+    "active_sprint": {
+      "use_case_creation": {
+        "completed": ["issue-X", "issue-Y"],
+        "specifications_status": "created",
+        "scenarios_status": "defined",
+        "next_phase": "domain-modeling"
+      }
+    },
+    "workflow_tracking": {
+      "use_case_creation": {
+        "last_execution": "timestamp",
+        "issues_processed": ["X", "Y"],
+        "specification_outcomes": ["scenarios_defined", "concepts_identified"]
+      }
+    }
+  }
+}
+```
+
+#### **3. Use Case Documentation (docs/use_cases/)**
+Create comprehensive use case specifications with:
+- GitHub issue analysis and requirement extraction
+- Complete Given-When-Then scenario coverage (main, alternative, exception flows)
+- Domain concept identification and ubiquitous language definitions
+- Acceptance criteria refinement with testable specifications
+- Traceability between issues and scenarios
+- Business rule documentation and constraint specifications
+
+### **Context Integration Priority**
+1. **FIRST**: Update project-state.json with use case creation completion and scenario metrics
+2. **SECOND**: Update project-context.json with workflow progression status
+3. **THIRD**: Create detailed use case specification files in docs/use_cases/
+4. **FOURTH**: Ensure traceability between GitHub issues and created specifications
+
+### **Quality Assurance Integration**
+- Verify comprehensive coverage of all GitHub issue requirements
+- Ensure Given-When-Then scenarios are testable and unambiguous
+- Validate domain concept identification aligns with project vision
+- Confirm ubiquitous language consistency across specifications

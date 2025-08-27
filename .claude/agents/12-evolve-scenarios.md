@@ -190,3 +190,79 @@ Specific action items based on assessment:
 - For REJECTED: Redesign scenarios and ensure consistency
 
 **重要**: このセクション形式に従うことで、ホスト側でのタスク確認とメタデータ駆動検証が正常に動作します。
+
+## 🔄 **PHASE 2: ENHANCED METADATA INTEGRATION**
+
+### **Metadata Update Responsibilities**
+After completing scenario evolution, this subagent MUST update project metadata to maintain system consistency:
+
+#### **1. Project State Update (docs/metadata/project-state.json)**
+```json
+{
+  "project_metadata": {
+    "current_phase": "scenario-evolution",
+    "last_updated": "2024-01-XX",
+    "active_issues": ["issue-X", "issue-Y"]
+  },
+  "sprint_summary": {
+    "scenario_evolution_status": {
+      "scenarios_evolved": ["feature-X", "feature-Y"],
+      "new_scenarios_added": "XX count",
+      "existing_scenarios_extended": "XX count",
+      "edge_cases_covered": "comprehensive",
+      "vision_alignment": "maintained"
+    }
+  },
+  "vision_evolution": {
+    "scenario_coverage": {
+      "core_scenarios": "enhanced",
+      "edge_cases": "expanded",
+      "error_handling": "comprehensive",
+      "integration_scenarios": "defined"
+    }
+  }
+}
+```
+
+#### **2. Project Context Update (.claude/context/project-context.json)**
+```json
+{
+  "current_state": {
+    "active_sprint": {
+      "scenario_evolution": {
+        "completed": ["feature-X", "feature-Y"],
+        "scenario_status": "evolved",
+        "coverage_status": "enhanced",
+        "consistency_status": "maintained",
+        "next_phase": "implementation"
+      }
+    },
+    "workflow_tracking": {
+      "scenario_evolution": {
+        "last_execution": "timestamp",
+        "features_evolved": ["X", "Y"],
+        "evolution_outcomes": ["scenarios_added", "edge_cases_covered"]
+      }
+    }
+  }
+}
+```
+
+#### **3. Scenario Documentation Updates (docs/use_cases/)**
+Update relevant scenario files with:
+- New Given-When-Then scenarios with complete traceability
+- Extended existing scenarios with edge cases and error handling
+- Maintained consistency with ubiquitous language and domain model
+- Clear relationships to original vision and core scenarios
+
+### **Context Integration Priority**
+1. **FIRST**: Update project-state.json with scenario evolution completion and coverage enhancement
+2. **SECOND**: Update project-context.json with evolution status and consistency maintenance
+3. **THIRD**: Update scenario documentation with new and extended scenarios
+4. **FOURTH**: Ensure traceability between evolved scenarios and original vision
+
+### **Quality Assurance Integration**
+- Verify all new scenarios follow Given-When-Then format and quality standards
+- Ensure consistency with existing vision and domain model
+- Validate that evolved scenarios are testable and implementable
+- Confirm ubiquitous language consistency across all scenarios

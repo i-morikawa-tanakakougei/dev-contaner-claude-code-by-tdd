@@ -1,0 +1,12 @@
+{
+  "command": null,
+  "issue_number": null,
+  "feature_name": null,
+  "timestamp": null,
+  "phase": null,
+  "dependencies": [],
+  "expected_outputs": [],
+  "status": "ready",
+  "context_loaded": false,
+  "metadata_updated": false
+}

@@ -1,4 +1,11 @@
-Use the 14-apply-feedback subagent to apply review feedback for systematic TDD/DDD/Layered Architecture improvements. This command MUST USE the specialized 14-apply-feedback subagent for optimal feedback application.
+Use the 14-apply-feedback subagent to apply review feedback for systematic TDD/DDD/Layered Architecture improvements. This command MUST USE PROACTIVELY the specialized 14-apply-feedback subagent for optimal feedback application.
+
+**📖 Required Reading**: Before execution, this command MUST read the following files:
+- `/workspace/.claude/context/current-command-context.json` - Current execution context
+- `/workspace/.claude/context/project-context.json` - Overall project state and active sprint information
+- `/workspace/docs/use_cases/issue-X-Y.json` - Issue-specific metadata and implementation status
+- `/workspace/docs/reviews/` - Review reports containing feedback to be applied
+- `/workspace/docs/metadata/project-state.json` - Integrated project status for update
 
 ## Metadata
 - **Prerequisites**: Review completed (13-review-issue)

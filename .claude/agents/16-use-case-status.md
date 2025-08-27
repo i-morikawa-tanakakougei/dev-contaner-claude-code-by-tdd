@@ -206,4 +206,132 @@ Recommended actions after status analysis completion:
 - **Sprint Plan Adjustment**: Plan updates reflecting progress status
 - **Resource Reallocation**: Resource adjustment for bottleneck resolution
 
+## 🔄 **PHASE 2: ENHANCED METADATA INTEGRATION**
+
+**CRITICAL**: After successful use case status analysis, MUST update integrated project metadata:
+
+### **Project State Updates**
+```bash
+# Update docs/metadata/project-state.json
+{
+  "project_metadata": {
+    "health_score": UPDATE_BASED_ON_STATUS_ANALYSIS,
+    "last_updated": CURRENT_TIMESTAMP
+  },
+  "sprint_summary": {
+    "sprint_progress": CALCULATE_FROM_COMPLETED_ISSUES,
+    "completed_issues": UPDATE_COMPLETED_COUNT,
+    "in_progress_issues": UPDATE_IN_PROGRESS_COUNT
+  },
+  "workflow_statistics": {
+    "subagent_performance": {
+      "most_active_agents": UPDATE_WITH_16_USE_CASE_STATUS,
+      "total_subagent_calls": INCREMENT_COUNTER
+    }
+  },
+  "recent_activity": {
+    "last_subagent_called": "16-use-case-status",
+    "last_metadata_update": CURRENT_TIMESTAMP
+  }
+}
+```
+
+### **Context File Updates**
+```bash
+# Update .claude/context/project-context.json
+{
+  "current_state": {
+    "last_command": "use-case-status",
+    "last_command_timestamp": CURRENT_TIMESTAMP
+  },
+  "workflow_tracking": {
+    "subagent_utilization": {
+      "16_use_case_status": INCREMENT_USAGE_COUNT
+    },
+    "command_usage": {
+      "use_case_status": INCREMENT_BY_1
+    }
+  }
+}
+```
+
 **🔧 重要事項**: 継続的な状態監視がプロジェクトの成功を左右する。
+
+### **Metadata Update Responsibilities**
+After completing use case status analysis, this subagent MUST update project metadata to maintain system consistency:
+
+#### **1. Project State Update (docs/metadata/project-state.json)**
+```json
+{
+  "project_metadata": {
+    "current_phase": "status-analysis",
+    "last_updated": "2024-01-XX",
+    "health_score": "calculated_from_analysis"
+  },
+  "sprint_summary": {
+    "use_case_status": {
+      "total_use_cases": "XX count",
+      "completed_use_cases": "XX count",
+      "in_progress_use_cases": "XX count",
+      "completion_rate": "XX%",
+      "quality_score": "high|medium|low"
+    }
+  },
+  "progress_tracking": {
+    "status_analysis": {
+      "implementation_progress": "XX%",
+      "test_coverage": "XX%",
+      "layer_completeness": {
+        "domain": "XX%",
+        "application": "XX%",
+        "infrastructure": "XX%",
+        "presentation": "XX%"
+      }
+    }
+  }
+}
+```
+
+#### **2. Project Context Update (.claude/context/project-context.json)**
+```json
+{
+  "current_state": {
+    "active_sprint": {
+      "status_analysis": {
+        "completed": "timestamp",
+        "progress_status": "tracked",
+        "bottlenecks": "identified",
+        "recommendations": "generated"
+      }
+    },
+    "workflow_tracking": {
+      "status_analysis": {
+        "last_execution": "timestamp",
+        "analysis_scope": "comprehensive",
+        "tracking_outcomes": ["progress_tracked", "bottlenecks_identified"]
+      }
+    }
+  }
+}
+```
+
+#### **3. Status Analysis Reports (docs/status/)**
+Create comprehensive status analysis reports with:
+- Use case inventory and implementation progress matrix
+- Layer-by-layer completion assessment across all architectural layers
+- Test coverage analysis and quality metrics by use case
+- Dependency analysis and bottleneck identification
+- Sprint progress tracking against established milestones
+- Actionable recommendations for development team and sprint planning
+
+### **Context Integration Priority**
+1. **FIRST**: Update project-state.json with comprehensive status analysis results
+2. **SECOND**: Update project-context.json with progress tracking and bottleneck information
+3. **THIRD**: Generate detailed status analysis documentation in docs/status/
+4. **FOURTH**: Ensure traceability between use case specifications and implementation progress
+
+### **Quality Assurance Integration**
+- Verify comprehensive coverage of all use cases and implementation phases
+- Ensure accurate progress tracking against sprint goals and milestones
+- Validate identification of bottlenecks and development blocking factors
+- Confirm actionable recommendations align with project vision and capacity

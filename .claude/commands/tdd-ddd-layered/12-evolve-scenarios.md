@@ -1,4 +1,10 @@
-Use the 12-evolve-scenarios subagent to evolve scenarios based on sprint feedback and requirements discovery. This command MUST USE the specialized 12-evolve-scenarios subagent for optimal scenario evolution.
+Use the 12-evolve-scenarios subagent to evolve scenarios based on sprint feedback and requirements discovery. This command MUST USE PROACTIVELY the specialized 12-evolve-scenarios subagent for optimal scenario evolution.
+
+**📖 Required Reading**: Before execution, this command MUST read the following files:
+- `/workspace/.claude/context/current-command-context.json` - Current execution context
+- `/workspace/.claude/context/project-context.json` - Overall project state and active sprint information
+- `/workspace/docs/vision/project-vision.md` - Current vision and core scenarios for evolution reference
+- `/workspace/docs/metadata/project-state.json` - Integrated project status for update
 
 ## Metadata
 - **Prerequisites**: Development cycle in progress or completed

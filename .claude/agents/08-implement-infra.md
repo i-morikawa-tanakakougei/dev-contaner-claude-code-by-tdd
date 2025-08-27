@@ -222,3 +222,85 @@ Guidance for transitioning to presentation layer implementation phase:
 ```
 
 **🔧 重要事項**: インフラ層は技術的詳細を隠蔽し、ドメイン層から完全に分離された実装。
+
+## 🔄 **PHASE 2: ENHANCED METADATA INTEGRATION**
+
+### **Metadata Update Responsibilities**
+After completing infrastructure implementation, this subagent MUST update project metadata to maintain system consistency:
+
+#### **1. Project State Update (docs/metadata/project-state.json)**
+```json
+{
+  "project_metadata": {
+    "current_phase": "infrastructure-implementation",
+    "last_updated": "2024-01-XX",
+    "active_issues": ["issue-X", "issue-Y"]
+  },
+  "sprint_summary": {
+    "infrastructure_status": {
+      "issues_implemented": ["issue-X-Y"],
+      "repository_implementations": "completed",
+      "external_service_integrations": "completed",
+      "persistence_layer_status": "functional"
+    }
+  },
+  "architecture_overview": {
+    "infrastructure_layer": {
+      "repository_pattern": "implemented",
+      "database_integration": "configured",
+      "external_services": "integrated",
+      "configuration_management": "established"
+    }
+  }
+}
+```
+
+#### **2. Project Context Update (.claude/context/project-context.json)**
+```json
+{
+  "current_state": {
+    "active_sprint": {
+      "infrastructure_implementation": {
+        "completed": ["issue-X-Y"],
+        "repository_status": "implemented",
+        "persistence_status": "functional",
+        "next_phase": "implement-presentation"
+      }
+    },
+    "workflow_tracking": {
+      "infrastructure_implementation": {
+        "last_execution": "timestamp",
+        "issues_processed": ["X", "Y"],
+        "implementation_outcomes": ["repository_complete", "persistence_functional"]
+      }
+    }
+  }
+}
+```
+
+#### **3. Issue-Specific Updates (docs/use_cases/issue-X-Y.json)**
+```json
+{
+  "implementation_status": {
+    "infrastructure_layer": {
+      "status": "completed",
+      "completed_date": "2024-01-XX",
+      "repository_implementations": ["UserRepository", "OrderRepository"],
+      "external_integrations": ["PaymentAPI", "EmailService"],
+      "configuration": "environment-ready"
+    }
+  }
+}
+```
+
+### **Context Integration Priority**
+1. **FIRST**: Update project-state.json with infrastructure completion status
+2. **SECOND**: Update project-context.json with workflow progression
+3. **THIRD**: Update issue-specific metadata with implementation details
+4. **FOURTH**: Document infrastructure components and configuration requirements
+
+### **Quality Assurance Integration**
+- Verify infrastructure layer maintains domain purity
+- Ensure proper separation of concerns is maintained
+- Validate external service integration resilience
+- Confirm configuration management follows security best practices

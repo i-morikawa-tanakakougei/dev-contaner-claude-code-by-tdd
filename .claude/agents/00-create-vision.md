@@ -202,4 +202,63 @@ Recommended actions after vision creation:
 /sprint-planning 1
 ```
 
+## 🔄 **PHASE 2: ENHANCED METADATA INTEGRATION**
+
+**CRITICAL**: After successful vision creation, MUST update integrated project metadata:
+
+### **Project State Updates**
+```bash
+# Update docs/metadata/project-state.json
+{
+  "project_metadata": {
+    "overall_status": "Vision Created - Ready for Sprint Planning",
+    "health_score": UPDATE_BASED_ON_VISION_QUALITY
+  },
+  "documentation_metrics": {
+    "specification_documents": {
+      "vision_documents": INCREMENT_BY_1
+    },
+    "documentation_coverage": {
+      "process_documentation": RECALCULATE_PERCENTAGE
+    }
+  },
+  "workflow_statistics": {
+    "subagent_performance": {
+      "most_active_agents": UPDATE_WITH_00_CREATE_VISION,
+      "total_subagent_calls": INCREMENT_COUNTER
+    }
+  },
+  "recent_activity": {
+    "last_subagent_called": "00-create-vision",
+    "last_metadata_update": CURRENT_TIMESTAMP
+  }
+}
+```
+
+### **Context File Updates**
+```bash
+# Update .claude/context/project-context.json
+{
+  "current_state": {
+    "current_phase": "Vision Created - Sprint Planning Ready",
+    "development_stage": "Project Initialization"
+  },
+  "documentation_status": {
+    "vision_documents": {
+      "project_vision": true,
+      "core_scenarios": true,
+      "bounded_contexts": true
+    }
+  },
+  "workflow_tracking": {
+    "subagent_utilization": {
+      "00_create_vision": INCREMENT_USAGE_COUNT
+    },
+    "command_usage": {
+      "create_vision": INCREMENT_BY_1
+    }
+  }
+}
+```
+
 **🔧 重要事項**: ビジョンの品質がプロジェクト全体の成功を決定する。

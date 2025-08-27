@@ -1,4 +1,11 @@
-Use the 05-create-tests subagent to create TDD tests based on Given-When-Then specifications and domain model. This command MUST USE the specialized 05-create-tests subagent for optimal test creation implementation.
+Use the 05-create-tests subagent to create TDD tests based on Given-When-Then specifications and domain model. This command MUST USE PROACTIVELY the specialized 05-create-tests subagent for optimal test creation implementation.
+
+**📖 Required Reading**: Before execution, this command MUST read the following files:
+- `/workspace/.claude/context/current-command-context.json` - Current execution context
+- `/workspace/.claude/context/project-context.json` - Overall project state and active sprint information
+- `/workspace/docs/use_cases/issue-X-Y.md` - Use case specifications for test creation
+- `/workspace/docs/domain/issue-X-Y-domain-model.md` - Domain model design for test implementation
+- `/workspace/docs/metadata/project-state.json` - Integrated project status for update
 
 ## 🎯 **TDD/DDD/LAYERED PROCESS CONTEXT**
 
@@ -428,3 +435,37 @@ $ /create-tests 15
 # Fix: Create use case specification first
 $ /create-use-case 15
 ```
+
+## 🔄 Metadata Update Requirements
+
+**CRITICAL**: After successful test creation completion, you MUST update the following files:
+
+1. **Project State Update**:
+   ```bash
+   # Update docs/metadata/project-state.json
+   # - Increment quality_dashboard.test_coverage.unit_test_coverage
+   # - Update tdd_compliance.red_phase_completions count
+   # - Add to recent_activity.last_command_executed
+   # - Update workflow_statistics.command_execution_stats
+   ```
+
+2. **Project Context Update**:
+   ```bash
+   # Update .claude/context/project-context.json  
+   # - Update quality_metrics.test_coverage.unit_tests count
+   # - Increment workflow_tracking.command_usage.create_tests
+   # - Set current_state.last_command and last_command_timestamp
+   ```
+
+3. **Issue-Specific Metadata**:
+   ```bash
+   # Update docs/use_cases/issue-X-Y.json
+   # - Set test_creation.status to "completed"
+   # - Add test_files array with created test files
+   # - Update completion timestamp
+   ```
+
+**⚠️ Error Handling**: If standard workflow is disrupted:
+- 📖 Consult: [Manual Sync Guide](../../docs/maintenance/manual-sync-guide.md)
+- 🔄 Check Status: `/use-case-status` for current project state
+- 📊 Verify Context: `.claude/context/current-command-context.json`

@@ -1,4 +1,10 @@
-Use the 07-implement-usecase subagent to implement application layer use cases to orchestrate domain logic. This command MUST USE the specialized 07-implement-usecase subagent for optimal usecase implementation.
+Use the 07-implement-usecase subagent to implement application layer use cases to orchestrate domain logic. This command MUST USE PROACTIVELY the specialized 07-implement-usecase subagent for optimal usecase implementation.
+
+**📖 Required Reading**: Before execution, this command MUST read the following files:
+- `/workspace/.claude/context/current-command-context.json` - Current execution context
+- `/workspace/.claude/context/project-context.json` - Overall project state and active sprint information
+- `/workspace/docs/use_cases/issue-X-Y.json` - Issue-specific metadata and implementation status
+- `/workspace/docs/metadata/project-state.json` - Integrated project status for update
 
 ## Metadata
 - **Prerequisites**: Domain layer implementation completed (06-implement-domain)
@@ -643,4 +649,38 @@ APPROVED/CONDITIONAL_APPROVAL/REJECTED/COMPLETED のいずれかを明記
    
    echo "✅ Critical tasks確認完了 - 全項目クリア"
    ```
+
+## 🔄 Metadata Update Requirements
+
+**CRITICAL**: After successful use case implementation completion, you MUST update the following files:
+
+1. **Project State Update**:
+   ```bash
+   # Update docs/metadata/project-state.json
+   # - Increment application_layer.implemented_use_cases count
+   # - Update architecture_overview.application_layer.completion_rate
+   # - Add to recent_activity.last_command_executed
+   # - Update workflow_statistics.command_execution_stats
+   ```
+
+2. **Project Context Update**:
+   ```bash
+   # Update .claude/context/project-context.json  
+   # - Update architecture_status.application_layer.use_cases array
+   # - Increment workflow_tracking.command_usage.implement_usecase
+   # - Set current_state.last_command and last_command_timestamp
+   ```
+
+3. **Issue-Specific Metadata**:
+   ```bash
+   # Update docs/use_cases/issue-X-Y.json
+   # - Set application_layer.status to "completed"
+   # - Add implementation_files array with created use case files
+   # - Update completion timestamp
+   ```
+
+**⚠️ Error Handling**: If standard workflow is disrupted:
+- 📖 Consult: [Manual Sync Guide](../../docs/maintenance/manual-sync-guide.md)
+- 🔄 Check Status: `/use-case-status` for current project state
+- 📊 Verify Context: `.claude/context/current-command-context.json`
 

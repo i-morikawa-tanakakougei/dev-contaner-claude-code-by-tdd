@@ -1,4 +1,10 @@
-Use the 04-domain-modeling subagent to design domain models based on the Given-When-Then specification. This command MUST USE the specialized 04-domain-modeling subagent for optimal domain modeling implementation.
+Use the 04-domain-modeling subagent to design domain models based on the Given-When-Then specification. This command MUST USE PROACTIVELY the specialized 04-domain-modeling subagent for optimal domain modeling implementation.
+
+**📖 Required Reading**: Before execution, this command MUST read the following files:
+- `/workspace/.claude/context/current-command-context.json` - Current execution context
+- `/workspace/.claude/context/project-context.json` - Overall project state and active sprint information
+- `/workspace/docs/use_cases/issue-X-Y.md` - Use case specification for domain modeling
+- `/workspace/docs/metadata/project-state.json` - Integrated project status for update
 
 ## Metadata
 - **Prerequisites**: Use case specifications created (03-create-use-case)
@@ -415,3 +421,35 @@ $ /domain-modeling 15
 $ /create-use-case 15
 $ /domain-modeling 15
 ```
+
+## 🔄 Metadata Update Requirements
+
+**CRITICAL**: After successful domain modeling completion, you MUST update the following files:
+
+1. **Project State Update**:
+   ```bash
+   # Update docs/metadata/project-state.json
+   # - Increment documentation_metrics.specification_documents.domain_models count
+   # - Add to recent_activity.last_command_executed
+   # - Update workflow_statistics.command_execution_stats
+   ```
+
+2. **Project Context Update**:
+   ```bash
+   # Update .claude/context/project-context.json  
+   # - Increment workflow_tracking.command_usage.domain_modeling
+   # - Set current_state.last_command and last_command_timestamp
+   ```
+
+3. **Issue-Specific Metadata**:
+   ```bash
+   # Update docs/use_cases/issue-X-Y.json
+   # - Set domain_modeling.status to "completed"
+   # - Add domain_model_files array
+   # - Update completion timestamp
+   ```
+
+**⚠️ Error Handling**: If standard workflow is disrupted:
+- 📖 Consult: [Manual Sync Guide](../../docs/maintenance/manual-sync-guide.md)
+- 🔄 Check Status: `/use-case-status` for current project state
+- 📊 Verify Context: `.claude/context/current-command-context.json`

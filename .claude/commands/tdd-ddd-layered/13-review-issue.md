@@ -1,4 +1,10 @@
-Use the 13-review-issue subagent to review TDD/DDD/Layered Architecture implementation with comprehensive analysis. This command MUST USE the specialized 13-review-issue subagent for optimal issue review.
+Use the 13-review-issue subagent to review TDD/DDD/Layered Architecture implementation with comprehensive analysis. This command MUST USE PROACTIVELY the specialized 13-review-issue subagent for optimal issue review.
+
+**📖 Required Reading**: Before execution, this command MUST read the following files:
+- `/workspace/.claude/context/current-command-context.json` - Current execution context
+- `/workspace/.claude/context/project-context.json` - Overall project state and active sprint information
+- `/workspace/docs/use_cases/issue-X-Y.json` - Issue-specific metadata and implementation status
+- `/workspace/docs/metadata/project-state.json` - Integrated project status for update
 
 ## Metadata
 - **Prerequisites**: Implementation completed, all tests passing

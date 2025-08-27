@@ -1,4 +1,9 @@
-Use the 00-create-vision subagent to create project vision and core scenarios. This command MUST USE the specialized 00-create-vision subagent for optimal project vision creation.
+Use the 00-create-vision subagent to create project vision and core scenarios. This command MUST USE PROACTIVELY the specialized 00-create-vision subagent for optimal project vision creation.
+
+**📖 Required Reading**: Before execution, this command MUST read the following files:
+- `/workspace/.claude/context/current-command-context.json` - Current execution context
+- `/workspace/.claude/context/project-context.json` - Overall project state and active sprint information
+- `/workspace/docs/metadata/project-state.json` - Integrated project status for update
 
 ## Metadata
 - **Prerequisites**: None (Initial project phase)
@@ -446,6 +451,42 @@ COMPLETED/APPROVED のいずれかを明記
    echo ""
    echo "✅ TDD/DDD/レイヤードアーキテクチャ開発準備完了!"
    ```
+
+## 🔄 Metadata Update Requirements
+
+**CRITICAL**: After successful vision creation completion, you MUST update the following files:
+
+1. **Project State Update**:
+   ```bash
+   # Update docs/metadata/project-state.json
+   # - Set project_metadata.overall_status to "Vision Created - Ready for Sprint Planning"
+   # - Increment documentation_metrics.specification_documents.vision_documents count
+   # - Update project_metadata.health_score based on vision quality
+   # - Add to recent_activity.last_command_executed
+   # - Update workflow_statistics.command_execution_stats
+   ```
+
+2. **Project Context Update**:
+   ```bash
+   # Update .claude/context/project-context.json  
+   # - Set current_state.current_phase to "Vision Created - Sprint Planning Ready"
+   # - Update documentation_status.vision_documents to completed
+   # - Increment workflow_tracking.command_usage.create_vision
+   # - Set current_state.last_command and last_command_timestamp
+   ```
+
+3. **Vision Documentation**:
+   ```bash
+   # Create vision-specific metadata files
+   # - docs/vision/project-vision.md (main vision document)
+   # - docs/use_cases/core/index.md (core scenarios)
+   # - docs/steering/ documents (steering files)
+   ```
+
+**⚠️ Error Handling**: If standard workflow is disrupted:
+- 📖 Consult: [Manual Sync Guide](../../docs/maintenance/manual-sync-guide.md)
+- 🔄 Check Status: `/use-case-status` for current project state
+- 📊 Verify Context: `.claude/context/current-command-context.json`
 
 
 

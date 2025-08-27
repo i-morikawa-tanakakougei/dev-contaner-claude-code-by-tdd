@@ -1,4 +1,12 @@
-Use the 06-implement-domain subagent to implement domain layer to make tests pass (TDD GREEN phase). This command MUST USE the specialized 06-implement-domain subagent for optimal domain implementation.
+Use the 06-implement-domain subagent to implement domain layer to make tests pass (TDD GREEN phase). This command MUST USE PROACTIVELY the specialized 06-implement-domain subagent for optimal domain implementation.
+
+**📖 Required Reading**: Before execution, this command MUST read the following files:
+- `/workspace/.claude/context/current-command-context.json` - Current execution context
+- `/workspace/.claude/context/project-context.json` - Overall project state and active sprint information
+- `/workspace/tests/` - All failing test files for implementation guidance
+- `/workspace/docs/domain/issue-X-Y-domain-model.md` - Domain design specifications
+- `/workspace/docs/use_cases/issue-X-Y.md` - Use case specifications for business logic
+- `/workspace/docs/metadata/project-state.json` - Integrated project status for update
 
 ## Metadata
 - **Prerequisites**: TDD tests created and failing (05-create-tests)
@@ -107,12 +115,6 @@ Use the 06-implement-domain subagent to implement domain layer to make tests pas
 ## Task Details
 
 **🤖 Agent Integration**: This command MUST USE PROACTIVELY the specialized `06-implement-domain` subagent for optimal TDD GREEN phase implementation. Claude Code should automatically delegate this task to the 06-implement-domain subagent based on the command description.
-
-**📖 Required Reading**: Before execution, this command MUST read the following files to understand project context:
-- `/workspace/.claude/context/current-command-context.json` - Current execution context
-- `tests/` - All failing test files for implementation guidance
-- `docs/domain/issue-X-Y-domain-model.md` - Domain design specifications
-- `docs/use_cases/issue-X-Y.md` - Use case specifications for business logic
 
 **Additional Context for Subagent Execution:**
 - `docs/index.md` - Project navigation and status overview for understanding domain implementation context
@@ -421,3 +423,41 @@ $ /implement-domain 15
 $ /create-tests 15
 $ /implement-domain 15
 ```
+
+## 🔄 Metadata Update Requirements
+
+**CRITICAL**: After successful domain implementation completion, you MUST update the following files:
+
+1. **Project State Update**:
+   ```bash
+   # Update docs/metadata/project-state.json
+   # - Increment domain_layer.implemented_entities count
+   # - Increment domain_layer.implemented_value_objects count
+   # - Increment domain_layer.domain_services count
+   # - Update architecture_overview.domain_layer.completion_rate
+   # - Add to recent_activity.last_command_executed
+   # - Update workflow_statistics.command_execution_stats
+   ```
+
+2. **Project Context Update**:
+   ```bash
+   # Update .claude/context/project-context.json  
+   # - Update architecture_status.domain_layer.key_entities array
+   # - Update architecture_status.domain_layer.value_objects array
+   # - Update architecture_status.domain_layer.domain_services array
+   # - Increment workflow_tracking.command_usage.implement_domain
+   # - Set current_state.last_command and last_command_timestamp
+   ```
+
+3. **Issue-Specific Metadata**:
+   ```bash
+   # Update docs/use_cases/issue-X-Y.json
+   # - Set domain_layer.status to "completed"
+   # - Add implementation_files array with created domain files
+   # - Update completion timestamp
+   ```
+
+**⚠️ Error Handling**: If standard workflow is disrupted:
+- 📖 Consult: [Manual Sync Guide](../../docs/maintenance/manual-sync-guide.md)
+- 🔄 Check Status: `/use-case-status` for current project state
+- 📊 Verify Context: `.claude/context/current-command-context.json`

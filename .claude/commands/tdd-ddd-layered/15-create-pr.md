@@ -1,4 +1,11 @@
-Use the 15-create-pr subagent to create pull request and close related issues. This command MUST USE the specialized 15-create-pr subagent for optimal pull request creation.
+Use the 15-create-pr subagent to create pull request and close related issues. This command MUST USE PROACTIVELY the specialized 15-create-pr subagent for optimal pull request creation.
+
+**📖 Required Reading**: Before execution, this command MUST read the following files:
+- `/workspace/.claude/context/current-command-context.json` - Current execution context
+- `/workspace/.claude/context/project-context.json` - Overall project state and active sprint information
+- `/workspace/docs/use_cases/issue-X-Y.json` - Issue-specific metadata and implementation status
+- `/workspace/docs/reviews/` - Review reports for PR description reference
+- `/workspace/docs/metadata/project-state.json` - Integrated project status for update
 
 ## Metadata
 - **Prerequisites**: Feedback applied, all implementations completed
@@ -452,4 +459,37 @@ APPROVED/CONDITIONAL_APPROVAL/REJECTED/COMPLETED のいずれかを明記
    echo "✅ プルリクエスト作成完了 - レビューとマージを待機中!"
 
    ```
+
+## 🔄 Metadata Update Requirements
+
+**CRITICAL**: After successful pull request creation completion, you MUST update the following files:
+
+1. **Project State Update**:
+   ```bash
+   # Update docs/metadata/project-state.json
+   # - Update sprint_summary with completed issues
+   # - Add to recent_activity.last_command_executed
+   # - Update workflow_statistics.command_execution_stats
+   ```
+
+2. **Project Context Update**:
+   ```bash
+   # Update .claude/context/project-context.json  
+   # - Move issue from pending_issues to completed_issues
+   # - Increment workflow_tracking.command_usage.create_pr
+   # - Set current_state.last_command and last_command_timestamp
+   ```
+
+3. **Issue-Specific Metadata**:
+   ```bash
+   # Update docs/use_cases/issue-X-Y.json
+   # - Set overall_status to "pull_request_created"
+   # - Add pull_request_url and created_at timestamp
+   # - Mark as ready_for_review
+   ```
+
+**⚠️ Error Handling**: If standard workflow is disrupted:
+- 📖 Consult: [Manual Sync Guide](../../docs/maintenance/manual-sync-guide.md)
+- 🔄 Check Status: `/use-case-status` for current project state
+- 📊 Verify Context: `.claude/context/current-command-context.json`
 

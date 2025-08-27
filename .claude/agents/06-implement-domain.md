@@ -264,4 +264,53 @@ Transition guidance to application layer implementation phase:
 /implement-usecase <issue-number>
 ```
 
+## 🔄 **PHASE 2: ENHANCED METADATA INTEGRATION**
+
+**CRITICAL**: After successful domain implementation, MUST update integrated project metadata:
+
+### **Project State Updates**
+```bash
+# Update docs/metadata/project-state.json
+{
+  "architecture_overview": {
+    "domain_layer": {
+      "implemented_entities": INCREMENT_BY_ENTITY_COUNT,
+      "implemented_value_objects": INCREMENT_BY_VO_COUNT,
+      "domain_services": INCREMENT_BY_SERVICE_COUNT,
+      "completion_rate": RECALCULATE_PERCENTAGE
+    }
+  },
+  "workflow_statistics": {
+    "subagent_performance": {
+      "most_active_agents": UPDATE_WITH_06_IMPLEMENT_DOMAIN,
+      "total_subagent_calls": INCREMENT_COUNTER
+    }
+  },
+  "recent_activity": {
+    "last_subagent_called": "06-implement-domain",
+    "last_metadata_update": CURRENT_TIMESTAMP
+  }
+}
+```
+
+### **Context File Updates**
+```bash
+# Update .claude/context/project-context.json
+{
+  "architecture_status": {
+    "domain_layer": {
+      "key_entities": ADD_IMPLEMENTED_ENTITY_NAMES,
+      "value_objects": ADD_IMPLEMENTED_VO_NAMES,
+      "domain_services": ADD_IMPLEMENTED_SERVICE_NAMES,
+      "completion_percentage": RECALCULATE_PROGRESS
+    }
+  },
+  "workflow_tracking": {
+    "subagent_utilization": {
+      "06_implement_domain": INCREMENT_USAGE_COUNT
+    }
+  }
+}
+```
+
 **🔧 重要事項**: ドメイン層ではI/O操作を一切含まず、純粋なビジネスロジックのみ実装。

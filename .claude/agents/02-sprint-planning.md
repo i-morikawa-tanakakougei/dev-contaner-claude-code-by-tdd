@@ -207,4 +207,51 @@ Recommended actions after sprint plan creation completion:
 /create-use-case <first-issue-number>
 ```
 
+## 🔄 **PHASE 2: ENHANCED METADATA INTEGRATION**
+
+**CRITICAL**: After successful sprint planning, MUST update integrated project metadata:
+
+### **Project State Updates**
+```bash
+# Update docs/metadata/project-state.json
+{
+  "sprint_summary": {
+    "current_sprint": SET_SPRINT_NUMBER,
+    "total_issues": SET_CREATED_ISSUES_COUNT,
+    "sprint_progress": 0
+  },
+  "workflow_statistics": {
+    "subagent_performance": {
+      "most_active_agents": UPDATE_WITH_02_SPRINT_PLANNING,
+      "total_subagent_calls": INCREMENT_COUNTER
+    }
+  },
+  "recent_activity": {
+    "last_subagent_called": "02-sprint-planning",
+    "last_metadata_update": CURRENT_TIMESTAMP
+  }
+}
+```
+
+### **Context File Updates**  
+```bash
+# Update .claude/context/project-context.json
+{
+  "current_state": {
+    "active_sprint": SET_SPRINT_NUMBER,
+    "current_phase": "Sprint Execution"
+  },
+  "sprint_management": {
+    "active_sprint_number": SET_SPRINT_NUMBER,
+    "total_issues": SET_CREATED_ISSUES_COUNT,
+    "pending_issues": ADD_ALL_CREATED_ISSUE_NUMBERS
+  },
+  "workflow_tracking": {
+    "subagent_utilization": {
+      "02_sprint_planning": INCREMENT_USAGE_COUNT
+    }
+  }
+}
+```
+
 **🔧 重要事項**: スプリント計画の品質がスプリント全体の成功率を決定する。

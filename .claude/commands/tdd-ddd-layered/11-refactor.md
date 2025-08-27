@@ -1,4 +1,10 @@
-Use the 11-refactor subagent to refactor code after all tests are GREEN (TDD REFACTOR phase). This command MUST USE the specialized 11-refactor subagent for optimal refactoring implementation.
+Use the 11-refactor subagent to refactor code after all tests are GREEN (TDD REFACTOR phase). This command MUST USE PROACTIVELY the specialized 11-refactor subagent for optimal refactoring implementation.
+
+**📖 Required Reading**: Before execution, this command MUST read the following files:
+- `/workspace/.claude/context/current-command-context.json` - Current execution context
+- `/workspace/.claude/context/project-context.json` - Overall project state and active sprint information
+- `/workspace/docs/use_cases/issue-X-Y.json` - Issue-specific metadata and implementation status
+- `/workspace/docs/metadata/project-state.json` - Integrated project status for update
 
 ## Metadata
 - **Prerequisites**: All tests passing (10-run-all-tests)
@@ -469,3 +475,37 @@ Important Notes:
 - Make incremental changes with continuous testing
 - Document all improvements for team knowledge
 - All user-facing output must be in JAPANESE
+
+## 🔄 Metadata Update Requirements
+
+**CRITICAL**: After successful refactoring completion, you MUST update the following files:
+
+1. **Project State Update**:
+   ```bash
+   # Update docs/metadata/project-state.json
+   # - Update quality_dashboard.code_quality metrics
+   # - Update tdd_compliance.refactor_phase_completions count
+   # - Add to recent_activity.last_command_executed
+   # - Update workflow_statistics.command_execution_stats
+   ```
+
+2. **Project Context Update**:
+   ```bash
+   # Update .claude/context/project-context.json  
+   # - Update quality_metrics.code_quality indicators
+   # - Increment workflow_tracking.command_usage.refactor
+   # - Set current_state.last_command and last_command_timestamp
+   ```
+
+3. **Issue-Specific Metadata**:
+   ```bash
+   # Update docs/use_cases/issue-X-Y.json
+   # - Set refactoring.status to "completed"
+   # - Add refactoring_improvements list
+   # - Update completion timestamp
+   ```
+
+**⚠️ Error Handling**: If standard workflow is disrupted:
+- 📖 Consult: [Manual Sync Guide](../../docs/maintenance/manual-sync-guide.md)
+- 🔄 Check Status: `/use-case-status` for current project state
+- 📊 Verify Context: `.claude/context/current-command-context.json`

@@ -217,3 +217,79 @@ Recommended actions after issue analysis completion:
 ```
 
 **🔧 重要事項**: イシューの適切な分析と理解が高品質な実装の前提条件。
+
+## 🔄 **PHASE 2: ENHANCED METADATA INTEGRATION**
+
+### **Metadata Update Responsibilities**
+After completing issue review, this subagent MUST update project metadata to maintain system consistency:
+
+#### **1. Project State Update (docs/metadata/project-state.json)**
+```json
+{
+  "project_metadata": {
+    "current_phase": "issue-review",
+    "last_updated": "2024-01-XX",
+    "active_issues": ["issue-X", "issue-Y"]
+  },
+  "sprint_summary": {
+    "issue_review_status": {
+      "issues_analyzed": ["issue-X", "issue-Y"],
+      "requirements_clarity": "high|medium|low",
+      "implementation_readiness": "ready|clarification_needed|breakdown_required",
+      "complexity_assessment": "low|medium|high"
+    }
+  },
+  "requirements_analysis": {
+    "issue_analysis": {
+      "functional_requirements": "extracted",
+      "acceptance_criteria": "validated",
+      "technical_feasibility": "confirmed",
+      "architecture_impact": "assessed"
+    }
+  }
+}
+```
+
+#### **2. Project Context Update (.claude/context/project-context.json)**
+```json
+{
+  "current_state": {
+    "active_sprint": {
+      "issue_review": {
+        "completed": ["issue-X", "issue-Y"],
+        "analysis_status": "complete",
+        "readiness_status": "ready_for_implementation",
+        "next_phase": "create-use-case"
+      }
+    },
+    "workflow_tracking": {
+      "issue_review": {
+        "last_execution": "timestamp",
+        "issues_processed": ["X", "Y"],
+        "analysis_outcomes": ["ready_for_implementation", "requirements_clear"]
+      }
+    }
+  }
+}
+```
+
+#### **3. Issue-Specific Analysis (docs/analysis/issue-X-review.md)**
+Create comprehensive issue analysis reports with:
+- Requirements extraction and clarification
+- Acceptance criteria validation in Given-When-Then format
+- Implementation scope definition and boundaries
+- Dependency identification and technical feasibility assessment
+- Complexity estimation and risk evaluation
+- Implementation guidance and recommended approach
+
+### **Context Integration Priority**
+1. **FIRST**: Update project-state.json with issue analysis completion and readiness assessment
+2. **SECOND**: Update project-context.json with workflow progression status
+3. **THIRD**: Create detailed issue analysis documentation in docs/analysis/
+4. **FOURTH**: Ensure traceability between issue requirements and implementation approach
+
+### **Quality Assurance Integration**
+- Verify all requirements are clearly extracted and understood
+- Ensure acceptance criteria are complete and testable
+- Validate technical feasibility within current architecture
+- Confirm alignment with project vision and domain model

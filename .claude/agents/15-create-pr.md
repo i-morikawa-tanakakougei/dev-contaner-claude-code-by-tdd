@@ -212,3 +212,82 @@ Recommended actions after PR creation completion:
 - **CI/CD Monitoring**: Monitoring automated tests and quality checks
 
 **🔧 重要事項**: PRがコード品質とチームコラボレーションの向上に貢献する。
+
+## 🔄 **PHASE 2: ENHANCED METADATA INTEGRATION**
+
+### **Metadata Update Responsibilities**
+After completing pull request creation, this subagent MUST update project metadata to maintain system consistency:
+
+#### **1. Project State Update (docs/metadata/project-state.json)**
+```json
+{
+  "project_metadata": {
+    "current_phase": "pull-request-creation",
+    "last_updated": "2024-01-XX",
+    "active_issues": ["issue-X", "issue-Y"]
+  },
+  "sprint_summary": {
+    "pull_request_status": {
+      "issues_completed": ["issue-X", "issue-Y"],
+      "prs_created": "XX count",
+      "code_completion": "verified",
+      "test_validation": "passed",
+      "documentation_updates": "complete",
+      "review_readiness": "ready"
+    }
+  },
+  "delivery_metrics": {
+    "feature_delivery": {
+      "implemented_features": "XX count",
+      "quality_gates_passed": "all",
+      "test_coverage": "adequate",
+      "reviewer_assignments": "complete"
+    }
+  }
+}
+```
+
+#### **2. Project Context Update (.claude/context/project-context.json)**
+```json
+{
+  "current_state": {
+    "active_sprint": {
+      "pull_request_creation": {
+        "completed": ["issue-X", "issue-Y"],
+        "pr_status": "created",
+        "review_status": "pending",
+        "deployment_status": "ready",
+        "next_phase": "await_review"
+      }
+    },
+    "workflow_tracking": {
+      "pull_request_creation": {
+        "last_execution": "timestamp",
+        "issues_processed": ["X", "Y"],
+        "pr_outcomes": ["created", "review_ready"]
+      }
+    }
+  }
+}
+```
+
+#### **3. Feature Delivery Documentation (docs/delivery/)**
+Create comprehensive feature delivery reports with:
+- Pull request URLs and change summaries
+- Feature implementation completeness verification
+- Test results and coverage metrics
+- Documentation updates and API changes
+- Reviewer assignments and review guidelines
+- Deployment readiness checklist and CI/CD status
+
+### **Context Integration Priority**
+1. **FIRST**: Update project-state.json with pull request creation and delivery status
+2. **SECOND**: Update project-context.json with workflow completion status
+3. **THIRD**: Document detailed feature delivery results in docs/delivery/
+4. **FOURTH**: Ensure traceability from original issues to completed features
+
+### **Quality Assurance Integration**
+- Verify all code completion and quality gates are satisfied
+- Ensure comprehensive test coverage and documentation updates
+- Validate proper reviewer assignment and PR description quality
+- Confirm deployment readiness and CI/CD pipeline status

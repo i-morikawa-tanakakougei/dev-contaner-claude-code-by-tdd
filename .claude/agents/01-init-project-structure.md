@@ -225,3 +225,83 @@ Recommended actions after project structure initialization completion:
 ```
 
 **🔧 重要事項**: プロジェクト構造の品質が開発効率と保守性を左右する。
+
+## 🔄 **PHASE 2: ENHANCED METADATA INTEGRATION**
+
+### **Metadata Update Responsibilities**
+After completing project structure initialization, this subagent MUST update project metadata to maintain system consistency:
+
+#### **1. Project State Update (docs/metadata/project-state.json)**
+```json
+{
+  "project_metadata": {
+    "current_phase": "project-initialization",
+    "last_updated": "2024-01-XX",
+    "project_status": "initialized"
+  },
+  "architecture_overview": {
+    "project_structure": {
+      "directory_structure": "created",
+      "layer_organization": "established",
+      "configuration_files": "configured",
+      "development_environment": "ready"
+    }
+  },
+  "initialization_status": {
+    "project_setup": {
+      "tdd_framework": "configured",
+      "ddd_layers": "organized",
+      "layered_architecture": "established",
+      "documentation_structure": "initialized"
+    }
+  }
+}
+```
+
+#### **2. Project Context Update (.claude/context/project-context.json)**
+```json
+{
+  "project_info": {
+    "initialization_status": "completed",
+    "structure_created": "timestamp",
+    "development_ready": true
+  },
+  "current_state": {
+    "active_sprint": {
+      "project_initialization": {
+        "completed": "timestamp",
+        "structure_status": "created",
+        "environment_status": "configured",
+        "next_phase": "create-vision"
+      }
+    },
+    "workflow_tracking": {
+      "project_initialization": {
+        "last_execution": "timestamp",
+        "setup_outcomes": ["structure_created", "environment_ready"]
+      }
+    }
+  }
+}
+```
+
+#### **3. Project Setup Documentation (docs/setup/)**
+Create comprehensive project setup documentation with:
+- Directory structure overview and architectural layer explanations
+- Development environment setup guide and dependency management
+- Configuration file descriptions and customization options
+- Quality assurance tool setup (ruff, pyright, pytest)
+- Getting started guide for new developers
+- Architecture decision records for structural choices
+
+### **Context Integration Priority**
+1. **FIRST**: Update project-state.json with initialization completion status
+2. **SECOND**: Update project-context.json with development readiness status
+3. **THIRD**: Create comprehensive setup documentation in docs/setup/
+4. **FOURTH**: Ensure project structure supports metadata-driven development workflow
+
+### **Quality Assurance Integration**
+- Verify complete TDD/DDD/Layered Architecture structure is established
+- Ensure all development tools are properly configured and functional
+- Validate documentation structure supports comprehensive project tracking
+- Confirm project structure enables seamless transition to vision creation phase

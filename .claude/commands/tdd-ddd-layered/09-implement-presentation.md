@@ -1,4 +1,10 @@
-Use the 09-implement-presentation subagent to implement presentation layer (API endpoints, CLI, or UI). This command MUST USE the specialized 09-implement-presentation subagent for optimal presentation layer implementation.
+Use the 09-implement-presentation subagent to implement presentation layer (API endpoints, CLI, or UI). This command MUST USE PROACTIVELY the specialized 09-implement-presentation subagent for optimal presentation layer implementation.
+
+**📖 Required Reading**: Before execution, this command MUST read the following files:
+- `/workspace/.claude/context/current-command-context.json` - Current execution context
+- `/workspace/.claude/context/project-context.json` - Overall project state and active sprint information
+- `/workspace/docs/use_cases/issue-X-Y.json` - Issue-specific metadata and implementation status
+- `/workspace/docs/metadata/project-state.json` - Integrated project status for update
 
 ## Metadata
 - **Prerequisites**: Infrastructure layer implementation completed (08-implement-infra)
@@ -603,3 +609,37 @@ Important Notes:
 - Use proper input validation and error handling
 - Ensure consistent API response formats
 - All user-facing output must be in JAPANESE
+
+## 🔄 Metadata Update Requirements
+
+**CRITICAL**: After successful presentation implementation completion, you MUST update the following files:
+
+1. **Project State Update**:
+   ```bash
+   # Update docs/metadata/project-state.json
+   # - Increment presentation_layer.api_endpoints count
+   # - Update architecture_overview.presentation_layer.completion_rate
+   # - Add to recent_activity.last_command_executed
+   # - Update workflow_statistics.command_execution_stats
+   ```
+
+2. **Project Context Update**:
+   ```bash
+   # Update .claude/context/project-context.json  
+   # - Update architecture_status.presentation_layer.api_endpoints array
+   # - Increment workflow_tracking.command_usage.implement_presentation
+   # - Set current_state.last_command and last_command_timestamp
+   ```
+
+3. **Issue-Specific Metadata**:
+   ```bash
+   # Update docs/use_cases/issue-X-Y.json
+   # - Set presentation_layer.status to "completed"
+   # - Add implementation_files array with created presentation files
+   # - Update completion timestamp
+   ```
+
+**⚠️ Error Handling**: If standard workflow is disrupted:
+- 📖 Consult: [Manual Sync Guide](../../docs/maintenance/manual-sync-guide.md)
+- 🔄 Check Status: `/use-case-status` for current project state
+- 📊 Verify Context: `.claude/context/current-command-context.json`

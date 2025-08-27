@@ -1,0 +1,148 @@
+{
+  "project_info": {
+    "name": "TDD/DDD/Layered Architecture Development System",
+    "version": "2.0",
+    "created": "2025-08-27T00:00:00Z",
+    "last_updated": "2025-08-27T00:00:00Z",
+    "description": "Comprehensive development workflow with custom commands and specialized subagents",
+    "architecture": ["Test-Driven Development", "Domain-Driven Design", "Layered Architecture"]
+  },
+  "current_state": {
+    "active_sprint": 1,
+    "current_phase": "Phase 2: Core Feature Enhancement - Completed",
+    "last_command": "review-implementation",
+    "last_command_timestamp": "2025-08-27T00:00:00Z",
+    "current_issue": null,
+    "development_stage": "Ready for Phase 3"
+  },
+  "sprint_management": {
+    "active_sprint_number": 1,
+    "sprint_start_date": "2025-08-27",
+    "sprint_end_date": "2025-09-10",
+    "sprint_goal": "Complete Phase 2 core feature enhancements and subagent integration",
+    "total_issues": 0,
+    "completed_issues": [],
+    "in_progress_issues": [],
+    "pending_issues": []
+  },
+  "architecture_status": {
+    "domain_layer": {
+      "status": "initialized",
+      "completion_percentage": 0,
+      "key_entities": [],
+      "value_objects": [],
+      "domain_services": []
+    },
+    "application_layer": {
+      "status": "initialized",
+      "completion_percentage": 0,
+      "use_cases": [],
+      "dto_definitions": []
+    },
+    "infrastructure_layer": {
+      "status": "initialized", 
+      "completion_percentage": 0,
+      "repositories": [],
+      "external_services": []
+    },
+    "presentation_layer": {
+      "status": "operational", 
+      "completion_percentage": 85,
+      "api_endpoints": [],
+      "cli_commands": [
+        "create-vision", "review-vision", "init-project-structure", 
+        "sprint-planning", "review-sprint-plan", "create-use-case",
+        "domain-modeling", "review-domain-design", "create-tests",
+        "review-test-design", "implement-domain", "implement-usecase", 
+        "implement-infra", "implement-presentation", "run-all-tests",
+        "review-test-results", "refactor", "evolve-scenarios", 
+        "review-issue", "apply-feedback", "create-pr", "use-case-status"
+      ]
+    }
+  },
+  "quality_metrics": {
+    "test_coverage": {
+      "unit_tests": 0,
+      "integration_tests": 0,
+      "e2e_tests": 0,
+      "overall_coverage": "0%"
+    },
+    "tdd_compliance": {
+      "red_phase_completions": 0,
+      "green_phase_completions": 0,
+      "refactor_phase_completions": 0
+    },
+    "code_quality": {
+      "linting_score": "Not assessed",
+      "type_safety_score": "Not assessed",
+      "complexity_score": "Not assessed"
+    }
+  },
+  "workflow_tracking": {
+    "command_usage": {
+      "create_vision": 0,
+      "sprint_planning": 0,
+      "create_use_case": 0,
+      "domain_modeling": 0,
+      "create_tests": 0,
+      "implement_domain": 0,
+      "implement_usecase": 0,
+      "implement_infra": 0,
+      "implement_presentation": 0,
+      "run_all_tests": 0,
+      "refactor": 0,
+      "create_pr": 0
+    },
+    "subagent_utilization": {
+      "00_create_vision": 0,
+      "01_init_project_structure": 0,
+      "02_sprint_planning": 0,
+      "03_create_use_case": 0,
+      "04_domain_modeling": 0,
+      "05_create_tests": 0,
+      "06_implement_domain": 0,
+      "07_implement_usecase": 0,
+      "08_implement_infra": 0,
+      "09_implement_presentation": 0,
+      "10_run_all_tests": 0,
+      "11_refactor": 0,
+      "12_evolve_scenarios": 0,
+      "13_review_issue": 0,
+      "14_apply_feedback": 0,
+      "15_create_pr": 0,
+      "16_use_case_status": 0
+    }
+  },
+  "documentation_status": {
+    "vision_documents": {
+      "project_vision": true,
+      "core_scenarios": true, 
+      "bounded_contexts": true
+    },
+    "specification_documents": {
+      "use_case_specifications": 22,
+      "domain_models": 16,
+      "test_plans": 22
+    },
+    "implementation_tracking": {
+      "issue_metadata_files": 1,
+      "review_reports": 4,
+      "test_reports": 0
+    }
+  },
+  "system_configuration": {
+    "custom_commands_enabled": true,
+    "subagents_enabled": true,
+    "context_processing_enabled": true,
+    "metadata_integration_enabled": true,
+    "dashboard_enabled": true
+  },
+  "metadata_references": {
+    "project_dashboard": "docs/index.md",
+    "manual_sync_guide": "docs/maintenance/manual-sync-guide.md",
+    "implementation_reports": "docs/maintenance/",
+    "custom_commands": ".claude/commands/tdd-ddd-layered/",
+    "subagents": ".claude/agents/",
+    "context_files": ".claude/context/"
+  }
+}

@@ -288,3 +288,80 @@ Transition guidance to infrastructure layer implementation phase:
 ```
 
 **🔧 重要事項**: アプリケーション層はドメインロジックを含まず、オーケストレーションのみに責務を限定。
+
+## 🔄 **PHASE 2: ENHANCED METADATA INTEGRATION**
+
+### **Metadata Update Responsibilities**
+After completing use case implementation, this subagent MUST update project metadata to maintain system consistency:
+
+#### **1. Project State Update (docs/metadata/project-state.json)**
+```json
+{
+  "project_metadata": {
+    "current_phase": "application-layer-implementation",
+    "last_updated": "2024-01-XX",
+    "active_issues": ["issue-X", "issue-Y"]
+  },
+  "sprint_summary": {
+    "application_implementation_status": {
+      "issues_implemented": ["issue-X", "issue-Y"],
+      "use_cases_created": "XX count",
+      "dtos_implemented": "XX count",
+      "transaction_boundaries": "established",
+      "domain_orchestration": "functional"
+    }
+  },
+  "architecture_overview": {
+    "application_layer": {
+      "use_cases": "implemented",
+      "dtos": "created",
+      "application_services": "functional",
+      "transaction_management": "established"
+    }
+  }
+}
+```
+
+#### **2. Project Context Update (.claude/context/project-context.json)**
+```json
+{
+  "current_state": {
+    "active_sprint": {
+      "application_implementation": {
+        "completed": ["issue-X", "issue-Y"],
+        "use_case_status": "functional",
+        "orchestration_status": "working",
+        "next_phase": "implement-infra"
+      }
+    },
+    "workflow_tracking": {
+      "application_implementation": {
+        "last_execution": "timestamp",
+        "issues_processed": ["X", "Y"],
+        "implementation_outcomes": ["use_cases_functional", "orchestration_complete"]
+      }
+    }
+  }
+}
+```
+
+#### **3. Application Layer Documentation (src/application/docs/)**
+Create comprehensive application layer documentation with:
+- Use case implementation details and domain orchestration patterns
+- DTO specifications and mapping logic between domain and presentation layers
+- Transaction boundary definitions and consistency management strategies
+- Application service interfaces and dependency injection configuration
+- Integration patterns with domain layer entities and services
+- Error handling strategies and cross-cutting concern implementations
+
+### **Context Integration Priority**
+1. **FIRST**: Update project-state.json with application layer implementation completion
+2. **SECOND**: Update project-context.json with use case functionality status
+3. **THIRD**: Document application layer patterns and orchestration logic
+4. **FOURTH**: Ensure traceability between domain objects and use case implementations
+
+### **Quality Assurance Integration**
+- Verify use cases properly orchestrate domain objects without containing business logic
+- Ensure appropriate transaction boundaries maintain data consistency
+- Validate DTO mappings provide clean separation between layers
+- Confirm integration tests pass with application layer functionality

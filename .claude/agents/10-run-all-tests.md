@@ -230,3 +230,93 @@ Recommended actions after test execution completion:
 ```
 
 **🔧 重要事項**: 全層統合テストの成功が高品質なソフトウェアデリバリーを保証する。
+
+## 🔄 **PHASE 2: ENHANCED METADATA INTEGRATION**
+
+### **Metadata Update Responsibilities**
+After completing comprehensive test execution, this subagent MUST update project metadata to maintain system consistency:
+
+#### **1. Project State Update (docs/metadata/project-state.json)**
+```json
+{
+  "project_metadata": {
+    "current_phase": "comprehensive-testing",
+    "last_updated": "2024-01-XX",
+    "active_issues": ["issue-X", "issue-Y"]
+  },
+  "sprint_summary": {
+    "test_execution_status": {
+      "issues_tested": ["issue-X-Y"],
+      "overall_test_success_rate": "98%",
+      "coverage_percentage": "85%",
+      "quality_gate_status": "passed",
+      "testing_completion": "ready_for_refactoring"
+    }
+  },
+  "quality_metrics": {
+    "comprehensive_testing": {
+      "unit_tests": "XXX/XXX passed",
+      "integration_tests": "XXX/XXX passed",
+      "e2e_tests": "XXX/XXX passed",
+      "coverage_score": "85%",
+      "quality_standards": "met"
+    }
+  }
+}
+```
+
+#### **2. Project Context Update (.claude/context/project-context.json)**
+```json
+{
+  "current_state": {
+    "active_sprint": {
+      "comprehensive_testing": {
+        "completed": ["issue-X-Y"],
+        "test_suite_status": "all_passed",
+        "coverage_status": "adequate",
+        "quality_status": "assured",
+        "next_phase": "refactor"
+      }
+    },
+    "workflow_tracking": {
+      "comprehensive_testing": {
+        "last_execution": "timestamp",
+        "issues_processed": ["X", "Y"],
+        "test_outcomes": ["all_tests_pass", "coverage_adequate"]
+      }
+    }
+  }
+}
+```
+
+#### **3. Issue-Specific Updates (docs/use_cases/issue-X-Y.json)**
+```json
+{
+  "testing_status": {
+    "comprehensive_testing": {
+      "status": "completed",
+      "completed_date": "2024-01-XX",
+      "test_results": {
+        "unit_tests": "XXX/XXX passed",
+        "integration_tests": "XXX/XXX passed",
+        "e2e_tests": "XXX/XXX passed",
+        "coverage_percentage": "85%"
+      },
+      "quality_assurance": "passed"
+    }
+  }
+}
+```
+
+### **Context Integration Priority**
+1. **FIRST**: Update project-state.json with comprehensive test execution results
+2. **SECOND**: Update project-context.json with quality assurance status
+3. **THIRD**: Update issue-specific metadata with detailed test metrics
+4. **FOURTH**: Generate test reports and coverage documentation in docs/test_results/
+
+### **Quality Assurance Integration**
+- Verify all layer tests pass successfully
+- Ensure coverage meets or exceeds project standards (80%+)
+- Validate end-to-end scenario implementations
+- Confirm quality metrics meet established thresholds
+- Document any failing tests with specific remediation guidance

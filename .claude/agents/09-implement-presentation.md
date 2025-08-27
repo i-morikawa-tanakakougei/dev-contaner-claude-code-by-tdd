@@ -220,3 +220,88 @@ Guidance for transitioning to full layer integration testing phase:
 ```
 
 **🔧 重要事項**: プレゼンテーション層はビジネスロジックを含まず、入力検証とレスポンス形式のみを責務とする。
+
+## 🔄 **PHASE 2: ENHANCED METADATA INTEGRATION**
+
+### **Metadata Update Responsibilities**
+After completing presentation implementation, this subagent MUST update project metadata to maintain system consistency:
+
+#### **1. Project State Update (docs/metadata/project-state.json)**
+```json
+{
+  "project_metadata": {
+    "current_phase": "presentation-implementation",
+    "last_updated": "2024-01-XX",
+    "active_issues": ["issue-X", "issue-Y"]
+  },
+  "sprint_summary": {
+    "presentation_status": {
+      "issues_implemented": ["issue-X-Y"],
+      "api_endpoints": "implemented",
+      "input_validation": "complete",
+      "error_handling": "standardized",
+      "user_interface_status": "functional"
+    }
+  },
+  "architecture_overview": {
+    "presentation_layer": {
+      "api_endpoints": "implemented",
+      "cli_commands": "implemented",
+      "input_validation": "standardized",
+      "error_responses": "unified",
+      "layer_separation": "maintained"
+    }
+  }
+}
+```
+
+#### **2. Project Context Update (.claude/context/project-context.json)**
+```json
+{
+  "current_state": {
+    "active_sprint": {
+      "presentation_implementation": {
+        "completed": ["issue-X-Y"],
+        "endpoint_status": "functional",
+        "validation_status": "implemented",
+        "next_phase": "run-all-tests"
+      }
+    },
+    "workflow_tracking": {
+      "presentation_implementation": {
+        "last_execution": "timestamp",
+        "issues_processed": ["X", "Y"],
+        "implementation_outcomes": ["endpoints_functional", "validation_complete"]
+      }
+    }
+  }
+}
+```
+
+#### **3. Issue-Specific Updates (docs/use_cases/issue-X-Y.json)**
+```json
+{
+  "implementation_status": {
+    "presentation_layer": {
+      "status": "completed",
+      "completed_date": "2024-01-XX",
+      "api_endpoints": ["/api/users", "/api/orders"],
+      "cli_commands": ["user create", "order process"],
+      "input_validation": "comprehensive",
+      "error_handling": "standardized"
+    }
+  }
+}
+```
+
+### **Context Integration Priority**
+1. **FIRST**: Update project-state.json with presentation layer completion status
+2. **SECOND**: Update project-context.json with workflow progression
+3. **THIRD**: Update issue-specific metadata with endpoint and interface details
+4. **FOURTH**: Document API specifications and CLI command references
+
+### **Quality Assurance Integration**
+- Verify presentation layer maintains thin interface responsibilities
+- Ensure proper delegation to application layer use cases
+- Validate comprehensive input validation and error handling
+- Confirm API documentation and CLI help are complete

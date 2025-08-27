@@ -186,3 +186,81 @@ Recommended actions after feedback application completion:
 ```
 
 **🔧 重要事項**: フィードバック適用が継続的改善と品質向上の基盤となる。
+
+## 🔄 **PHASE 2: ENHANCED METADATA INTEGRATION**
+
+### **Metadata Update Responsibilities**
+After completing feedback application, this subagent MUST update project metadata to maintain system consistency:
+
+#### **1. Project State Update (docs/metadata/project-state.json)**
+```json
+{
+  "project_metadata": {
+    "current_phase": "feedback-application",
+    "last_updated": "2024-01-XX",
+    "active_issues": ["issue-X", "issue-Y"]
+  },
+  "sprint_summary": {
+    "feedback_application_status": {
+      "feedback_items_processed": "XX count",
+      "improvements_implemented": "XX count",
+      "process_enhancements": "applied",
+      "documentation_updates": "completed",
+      "validation_status": "verified"
+    }
+  },
+  "continuous_improvement": {
+    "feedback_application": {
+      "code_quality_improvements": "XX count",
+      "user_experience_enhancements": "XX count",
+      "performance_optimizations": "XX count",
+      "development_process_improvements": "XX count"
+    }
+  }
+}
+```
+
+#### **2. Project Context Update (.claude/context/project-context.json)**
+```json
+{
+  "current_state": {
+    "active_sprint": {
+      "feedback_application": {
+        "completed": ["feedback-source-X", "feedback-source-Y"],
+        "improvements_status": "implemented",
+        "validation_status": "verified",
+        "effectiveness_status": "confirmed",
+        "next_phase": "create-pr"
+      }
+    },
+    "workflow_tracking": {
+      "feedback_application": {
+        "last_execution": "timestamp",
+        "feedback_sources": ["sprint-review", "retrospective"],
+        "application_outcomes": ["improvements_implemented", "validation_complete"]
+      }
+    }
+  }
+}
+```
+
+#### **3. Feedback Application Documentation (docs/improvements/)**
+Create comprehensive feedback application reports with:
+- Detailed analysis of feedback sources and categorization
+- Prioritization matrix based on impact and implementation effort
+- Layer-by-layer implementation details and changes made
+- Validation results and effectiveness measurements
+- Process improvements and development workflow enhancements
+- Traceability between feedback items and implemented changes
+
+### **Context Integration Priority**
+1. **FIRST**: Update project-state.json with feedback application completion and improvement metrics
+2. **SECOND**: Update project-context.json with continuous improvement workflow status
+3. **THIRD**: Document detailed feedback application results in docs/improvements/
+4. **FOURTH**: Ensure traceability between feedback sources and implemented changes
+
+### **Quality Assurance Integration**
+- Verify all feedback items are systematically addressed
+- Ensure improvements maintain architectural integrity and quality standards
+- Validate that changes effectively address original feedback concerns
+- Confirm development process enhancements improve team productivity

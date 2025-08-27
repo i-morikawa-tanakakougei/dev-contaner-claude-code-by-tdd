@@ -295,3 +295,81 @@ Transition guidance to domain implementation phase:
 ```
 
 **🔧 重要事項**: TDD REDフェーズでは実装コードを一切含めず、失敗テストのみを作成。
+
+## 🔄 **PHASE 2: ENHANCED METADATA INTEGRATION**
+
+### **Metadata Update Responsibilities**
+After completing test creation, this subagent MUST update project metadata to maintain system consistency:
+
+#### **1. Project State Update (docs/metadata/project-state.json)**
+```json
+{
+  "project_metadata": {
+    "current_phase": "test-creation",
+    "last_updated": "2024-01-XX",
+    "active_issues": ["issue-X", "issue-Y"]
+  },
+  "sprint_summary": {
+    "test_creation_status": {
+      "issues_tested": ["issue-X", "issue-Y"],
+      "test_files_created": "XX count",
+      "total_test_cases": "XX count",
+      "red_phase_validated": "complete",
+      "scenario_coverage": "comprehensive"
+    }
+  },
+  "quality_metrics": {
+    "test_creation": {
+      "given_when_then_coverage": "100%",
+      "edge_case_coverage": "comprehensive",
+      "business_rule_tests": "complete",
+      "tdd_red_validation": "passed"
+    }
+  }
+}
+```
+
+#### **2. Project Context Update (.claude/context/project-context.json)**
+```json
+{
+  "current_state": {
+    "active_sprint": {
+      "test_creation": {
+        "completed": ["issue-X", "issue-Y"],
+        "red_phase_status": "validated",
+        "test_suite_status": "failing",
+        "coverage_status": "comprehensive",
+        "next_phase": "implement-domain"
+      }
+    },
+    "workflow_tracking": {
+      "test_creation": {
+        "last_execution": "timestamp",
+        "issues_processed": ["X", "Y"],
+        "tdd_outcomes": ["tests_created", "red_phase_complete"]
+      }
+    }
+  }
+}
+```
+
+#### **3. Test Documentation (tests/documentation/)**
+Create comprehensive test documentation with:
+- Test suite organization and structure overview
+- Given-When-Then scenario to test case mapping
+- Domain model test coverage analysis
+- Business rule and edge case test specifications
+- TDD RED phase validation results
+- Test execution guidelines and setup instructions
+
+### **Context Integration Priority**
+1. **FIRST**: Update project-state.json with test creation completion and TDD RED phase validation
+2. **SECOND**: Update project-context.json with test suite status and workflow progression
+3. **THIRD**: Create comprehensive test documentation in tests/documentation/
+4. **FOURTH**: Ensure traceability between Given-When-Then scenarios and test cases
+
+### **Quality Assurance Integration**
+- Verify all Given-When-Then scenarios are covered by failing tests
+- Ensure TDD RED phase compliance with all tests failing appropriately
+- Validate test structure follows project conventions and quality standards
+- Confirm comprehensive coverage of business rules and edge cases

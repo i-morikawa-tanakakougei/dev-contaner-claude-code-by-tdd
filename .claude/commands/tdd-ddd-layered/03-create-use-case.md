@@ -1,4 +1,10 @@
-Use the 03-create-use-case subagent to create a Given-When-Then use case specification from GitHub issues. This command MUST USE the specialized 03-create-use-case subagent for optimal use case specification creation.
+Use the 03-create-use-case subagent to create a Given-When-Then use case specification from GitHub issues. This command MUST USE PROACTIVELY the specialized 03-create-use-case subagent for optimal use case specification creation.
+
+**📖 Required Reading**: Before execution, this command MUST read the following files:
+- `/workspace/.claude/context/current-command-context.json` - Current execution context
+- `/workspace/.claude/context/project-context.json` - Overall project state and active sprint information
+- `/workspace/docs/vision/project-vision.md` - Project vision for use case alignment
+- `/workspace/docs/metadata/project-state.json` - Integrated project status for update
 
 ## Metadata
 - **Prerequisites**: GitHub issues created, Git repository initialized
@@ -457,3 +463,35 @@ $ /create-use-case 999
 $ gh issue list
 $ /create-use-case 15
 ```
+
+## 🔄 Metadata Update Requirements
+
+**CRITICAL**: After successful use case creation completion, you MUST update the following files:
+
+1. **Project State Update**:
+   ```bash
+   # Update docs/metadata/project-state.json
+   # - Increment documentation_metrics.specification_documents.use_case_specifications count
+   # - Add to recent_activity.last_command_executed
+   # - Update workflow_statistics.command_execution_stats
+   ```
+
+2. **Project Context Update**:
+   ```bash
+   # Update .claude/context/project-context.json  
+   # - Increment workflow_tracking.command_usage.create_use_case
+   # - Set current_state.last_command and last_command_timestamp
+   ```
+
+3. **Issue-Specific Metadata**:
+   ```bash
+   # Update docs/use_cases/issue-X-Y.json
+   # - Set use_case_specification.status to "completed"
+   # - Add specification_files array
+   # - Update completion timestamp
+   ```
+
+**⚠️ Error Handling**: If standard workflow is disrupted:
+- 📖 Consult: [Manual Sync Guide](../../docs/maintenance/manual-sync-guide.md)
+- 🔄 Check Status: `/use-case-status` for current project state
+- 📊 Verify Context: `.claude/context/current-command-context.json`

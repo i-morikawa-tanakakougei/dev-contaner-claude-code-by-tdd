@@ -1,4 +1,10 @@
-Use the 16-use-case-status subagent to show use case development status and progress with comprehensive analytics and intelligent recommendations. This command MUST USE the specialized 16-use-case-status subagent for optimal status reporting.
+Use the 16-use-case-status subagent to show use case development status and progress with comprehensive analytics and intelligent recommendations. This command MUST USE PROACTIVELY the specialized 16-use-case-status subagent for optimal status reporting.
+
+**📖 Required Reading**: Before execution, this command MUST read the following files:
+- `/workspace/.claude/context/current-command-context.json` - Current execution context
+- `/workspace/.claude/context/project-context.json` - Overall project state and active sprint information
+- `/workspace/docs/metadata/project-state.json` - Integrated project status for comprehensive analysis
+- `/workspace/docs/use_cases/` - All use case specifications and metadata for status analysis
 
 ## Metadata
 - **Prerequisites**: Use case development in progress or completed
@@ -418,4 +424,38 @@ APPROVED/CONDITIONAL_APPROVAL/REJECTED/COMPLETED のいずれかを明記
    
    echo "✅ Critical tasks確認完了 - 全項目クリア"
    ```
+
+## 🔄 Metadata Update Requirements
+
+**CRITICAL**: After successful use case status analysis completion, you MUST update the following files:
+
+1. **Project State Update**:
+   ```bash
+   # Update docs/metadata/project-state.json
+   # - Update project_metadata.health_score based on analysis
+   # - Refresh sprint_summary with current progress
+   # - Add to recent_activity.last_command_executed
+   # - Update workflow_statistics.command_execution_stats
+   ```
+
+2. **Project Context Update**:
+   ```bash
+   # Update .claude/context/project-context.json  
+   # - Update current_state with latest status assessment
+   # - Increment workflow_tracking.command_usage.use_case_status
+   # - Set current_state.last_command and last_command_timestamp
+   ```
+
+3. **Status Analysis Results**:
+   ```bash
+   # Generate comprehensive status reports
+   # - docs/use_cases/status-report-YYYY-MM-DD.md
+   # - Update individual issue metadata with current status
+   # - Identify bottlenecks and recommendations
+   ```
+
+**⚠️ Error Handling**: If standard workflow is disrupted:
+- 📖 Consult: [Manual Sync Guide](../../docs/maintenance/manual-sync-guide.md)
+- 🔄 Check Status: Run `/use-case-status` again for verification
+- 📊 Verify Context: `.claude/context/current-command-context.json`
 

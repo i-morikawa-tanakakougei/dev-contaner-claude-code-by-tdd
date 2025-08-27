@@ -1,4 +1,10 @@
-Use the 10-run-all-tests subagent to run all tests and generate comprehensive test report. This command MUST USE the specialized 10-run-all-tests subagent for optimal test execution and reporting.
+Use the 10-run-all-tests subagent to run all tests and generate comprehensive test report. This command MUST USE PROACTIVELY the specialized 10-run-all-tests subagent for optimal test execution and reporting.
+
+**📖 Required Reading**: Before execution, this command MUST read the following files:
+- `/workspace/.claude/context/current-command-context.json` - Current execution context
+- `/workspace/.claude/context/project-context.json` - Overall project state and active sprint information
+- `/workspace/docs/use_cases/issue-X-Y.json` - Issue-specific metadata and implementation status
+- `/workspace/docs/metadata/project-state.json` - Integrated project status for update
 
 ## Metadata
 - **Prerequisites**: All implementation layers completed (domain, application, infrastructure, presentation)
@@ -471,3 +477,37 @@ Important Notes:
 - Validate all layers work together correctly
 - Document test results for team review
 - All user-facing output must be in JAPANESE
+
+## 🔄 Metadata Update Requirements
+
+**CRITICAL**: After successful test execution completion, you MUST update the following files:
+
+1. **Project State Update**:
+   ```bash
+   # Update docs/metadata/project-state.json
+   # - Update quality_dashboard.test_coverage with actual coverage percentages
+   # - Update tdd_compliance.green_phase_completions count
+   # - Add to recent_activity.last_command_executed
+   # - Update workflow_statistics.command_execution_stats
+   ```
+
+2. **Project Context Update**:
+   ```bash
+   # Update .claude/context/project-context.json  
+   # - Update quality_metrics.test_coverage with detailed results
+   # - Increment workflow_tracking.command_usage.run_all_tests
+   # - Set current_state.last_command and last_command_timestamp
+   ```
+
+3. **Issue-Specific Metadata**:
+   ```bash
+   # Update docs/use_cases/issue-X-Y.json
+   # - Set testing.status to "completed"
+   # - Add test_results with coverage and success metrics
+   # - Update completion timestamp
+   ```
+
+**⚠️ Error Handling**: If standard workflow is disrupted:
+- 📖 Consult: [Manual Sync Guide](../../docs/maintenance/manual-sync-guide.md)
+- 🔄 Check Status: `/use-case-status` for current project state
+- 📊 Verify Context: `.claude/context/current-command-context.json`

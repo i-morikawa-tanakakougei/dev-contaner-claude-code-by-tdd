@@ -1,4 +1,10 @@
-Use the 01-init-project-structure subagent to initialize project structure for TDD/DDD/Layered Architecture development. This command MUST USE the specialized 01-init-project-structure subagent for optimal project structure initialization.
+Use the 01-init-project-structure subagent to initialize project structure for TDD/DDD/Layered Architecture development. This command MUST USE PROACTIVELY the specialized 01-init-project-structure subagent for optimal project structure initialization.
+
+**📖 Required Reading**: Before execution, this command MUST read the following files:
+- `/workspace/.claude/context/current-command-context.json` - Current execution context
+- `/workspace/.claude/context/project-context.json` - Overall project state and active sprint information  
+- `/workspace/docs/vision/project-vision.md` - Project vision for structure alignment (if exists)
+- `/workspace/docs/metadata/project-state.json` - Integrated project status for update
 
 ## Metadata
 - **Prerequisites**: Vision document should exist (run `/create-vision` first)
