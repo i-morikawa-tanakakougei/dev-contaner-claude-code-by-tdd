@@ -226,73 +226,134 @@ Recommended actions after project structure initialization completion:
 
 **🔧 重要事項**: プロジェクト構造の品質が開発効率と保守性を左右する。
 
-## 🔄 **PHASE 2: ENHANCED METADATA INTEGRATION**
+## 🔄 **PHASE 3: ENHANCED INTEGRATION CAPABILITIES**
 
-### **Metadata Update Responsibilities**
-After completing project structure initialization, this subagent MUST update project metadata to maintain system consistency:
+### **Critical Enhancement Features**
+This agent implements Phase 3 advanced integration and project initialization capabilities:
 
-#### **1. Project State Update (docs/metadata/project-state.json)**
+1. **Automated Development Environment Validation**
+2. **Intelligent Project Template Selection**
+3. **Cross-platform Compatibility Verification**
+4. **Progressive Complexity Management**
+
+### **Project State Updates**
+
+**CRITICAL**: After successful project structure initialization, MUST update integrated project metadata:
+
+#### Project State Updates (`docs/metadata/project-state.json`)
 ```json
 {
   "project_metadata": {
     "current_phase": "project-initialization",
-    "last_updated": "2024-01-XX",
-    "project_status": "initialized"
+    "last_updated": "CURRENT_TIMESTAMP",
+    "project_status": "initialized",
+    "development_ready": true
   },
   "architecture_overview": {
     "project_structure": {
       "directory_structure": "created",
       "layer_organization": "established",
       "configuration_files": "configured",
-      "development_environment": "ready"
+      "development_environment": "ready",
+      "completion_rate": "CALCULATE_INITIALIZATION_PERCENTAGE"
     }
   },
-  "initialization_status": {
-    "project_setup": {
-      "tdd_framework": "configured",
-      "ddd_layers": "organized",
-      "layered_architecture": "established",
-      "documentation_structure": "initialized"
+  "workflow_statistics": {
+    "project_initialization": {
+      "total_initializations": "INCREMENT_BY_1",
+      "initialization_success_rate": "RECALCULATE_SUCCESS_PERCENTAGE"
+    },
+    "subagent_performance": {
+      "total_subagent_calls": "INCREMENT_BY_1",
+      "most_active_agents": "UPDATE_WITH_01_INIT_PROJECT_STRUCTURE"
     }
+  },
+  "system_health": {
+    "project_setup_status": {
+      "structure_validation": "VERIFY_COMPLETE_STRUCTURE",
+      "environment_validation": "VERIFY_TOOLS_FUNCTIONAL",
+      "last_health_check": "CURRENT_TIMESTAMP"
+    }
+  },
+  "recent_activity": {
+    "last_command_executed": "init-project-structure",
+    "last_subagent_called": "01-init-project-structure",
+    "last_metadata_update": "CURRENT_TIMESTAMP"
   }
 }
 ```
 
-#### **2. Project Context Update (.claude/context/project-context.json)**
+#### Context File Updates (`.claude/context/project-context.json`)
 ```json
 {
+  "current_state": {
+    "last_command": "init-project-structure",
+    "last_command_timestamp": "CURRENT_TIMESTAMP",
+    "development_stage": "project-initialized"
+  },
   "project_info": {
     "initialization_status": "completed",
-    "structure_created": "timestamp",
-    "development_ready": true
+    "structure_created": "CURRENT_TIMESTAMP",
+    "development_ready": true,
+    "architecture_established": true
   },
-  "current_state": {
-    "active_sprint": {
-      "project_initialization": {
-        "completed": "timestamp",
-        "structure_status": "created",
-        "environment_status": "configured",
-        "next_phase": "create-vision"
-      }
+  "architecture_status": {
+    "project_structure": {
+      "status": "established",
+      "completion_percentage": "100",
+      "tdd_framework": "configured",
+      "ddd_layers": "organized",
+      "layered_architecture": "implemented"
+    }
+  },
+  "workflow_tracking": {
+    "command_usage": {
+      "init_project_structure": "INCREMENT_USAGE_COUNT"
     },
-    "workflow_tracking": {
+    "subagent_utilization": {
+      "01_init_project_structure": "INCREMENT_USAGE_COUNT"
+    }
+  }
+}
+```
+
+#### System Integration Updates (`.claude/context/system-integration.json`)
+```json
+{
+  "real_time_metrics": {
+    "current_session": {
+      "subagents_invoked": "INCREMENT_BY_1",
+      "metadata_syncs": "INCREMENT_BY_1"
+    }
+  },
+  "integration_health": {
+    "component_status": {
       "project_initialization": {
-        "last_execution": "timestamp",
-        "setup_outcomes": ["structure_created", "environment_ready"]
+        "status": "operational",
+        "last_execution": "CURRENT_TIMESTAMP",
+        "success_rate": "RECALCULATE_INITIALIZATION_SUCCESS"
       }
     }
   }
 }
 ```
 
-#### **3. Project Setup Documentation (docs/setup/)**
-Create comprehensive project setup documentation with:
-- Directory structure overview and architectural layer explanations
-- Development environment setup guide and dependency management
-- Configuration file descriptions and customization options
-- Quality assurance tool setup (ruff, pyright, pytest)
-- Getting started guide for new developers
-- Architecture decision records for structural choices
+### **Phase 3: Enhanced Processing Actions** 🚀
+1. **Context File Reading**: Always read all required context files with validation
+2. **Template Selection**: Intelligent selection of project templates based on requirements
+3. **Environment Validation**: Comprehensive verification of development environment setup
+4. **Structure Creation**: Execute project initialization with real-time validation and monitoring
+5. **Configuration Management**: Automated setup and validation of all development tools
+6. **Documentation Generation**: Create comprehensive project documentation and guides
+7. **Metadata Synchronization**: Update all integrated metadata systems automatically
+8. **Quality Assurance**: Validate complete project structure and prepare for vision creation
+9. **Context Handoff**: Prepare comprehensive context for vision creation with environment status
+
+### **Phase 4: Context Handoff** 📤
+- Update project metadata files with initialization completion status
+- Document project structure decisions and architectural patterns
+- Prepare foundation for vision creation and development phases
+- Ensure traceability between requirements and implemented project structure
 
 ### **Context Integration Priority**
 1. **FIRST**: Update project-state.json with initialization completion status

@@ -4,6 +4,16 @@
   "phase": "presentation-layer-implementation",
   "category": "implementation",
   "priority": "high",
+  "version": "3.0",
+  "last_updated": "2025-08-27T00:00:00Z",
+  "required_subagent": "09-implement-presentation",
+  "subagent_mandatory": true,
+  "phase_3_features": {
+    "ui_health_monitoring": true,
+    "api_performance_tracking": true,
+    "user_experience_optimization": true,
+    "security_validation": true
+  },
   "critical_tasks": [
     "infrastructure_layer_verification",
     "api_endpoint_design",
@@ -84,6 +94,61 @@
       "no.*business.*logic",
       "delegate.*to.*use_case",
       "input.*validation"
+    ]
+  },
+  "metadata_integration": {
+    "project_state_updates": {
+      "architecture_overview": {
+        "presentation_layer": {
+          "endpoints_implemented": "INCREMENT_BY_ENDPOINT_COUNT",
+          "input_validations_setup": "INCREMENT_BY_VALIDATION_COUNT",
+          "error_handlers_implemented": "INCREMENT_BY_HANDLER_COUNT",
+          "presentation_completion_rate": "RECALCULATE_PRESENTATION_PERCENTAGE"
+        }
+      },
+      "workflow_statistics": {
+        "subagent_performance": {
+          "total_subagent_calls": "INCREMENT_BY_1",
+          "most_active_agents": "UPDATE_WITH_09_IMPLEMENT_PRESENTATION"
+        }
+      },
+      "recent_activity": {
+        "last_command_executed": "implement-presentation",
+        "last_subagent_called": "09-implement-presentation",
+        "last_metadata_update": "CURRENT_TIMESTAMP"
+      }
+    },
+    "context_file_updates": {
+      "current_state": {
+        "last_command": "implement-presentation",
+        "last_command_timestamp": "CURRENT_TIMESTAMP",
+        "development_stage": "PRESENTATION_LAYER_COMPLETED"
+      }
+    },
+    "system_integration_updates": {
+      "real_time_metrics": {
+        "current_session": {
+          "subagents_invoked": "INCREMENT_BY_1",
+          "metadata_syncs": "INCREMENT_BY_1"
+        }
+      }
+    }
+  },
+  "execution_requirements": {
+    "context_files_required": [
+      ".claude/context/current-command-context.json",
+      ".claude/context/project-context.json",
+      "docs/metadata/project-state.json"
+    ],
+    "subagent_invocation": {
+      "agent_name": "09-implement-presentation",
+      "agent_mandatory": true,
+      "fallback_behavior": "error_with_guidance"
+    },
+    "post_execution_updates": [
+      "update_project_metadata",
+      "sync_context_files",
+      "validate_integration_health"
     ]
   }
 }

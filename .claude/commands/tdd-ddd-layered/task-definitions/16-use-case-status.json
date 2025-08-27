@@ -4,6 +4,16 @@
   "phase": "status-tracking-phase",
   "category": "monitoring",
   "priority": "low",
+  "version": "3.0",
+  "last_updated": "2025-08-27T00:00:00Z",
+  "required_subagent": "16-use-case-status",
+  "subagent_mandatory": true,
+  "phase_3_features": {
+    "progress_tracking_automation": true,
+    "completion_prediction": true,
+    "bottleneck_identification": true,
+    "quality_trend_analysis": true
+  },
   "critical_tasks": [
     "use_case_inventory_analysis",
     "implementation_status_assessment",
@@ -64,6 +74,61 @@
     ],
     "output_files": [
       "use_case_status_report.md"
+    ]
+  },
+  "metadata_integration": {
+    "project_state_updates": {
+      "architecture_overview": {
+        "monitoring_layer": {
+          "status_checks_completed": "INCREMENT_BY_1",
+          "use_case_progress_tracked": "UPDATE_WITH_PROGRESS_DATA",
+          "bottlenecks_identified": "UPDATE_WITH_BOTTLENECK_COUNT",
+          "monitoring_completion_rate": "RECALCULATE_MONITORING_PERCENTAGE"
+        }
+      },
+      "workflow_statistics": {
+        "subagent_performance": {
+          "total_subagent_calls": "INCREMENT_BY_1",
+          "most_active_agents": "UPDATE_WITH_16_USE_CASE_STATUS"
+        }
+      },
+      "recent_activity": {
+        "last_command_executed": "use-case-status",
+        "last_subagent_called": "16-use-case-status",
+        "last_metadata_update": "CURRENT_TIMESTAMP"
+      }
+    },
+    "context_file_updates": {
+      "current_state": {
+        "last_command": "use-case-status",
+        "last_command_timestamp": "CURRENT_TIMESTAMP",
+        "development_stage": "USE_CASE_STATUS_CHECK_COMPLETED"
+      }
+    },
+    "system_integration_updates": {
+      "real_time_metrics": {
+        "current_session": {
+          "subagents_invoked": "INCREMENT_BY_1",
+          "metadata_syncs": "INCREMENT_BY_1"
+        }
+      }
+    }
+  },
+  "execution_requirements": {
+    "context_files_required": [
+      ".claude/context/current-command-context.json",
+      ".claude/context/project-context.json",
+      "docs/metadata/project-state.json"
+    ],
+    "subagent_invocation": {
+      "agent_name": "16-use-case-status",
+      "agent_mandatory": true,
+      "fallback_behavior": "error_with_guidance"
+    },
+    "post_execution_updates": [
+      "update_project_metadata",
+      "sync_context_files",
+      "validate_integration_health"
     ]
   }
 }

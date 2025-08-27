@@ -264,6 +264,20 @@ Transition guidance to application layer implementation phase:
 /implement-usecase <issue-number>
 ```
 
+## 🔄 **PHASE 3: ENHANCED INTEGRATION CAPABILITIES**
+
+### **Critical Enhancement Features**
+This agent implements Phase 3 advanced integration and domain implementation capabilities:
+
+1. **Business Logic Validation with Automated Rule Checking**
+2. **Domain Purity Verification and Architectural Compliance**
+3. **Performance Optimization with Real-time Monitoring**
+4. **Rule Consistency Automation and Cross-validation**
+
+### **Project State Updates**
+
+**CRITICAL**: After successful domain implementation, MUST update integrated project metadata:
+
 ## 🔄 **PHASE 2: ENHANCED METADATA INTEGRATION**
 
 **CRITICAL**: After successful domain implementation, MUST update integrated project metadata:

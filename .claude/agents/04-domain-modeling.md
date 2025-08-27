@@ -229,71 +229,131 @@ Recommended actions after domain model design completion:
 
 **🔧 重要事項**: ドメインモデルの品質がシステム全体のアーキテクチャと保守性を決定する。
 
-## 🔄 **PHASE 2: ENHANCED METADATA INTEGRATION**
+## 🔄 **PHASE 3: ENHANCED INTEGRATION CAPABILITIES**
 
-### **Metadata Update Responsibilities**
-After completing domain modeling, this subagent MUST update project metadata to maintain system consistency:
+### **Critical Enhancement Features**
+This agent implements Phase 3 advanced integration and domain modeling capabilities:
 
-#### **1. Project State Update (docs/metadata/project-state.json)**
+1. **Automated Domain Model Validation and Consistency Checking**
+2. **Cross-Aggregate Relationship Analysis**
+3. **Business Rule Extraction and Verification**
+4. **Domain Complexity Assessment and Optimization**
+
+### **Project State Updates**
+
+**CRITICAL**: After successful domain modeling, MUST update integrated project metadata:
+
+#### Project State Updates (`docs/metadata/project-state.json`)
 ```json
 {
   "project_metadata": {
     "current_phase": "domain-modeling",
-    "last_updated": "2024-01-XX",
-    "active_issues": ["issue-X", "issue-Y"]
-  },
-  "sprint_summary": {
-    "domain_modeling_status": {
-      "issues_modeled": ["issue-X", "issue-Y"],
-      "entities_designed": "XX count",
-      "value_objects_created": "XX count",
-      "aggregates_defined": "XX count",
-      "domain_services_identified": "XX count"
-    }
+    "last_updated": "CURRENT_TIMESTAMP",
+    "active_issues": "UPDATE_WITH_MODELED_ISSUES"
   },
   "architecture_overview": {
     "domain_layer": {
-      "entities": "designed",
-      "value_objects": "created",
-      "aggregate_boundaries": "defined",
-      "domain_services": "identified",
-      "repository_interfaces": "designed"
+      "entities_designed": "INCREMENT_BY_ENTITY_COUNT",
+      "value_objects_created": "INCREMENT_BY_VALUE_OBJECT_COUNT",
+      "aggregates_defined": "INCREMENT_BY_AGGREGATE_COUNT",
+      "domain_services_identified": "INCREMENT_BY_SERVICE_COUNT",
+      "repository_interfaces_designed": "INCREMENT_BY_REPOSITORY_COUNT",
+      "completion_rate": "RECALCULATE_DOMAIN_LAYER_PERCENTAGE"
     }
+  },
+  "workflow_statistics": {
+    "domain_modeling": {
+      "total_models_designed": "INCREMENT_BY_1",
+      "modeling_success_rate": "RECALCULATE_SUCCESS_PERCENTAGE"
+    },
+    "subagent_performance": {
+      "total_subagent_calls": "INCREMENT_BY_1",
+      "most_active_agents": "UPDATE_WITH_04_DOMAIN_MODELING"
+    }
+  },
+  "system_health": {
+    "domain_quality": {
+      "model_complexity_score": "CALCULATE_COMPLEXITY_SCORE",
+      "aggregate_cohesion": "CALCULATE_COHESION_METRICS",
+      "business_rule_coverage": "CALCULATE_RULE_COVERAGE",
+      "last_quality_check": "CURRENT_TIMESTAMP"
+    }
+  },
+  "recent_activity": {
+    "last_command_executed": "domain-modeling",
+    "last_subagent_called": "04-domain-modeling",
+    "last_metadata_update": "CURRENT_TIMESTAMP"
   }
 }
 ```
 
-#### **2. Project Context Update (.claude/context/project-context.json)**
+#### Context File Updates (`.claude/context/project-context.json`)
 ```json
 {
   "current_state": {
-    "active_sprint": {
-      "domain_modeling": {
-        "completed": ["issue-X", "issue-Y"],
-        "domain_design_status": "completed",
-        "model_quality": "validated",
-        "next_phase": "review-domain-design"
-      }
+    "last_command": "domain-modeling",
+    "last_command_timestamp": "CURRENT_TIMESTAMP",
+    "development_stage": "UPDATE_TO_DOMAIN_MODELED"
+  },
+  "architecture_status": {
+    "domain_layer": {
+      "status": "UPDATE_TO_DESIGNED_OR_VALIDATED",
+      "completion_percentage": "CALCULATE_DOMAIN_COMPLETION",
+      "entities": "LIST_DESIGNED_ENTITIES",
+      "value_objects": "LIST_CREATED_VALUE_OBJECTS",
+      "aggregates": "LIST_DEFINED_AGGREGATES"
+    }
+  },
+  "workflow_tracking": {
+    "command_usage": {
+      "domain_modeling": "INCREMENT_USAGE_COUNT"
     },
-    "workflow_tracking": {
-      "domain_modeling": {
-        "last_execution": "timestamp",
-        "issues_processed": ["X", "Y"],
-        "modeling_outcomes": ["entities_designed", "aggregates_defined"]
+    "subagent_utilization": {
+      "04_domain_modeling": "INCREMENT_USAGE_COUNT"
+    }
+  }
+}
+```
+
+#### System Integration Updates (`.claude/context/system-integration.json`)
+```json
+{
+  "real_time_metrics": {
+    "current_session": {
+      "subagents_invoked": "INCREMENT_BY_1",
+      "metadata_syncs": "INCREMENT_BY_1"
+    }
+  },
+  "integration_health": {
+    "component_status": {
+      "domain_system": {
+        "model_quality_score": "CALCULATE_CURRENT_QUALITY",
+        "aggregate_count": "UPDATE_WITH_CURRENT_AGGREGATE_COUNT",
+        "last_validation": "CURRENT_TIMESTAMP"
       }
     }
   }
 }
 ```
 
-#### **3. Domain Design Documentation (docs/domain/)**
-Create comprehensive domain model documentation with:
-- Detailed entity designs with identity, behavior, and business rules
-- Value object specifications with immutability and validation logic
-- Aggregate boundary definitions and consistency rules
-- Domain service identification for complex business operations
-- Repository interface designs for data access abstraction
-- Ubiquitous language terms and domain concept relationships
+### **Phase 3: Enhanced Processing Actions** 🚀
+1. **Context File Reading**: Always read all required context files with validation
+2. **Specification Analysis**: Deep analysis of use case specifications with domain concept extraction
+3. **Model Design**: Intelligent domain model design with entity, value object, and aggregate identification
+4. **Business Rule Extraction**: Automated business rule identification and consistency verification
+5. **Aggregate Boundary Analysis**: Sophisticated aggregate boundary definition with transaction consistency
+6. **Repository Design**: Create repository interfaces aligned with aggregate boundaries
+7. **Quality Assessment**: Real-time domain model quality scoring and complexity analysis
+8. **Cross-Reference Validation**: Verify consistency with existing domain models and specifications
+9. **Metadata Synchronization**: Update all integrated metadata systems automatically
+10. **Documentation Generation**: Create comprehensive domain documentation with design rationale
+11. **Context Handoff**: Prepare comprehensive context for test creation with domain quality metrics
+
+### **Phase 4: Context Handoff** 📤
+- Update project metadata files with domain modeling completion status and quality metrics
+- Document entities, value objects, aggregates, and domain services with design rationale
+- Prepare foundation for test creation phase with comprehensive domain model
+- Ensure traceability between use case specifications and domain concepts
 
 ### **Context Integration Priority**
 1. **FIRST**: Update project-state.json with domain modeling completion and component metrics

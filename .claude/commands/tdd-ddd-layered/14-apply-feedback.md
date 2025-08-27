@@ -447,6 +447,91 @@ APPROVED/CONDITIONAL_APPROVAL/REJECTED/COMPLETED のいずれかを明記
 - Ensure architecture compliance is maintained
 - Document all improvements for traceability
 
+## 🔄 **PHASE 3: ENHANCED INTEGRATION CAPABILITIES**
+
+### **Critical Enhancement Features**
+This command implements Phase 3 advanced integration and feedback application capabilities:
+
+1. **Feedback Impact Analysis**: Comprehensive analysis of feedback impact on system architecture and quality metrics
+2. **Iteration Optimization**: Advanced iteration optimization with systematic improvement tracking and validation
+3. **Quality Improvement Tracking**: Intelligent quality improvement tracking with measurable outcome assessment
+4. **Systematic Enhancement**: Smart systematic enhancement with prioritized improvement implementation and validation
+
+### **Project State Updates**
+
+**CRITICAL**: After successful feedback application completion, MUST update integrated project metadata:
+
+#### Project State Updates (`docs/metadata/project-state.json`)
+```json
+{
+  "project_metadata": {
+    "overall_status": "feedback_applied",
+    "health_score": "RECALCULATE_WITH_FEEDBACK_METRICS",
+    "last_updated": "CURRENT_TIMESTAMP"
+  },
+  "architecture_overview": {
+    "feedback_application": {
+      "improvements_implemented": "UPDATE_IMPROVEMENT_COUNT",
+      "quality_metrics_delta": "UPDATE_QUALITY_IMPROVEMENTS",
+      "iteration_efficiency": "UPDATE_ITERATION_METRICS",
+      "systematic_enhancement_score": "UPDATE_ENHANCEMENT_SCORE"
+    }
+  },
+  "workflow_statistics": {
+    "command_execution_stats": {
+      "total_command_executions": "INCREMENT_BY_1",
+      "apply_feedback_completions": "INCREMENT_BY_1"
+    },
+    "subagent_performance": {
+      "most_active_agents": "UPDATE_WITH_14_APPLY_FEEDBACK_SUBAGENT"
+    }
+  },
+  "recent_activity": {
+    "last_command_executed": "apply-feedback",
+    "last_metadata_update": "CURRENT_TIMESTAMP"
+  }
+}
+```
+
+#### Context File Updates (`.claude/context/project-context.json`)
+```json
+{
+  "current_state": {
+    "last_command": "apply-feedback",
+    "last_command_timestamp": "CURRENT_TIMESTAMP"
+  },
+  "workflow_tracking": {
+    "command_usage": {
+      "apply_feedback": "INCREMENT_USAGE_COUNT"
+    }
+  },
+  "feedback_application_status": {
+    "applied_feedback_items": "UPDATE_FEEDBACK_ITEMS_LIST",
+    "improvement_tracking": "UPDATE_IMPROVEMENT_TRACKING",
+    "quality_enhancements": "UPDATE_QUALITY_ENHANCEMENTS",
+    "iteration_results": "UPDATE_ITERATION_RESULTS"
+  }
+}
+```
+
+#### System Integration Updates (`.claude/context/system-integration.json`)
+```json
+{
+  "real_time_metrics": {
+    "current_session": {
+      "commands_executed": "INCREMENT_BY_1",
+      "metadata_syncs": "INCREMENT_BY_1",
+      "feedback_application_cycles": "INCREMENT_BY_1"
+    }
+  },
+  "feedback_quality": {
+    "improvement_impact_score": "UPDATE_IMPROVEMENT_IMPACT",
+    "iteration_effectiveness": "UPDATE_ITERATION_EFFECTIVENESS",
+    "systematic_enhancement": "UPDATE_SYSTEMATIC_ENHANCEMENT"
+  }
+}
+```
+
 **🚨 MANDATORY FOR CLAUDE CODE: SCENARIO EVOLUTION CHECK**
 
 フィードバック適用中に新要件・制約・改善案発見時は

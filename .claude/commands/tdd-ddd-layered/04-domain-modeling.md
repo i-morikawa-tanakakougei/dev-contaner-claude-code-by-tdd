@@ -422,32 +422,90 @@ $ /create-use-case 15
 $ /domain-modeling 15
 ```
 
-## 🔄 Metadata Update Requirements
+## 🔄 **PHASE 3: ENHANCED INTEGRATION CAPABILITIES**
 
-**CRITICAL**: After successful domain modeling completion, you MUST update the following files:
+### **Critical Enhancement Features**
+This command implements Phase 3 advanced integration and domain modeling capabilities:
 
-1. **Project State Update**:
-   ```bash
-   # Update docs/metadata/project-state.json
-   # - Increment documentation_metrics.specification_documents.domain_models count
-   # - Add to recent_activity.last_command_executed
-   # - Update workflow_statistics.command_execution_stats
-   ```
+1. **Business Rule Extraction**: Intelligent extraction and validation of business rules from use case specifications
+2. **Aggregate Boundary Analysis**: Automated aggregate boundary identification with consistency validation
+3. **Entity Relationship Optimization**: Smart entity relationship design with performance and integrity analysis
+4. **Ubiquitous Language Validation**: Automated domain terminology consistency checking across all artifacts
 
-2. **Project Context Update**:
-   ```bash
-   # Update .claude/context/project-context.json  
-   # - Increment workflow_tracking.command_usage.domain_modeling
-   # - Set current_state.last_command and last_command_timestamp
-   ```
+### **Project State Updates**
 
-3. **Issue-Specific Metadata**:
-   ```bash
-   # Update docs/use_cases/issue-X-Y.json
-   # - Set domain_modeling.status to "completed"
-   # - Add domain_model_files array
-   # - Update completion timestamp
-   ```
+**CRITICAL**: After successful domain modeling completion, MUST update integrated project metadata:
+
+#### Project State Updates (`docs/metadata/project-state.json`)
+```json
+{
+  "project_metadata": {
+    "overall_status": "domain_model_designed",
+    "health_score": "RECALCULATE_WITH_DOMAIN_METRICS",
+    "last_updated": "CURRENT_TIMESTAMP"
+  },
+  "architecture_overview": {
+    "domain_layer": {
+      "entities": "UPDATE_ENTITY_COUNT",
+      "value_objects": "UPDATE_VALUE_OBJECT_COUNT",
+      "aggregate_boundaries": "UPDATE_AGGREGATE_METRICS",
+      "business_rules": "UPDATE_BUSINESS_RULE_COUNT"
+    }
+  },
+  "workflow_statistics": {
+    "command_execution_stats": {
+      "total_command_executions": "INCREMENT_BY_1",
+      "domain_modeling_completions": "INCREMENT_BY_1"
+    },
+    "subagent_performance": {
+      "most_active_agents": "UPDATE_WITH_04_DOMAIN_MODELING_SUBAGENT"
+    }
+  },
+  "recent_activity": {
+    "last_command_executed": "domain-modeling",
+    "last_metadata_update": "CURRENT_TIMESTAMP"
+  }
+}
+```
+
+#### Context File Updates (`.claude/context/project-context.json`)
+```json
+{
+  "current_state": {
+    "last_command": "domain-modeling",
+    "last_command_timestamp": "CURRENT_TIMESTAMP"
+  },
+  "workflow_tracking": {
+    "command_usage": {
+      "domain_modeling": "INCREMENT_USAGE_COUNT"
+    }
+  },
+  "domain_model_status": {
+    "entities": "UPDATE_ENTITY_DEFINITIONS",
+    "value_objects": "UPDATE_VALUE_OBJECT_DEFINITIONS",
+    "aggregate_roots": "UPDATE_AGGREGATE_DEFINITIONS",
+    "ubiquitous_language": "UPDATE_DOMAIN_VOCABULARY"
+  }
+}
+```
+
+#### System Integration Updates (`.claude/context/system-integration.json`)
+```json
+{
+  "real_time_metrics": {
+    "current_session": {
+      "commands_executed": "INCREMENT_BY_1",
+      "metadata_syncs": "INCREMENT_BY_1",
+      "domain_models_created": "INCREMENT_BY_1"
+    }
+  },
+  "domain_quality": {
+    "business_rule_coverage": "UPDATE_RULE_COVERAGE_METRICS",
+    "aggregate_consistency": "UPDATE_CONSISTENCY_SCORE",
+    "ubiquitous_language_compliance": "UPDATE_LANGUAGE_COMPLIANCE"
+  }
+}
+```
 
 **⚠️ Error Handling**: If standard workflow is disrupted:
 - 📖 Consult: [Manual Sync Guide](../../docs/maintenance/manual-sync-guide.md)

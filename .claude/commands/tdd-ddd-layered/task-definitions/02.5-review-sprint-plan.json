@@ -4,6 +4,16 @@
   "phase": "sprint-planning-review-phase",
   "category": "quality-assurance",
   "priority": "medium",
+  "version": "3.0",
+  "last_updated": "2025-08-27T00:00:00Z",
+  "required_subagent": "02.5-review-sprint-plan",
+  "subagent_mandatory": true,
+  "phase_3_features": {
+    "plan_quality_scoring": true,
+    "feasibility_assessment_automation": true,
+    "dependency_validation": true,
+    "timeline_optimization_analysis": true
+  },
   "critical_tasks": [
     "sprint_plan_analysis",
     "ticket_structure_validation",
@@ -64,6 +74,60 @@
     ],
     "output_files": [
       "sprint_plan_review_report.md"
+    ]
+  },
+  "metadata_integration": {
+    "project_state_updates": {
+      "architecture_overview": {
+        "quality_assurance_layer": {
+          "sprint_plan_reviews_completed": "INCREMENT_BY_1",
+          "plan_quality_scores_recorded": "UPDATE_WITH_QUALITY_SCORE",
+          "review_approval_status": "UPDATE_WITH_APPROVAL_STATUS"
+        }
+      },
+      "workflow_statistics": {
+        "subagent_performance": {
+          "total_subagent_calls": "INCREMENT_BY_1",
+          "most_active_agents": "UPDATE_WITH_02.5_REVIEW_SPRINT_PLAN"
+        }
+      },
+      "recent_activity": {
+        "last_command_executed": "review-sprint-plan",
+        "last_subagent_called": "02.5-review-sprint-plan",
+        "last_metadata_update": "CURRENT_TIMESTAMP"
+      }
+    },
+    "context_file_updates": {
+      "current_state": {
+        "last_command": "review-sprint-plan",
+        "last_command_timestamp": "CURRENT_TIMESTAMP",
+        "development_stage": "SPRINT_PLAN_REVIEW_COMPLETED"
+      }
+    },
+    "system_integration_updates": {
+      "real_time_metrics": {
+        "current_session": {
+          "subagents_invoked": "INCREMENT_BY_1",
+          "metadata_syncs": "INCREMENT_BY_1"
+        }
+      }
+    }
+  },
+  "execution_requirements": {
+    "context_files_required": [
+      ".claude/context/current-command-context.json",
+      ".claude/context/project-context.json",
+      "docs/metadata/project-state.json"
+    ],
+    "subagent_invocation": {
+      "agent_name": "02.5-review-sprint-plan",
+      "agent_mandatory": true,
+      "fallback_behavior": "error_with_guidance"
+    },
+    "post_execution_updates": [
+      "update_project_metadata",
+      "sync_context_files",
+      "validate_integration_health"
     ]
   }
 }

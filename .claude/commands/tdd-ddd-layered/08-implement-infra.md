@@ -628,34 +628,90 @@ Important Notes:
 - Consider using repository pattern with Unit of Work
 - All user-facing output must be in JAPANESE
 
-## 🔄 Metadata Update Requirements
+## 🔄 **PHASE 3: ENHANCED INTEGRATION CAPABILITIES**
 
-**CRITICAL**: After successful infrastructure implementation completion, you MUST update the following files:
+### **Critical Enhancement Features**
+This command implements Phase 3 advanced integration and infrastructure implementation capabilities:
 
-1. **Project State Update**:
-   ```bash
-   # Update docs/metadata/project-state.json
-   # - Increment infrastructure_layer.repository_implementations count
-   # - Update architecture_overview.infrastructure_layer.completion_rate
-   # - Add to recent_activity.last_command_executed
-   # - Update workflow_statistics.command_execution_stats
-   ```
+1. **Infrastructure Health Monitoring**: Real-time infrastructure component health tracking with automated alerts
+2. **Performance Tracking**: Advanced performance monitoring with bottleneck detection and optimization suggestions
+3. **Dependency Validation**: Comprehensive dependency validation with version compatibility and security analysis
+4. **Integration Optimization**: Smart integration pattern optimization with fault tolerance and retry mechanisms
 
-2. **Project Context Update**:
-   ```bash
-   # Update .claude/context/project-context.json  
-   # - Update architecture_status.infrastructure_layer.repositories array
-   # - Increment workflow_tracking.command_usage.implement_infra
-   # - Set current_state.last_command and last_command_timestamp
-   ```
+### **Project State Updates**
 
-3. **Issue-Specific Metadata**:
-   ```bash
-   # Update docs/use_cases/issue-X-Y.json
-   # - Set infrastructure_layer.status to "completed"
-   # - Add implementation_files array with created infrastructure files
-   # - Update completion timestamp
-   ```
+**CRITICAL**: After successful infrastructure implementation completion, MUST update integrated project metadata:
+
+#### Project State Updates (`docs/metadata/project-state.json`)
+```json
+{
+  "project_metadata": {
+    "overall_status": "infrastructure_implemented",
+    "health_score": "RECALCULATE_WITH_INFRA_METRICS",
+    "last_updated": "CURRENT_TIMESTAMP"
+  },
+  "architecture_overview": {
+    "infrastructure_layer": {
+      "repository_implementations": "UPDATE_REPOSITORY_COUNT",
+      "external_integrations": "UPDATE_INTEGRATION_COUNT",
+      "database_connections": "UPDATE_CONNECTION_METRICS",
+      "performance_score": "UPDATE_PERFORMANCE_METRICS"
+    }
+  },
+  "workflow_statistics": {
+    "command_execution_stats": {
+      "total_command_executions": "INCREMENT_BY_1",
+      "implement_infra_completions": "INCREMENT_BY_1"
+    },
+    "subagent_performance": {
+      "most_active_agents": "UPDATE_WITH_08_IMPLEMENT_INFRA_SUBAGENT"
+    }
+  },
+  "recent_activity": {
+    "last_command_executed": "implement-infra",
+    "last_metadata_update": "CURRENT_TIMESTAMP"
+  }
+}
+```
+
+#### Context File Updates (`.claude/context/project-context.json`)
+```json
+{
+  "current_state": {
+    "last_command": "implement-infra",
+    "last_command_timestamp": "CURRENT_TIMESTAMP"
+  },
+  "workflow_tracking": {
+    "command_usage": {
+      "implement_infra": "INCREMENT_USAGE_COUNT"
+    }
+  },
+  "infrastructure_status": {
+    "repositories": "UPDATE_REPOSITORY_IMPLEMENTATIONS",
+    "external_services": "UPDATE_SERVICE_INTEGRATIONS",
+    "database_health": "UPDATE_DATABASE_STATUS",
+    "performance_metrics": "UPDATE_INFRA_PERFORMANCE"
+  }
+}
+```
+
+#### System Integration Updates (`.claude/context/system-integration.json`)
+```json
+{
+  "real_time_metrics": {
+    "current_session": {
+      "commands_executed": "INCREMENT_BY_1",
+      "metadata_syncs": "INCREMENT_BY_1",
+      "infrastructure_components_deployed": "INCREMENT_BY_1"
+    }
+  },
+  "infrastructure_health": {
+    "repository_performance": "UPDATE_REPOSITORY_PERFORMANCE",
+    "external_service_availability": "UPDATE_SERVICE_AVAILABILITY",
+    "data_integrity_score": "UPDATE_DATA_INTEGRITY"
+  }
+}
+```
 
 **⚠️ Error Handling**: If standard workflow is disrupted:
 - 📖 Consult: [Manual Sync Guide](../../docs/maintenance/manual-sync-guide.md)

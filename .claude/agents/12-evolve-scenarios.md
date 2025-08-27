@@ -191,69 +191,127 @@ Specific action items based on assessment:
 
 **重要**: このセクション形式に従うことで、ホスト側でのタスク確認とメタデータ駆動検証が正常に動作します。
 
-## 🔄 **PHASE 2: ENHANCED METADATA INTEGRATION**
+## 🔄 **PHASE 3: ENHANCED INTEGRATION CAPABILITIES**
 
-### **Metadata Update Responsibilities**
-After completing scenario evolution, this subagent MUST update project metadata to maintain system consistency:
+### **Critical Enhancement Features**
+This agent implements Phase 3 advanced integration and scenario evolution capabilities:
 
-#### **1. Project State Update (docs/metadata/project-state.json)**
+1. **Automated Scenario Impact Analysis and Dependency Mapping**
+2. **Intelligent Scenario Gap Detection and Filling**
+3. **Cross-feature Scenario Consistency Verification**
+4. **Real-time Vision Alignment Assessment**
+
+### **Project State Updates**
+
+**CRITICAL**: After successful scenario evolution, MUST update integrated project metadata:
+
+#### Project State Updates (`docs/metadata/project-state.json`)
 ```json
 {
   "project_metadata": {
     "current_phase": "scenario-evolution",
-    "last_updated": "2024-01-XX",
-    "active_issues": ["issue-X", "issue-Y"]
-  },
-  "sprint_summary": {
-    "scenario_evolution_status": {
-      "scenarios_evolved": ["feature-X", "feature-Y"],
-      "new_scenarios_added": "XX count",
-      "existing_scenarios_extended": "XX count",
-      "edge_cases_covered": "comprehensive",
-      "vision_alignment": "maintained"
-    }
+    "last_updated": "CURRENT_TIMESTAMP",
+    "active_issues": "UPDATE_WITH_EVOLVED_FEATURES"
   },
   "vision_evolution": {
     "scenario_coverage": {
-      "core_scenarios": "enhanced",
-      "edge_cases": "expanded",
-      "error_handling": "comprehensive",
-      "integration_scenarios": "defined"
+      "core_scenarios_enhanced": "INCREMENT_BY_ENHANCED_COUNT",
+      "new_scenarios_added": "INCREMENT_BY_NEW_SCENARIO_COUNT",
+      "edge_cases_expanded": "INCREMENT_BY_EDGE_CASE_COUNT",
+      "integration_scenarios_defined": "INCREMENT_BY_INTEGRATION_COUNT",
+      "coverage_completeness": "RECALCULATE_COVERAGE_PERCENTAGE"
     }
+  },
+  "workflow_statistics": {
+    "scenario_evolution": {
+      "total_evolution_sessions": "INCREMENT_BY_1",
+      "evolution_success_rate": "RECALCULATE_SUCCESS_PERCENTAGE"
+    },
+    "subagent_performance": {
+      "total_subagent_calls": "INCREMENT_BY_1",
+      "most_active_agents": "UPDATE_WITH_12_EVOLVE_SCENARIOS"
+    }
+  },
+  "system_health": {
+    "requirement_tracking": {
+      "scenario_consistency_score": "CALCULATE_CONSISTENCY_SCORE",
+      "vision_alignment_index": "CALCULATE_ALIGNMENT_INDEX",
+      "testability_score": "CALCULATE_TESTABILITY_SCORE",
+      "last_quality_check": "CURRENT_TIMESTAMP"
+    }
+  },
+  "recent_activity": {
+    "last_command_executed": "evolve-scenarios",
+    "last_subagent_called": "12-evolve-scenarios",
+    "last_metadata_update": "CURRENT_TIMESTAMP"
   }
 }
 ```
 
-#### **2. Project Context Update (.claude/context/project-context.json)**
+#### Context File Updates (`.claude/context/project-context.json`)
 ```json
 {
   "current_state": {
-    "active_sprint": {
-      "scenario_evolution": {
-        "completed": ["feature-X", "feature-Y"],
-        "scenario_status": "evolved",
-        "coverage_status": "enhanced",
-        "consistency_status": "maintained",
-        "next_phase": "implementation"
-      }
+    "last_command": "evolve-scenarios",
+    "last_command_timestamp": "CURRENT_TIMESTAMP",
+    "development_stage": "UPDATE_TO_SCENARIOS_EVOLVED"
+  },
+  "requirements_tracking": {
+    "scenario_evolution": {
+      "status": "UPDATE_TO_COMPLETED_OR_IN_PROGRESS",
+      "evolved_features": "LIST_EVOLVED_FEATURES",
+      "new_scenarios_count": "COUNT_NEW_SCENARIOS",
+      "vision_consistency": "VERIFY_ALIGNMENT_STATUS"
+    }
+  },
+  "workflow_tracking": {
+    "command_usage": {
+      "evolve_scenarios": "INCREMENT_USAGE_COUNT"
     },
-    "workflow_tracking": {
-      "scenario_evolution": {
-        "last_execution": "timestamp",
-        "features_evolved": ["X", "Y"],
-        "evolution_outcomes": ["scenarios_added", "edge_cases_covered"]
+    "subagent_utilization": {
+      "12_evolve_scenarios": "INCREMENT_USAGE_COUNT"
+    }
+  }
+}
+```
+
+#### System Integration Updates (`.claude/context/system-integration.json`)
+```json
+{
+  "real_time_metrics": {
+    "current_session": {
+      "subagents_invoked": "INCREMENT_BY_1",
+      "metadata_syncs": "INCREMENT_BY_1"
+    }
+  },
+  "integration_health": {
+    "component_status": {
+      "scenario_evolution_system": {
+        "evolution_complexity": "CALCULATE_EVOLUTION_COMPLEXITY",
+        "consistency_maintenance": "VERIFY_CONSISTENCY_STATUS"
       }
     }
   }
 }
 ```
 
-#### **3. Scenario Documentation Updates (docs/use_cases/)**
-Update relevant scenario files with:
-- New Given-When-Then scenarios with complete traceability
-- Extended existing scenarios with edge cases and error handling
-- Maintained consistency with ubiquitous language and domain model
-- Clear relationships to original vision and core scenarios
+### **Phase 3: Enhanced Processing Actions** 🚀
+1. **Context File Reading**: Always read all required context files with validation
+2. **Scenario Analysis**: Comprehensive analysis of existing scenarios with gap identification
+3. **Evolution Planning**: Intelligent scenario evolution strategy with impact assessment
+4. **Scenario Creation**: Create new scenarios with automated quality and consistency validation
+5. **Extension Implementation**: Extend existing scenarios with comprehensive edge case coverage
+6. **Consistency Verification**: Real-time consistency checking with vision and domain alignment
+7. **Cross-Reference Validation**: Verify scenario relationships and dependencies
+8. **Metadata Synchronization**: Update all integrated metadata systems automatically
+9. **Documentation Generation**: Create comprehensive scenario documentation with traceability
+10. **Context Handoff**: Prepare comprehensive context for implementation with evolution metrics
+
+### **Phase 4: Context Handoff** 📤
+- Update project metadata files with scenario evolution status and coverage metrics
+- Document new and extended scenarios with comprehensive traceability
+- Prepare foundation for implementation phases with enhanced requirements
+- Ensure traceability between original vision and evolved scenarios
 
 ### **Context Integration Priority**
 1. **FIRST**: Update project-state.json with scenario evolution completion and coverage enhancement

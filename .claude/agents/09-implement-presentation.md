@@ -221,10 +221,19 @@ Guidance for transitioning to full layer integration testing phase:
 
 **🔧 重要事項**: プレゼンテーション層はビジネスロジックを含まず、入力検証とレスポンス形式のみを責務とする。
 
-## 🔄 **PHASE 2: ENHANCED METADATA INTEGRATION**
+## 🔄 **PHASE 3: ENHANCED INTEGRATION CAPABILITIES**
 
-### **Metadata Update Responsibilities**
-After completing presentation implementation, this subagent MUST update project metadata to maintain system consistency:
+### **Critical Enhancement Features**
+This agent implements Phase 3 advanced integration and presentation layer capabilities:
+
+1. **Real-time User Interface Health Monitoring**
+2. **API Performance Tracking & Optimization**
+3. **User Experience Quality Metrics**
+4. **Security Validation & Compliance Checking**
+
+### **Project State Updates**
+
+**CRITICAL**: After successful presentation implementation, MUST update integrated project metadata:
 
 #### **1. Project State Update (docs/metadata/project-state.json)**
 ```json

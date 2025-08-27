@@ -289,6 +289,20 @@ Transition guidance to infrastructure layer implementation phase:
 
 **🔧 重要事項**: アプリケーション層はドメインロジックを含まず、オーケストレーションのみに責務を限定。
 
+## 🔄 **PHASE 3: ENHANCED INTEGRATION CAPABILITIES**
+
+### **Critical Enhancement Features**
+This agent implements Phase 3 advanced integration and use case implementation capabilities:
+
+1. **Use Case Orchestration Optimization with Smart Workflows**
+2. **Integration Validation Automation with Dependency Checking**
+3. **Performance Monitoring with Real-time Metrics**
+4. **Error Handling Enhancement with Predictive Analysis**
+
+### **Project State Updates**
+
+**CRITICAL**: After successful use case implementation, MUST update integrated project metadata:
+
 ## 🔄 **PHASE 2: ENHANCED METADATA INTEGRATION**
 
 ### **Metadata Update Responsibilities**

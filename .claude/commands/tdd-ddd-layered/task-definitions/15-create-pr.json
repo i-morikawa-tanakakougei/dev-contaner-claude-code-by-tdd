@@ -4,6 +4,16 @@
   "phase": "pull-request-creation-phase",
   "category": "delivery",
   "priority": "medium",
+  "version": "3.0",
+  "last_updated": "2025-08-27T00:00:00Z",
+  "required_subagent": "15-create-pr",
+  "subagent_mandatory": true,
+  "phase_3_features": {
+    "pr_quality_analysis": true,
+    "integration_validation": true,
+    "merge_readiness_assessment": true,
+    "deployment_preparation": true
+  },
   "critical_tasks": [
     "code_completion_verification",
     "test_suite_validation",
@@ -65,6 +75,61 @@
     ],
     "output_files": [
       "GitHub Pull Request"
+    ]
+  },
+  "metadata_integration": {
+    "project_state_updates": {
+      "architecture_overview": {
+        "delivery_layer": {
+          "pull_requests_created": "INCREMENT_BY_1",
+          "code_reviews_initiated": "INCREMENT_BY_1",
+          "deployment_preparations_completed": "INCREMENT_BY_1",
+          "delivery_completion_rate": "RECALCULATE_DELIVERY_PERCENTAGE"
+        }
+      },
+      "workflow_statistics": {
+        "subagent_performance": {
+          "total_subagent_calls": "INCREMENT_BY_1",
+          "most_active_agents": "UPDATE_WITH_15_CREATE_PR"
+        }
+      },
+      "recent_activity": {
+        "last_command_executed": "create-pr",
+        "last_subagent_called": "15-create-pr",
+        "last_metadata_update": "CURRENT_TIMESTAMP"
+      }
+    },
+    "context_file_updates": {
+      "current_state": {
+        "last_command": "create-pr",
+        "last_command_timestamp": "CURRENT_TIMESTAMP",
+        "development_stage": "PULL_REQUEST_CREATED"
+      }
+    },
+    "system_integration_updates": {
+      "real_time_metrics": {
+        "current_session": {
+          "subagents_invoked": "INCREMENT_BY_1",
+          "metadata_syncs": "INCREMENT_BY_1"
+        }
+      }
+    }
+  },
+  "execution_requirements": {
+    "context_files_required": [
+      ".claude/context/current-command-context.json",
+      ".claude/context/project-context.json",
+      "docs/metadata/project-state.json"
+    ],
+    "subagent_invocation": {
+      "agent_name": "15-create-pr",
+      "agent_mandatory": true,
+      "fallback_behavior": "error_with_guidance"
+    },
+    "post_execution_updates": [
+      "update_project_metadata",
+      "sync_context_files",
+      "validate_integration_health"
     ]
   }
 }

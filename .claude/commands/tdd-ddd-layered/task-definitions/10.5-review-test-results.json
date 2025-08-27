@@ -2,6 +2,18 @@
   "command": "10.5-review-test-results",
   "description": "Comprehensive test execution results analysis and quality metrics assessment",
   "phase": "test-results-review",
+  "category": "quality-assurance",
+  "priority": "medium",
+  "version": "3.0",
+  "last_updated": "2025-08-27T00:00:00Z",
+  "required_subagent": "10.5-review-test-results",
+  "subagent_mandatory": true,
+  "phase_3_features": {
+    "test_result_analysis_automation": true,
+    "quality_prediction_modeling": true,
+    "coverage_gap_identification": true,
+    "performance_impact_assessment": true
+  },
   "critical_tasks": [
     "test_execution_results_analysis",
     "coverage_analysis_assessment", 
@@ -93,6 +105,71 @@
       "Performance bottlenecks",
       "High code complexity",
       "Failing or unstable tests"
+    ]
+  },
+  "dependencies": {
+    "previous_commands": ["10-run-all-tests"],
+    "next_commands": ["11-refactor"],
+    "required_files": [
+      "test-results/",
+      "coverage-report.html"
+    ],
+    "output_files": [
+      "test_results_review_report.md"
+    ]
+  },
+  "metadata_integration": {
+    "project_state_updates": {
+      "architecture_overview": {
+        "quality_assurance_layer": {
+          "test_result_reviews_completed": "INCREMENT_BY_1",
+          "quality_assessment_scores_recorded": "UPDATE_WITH_ASSESSMENT_SCORE",
+          "test_approval_status": "UPDATE_WITH_APPROVAL_STATUS"
+        }
+      },
+      "workflow_statistics": {
+        "subagent_performance": {
+          "total_subagent_calls": "INCREMENT_BY_1",
+          "most_active_agents": "UPDATE_WITH_10.5_REVIEW_TEST_RESULTS"
+        }
+      },
+      "recent_activity": {
+        "last_command_executed": "review-test-results",
+        "last_subagent_called": "10.5-review-test-results",
+        "last_metadata_update": "CURRENT_TIMESTAMP"
+      }
+    },
+    "context_file_updates": {
+      "current_state": {
+        "last_command": "review-test-results",
+        "last_command_timestamp": "CURRENT_TIMESTAMP",
+        "development_stage": "TEST_RESULTS_REVIEW_COMPLETED"
+      }
+    },
+    "system_integration_updates": {
+      "real_time_metrics": {
+        "current_session": {
+          "subagents_invoked": "INCREMENT_BY_1",
+          "metadata_syncs": "INCREMENT_BY_1"
+        }
+      }
+    }
+  },
+  "execution_requirements": {
+    "context_files_required": [
+      ".claude/context/current-command-context.json",
+      ".claude/context/project-context.json",
+      "docs/metadata/project-state.json"
+    ],
+    "subagent_invocation": {
+      "agent_name": "10.5-review-test-results",
+      "agent_mandatory": true,
+      "fallback_behavior": "error_with_guidance"
+    },
+    "post_execution_updates": [
+      "update_project_metadata",
+      "sync_context_files",
+      "validate_integration_health"
     ]
   }
 }

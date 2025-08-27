@@ -4,6 +4,16 @@
   "phase": "feedback-application-phase",
   "category": "improvement",
   "priority": "medium",
+  "version": "3.0",
+  "last_updated": "2025-08-27T00:00:00Z",
+  "required_subagent": "14-apply-feedback",
+  "subagent_mandatory": true,
+  "phase_3_features": {
+    "feedback_impact_analysis": true,
+    "iteration_optimization": true,
+    "quality_improvement_tracking": true,
+    "systematic_enhancement": true
+  },
   "critical_tasks": [
     "feedback_analysis",
     "improvement_prioritization",
@@ -66,6 +76,61 @@
     "output_files": [
       "improvement_report.md",
       "updated_codebase"
+    ]
+  },
+  "metadata_integration": {
+    "project_state_updates": {
+      "architecture_overview": {
+        "improvement_layer": {
+          "feedback_applications_completed": "INCREMENT_BY_1",
+          "improvements_implemented": "INCREMENT_BY_IMPROVEMENT_COUNT",
+          "quality_enhancements_applied": "INCREMENT_BY_ENHANCEMENT_COUNT",
+          "feedback_completion_rate": "RECALCULATE_FEEDBACK_PERCENTAGE"
+        }
+      },
+      "workflow_statistics": {
+        "subagent_performance": {
+          "total_subagent_calls": "INCREMENT_BY_1",
+          "most_active_agents": "UPDATE_WITH_14_APPLY_FEEDBACK"
+        }
+      },
+      "recent_activity": {
+        "last_command_executed": "apply-feedback",
+        "last_subagent_called": "14-apply-feedback",
+        "last_metadata_update": "CURRENT_TIMESTAMP"
+      }
+    },
+    "context_file_updates": {
+      "current_state": {
+        "last_command": "apply-feedback",
+        "last_command_timestamp": "CURRENT_TIMESTAMP",
+        "development_stage": "FEEDBACK_APPLICATION_COMPLETED"
+      }
+    },
+    "system_integration_updates": {
+      "real_time_metrics": {
+        "current_session": {
+          "subagents_invoked": "INCREMENT_BY_1",
+          "metadata_syncs": "INCREMENT_BY_1"
+        }
+      }
+    }
+  },
+  "execution_requirements": {
+    "context_files_required": [
+      ".claude/context/current-command-context.json",
+      ".claude/context/project-context.json",
+      "docs/metadata/project-state.json"
+    ],
+    "subagent_invocation": {
+      "agent_name": "14-apply-feedback",
+      "agent_mandatory": true,
+      "fallback_behavior": "error_with_guidance"
+    },
+    "post_execution_updates": [
+      "update_project_metadata",
+      "sync_context_files",
+      "validate_integration_health"
     ]
   }
 }

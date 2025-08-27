@@ -423,3 +423,89 @@ APPROVED/CONDITIONAL_APPROVAL/REJECTED/COMPLETED のいずれかを明記
 プロジェクト構造初期化はインフラ設定のみ
 ビジネスロジックや機能実装は含まない
 CRITICAL: 基盤構築に集中すること
+
+## 🔄 **PHASE 3: ENHANCED INTEGRATION CAPABILITIES**
+
+### **Critical Enhancement Features**
+This command implements Phase 3 advanced integration and project structure initialization capabilities:
+
+1. **Project Template Optimization**: Advanced directory structure generation with intelligent template selection
+2. **Environment Validation**: Comprehensive development environment verification and dependency management
+3. **Dependency Management**: Automated dependency resolution and conflict detection with version compatibility checks
+4. **Structure Consistency**: Cross-project structure validation and standardization enforcement
+
+### **Project State Updates**
+
+**CRITICAL**: After successful project structure initialization completion, MUST update integrated project metadata:
+
+#### Project State Updates (`docs/metadata/project-state.json`)
+```json
+{
+  "project_metadata": {
+    "overall_status": "structure_initialized",
+    "health_score": "CALCULATE_INITIAL_HEALTH_SCORE",
+    "last_updated": "CURRENT_TIMESTAMP"
+  },
+  "architecture_overview": {
+    "foundation_layer": {
+      "directory_structure_completeness": "UPDATE_STRUCTURE_METRICS",
+      "python_package_structure": "UPDATE_PACKAGE_METRICS",
+      "build_system_health": "UPDATE_BUILD_SYSTEM_STATUS"
+    }
+  },
+  "workflow_statistics": {
+    "command_execution_stats": {
+      "total_command_executions": "INCREMENT_BY_1",
+      "init_project_structure_completions": "INCREMENT_BY_1"
+    },
+    "subagent_performance": {
+      "most_active_agents": "UPDATE_WITH_01_INIT_PROJECT_STRUCTURE_SUBAGENT"
+    }
+  },
+  "recent_activity": {
+    "last_command_executed": "init-project-structure",
+    "last_metadata_update": "CURRENT_TIMESTAMP"
+  }
+}
+```
+
+#### Context File Updates (`.claude/context/project-context.json`)
+```json
+{
+  "current_state": {
+    "last_command": "init-project-structure",
+    "last_command_timestamp": "CURRENT_TIMESTAMP",
+    "project_initialization_status": "completed"
+  },
+  "workflow_tracking": {
+    "command_usage": {
+      "init_project_structure": "INCREMENT_USAGE_COUNT"
+    }
+  },
+  "architecture_status": {
+    "foundation_layer": {
+      "structure_initialized": true,
+      "package_structure_created": true,
+      "build_system_configured": true
+    }
+  }
+}
+```
+
+#### System Integration Updates (`.claude/context/system-integration.json`)
+```json
+{
+  "real_time_metrics": {
+    "current_session": {
+      "commands_executed": "INCREMENT_BY_1",
+      "metadata_syncs": "INCREMENT_BY_1",
+      "structure_initializations": "INCREMENT_BY_1"
+    }
+  },
+  "project_foundation": {
+    "directory_structure_health": "CALCULATE_STRUCTURE_HEALTH",
+    "python_environment_status": "UPDATE_ENVIRONMENT_STATUS",
+    "build_system_compatibility": "UPDATE_BUILD_COMPATIBILITY"
+  }
+}
+```

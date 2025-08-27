@@ -254,69 +254,125 @@ Recommended actions after use case specification creation completion:
 
 **🔧 重要事項**: ユースケース仕様の品質がTDD実装とドメイン設計の成功を左右する。
 
-## 🔄 **PHASE 2: ENHANCED METADATA INTEGRATION**
+## 🔄 **PHASE 3: ENHANCED INTEGRATION CAPABILITIES**
 
-### **Metadata Update Responsibilities**
-After completing use case specification creation, this subagent MUST update project metadata to maintain system consistency:
+### **Critical Enhancement Features**
+This agent implements Phase 3 advanced integration and use case specification capabilities:
 
-#### **1. Project State Update (docs/metadata/project-state.json)**
+1. **Automated Scenario Validation and Completeness Checking**
+2. **Domain Concept Discovery and Consistency Verification**
+3. **Cross-Issue Dependency Analysis**
+4. **Real-time Specification Quality Assessment**
+
+### **Project State Updates**
+
+**CRITICAL**: After successful use case specification creation, MUST update integrated project metadata:
+
+#### Project State Updates (`docs/metadata/project-state.json`)
 ```json
 {
   "project_metadata": {
     "current_phase": "use-case-specification",
-    "last_updated": "2024-01-XX",
-    "active_issues": ["issue-X", "issue-Y"]
-  },
-  "sprint_summary": {
-    "use_case_creation_status": {
-      "issues_specified": ["issue-X", "issue-Y"],
-      "scenarios_created": "XX count",
-      "domain_concepts_identified": "XX count",
-      "ubiquitous_language_established": "consistent"
-    }
+    "last_updated": "CURRENT_TIMESTAMP",
+    "active_issues": "UPDATE_WITH_PROCESSED_ISSUES"
   },
   "requirements_analysis": {
     "use_case_specifications": {
-      "github_issues_analyzed": "XX count",
-      "given_when_then_scenarios": "comprehensive",
-      "acceptance_criteria": "refined",
-      "domain_concepts": "identified"
+      "github_issues_analyzed": "INCREMENT_BY_PROCESSED_COUNT",
+      "given_when_then_scenarios": "INCREMENT_BY_SCENARIO_COUNT",
+      "acceptance_criteria": "INCREMENT_BY_CRITERIA_COUNT",
+      "domain_concepts_identified": "INCREMENT_BY_CONCEPT_COUNT",
+      "completion_rate": "RECALCULATE_SPECIFICATION_PERCENTAGE"
     }
+  },
+  "workflow_statistics": {
+    "specification_creation": {
+      "total_specifications_created": "INCREMENT_BY_1",
+      "specification_success_rate": "RECALCULATE_SUCCESS_PERCENTAGE"
+    },
+    "subagent_performance": {
+      "total_subagent_calls": "INCREMENT_BY_1",
+      "most_active_agents": "UPDATE_WITH_03_CREATE_USE_CASE"
+    }
+  },
+  "system_health": {
+    "requirements_tracking": {
+      "specification_quality": "CALCULATE_QUALITY_SCORE",
+      "scenario_coverage": "CALCULATE_COVERAGE_PERCENTAGE",
+      "last_quality_check": "CURRENT_TIMESTAMP"
+    }
+  },
+  "recent_activity": {
+    "last_command_executed": "create-use-case",
+    "last_subagent_called": "03-create-use-case",
+    "last_metadata_update": "CURRENT_TIMESTAMP"
   }
 }
 ```
 
-#### **2. Project Context Update (.claude/context/project-context.json)**
+#### Context File Updates (`.claude/context/project-context.json`)
 ```json
 {
   "current_state": {
-    "active_sprint": {
-      "use_case_creation": {
-        "completed": ["issue-X", "issue-Y"],
-        "specifications_status": "created",
-        "scenarios_status": "defined",
-        "next_phase": "domain-modeling"
-      }
+    "last_command": "create-use-case",
+    "last_command_timestamp": "CURRENT_TIMESTAMP",
+    "development_stage": "UPDATE_TO_USE_CASE_SPECIFIED"
+  },
+  "requirements_tracking": {
+    "use_case_creation": {
+      "status": "UPDATE_TO_COMPLETED_OR_IN_PROGRESS",
+      "completed_issues": "LIST_COMPLETED_ISSUES",
+      "scenarios_created": "COUNT_CREATED_SCENARIOS",
+      "domain_concepts": "LIST_IDENTIFIED_CONCEPTS"
+    }
+  },
+  "workflow_tracking": {
+    "command_usage": {
+      "create_use_case": "INCREMENT_USAGE_COUNT"
     },
-    "workflow_tracking": {
-      "use_case_creation": {
-        "last_execution": "timestamp",
-        "issues_processed": ["X", "Y"],
-        "specification_outcomes": ["scenarios_defined", "concepts_identified"]
+    "subagent_utilization": {
+      "03_create_use_case": "INCREMENT_USAGE_COUNT"
+    }
+  }
+}
+```
+
+#### System Integration Updates (`.claude/context/system-integration.json`)
+```json
+{
+  "real_time_metrics": {
+    "current_session": {
+      "subagents_invoked": "INCREMENT_BY_1",
+      "metadata_syncs": "INCREMENT_BY_1"
+    }
+  },
+  "integration_health": {
+    "component_status": {
+      "use_case_system": {
+        "average_scenario_count": "UPDATE_WITH_CURRENT_SCENARIO_COUNT",
+        "quality_score": "CALCULATE_CURRENT_QUALITY_SCORE"
       }
     }
   }
 }
 ```
 
-#### **3. Use Case Documentation (docs/use_cases/)**
-Create comprehensive use case specifications with:
-- GitHub issue analysis and requirement extraction
-- Complete Given-When-Then scenario coverage (main, alternative, exception flows)
-- Domain concept identification and ubiquitous language definitions
-- Acceptance criteria refinement with testable specifications
-- Traceability between issues and scenarios
-- Business rule documentation and constraint specifications
+### **Phase 3: Enhanced Processing Actions** 🚀
+1. **Context File Reading**: Always read all required context files with validation
+2. **Issue Analysis**: Deep GitHub issue analysis with requirement extraction and dependency mapping
+3. **Scenario Generation**: Intelligent Given-When-Then scenario creation with completeness validation
+4. **Domain Discovery**: Automated domain concept identification and consistency verification
+5. **Quality Assessment**: Real-time specification quality scoring and improvement recommendations
+6. **Cross-Reference Validation**: Verify consistency with existing specifications and vision alignment
+7. **Metadata Synchronization**: Update all integrated metadata systems automatically
+8. **Documentation Generation**: Create comprehensive use case documentation with traceability
+9. **Context Handoff**: Prepare comprehensive context for domain modeling with specification quality metrics
+
+### **Phase 4: Context Handoff** 📤
+- Update project metadata files with specification creation status and quality metrics
+- Document domain concepts and ubiquitous language definitions
+- Prepare foundation for domain modeling with comprehensive requirement analysis
+- Ensure traceability between GitHub issues, scenarios, and domain concepts
 
 ### **Context Integration Priority**
 1. **FIRST**: Update project-state.json with use case creation completion and scenario metrics

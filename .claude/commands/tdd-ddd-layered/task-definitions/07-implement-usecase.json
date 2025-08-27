@@ -4,6 +4,16 @@
   "phase": "application-layer-implementation",
   "category": "implementation", 
   "priority": "high",
+  "version": "3.0",
+  "last_updated": "2025-08-27T00:00:00Z",
+  "required_subagent": "07-implement-usecase",
+  "subagent_mandatory": true,
+  "phase_3_features": {
+    "orchestration_optimization": true,
+    "integration_validation_automation": true,
+    "performance_monitoring": true,
+    "error_handling_enhancement": true
+  },
   "critical_tasks": [
     "domain_layer_verification",
     "use_case_interfaces_design",
@@ -85,6 +95,61 @@
       "from.*domain",
       "Repository.*Interface",
       "transaction.*boundary"
+    ]
+  },
+  "metadata_integration": {
+    "project_state_updates": {
+      "architecture_overview": {
+        "application_layer": {
+          "use_cases_implemented": "INCREMENT_BY_IMPLEMENTED_COUNT",
+          "dtos_created": "INCREMENT_BY_DTO_COUNT",
+          "application_services_implemented": "INCREMENT_BY_SERVICE_COUNT",
+          "application_completion_rate": "RECALCULATE_APPLICATION_PERCENTAGE"
+        }
+      },
+      "workflow_statistics": {
+        "subagent_performance": {
+          "total_subagent_calls": "INCREMENT_BY_1",
+          "most_active_agents": "UPDATE_WITH_07_IMPLEMENT_USECASE"
+        }
+      },
+      "recent_activity": {
+        "last_command_executed": "implement-usecase",
+        "last_subagent_called": "07-implement-usecase",
+        "last_metadata_update": "CURRENT_TIMESTAMP"
+      }
+    },
+    "context_file_updates": {
+      "current_state": {
+        "last_command": "implement-usecase",
+        "last_command_timestamp": "CURRENT_TIMESTAMP",
+        "development_stage": "APPLICATION_LAYER_COMPLETED"
+      }
+    },
+    "system_integration_updates": {
+      "real_time_metrics": {
+        "current_session": {
+          "subagents_invoked": "INCREMENT_BY_1",
+          "metadata_syncs": "INCREMENT_BY_1"
+        }
+      }
+    }
+  },
+  "execution_requirements": {
+    "context_files_required": [
+      ".claude/context/current-command-context.json",
+      ".claude/context/project-context.json",
+      "docs/metadata/project-state.json"
+    ],
+    "subagent_invocation": {
+      "agent_name": "07-implement-usecase",
+      "agent_mandatory": true,
+      "fallback_behavior": "error_with_guidance"
+    },
+    "post_execution_updates": [
+      "update_project_metadata",
+      "sync_context_files",
+      "validate_integration_health"
     ]
   }
 }

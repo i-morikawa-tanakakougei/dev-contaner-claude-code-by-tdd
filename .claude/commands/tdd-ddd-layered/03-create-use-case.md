@@ -464,32 +464,88 @@ $ gh issue list
 $ /create-use-case 15
 ```
 
-## 🔄 Metadata Update Requirements
+## 🔄 **PHASE 3: ENHANCED INTEGRATION CAPABILITIES**
 
-**CRITICAL**: After successful use case creation completion, you MUST update the following files:
+### **Critical Enhancement Features**
+This command implements Phase 3 advanced integration and use case specification capabilities:
 
-1. **Project State Update**:
-   ```bash
-   # Update docs/metadata/project-state.json
-   # - Increment documentation_metrics.specification_documents.use_case_specifications count
-   # - Add to recent_activity.last_command_executed
-   # - Update workflow_statistics.command_execution_stats
-   ```
+1. **Scenario Validation**: Intelligent Given-When-Then scenario validation with consistency checking
+2. **Domain Concept Discovery**: Automated extraction and validation of domain concepts from requirements
+3. **Requirements Analysis**: Advanced requirements parsing with dependency detection and impact analysis
+4. **Acceptance Criteria Optimization**: Smart acceptance criteria generation with completeness validation
 
-2. **Project Context Update**:
-   ```bash
-   # Update .claude/context/project-context.json  
-   # - Increment workflow_tracking.command_usage.create_use_case
-   # - Set current_state.last_command and last_command_timestamp
-   ```
+### **Project State Updates**
 
-3. **Issue-Specific Metadata**:
-   ```bash
-   # Update docs/use_cases/issue-X-Y.json
-   # - Set use_case_specification.status to "completed"
-   # - Add specification_files array
-   # - Update completion timestamp
-   ```
+**CRITICAL**: After successful use case creation completion, MUST update integrated project metadata:
+
+#### Project State Updates (`docs/metadata/project-state.json`)
+```json
+{
+  "project_metadata": {
+    "overall_status": "use_case_specification_created",
+    "health_score": "RECALCULATE_WITH_SPECIFICATION_METRICS",
+    "last_updated": "CURRENT_TIMESTAMP"
+  },
+  "architecture_overview": {
+    "requirements_layer": {
+      "use_case_specifications": "INCREMENT_SPECIFICATION_COUNT",
+      "scenario_coverage": "UPDATE_SCENARIO_METRICS",
+      "acceptance_criteria_completeness": "UPDATE_CRITERIA_METRICS"
+    }
+  },
+  "workflow_statistics": {
+    "command_execution_stats": {
+      "total_command_executions": "INCREMENT_BY_1",
+      "create_use_case_completions": "INCREMENT_BY_1"
+    },
+    "subagent_performance": {
+      "most_active_agents": "UPDATE_WITH_03_CREATE_USE_CASE_SUBAGENT"
+    }
+  },
+  "recent_activity": {
+    "last_command_executed": "create-use-case",
+    "last_metadata_update": "CURRENT_TIMESTAMP"
+  }
+}
+```
+
+#### Context File Updates (`.claude/context/project-context.json`)
+```json
+{
+  "current_state": {
+    "last_command": "create-use-case",
+    "last_command_timestamp": "CURRENT_TIMESTAMP"
+  },
+  "workflow_tracking": {
+    "command_usage": {
+      "create_use_case": "INCREMENT_USAGE_COUNT"
+    }
+  },
+  "requirements_status": {
+    "use_case_specifications": "UPDATE_SPECIFICATION_LIST",
+    "domain_concepts": "UPDATE_DISCOVERED_CONCEPTS",
+    "scenario_coverage": "UPDATE_COVERAGE_METRICS"
+  }
+}
+```
+
+#### System Integration Updates (`.claude/context/system-integration.json`)
+```json
+{
+  "real_time_metrics": {
+    "current_session": {
+      "commands_executed": "INCREMENT_BY_1",
+      "metadata_syncs": "INCREMENT_BY_1",
+      "specification_documents_created": "INCREMENT_BY_1"
+    }
+  },
+  "requirements_analysis": {
+    "scenario_quality_score": "CALCULATE_SCENARIO_QUALITY",
+    "domain_concept_consistency": "UPDATE_CONSISTENCY_METRICS",
+    "acceptance_criteria_coverage": "UPDATE_COVERAGE_ANALYSIS"
+  }
+}
+```
 
 **⚠️ Error Handling**: If standard workflow is disrupted:
 - 📖 Consult: [Manual Sync Guide](../../docs/maintenance/manual-sync-guide.md)

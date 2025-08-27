@@ -133,11 +133,59 @@
     "last_command_executed": null,
     "last_subagent_called": null,
     "last_issue_updated": null,
-    "last_metadata_update": "2025-08-27T00:00:00Z"
+    "last_metadata_update": "2025-08-27T00:00:00Z",
+    "activity_timeline": [],
+    "performance_metrics": {
+      "average_command_execution_time": "0s",
+      "system_response_time": "0.5s",
+      "metadata_sync_latency": "0.1s"
+    }
+  },
+  "health_monitoring": {
+    "real_time_health": {
+      "system_availability": 100,
+      "data_consistency_score": 100,
+      "performance_score": 95,
+      "last_health_check": "2025-08-27T00:00:00Z"
+    },
+    "alerts": [],
+    "maintenance_windows": [],
+    "backup_status": {
+      "last_backup": "2025-08-27T00:00:00Z",
+      "backup_success_rate": "100%",
+      "recovery_point_objective": "1h"
+    }
+  },
+  "predictive_analytics": {
+    "project_success_probability": 85,
+    "estimated_completion_date": null,
+    "risk_trends": [],
+    "velocity_forecast": {
+      "next_sprint_prediction": 0,
+      "confidence_level": "medium",
+      "factors": ["team_availability", "complexity_analysis", "historical_data"]
+    }
   },
   "dependencies_graph": {
-    "cross_layer_dependencies": [],
+    "cross_layer_dependencies": [
+      {"from": "presentation", "to": "application", "type": "uses", "strength": "high"},
+      {"from": "application", "to": "domain", "type": "orchestrates", "strength": "high"},
+      {"from": "application", "to": "infrastructure", "type": "depends_on", "strength": "medium"},
+      {"from": "infrastructure", "to": "domain", "type": "implements", "strength": "high"}
+    ],
     "issue_dependencies": [],
-    "command_dependencies": []
+    "command_dependencies": [
+      {"command": "create-vision", "prerequisites": [], "enables": ["sprint-planning"]},
+      {"command": "sprint-planning", "prerequisites": ["create-vision"], "enables": ["create-use-case"]},
+      {"command": "create-use-case", "prerequisites": ["sprint-planning"], "enables": ["domain-modeling"]},
+      {"command": "domain-modeling", "prerequisites": ["create-use-case"], "enables": ["create-tests"]},
+      {"command": "create-tests", "prerequisites": ["domain-modeling"], "enables": ["implement-domain"]},
+      {"command": "implement-domain", "prerequisites": ["create-tests"], "enables": ["implement-usecase"]},
+      {"command": "implement-usecase", "prerequisites": ["implement-domain"], "enables": ["implement-infra"]},
+      {"command": "implement-infra", "prerequisites": ["implement-usecase"], "enables": ["implement-presentation"]},
+      {"command": "implement-presentation", "prerequisites": ["implement-infra"], "enables": ["run-all-tests"]},
+      {"command": "run-all-tests", "prerequisites": ["implement-presentation"], "enables": ["refactor"]},
+      {"command": "refactor", "prerequisites": ["run-all-tests"], "enables": ["create-pr"]}
+    ]
   }
 }

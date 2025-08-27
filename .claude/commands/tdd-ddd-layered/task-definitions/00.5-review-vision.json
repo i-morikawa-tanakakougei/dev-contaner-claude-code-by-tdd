@@ -4,6 +4,16 @@
   "phase": "vision-review-phase",
   "category": "quality-assurance",
   "priority": "medium",
+  "version": "3.0",
+  "last_updated": "2025-08-27T00:00:00Z",
+  "required_subagent": "00.5-review-vision",
+  "subagent_mandatory": true,
+  "phase_3_features": {
+    "vision_quality_assessment": true,
+    "strategic_alignment_validation": true,
+    "scenario_completeness_analysis": true,
+    "success_probability_prediction": true
+  },
   "critical_tasks": [
     "vision_document_analysis",
     "bounded_context_validation",
@@ -64,6 +74,60 @@
     ],
     "output_files": [
       "vision_review_report.md"
+    ]
+  },
+  "metadata_integration": {
+    "project_state_updates": {
+      "architecture_overview": {
+        "quality_assurance_layer": {
+          "vision_reviews_completed": "INCREMENT_BY_1",
+          "quality_scores_recorded": "UPDATE_WITH_REVIEW_SCORE",
+          "approval_status": "UPDATE_WITH_APPROVAL_STATUS"
+        }
+      },
+      "workflow_statistics": {
+        "subagent_performance": {
+          "total_subagent_calls": "INCREMENT_BY_1",
+          "most_active_agents": "UPDATE_WITH_00.5_REVIEW_VISION"
+        }
+      },
+      "recent_activity": {
+        "last_command_executed": "review-vision",
+        "last_subagent_called": "00.5-review-vision",
+        "last_metadata_update": "CURRENT_TIMESTAMP"
+      }
+    },
+    "context_file_updates": {
+      "current_state": {
+        "last_command": "review-vision",
+        "last_command_timestamp": "CURRENT_TIMESTAMP",
+        "development_stage": "VISION_REVIEW_COMPLETED"
+      }
+    },
+    "system_integration_updates": {
+      "real_time_metrics": {
+        "current_session": {
+          "subagents_invoked": "INCREMENT_BY_1",
+          "metadata_syncs": "INCREMENT_BY_1"
+        }
+      }
+    }
+  },
+  "execution_requirements": {
+    "context_files_required": [
+      ".claude/context/current-command-context.json",
+      ".claude/context/project-context.json",
+      "docs/metadata/project-state.json"
+    ],
+    "subagent_invocation": {
+      "agent_name": "00.5-review-vision",
+      "agent_mandatory": true,
+      "fallback_behavior": "error_with_guidance"
+    },
+    "post_execution_updates": [
+      "update_project_metadata",
+      "sync_context_files",
+      "validate_integration_health"
     ]
   }
 }

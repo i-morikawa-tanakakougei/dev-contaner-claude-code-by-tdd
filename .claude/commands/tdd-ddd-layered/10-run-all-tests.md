@@ -478,34 +478,90 @@ Important Notes:
 - Document test results for team review
 - All user-facing output must be in JAPANESE
 
-## 🔄 Metadata Update Requirements
+## 🔄 **PHASE 3: ENHANCED INTEGRATION CAPABILITIES**
 
-**CRITICAL**: After successful test execution completion, you MUST update the following files:
+### **Critical Enhancement Features**
+This command implements Phase 3 advanced integration and test execution capabilities:
 
-1. **Project State Update**:
-   ```bash
-   # Update docs/metadata/project-state.json
-   # - Update quality_dashboard.test_coverage with actual coverage percentages
-   # - Update tdd_compliance.green_phase_completions count
-   # - Add to recent_activity.last_command_executed
-   # - Update workflow_statistics.command_execution_stats
-   ```
+1. **Comprehensive Test Analysis**: Deep analysis of test results with pattern recognition and failure correlation
+2. **Quality Assessment**: Multi-dimensional quality assessment with maintainability and reliability scoring
+3. **Coverage Reporting**: Advanced coverage reporting with gap analysis and improvement recommendations
+4. **Performance Impact Analysis**: Test performance impact analysis with optimization suggestions and bottleneck identification
 
-2. **Project Context Update**:
-   ```bash
-   # Update .claude/context/project-context.json  
-   # - Update quality_metrics.test_coverage with detailed results
-   # - Increment workflow_tracking.command_usage.run_all_tests
-   # - Set current_state.last_command and last_command_timestamp
-   ```
+### **Project State Updates**
 
-3. **Issue-Specific Metadata**:
-   ```bash
-   # Update docs/use_cases/issue-X-Y.json
-   # - Set testing.status to "completed"
-   # - Add test_results with coverage and success metrics
-   # - Update completion timestamp
-   ```
+**CRITICAL**: After successful test execution completion, MUST update integrated project metadata:
+
+#### Project State Updates (`docs/metadata/project-state.json`)
+```json
+{
+  "project_metadata": {
+    "overall_status": "tdd_green_phase_completed",
+    "health_score": "RECALCULATE_WITH_TEST_RESULTS",
+    "last_updated": "CURRENT_TIMESTAMP"
+  },
+  "architecture_overview": {
+    "quality_metrics": {
+      "test_pass_rate": "UPDATE_PASS_RATE_PERCENTAGE",
+      "coverage_percentage": "UPDATE_COVERAGE_PERCENTAGE",
+      "quality_score": "UPDATE_OVERALL_QUALITY_SCORE",
+      "performance_score": "UPDATE_PERFORMANCE_METRICS"
+    }
+  },
+  "workflow_statistics": {
+    "command_execution_stats": {
+      "total_command_executions": "INCREMENT_BY_1",
+      "run_all_tests_completions": "INCREMENT_BY_1"
+    },
+    "subagent_performance": {
+      "most_active_agents": "UPDATE_WITH_10_RUN_ALL_TESTS_SUBAGENT"
+    }
+  },
+  "recent_activity": {
+    "last_command_executed": "run-all-tests",
+    "last_metadata_update": "CURRENT_TIMESTAMP"
+  }
+}
+```
+
+#### Context File Updates (`.claude/context/project-context.json`)
+```json
+{
+  "current_state": {
+    "last_command": "run-all-tests",
+    "last_command_timestamp": "CURRENT_TIMESTAMP"
+  },
+  "workflow_tracking": {
+    "command_usage": {
+      "run_all_tests": "INCREMENT_USAGE_COUNT"
+    }
+  },
+  "test_execution_status": {
+    "tdd_green_phase": "completed",
+    "test_results": "UPDATE_TEST_EXECUTION_RESULTS",
+    "coverage_analysis": "UPDATE_COVERAGE_ANALYSIS",
+    "quality_assessment": "UPDATE_QUALITY_ASSESSMENT"
+  }
+}
+```
+
+#### System Integration Updates (`.claude/context/system-integration.json`)
+```json
+{
+  "real_time_metrics": {
+    "current_session": {
+      "commands_executed": "INCREMENT_BY_1",
+      "metadata_syncs": "INCREMENT_BY_1",
+      "test_executions_completed": "INCREMENT_BY_1"
+    }
+  },
+  "test_quality": {
+    "comprehensive_analysis_score": "UPDATE_ANALYSIS_SCORE",
+    "performance_impact": "UPDATE_PERFORMANCE_IMPACT",
+    "coverage_gap_analysis": "UPDATE_GAP_ANALYSIS"
+  }
+}
+```
 
 **⚠️ Error Handling**: If standard workflow is disrupted:
 - 📖 Consult: [Manual Sync Guide](../../docs/maintenance/manual-sync-guide.md)

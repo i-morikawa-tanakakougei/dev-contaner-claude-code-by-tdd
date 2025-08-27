@@ -4,6 +4,16 @@
   "phase": "tdd-refactor-phase",
   "category": "quality-improvement",
   "priority": "high",
+  "version": "3.0",
+  "last_updated": "2025-08-27T00:00:00Z",
+  "required_subagent": "11-refactor",
+  "subagent_mandatory": true,
+  "phase_3_features": {
+    "code_quality_analysis": true,
+    "performance_impact_assessment": true,
+    "technical_debt_reduction": true,
+    "design_pattern_optimization": true
+  },
   "critical_tasks": [
     "test_suite_verification",
     "code_quality_analysis",
@@ -83,6 +93,61 @@
       "cyclomatic.*complexity.*reduced",
       "duplication.*removed",
       "maintainability.*improved"
+    ]
+  },
+  "metadata_integration": {
+    "project_state_updates": {
+      "architecture_overview": {
+        "quality_improvement_layer": {
+          "refactoring_sessions_completed": "INCREMENT_BY_1",
+          "code_quality_improvements_applied": "INCREMENT_BY_IMPROVEMENT_COUNT",
+          "technical_debt_reduced": "UPDATE_WITH_DEBT_REDUCTION",
+          "refactoring_completion_rate": "RECALCULATE_REFACTORING_PERCENTAGE"
+        }
+      },
+      "workflow_statistics": {
+        "subagent_performance": {
+          "total_subagent_calls": "INCREMENT_BY_1",
+          "most_active_agents": "UPDATE_WITH_11_REFACTOR"
+        }
+      },
+      "recent_activity": {
+        "last_command_executed": "refactor",
+        "last_subagent_called": "11-refactor",
+        "last_metadata_update": "CURRENT_TIMESTAMP"
+      }
+    },
+    "context_file_updates": {
+      "current_state": {
+        "last_command": "refactor",
+        "last_command_timestamp": "CURRENT_TIMESTAMP",
+        "development_stage": "REFACTORING_COMPLETED"
+      }
+    },
+    "system_integration_updates": {
+      "real_time_metrics": {
+        "current_session": {
+          "subagents_invoked": "INCREMENT_BY_1",
+          "metadata_syncs": "INCREMENT_BY_1"
+        }
+      }
+    }
+  },
+  "execution_requirements": {
+    "context_files_required": [
+      ".claude/context/current-command-context.json",
+      ".claude/context/project-context.json",
+      "docs/metadata/project-state.json"
+    ],
+    "subagent_invocation": {
+      "agent_name": "11-refactor",
+      "agent_mandatory": true,
+      "fallback_behavior": "error_with_guidance"
+    },
+    "post_execution_updates": [
+      "update_project_metadata",
+      "sync_context_files",
+      "validate_integration_health"
     ]
   }
 }

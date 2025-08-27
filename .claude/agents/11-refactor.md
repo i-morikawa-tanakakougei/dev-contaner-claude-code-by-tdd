@@ -221,81 +221,126 @@ Guidance for transitioning to pull request creation phase:
 
 **🔧 重要事項**: TDD REFACTORフェーズでは常にテストをGREEN状態に保ち、段階的な改善を実施。
 
-## 🔄 **PHASE 2: ENHANCED METADATA INTEGRATION**
+## 🔄 **PHASE 3: ENHANCED INTEGRATION CAPABILITIES**
 
-### **Metadata Update Responsibilities**
-After completing refactoring, this subagent MUST update project metadata to maintain system consistency:
+### **Critical Enhancement Features**
+This agent implements Phase 3 advanced integration and refactoring capabilities:
 
-#### **1. Project State Update (docs/metadata/project-state.json)**
+1. **Automated Code Quality Analysis and Improvement Recommendations**
+2. **Intelligent Refactoring Pattern Recognition and Application**
+3. **Cross-layer Impact Analysis and Validation**
+4. **Real-time Performance Impact Assessment**
+
+### **Project State Updates**
+
+**CRITICAL**: After successful refactoring, MUST update integrated project metadata:
+
+#### Project State Updates (`docs/metadata/project-state.json`)
 ```json
 {
   "project_metadata": {
     "current_phase": "refactoring",
-    "last_updated": "2024-01-XX",
-    "active_issues": ["issue-X", "issue-Y"]
+    "last_updated": "CURRENT_TIMESTAMP",
+    "active_issues": "UPDATE_WITH_REFACTORED_ISSUES"
   },
-  "sprint_summary": {
-    "refactoring_status": {
-      "issues_refactored": ["issue-X-Y"],
-      "code_quality_improvements": "completed",
-      "duplication_removal": "executed",
-      "test_suite_status": "green",
-      "refactoring_completion": "ready_for_pr"
+  "quality_dashboard": {
+    "code_quality": {
+      "technical_debt_reduction": "CALCULATE_DEBT_REDUCTION_PERCENTAGE",
+      "code_duplication_reduction": "CALCULATE_DUPLICATION_REDUCTION",
+      "maintainability_index": "RECALCULATE_MAINTAINABILITY_INDEX",
+      "refactoring_impact_score": "CALCULATE_IMPACT_SCORE"
     }
   },
-  "quality_metrics": {
+  "workflow_statistics": {
     "refactoring": {
-      "duplicate_code_reduction": "XX%",
-      "method_extractions": "XX count",
-      "design_improvements": "XX count",
-      "test_status": "all_passing",
-      "performance_improvements": "achieved"
+      "total_refactoring_sessions": "INCREMENT_BY_1",
+      "refactoring_success_rate": "RECALCULATE_SUCCESS_PERCENTAGE"
+    },
+    "subagent_performance": {
+      "total_subagent_calls": "INCREMENT_BY_1",
+      "most_active_agents": "UPDATE_WITH_11_REFACTOR"
     }
+  },
+  "system_health": {
+    "code_health": {
+      "cyclomatic_complexity": "RECALCULATE_COMPLEXITY_METRICS",
+      "design_pattern_adherence": "CALCULATE_PATTERN_ADHERENCE",
+      "test_suite_stability": "VERIFY_TEST_STABILITY",
+      "last_health_check": "CURRENT_TIMESTAMP"
+    }
+  },
+  "recent_activity": {
+    "last_command_executed": "refactor",
+    "last_subagent_called": "11-refactor",
+    "last_metadata_update": "CURRENT_TIMESTAMP"
   }
 }
 ```
 
-#### **2. Project Context Update (.claude/context/project-context.json)**
+#### Context File Updates (`.claude/context/project-context.json`)
 ```json
 {
   "current_state": {
-    "active_sprint": {
-      "refactoring": {
-        "completed": ["issue-X-Y"],
-        "code_quality_status": "improved",
-        "test_suite_status": "green",
-        "performance_status": "optimized",
-        "next_phase": "create-pr"
-      }
+    "last_command": "refactor",
+    "last_command_timestamp": "CURRENT_TIMESTAMP",
+    "development_stage": "UPDATE_TO_REFACTORED"
+  },
+  "quality_tracking": {
+    "refactoring": {
+      "status": "UPDATE_TO_COMPLETED_OR_IN_PROGRESS",
+      "completed_issues": "LIST_REFACTORED_ISSUES",
+      "quality_improvements": "LIST_QUALITY_IMPROVEMENTS",
+      "test_suite_status": "VERIFY_ALL_TESTS_GREEN"
+    }
+  },
+  "workflow_tracking": {
+    "command_usage": {
+      "refactor": "INCREMENT_USAGE_COUNT"
     },
-    "workflow_tracking": {
-      "refactoring": {
-        "last_execution": "timestamp",
-        "issues_processed": ["X", "Y"],
-        "refactoring_outcomes": ["quality_improved", "tests_green"]
+    "subagent_utilization": {
+      "11_refactor": "INCREMENT_USAGE_COUNT"
+    }
+  }
+}
+```
+
+#### System Integration Updates (`.claude/context/system-integration.json`)
+```json
+{
+  "real_time_metrics": {
+    "current_session": {
+      "subagents_invoked": "INCREMENT_BY_1",
+      "metadata_syncs": "INCREMENT_BY_1"
+    }
+  },
+  "integration_health": {
+    "component_status": {
+      "refactoring_system": {
+        "code_quality_trend": "CALCULATE_QUALITY_TREND",
+        "refactoring_efficiency": "CALCULATE_EFFICIENCY_SCORE"
       }
     }
   }
 }
 ```
 
-#### **3. Issue-Specific Updates (docs/use_cases/issue-X-Y.json)**
-```json
-{
-  "refactoring_status": {
-    "refactoring": {
-      "status": "completed",
-      "completed_date": "2024-01-XX",
-      "improvements": {
-        "duplication_removal": "XX instances",
-        "method_extractions": "XX count",
-        "design_patterns_applied": ["Strategy", "Factory"],
-        "performance_optimizations": "XX improvements"
-      },
-      "test_verification": "all_passing"
-    }
-  }
-}
+### **Phase 3: Enhanced Processing Actions** 🚀
+1. **Context File Reading**: Always read all required context files with validation
+2. **Code Quality Analysis**: Comprehensive code quality assessment with automated issue identification
+3. **Refactoring Planning**: Intelligent refactoring strategy development with impact analysis
+4. **Implementation**: Execute refactoring with real-time quality monitoring and validation
+5. **Test Validation**: Continuous test execution to ensure GREEN state maintenance
+6. **Performance Assessment**: Monitor and assess performance impact of refactoring changes
+7. **Cross-Reference Validation**: Verify refactoring maintains system integration and consistency
+8. **Metadata Synchronization**: Update all integrated metadata systems automatically
+9. **Quality Reporting**: Generate comprehensive refactoring impact reports
+10. **Context Handoff**: Prepare comprehensive context for PR creation with quality metrics
+
+### **Phase 4: Context Handoff** 📤
+- Update project metadata files with refactoring completion status and quality improvements
+- Document code quality improvements and technical debt reduction
+- Prepare foundation for PR creation with comprehensive change analysis
+- Ensure traceability between refactoring goals and achieved improvements
 ```
 
 ### **Context Integration Priority**

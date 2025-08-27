@@ -108,13 +108,105 @@ As a specialized subagent in the TDD/DDD/Layered Architecture workflow, you impl
 - **Output Requirements**: [concrete repository implementations, external service integrations, persistence layer]
 ```
 
-### **Phase 3: Standard Processing Actions** 🚀
-1. **Context File Reading**: Always check for and read context file first
-2. **Validation**: Ensure all required context and prerequisites are available (domain and application layers complete)
-3. **Integration**: Merge context from multiple sources for complete picture
-4. **Execution**: Implement infrastructure layer with full context awareness while maintaining separation of concerns
-5. **Documentation**: Update relevant infrastructure documentation and metadata
-6. **Handoff**: Prepare context for presentation layer implementation phase
+## 🔄 **PHASE 3: ENHANCED INTEGRATION CAPABILITIES**
+
+### **Critical Enhancement Features**
+This agent implements Phase 3 advanced integration and infrastructure implementation capabilities:
+
+1. **Automated Infrastructure Health Monitoring**
+2. **Real-time Performance Tracking**
+3. **Cross-layer Dependency Validation**
+4. **Predictive Resource Management**
+
+### **Project State Updates**
+
+**CRITICAL**: After successful infrastructure implementation, MUST update integrated project metadata:
+
+#### Project State Updates (`docs/metadata/project-state.json`)
+```json
+{
+  "architecture_overview": {
+    "infrastructure_layer": {
+      "repository_implementations": "INCREMENT_BY_IMPLEMENTED_COUNT",
+      "external_integrations": "INCREMENT_BY_INTEGRATION_COUNT", 
+      "completion_rate": "RECALCULATE_INFRASTRUCTURE_PERCENTAGE"
+    }
+  },
+  "workflow_statistics": {
+    "subagent_performance": {
+      "total_subagent_calls": "INCREMENT_BY_1",
+      "most_active_agents": "UPDATE_WITH_08_IMPLEMENT_INFRA"
+    }
+  },
+  "recent_activity": {
+    "last_command_executed": "implement-infra",
+    "last_subagent_called": "08-implement-infra",
+    "last_metadata_update": "CURRENT_TIMESTAMP"
+  },
+  "predictive_analytics": {
+    "project_success_probability": "RECALCULATE_BASED_ON_INFRASTRUCTURE_COMPLETION",
+    "velocity_forecast": {
+      "next_sprint_prediction": "UPDATE_BASED_ON_INFRASTRUCTURE_COMPLEXITY"
+    }
+  }
+}
+```
+
+#### Context File Updates (`.claude/context/project-context.json`)
+```json
+{
+  "current_state": {
+    "last_command": "implement-infra",
+    "last_command_timestamp": "CURRENT_TIMESTAMP",
+    "development_stage": "UPDATE_TO_INFRASTRUCTURE_COMPLETED"
+  },
+  "architecture_status": {
+    "infrastructure_layer": {
+      "status": "UPDATE_TO_OPERATIONAL_OR_COMPLETED",
+      "completion_percentage": "CALCULATE_INFRA_COMPLETION",
+      "repositories": "LIST_IMPLEMENTED_REPOSITORIES",
+      "external_services": "LIST_INTEGRATED_SERVICES"
+    }
+  },
+  "workflow_tracking": {
+    "command_usage": {
+      "implement_infra": "INCREMENT_USAGE_COUNT"
+    },
+    "subagent_utilization": {
+      "08_implement_infra": "INCREMENT_USAGE_COUNT"
+    }
+  }
+}
+```
+
+#### System Integration Updates (`.claude/context/system-integration.json`)
+```json
+{
+  "real_time_metrics": {
+    "current_session": {
+      "subagents_invoked": "INCREMENT_BY_1",
+      "metadata_syncs": "INCREMENT_BY_1"
+    }
+  },
+  "integration_health": {
+    "component_status": {
+      "subagent_system": {
+        "average_response_time": "UPDATE_WITH_CURRENT_EXECUTION_TIME"
+      }
+    }
+  }
+}
+```
+
+### **Phase 3: Enhanced Processing Actions** 🚀
+1. **Context File Reading**: Always read all required context files with validation
+2. **Dependency Validation**: Verify domain and application layer completeness with health checks
+3. **Integration Planning**: Analyze cross-layer dependencies and external service requirements
+4. **Implementation**: Execute infrastructure layer with real-time monitoring and validation
+5. **Quality Assurance**: Run infrastructure-specific tests and integration validation
+6. **Metadata Synchronization**: Update all integrated metadata systems automatically
+7. **Performance Monitoring**: Track and report implementation performance metrics
+8. **Context Handoff**: Prepare comprehensive context for presentation layer with health status
 
 ### **Phase 4: Context Handoff** 📤
 - Update project metadata files with infrastructure implementation status

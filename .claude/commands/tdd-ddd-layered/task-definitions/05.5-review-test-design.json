@@ -2,6 +2,18 @@
   "command": "05.5-review-test-design",
   "description": "TDD test design quality and Given-When-Then scenario coverage review",
   "phase": "test-design-review",
+  "category": "quality-assurance",
+  "priority": "medium",
+  "version": "3.0",
+  "last_updated": "2025-08-27T00:00:00Z",
+  "required_subagent": "05.5-review-test-design",
+  "subagent_mandatory": true,
+  "phase_3_features": {
+    "test_coverage_analysis": true,
+    "quality_assessment_automation": true,
+    "scenario_validation": true,
+    "automation_optimization": true
+  },
   "critical_tasks": [
     "tdd_red_phase_validation",
     "given_when_then_coverage_analysis",
@@ -92,6 +104,72 @@
       "Missing scenario coverage",
       "Poor test structure and naming",
       "Inadequate business rule testing"
+    ]
+  },
+  "dependencies": {
+    "previous_commands": ["05-create-tests"],
+    "next_commands": ["06-implement-domain"],
+    "required_files": [
+      "tests/unit/domain/test_*.py",
+      "tests/unit/application/test_*.py",
+      "tests/integration/test_*.py"
+    ],
+    "output_files": [
+      "test_design_review_report.md"
+    ]
+  },
+  "metadata_integration": {
+    "project_state_updates": {
+      "architecture_overview": {
+        "quality_assurance_layer": {
+          "test_design_reviews_completed": "INCREMENT_BY_1",
+          "test_quality_scores_recorded": "UPDATE_WITH_TEST_SCORE",
+          "test_approval_status": "UPDATE_WITH_APPROVAL_STATUS"
+        }
+      },
+      "workflow_statistics": {
+        "subagent_performance": {
+          "total_subagent_calls": "INCREMENT_BY_1",
+          "most_active_agents": "UPDATE_WITH_05.5_REVIEW_TEST_DESIGN"
+        }
+      },
+      "recent_activity": {
+        "last_command_executed": "review-test-design",
+        "last_subagent_called": "05.5-review-test-design",
+        "last_metadata_update": "CURRENT_TIMESTAMP"
+      }
+    },
+    "context_file_updates": {
+      "current_state": {
+        "last_command": "review-test-design",
+        "last_command_timestamp": "CURRENT_TIMESTAMP",
+        "development_stage": "TEST_DESIGN_REVIEW_COMPLETED"
+      }
+    },
+    "system_integration_updates": {
+      "real_time_metrics": {
+        "current_session": {
+          "subagents_invoked": "INCREMENT_BY_1",
+          "metadata_syncs": "INCREMENT_BY_1"
+        }
+      }
+    }
+  },
+  "execution_requirements": {
+    "context_files_required": [
+      ".claude/context/current-command-context.json",
+      ".claude/context/project-context.json",
+      "docs/metadata/project-state.json"
+    ],
+    "subagent_invocation": {
+      "agent_name": "05.5-review-test-design",
+      "agent_mandatory": true,
+      "fallback_behavior": "error_with_guidance"
+    },
+    "post_execution_updates": [
+      "update_project_metadata",
+      "sync_context_files",
+      "validate_integration_health"
     ]
   }
 }

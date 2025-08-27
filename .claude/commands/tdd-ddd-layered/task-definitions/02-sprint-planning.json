@@ -4,6 +4,16 @@
   "phase": "sprint-planning-phase",
   "category": "planning",
   "priority": "high",
+  "version": "3.0",
+  "last_updated": "2025-08-27T00:00:00Z",
+  "required_subagent": "02-sprint-planning",
+  "subagent_mandatory": true,
+  "phase_3_features": {
+    "sprint_optimization_algorithms": true,
+    "velocity_prediction_modeling": true,
+    "resource_allocation_optimization": true,
+    "risk_assessment_automation": true
+  },
   "critical_tasks": [
     "vision_analysis_completion",
     "core_scenario_breakdown",
@@ -65,6 +75,61 @@
     "output_files": [
       "docs/sprints/sprint-X-plan.md",
       "GitHub issues"
+    ]
+  },
+  "metadata_integration": {
+    "project_state_updates": {
+      "architecture_overview": {
+        "planning_layer": {
+          "sprint_plans_created": "INCREMENT_BY_1",
+          "github_issues_created": "INCREMENT_BY_ISSUE_COUNT",
+          "acceptance_criteria_defined": "INCREMENT_BY_CRITERIA_COUNT",
+          "planning_completion_rate": "RECALCULATE_PLANNING_PERCENTAGE"
+        }
+      },
+      "workflow_statistics": {
+        "subagent_performance": {
+          "total_subagent_calls": "INCREMENT_BY_1",
+          "most_active_agents": "UPDATE_WITH_02_SPRINT_PLANNING"
+        }
+      },
+      "recent_activity": {
+        "last_command_executed": "sprint-planning",
+        "last_subagent_called": "02-sprint-planning",
+        "last_metadata_update": "CURRENT_TIMESTAMP"
+      }
+    },
+    "context_file_updates": {
+      "current_state": {
+        "last_command": "sprint-planning",
+        "last_command_timestamp": "CURRENT_TIMESTAMP",
+        "development_stage": "SPRINT_PLANNING_COMPLETED"
+      }
+    },
+    "system_integration_updates": {
+      "real_time_metrics": {
+        "current_session": {
+          "subagents_invoked": "INCREMENT_BY_1",
+          "metadata_syncs": "INCREMENT_BY_1"
+        }
+      }
+    }
+  },
+  "execution_requirements": {
+    "context_files_required": [
+      ".claude/context/current-command-context.json",
+      ".claude/context/project-context.json",
+      "docs/metadata/project-state.json"
+    ],
+    "subagent_invocation": {
+      "agent_name": "02-sprint-planning",
+      "agent_mandatory": true,
+      "fallback_behavior": "error_with_guidance"
+    },
+    "post_execution_updates": [
+      "update_project_metadata",
+      "sync_context_files",
+      "validate_integration_health"
     ]
   }
 }

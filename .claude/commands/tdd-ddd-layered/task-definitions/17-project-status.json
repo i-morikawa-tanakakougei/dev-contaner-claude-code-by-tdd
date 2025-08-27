@@ -1,0 +1,199 @@
+{
+  "command_name": "17-project-status",
+  "title": "Project Status Overview",
+  "description": "Comprehensive project health monitoring and status analysis",
+  "category": "project-management",
+  "phase": "monitoring",
+  "tdd_phase": "continuous",
+  "complexity": "medium",
+  "estimated_duration": "30min-1 hour",
+  "command": "17-project-status",
+  "priority": "low",
+  "version": "3.0",
+  "last_updated": "2025-08-27T00:00:00Z",
+  "required_subagent": "17-project-status",
+  "subagent_mandatory": true,
+  "phase_3_features": {
+    "system_health_calculation": true,
+    "predictive_analysis": true,
+    "risk_assessment": true,
+    "recommendation_generation": true
+  },
+  
+  "execution_context": {
+    "required_files": [
+      ".claude/context/current-command-context.json",
+      ".claude/context/project-context.json", 
+      "docs/metadata/project-state.json",
+      "docs/index.md"
+    ],
+    "optional_files": [
+      ".claude/context/system-integration.json",
+      "docs/use_cases/**/*.json",
+      "docs/domain/**/*.md"
+    ],
+    "output_files": [
+      "docs/reports/project-status-{timestamp}.md"
+    ],
+    "metadata_updates": [
+      "docs/metadata/project-state.json",
+      ".claude/context/project-context.json"
+    ]
+  },
+  
+  "dependencies": {
+    "prerequisites": ["02-sprint-planning"],
+    "enables": ["14-apply-feedback", "12-evolve-scenarios"],
+    "conflicts_with": [],
+    "parallel_safe": true
+  },
+  
+  "critical_tasks": [
+    "project_health_calculation",
+    "architecture_status_analysis", 
+    "sprint_progress_evaluation",
+    "quality_metrics_aggregation",
+    "system_integration_verification",
+    "risk_assessment_generation"
+  ],
+  
+  "quality_gates": [
+    "HEALTH_SCORE_CALCULATED",
+    "ARCHITECTURE_STATUS_ASSESSED", 
+    "INTEGRATION_STATUS_VERIFIED",
+    "RECOMMENDATIONS_GENERATED"
+  ],
+  
+  "success_criteria": [
+    "Accurate health score calculation (0-100 scale)",
+    "Complete architecture layer analysis", 
+    "Comprehensive system integration status",
+    "Actionable recommendations for improvement",
+    "Successful metadata update completion"
+  ],
+  
+  "error_scenarios": [
+    {
+      "condition": "missing_context_files",
+      "resolution": "Generate partial report with available data and guide to manual sync",
+      "reference": "docs/maintenance/manual-sync-guide.md"
+    },
+    {
+      "condition": "metadata_inconsistency_detected", 
+      "resolution": "Report conflicts and provide consistency restoration guidance",
+      "reference": "docs/maintenance/manual-sync-guide.md section 3.2"
+    },
+    {
+      "condition": "health_score_calculation_failure",
+      "resolution": "Use fallback scoring algorithm and alert user",
+      "reference": "17-project-status subagent error handling"
+    }
+  ],
+  
+  "scope_parameters": {
+    "all": "Complete project overview (default)",
+    "health": "System health metrics only",
+    "architecture": "Architecture layer status only", 
+    "sprint": "Sprint progress and velocity only",
+    "quality": "Quality metrics and TDD compliance only"
+  },
+  
+  "integration_points": {
+    "dashboard_accessible": "docs/index.md - Project Management section",
+    "complementary_commands": [
+      {"command": "16-use-case-status", "relationship": "detailed_view"},
+      {"command": "10-run-all-tests", "relationship": "quality_metrics_source"},
+      {"command": "02-sprint-planning", "relationship": "sprint_data_source"}
+    ]
+  },
+  
+  "performance_requirements": {
+    "max_execution_time": "60s",
+    "memory_usage": "moderate", 
+    "disk_io": "read-heavy",
+    "cache_strategy": "context_files_5min"
+  },
+  
+  "output_formats": {
+    "complete_overview": {
+      "sections": [
+        "project_health_overview",
+        "architecture_layer_status", 
+        "sprint_velocity_metrics",
+        "quality_tdd_compliance",
+        "system_integration_status",
+        "risk_indicators_alerts",
+        "recommended_actions"
+      ]
+    },
+    "focused_scopes": {
+      "health": ["overall_health_score", "health_indicators"],
+      "architecture": ["layer_completion_rates", "component_status"],
+      "sprint": ["velocity_metrics", "issue_progress"],
+      "quality": ["test_coverage", "tdd_compliance", "code_quality"]
+    }
+  },
+  
+  "phase_3_enhancements": {
+    "real_time_monitoring": true,
+    "predictive_analytics": true,
+    "automated_health_calculation": true,
+    "cross_system_validation": true,
+    "intelligent_recommendations": true
+  },
+  "metadata_integration": {
+    "project_state_updates": {
+      "architecture_overview": {
+        "monitoring_layer": {
+          "project_status_checks_completed": "INCREMENT_BY_1",
+          "health_scores_calculated": "UPDATE_WITH_HEALTH_SCORE",
+          "risk_assessments_performed": "INCREMENT_BY_1",
+          "recommendations_generated": "UPDATE_WITH_RECOMMENDATION_COUNT"
+        }
+      },
+      "workflow_statistics": {
+        "subagent_performance": {
+          "total_subagent_calls": "INCREMENT_BY_1",
+          "most_active_agents": "UPDATE_WITH_17_PROJECT_STATUS"
+        }
+      },
+      "recent_activity": {
+        "last_command_executed": "project-status",
+        "last_subagent_called": "17-project-status",
+        "last_metadata_update": "CURRENT_TIMESTAMP"
+      }
+    },
+    "context_file_updates": {
+      "current_state": {
+        "last_command": "project-status",
+        "last_command_timestamp": "CURRENT_TIMESTAMP",
+        "development_stage": "PROJECT_STATUS_CHECK_COMPLETED"
+      }
+    },
+    "system_integration_updates": {
+      "real_time_metrics": {
+        "current_session": {
+          "subagents_invoked": "INCREMENT_BY_1",
+          "metadata_syncs": "INCREMENT_BY_1"
+        }
+      }
+    }
+  },
+  "execution_requirements": {
+    "context_files_required": [
+      ".claude/context/current-command-context.json",
+      ".claude/context/project-context.json",
+      "docs/metadata/project-state.json"
+    ],
+    "subagent_invocation": {
+      "agent_name": "17-project-status",
+      "agent_mandatory": true,
+      "fallback_behavior": "error_with_guidance"
+    },
+    "post_execution_updates": [
+      "update_project_metadata",
+      "sync_context_files",
+      "validate_integration_health"
+    ]
+  }
+}

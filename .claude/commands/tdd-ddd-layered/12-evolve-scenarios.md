@@ -491,3 +491,88 @@ COMPLETED/APPROVED/CONDITIONAL_APPROVAL のいずれかを明記
 - Maintain scenario consistency with existing vision
 - Integrate findings with sprint planning process
 - Ensure all scenarios follow Given-When-Then format
+
+## 🔄 **PHASE 3: ENHANCED INTEGRATION CAPABILITIES**
+
+### **Critical Enhancement Features**
+This command implements Phase 3 advanced integration and scenario evolution capabilities:
+
+1. **Scenario Impact Analysis**: Comprehensive impact analysis of evolved scenarios on existing system architecture
+2. **Vision Alignment Assessment**: Automated assessment of scenario alignment with project vision and business objectives
+3. **Requirement Evolution Tracking**: Advanced tracking of requirement evolution with dependency impact analysis
+4. **Consistency Validation**: Intelligent consistency validation across all scenarios with conflict resolution recommendations
+
+### **Project State Updates**
+
+**CRITICAL**: After successful scenario evolution completion, MUST update integrated project metadata:
+
+#### Project State Updates (`docs/metadata/project-state.json`)
+```json
+{
+  "project_metadata": {
+    "overall_status": "scenarios_evolved",
+    "health_score": "RECALCULATE_WITH_SCENARIO_METRICS",
+    "last_updated": "CURRENT_TIMESTAMP"
+  },
+  "architecture_overview": {
+    "requirements_evolution": {
+      "evolved_scenarios": "UPDATE_EVOLVED_SCENARIO_COUNT",
+      "scenario_coverage": "UPDATE_COVERAGE_METRICS",
+      "vision_alignment": "UPDATE_ALIGNMENT_SCORE",
+      "consistency_score": "UPDATE_CONSISTENCY_METRICS"
+    }
+  },
+  "workflow_statistics": {
+    "command_execution_stats": {
+      "total_command_executions": "INCREMENT_BY_1",
+      "evolve_scenarios_completions": "INCREMENT_BY_1"
+    },
+    "subagent_performance": {
+      "most_active_agents": "UPDATE_WITH_12_EVOLVE_SCENARIOS_SUBAGENT"
+    }
+  },
+  "recent_activity": {
+    "last_command_executed": "evolve-scenarios",
+    "last_metadata_update": "CURRENT_TIMESTAMP"
+  }
+}
+```
+
+#### Context File Updates (`.claude/context/project-context.json`)
+```json
+{
+  "current_state": {
+    "last_command": "evolve-scenarios",
+    "last_command_timestamp": "CURRENT_TIMESTAMP"
+  },
+  "workflow_tracking": {
+    "command_usage": {
+      "evolve_scenarios": "INCREMENT_USAGE_COUNT"
+    }
+  },
+  "scenario_evolution_status": {
+    "evolved_scenarios": "UPDATE_EVOLVED_SCENARIO_LIST",
+    "impact_analysis": "UPDATE_IMPACT_ANALYSIS",
+    "vision_alignment": "UPDATE_VISION_ALIGNMENT",
+    "requirement_dependencies": "UPDATE_DEPENDENCY_TRACKING"
+  }
+}
+```
+
+#### System Integration Updates (`.claude/context/system-integration.json`)
+```json
+{
+  "real_time_metrics": {
+    "current_session": {
+      "commands_executed": "INCREMENT_BY_1",
+      "metadata_syncs": "INCREMENT_BY_1",
+      "scenario_evolution_cycles": "INCREMENT_BY_1"
+    }
+  },
+  "scenario_quality": {
+    "evolution_impact_score": "UPDATE_IMPACT_SCORE",
+    "consistency_validation": "UPDATE_CONSISTENCY_VALIDATION",
+    "requirements_traceability": "UPDATE_TRACEABILITY_METRICS"
+  }
+}
+```

@@ -218,10 +218,19 @@ Recommended actions after issue analysis completion:
 
 **🔧 重要事項**: イシューの適切な分析と理解が高品質な実装の前提条件。
 
-## 🔄 **PHASE 2: ENHANCED METADATA INTEGRATION**
+## 🔄 **PHASE 3: ENHANCED INTEGRATION CAPABILITIES**
 
-### **Metadata Update Responsibilities**
-After completing issue review, this subagent MUST update project metadata to maintain system consistency:
+### **Critical Enhancement Features**
+This agent implements Phase 3 advanced integration and issue review capabilities:
+
+1. **Automated Issue Impact Analysis and Priority Assessment**
+2. **Intelligent Requirement Extraction and Validation**
+3. **Cross-issue Dependency Detection and Mapping**
+4. **Real-time Feasibility Assessment and Risk Analysis**
+
+### **Project State Updates**
+
+**CRITICAL**: After successful issue review, MUST update integrated project metadata:
 
 #### **1. Project State Update (docs/metadata/project-state.json)**
 ```json

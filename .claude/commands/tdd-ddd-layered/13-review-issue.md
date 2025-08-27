@@ -450,3 +450,88 @@ APPROVED/CONDITIONAL_APPROVAL/REJECTED/COMPLETED のいずれかを明記
 レビュー中に新課題・改善点・要件変更発見時は
 作業を中断して `/evolve-scenarios <feature-name>` を実行すること
 CRITICAL: レビューは品質向上と新要件発見の重要な機会です
+
+## 🔄 **PHASE 3: ENHANCED INTEGRATION CAPABILITIES**
+
+### **Critical Enhancement Features**
+This command implements Phase 3 advanced integration and issue review capabilities:
+
+1. **Issue Impact Analysis**: Comprehensive analysis of issue impact on system architecture and business objectives
+2. **Feasibility Assessment**: Advanced feasibility assessment with resource allocation and technical risk analysis
+3. **Priority Optimization**: Intelligent priority optimization based on business value and technical complexity
+4. **Dependency Analysis**: Deep dependency analysis with impact propagation and resolution recommendations
+
+### **Project State Updates**
+
+**CRITICAL**: After successful issue review completion, MUST update integrated project metadata:
+
+#### Project State Updates (`docs/metadata/project-state.json`)
+```json
+{
+  "project_metadata": {
+    "overall_status": "issue_reviewed",
+    "health_score": "RECALCULATE_WITH_REVIEW_METRICS",
+    "last_updated": "CURRENT_TIMESTAMP"
+  },
+  "architecture_overview": {
+    "review_quality": {
+      "comprehensive_analysis_score": "UPDATE_ANALYSIS_SCORE",
+      "feasibility_assessment": "UPDATE_FEASIBILITY_METRICS",
+      "priority_optimization": "UPDATE_PRIORITY_METRICS",
+      "dependency_resolution": "UPDATE_DEPENDENCY_METRICS"
+    }
+  },
+  "workflow_statistics": {
+    "command_execution_stats": {
+      "total_command_executions": "INCREMENT_BY_1",
+      "review_issue_completions": "INCREMENT_BY_1"
+    },
+    "subagent_performance": {
+      "most_active_agents": "UPDATE_WITH_13_REVIEW_ISSUE_SUBAGENT"
+    }
+  },
+  "recent_activity": {
+    "last_command_executed": "review-issue",
+    "last_metadata_update": "CURRENT_TIMESTAMP"
+  }
+}
+```
+
+#### Context File Updates (`.claude/context/project-context.json`)
+```json
+{
+  "current_state": {
+    "last_command": "review-issue",
+    "last_command_timestamp": "CURRENT_TIMESTAMP"
+  },
+  "workflow_tracking": {
+    "command_usage": {
+      "review_issue": "INCREMENT_USAGE_COUNT"
+    }
+  },
+  "issue_review_status": {
+    "reviewed_issues": "UPDATE_REVIEWED_ISSUES_LIST",
+    "impact_analysis": "UPDATE_IMPACT_ANALYSIS",
+    "feasibility_scores": "UPDATE_FEASIBILITY_SCORES",
+    "dependency_mappings": "UPDATE_DEPENDENCY_MAPPINGS"
+  }
+}
+```
+
+#### System Integration Updates (`.claude/context/system-integration.json`)
+```json
+{
+  "real_time_metrics": {
+    "current_session": {
+      "commands_executed": "INCREMENT_BY_1",
+      "metadata_syncs": "INCREMENT_BY_1",
+      "issue_reviews_completed": "INCREMENT_BY_1"
+    }
+  },
+  "review_quality": {
+    "analysis_comprehensiveness": "UPDATE_ANALYSIS_COMPREHENSIVENESS",
+    "feasibility_accuracy": "UPDATE_FEASIBILITY_ACCURACY",
+    "priority_alignment": "UPDATE_PRIORITY_ALIGNMENT"
+  }
+}
+```

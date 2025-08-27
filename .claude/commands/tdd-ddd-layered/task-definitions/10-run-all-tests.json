@@ -4,6 +4,16 @@
   "phase": "comprehensive-testing-phase",
   "category": "quality-assurance",
   "priority": "medium",
+  "version": "3.0",
+  "last_updated": "2025-08-27T00:00:00Z",
+  "required_subagent": "10-run-all-tests",
+  "subagent_mandatory": true,
+  "phase_3_features": {
+    "comprehensive_test_analysis": true,
+    "quality_assessment": true,
+    "coverage_reporting": true,
+    "performance_impact_analysis": true
+  },
   "critical_tasks": [
     "test_environment_setup",
     "unit_test_execution",
@@ -65,6 +75,61 @@
     "output_files": [
       "test-results/",
       "coverage-report.html"
+    ]
+  },
+  "metadata_integration": {
+    "project_state_updates": {
+      "architecture_overview": {
+        "quality_assurance_layer": {
+          "comprehensive_test_runs_completed": "INCREMENT_BY_1",
+          "test_coverage_percentage": "UPDATE_WITH_COVERAGE_PERCENTAGE",
+          "quality_metrics_recorded": "UPDATE_WITH_QUALITY_METRICS",
+          "test_suite_health_status": "UPDATE_WITH_HEALTH_STATUS"
+        }
+      },
+      "workflow_statistics": {
+        "subagent_performance": {
+          "total_subagent_calls": "INCREMENT_BY_1",
+          "most_active_agents": "UPDATE_WITH_10_RUN_ALL_TESTS"
+        }
+      },
+      "recent_activity": {
+        "last_command_executed": "run-all-tests",
+        "last_subagent_called": "10-run-all-tests",
+        "last_metadata_update": "CURRENT_TIMESTAMP"
+      }
+    },
+    "context_file_updates": {
+      "current_state": {
+        "last_command": "run-all-tests",
+        "last_command_timestamp": "CURRENT_TIMESTAMP",
+        "development_stage": "COMPREHENSIVE_TESTING_COMPLETED"
+      }
+    },
+    "system_integration_updates": {
+      "real_time_metrics": {
+        "current_session": {
+          "subagents_invoked": "INCREMENT_BY_1",
+          "metadata_syncs": "INCREMENT_BY_1"
+        }
+      }
+    }
+  },
+  "execution_requirements": {
+    "context_files_required": [
+      ".claude/context/current-command-context.json",
+      ".claude/context/project-context.json",
+      "docs/metadata/project-state.json"
+    ],
+    "subagent_invocation": {
+      "agent_name": "10-run-all-tests",
+      "agent_mandatory": true,
+      "fallback_behavior": "error_with_guidance"
+    },
+    "post_execution_updates": [
+      "update_project_metadata",
+      "sync_context_files",
+      "validate_integration_health"
     ]
   }
 }

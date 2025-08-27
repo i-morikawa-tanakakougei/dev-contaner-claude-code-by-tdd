@@ -4,6 +4,16 @@
   "phase": "project-initialization-phase",
   "category": "foundation",
   "priority": "critical",
+  "version": "3.0",
+  "last_updated": "2025-08-27T00:00:00Z",
+  "required_subagent": "01-init-project-structure",
+  "subagent_mandatory": true,
+  "phase_3_features": {
+    "project_template_optimization": true,
+    "environment_validation": true,
+    "dependency_management_automation": true,
+    "structure_consistency_checking": true
+  },
   "critical_tasks": [
     "directory_structure_creation",
     "tdd_framework_setup",
@@ -67,6 +77,61 @@
       "src/presentation/",
       "tests/",
       "docs/"
+    ]
+  },
+  "metadata_integration": {
+    "project_state_updates": {
+      "architecture_overview": {
+        "foundation_layer": {
+          "project_structure_initialized": "SET_TO_TRUE",
+          "directories_created": "INCREMENT_BY_CREATED_COUNT",
+          "configuration_files_setup": "INCREMENT_BY_CONFIG_COUNT",
+          "initialization_completion_rate": "RECALCULATE_INIT_PERCENTAGE"
+        }
+      },
+      "workflow_statistics": {
+        "subagent_performance": {
+          "total_subagent_calls": "INCREMENT_BY_1",
+          "most_active_agents": "UPDATE_WITH_01_INIT_PROJECT_STRUCTURE"
+        }
+      },
+      "recent_activity": {
+        "last_command_executed": "init-project-structure",
+        "last_subagent_called": "01-init-project-structure",
+        "last_metadata_update": "CURRENT_TIMESTAMP"
+      }
+    },
+    "context_file_updates": {
+      "current_state": {
+        "last_command": "init-project-structure",
+        "last_command_timestamp": "CURRENT_TIMESTAMP",
+        "development_stage": "PROJECT_STRUCTURE_INITIALIZED"
+      }
+    },
+    "system_integration_updates": {
+      "real_time_metrics": {
+        "current_session": {
+          "subagents_invoked": "INCREMENT_BY_1",
+          "metadata_syncs": "INCREMENT_BY_1"
+        }
+      }
+    }
+  },
+  "execution_requirements": {
+    "context_files_required": [
+      ".claude/context/current-command-context.json",
+      ".claude/context/project-context.json",
+      "docs/metadata/project-state.json"
+    ],
+    "subagent_invocation": {
+      "agent_name": "01-init-project-structure",
+      "agent_mandatory": true,
+      "fallback_behavior": "error_with_guidance"
+    },
+    "post_execution_updates": [
+      "update_project_metadata",
+      "sync_context_files",
+      "validate_integration_health"
     ]
   }
 }

@@ -460,33 +460,90 @@ APPROVED/CONDITIONAL_APPROVAL/REJECTED/COMPLETED のいずれかを明記
 
    ```
 
-## 🔄 Metadata Update Requirements
+## 🔄 **PHASE 3: ENHANCED INTEGRATION CAPABILITIES**
 
-**CRITICAL**: After successful pull request creation completion, you MUST update the following files:
+### **Critical Enhancement Features**
+This command implements Phase 3 advanced integration and pull request creation capabilities:
 
-1. **Project State Update**:
-   ```bash
-   # Update docs/metadata/project-state.json
-   # - Update sprint_summary with completed issues
-   # - Add to recent_activity.last_command_executed
-   # - Update workflow_statistics.command_execution_stats
-   ```
+1. **PR Quality Analysis**: Comprehensive pull request quality analysis with compliance validation and completeness assessment
+2. **Integration Validation**: Advanced integration validation with cross-system compatibility and deployment readiness checks
+3. **Merge Readiness Assessment**: Intelligent merge readiness assessment with automated quality gates and risk analysis
+4. **Deployment Preparation**: Smart deployment preparation with configuration validation and rollback strategy planning
 
-2. **Project Context Update**:
-   ```bash
-   # Update .claude/context/project-context.json  
-   # - Move issue from pending_issues to completed_issues
-   # - Increment workflow_tracking.command_usage.create_pr
-   # - Set current_state.last_command and last_command_timestamp
-   ```
+### **Project State Updates**
 
-3. **Issue-Specific Metadata**:
-   ```bash
-   # Update docs/use_cases/issue-X-Y.json
-   # - Set overall_status to "pull_request_created"
-   # - Add pull_request_url and created_at timestamp
-   # - Mark as ready_for_review
-   ```
+**CRITICAL**: After successful pull request creation completion, MUST update integrated project metadata:
+
+#### Project State Updates (`docs/metadata/project-state.json`)
+```json
+{
+  "project_metadata": {
+    "overall_status": "pull_request_created",
+    "health_score": "RECALCULATE_WITH_PR_METRICS",
+    "last_updated": "CURRENT_TIMESTAMP"
+  },
+  "architecture_overview": {
+    "deployment_readiness": {
+      "pull_requests_created": "INCREMENT_PR_COUNT",
+      "integration_validation_score": "UPDATE_INTEGRATION_SCORE",
+      "merge_readiness_score": "UPDATE_MERGE_READINESS",
+      "deployment_preparation_status": "UPDATE_DEPLOYMENT_STATUS"
+    }
+  },
+  "workflow_statistics": {
+    "command_execution_stats": {
+      "total_command_executions": "INCREMENT_BY_1",
+      "create_pr_completions": "INCREMENT_BY_1"
+    },
+    "subagent_performance": {
+      "most_active_agents": "UPDATE_WITH_15_CREATE_PR_SUBAGENT"
+    }
+  },
+  "recent_activity": {
+    "last_command_executed": "create-pr",
+    "last_metadata_update": "CURRENT_TIMESTAMP"
+  }
+}
+```
+
+#### Context File Updates (`.claude/context/project-context.json`)
+```json
+{
+  "current_state": {
+    "last_command": "create-pr",
+    "last_command_timestamp": "CURRENT_TIMESTAMP"
+  },
+  "workflow_tracking": {
+    "command_usage": {
+      "create_pr": "INCREMENT_USAGE_COUNT"
+    }
+  },
+  "pr_creation_status": {
+    "created_pull_requests": "UPDATE_PR_LIST",
+    "integration_validation": "UPDATE_INTEGRATION_VALIDATION",
+    "merge_readiness": "UPDATE_MERGE_READINESS",
+    "deployment_status": "UPDATE_DEPLOYMENT_PREPARATION"
+  }
+}
+```
+
+#### System Integration Updates (`.claude/context/system-integration.json`)
+```json
+{
+  "real_time_metrics": {
+    "current_session": {
+      "commands_executed": "INCREMENT_BY_1",
+      "metadata_syncs": "INCREMENT_BY_1",
+      "pull_requests_created": "INCREMENT_BY_1"
+    }
+  },
+  "pr_quality": {
+    "quality_analysis_score": "UPDATE_PR_QUALITY_SCORE",
+    "integration_compliance": "UPDATE_INTEGRATION_COMPLIANCE",
+    "deployment_readiness": "UPDATE_DEPLOYMENT_READINESS"
+  }
+}
+```
 
 **⚠️ Error Handling**: If standard workflow is disrupted:
 - 📖 Consult: [Manual Sync Guide](../../docs/maintenance/manual-sync-guide.md)

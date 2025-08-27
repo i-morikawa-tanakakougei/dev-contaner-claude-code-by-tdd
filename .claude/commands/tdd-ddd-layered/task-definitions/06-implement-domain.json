@@ -4,6 +4,16 @@
   "phase": "tdd-green-phase",
   "category": "implementation",
   "priority": "high",
+  "version": "3.0",
+  "last_updated": "2025-08-27T00:00:00Z",
+  "required_subagent": "06-implement-domain",
+  "subagent_mandatory": true,
+  "phase_3_features": {
+    "business_logic_validation": true,
+    "domain_purity_verification": true,
+    "performance_optimization": true,
+    "rule_consistency_automation": true
+  },
   "critical_tasks": [
     "failing_test_analysis",
     "domain_entities_implementation",
@@ -87,6 +97,77 @@
       "no.*import.*database",
       "no.*import.*sqlalchemy",
       "no.*open\\("
+    ]
+  },
+  "metadata_integration": {
+    "project_state_updates": {
+      "architecture_overview": {
+        "domain_layer": {
+          "implemented_entities": "INCREMENT_BY_IMPLEMENTED_COUNT",
+          "implemented_value_objects": "INCREMENT_BY_IMPLEMENTED_COUNT",
+          "domain_services": "INCREMENT_BY_IMPLEMENTED_COUNT",
+          "completion_rate": "RECALCULATE_DOMAIN_PERCENTAGE"
+        }
+      },
+      "workflow_statistics": {
+        "subagent_performance": {
+          "total_subagent_calls": "INCREMENT_BY_1",
+          "most_active_agents": "UPDATE_WITH_06_IMPLEMENT_DOMAIN"
+        }
+      },
+      "recent_activity": {
+        "last_command_executed": "implement-domain",
+        "last_subagent_called": "06-implement-domain",
+        "last_metadata_update": "CURRENT_TIMESTAMP"
+      }
+    },
+    "context_file_updates": {
+      "current_state": {
+        "last_command": "implement-domain",
+        "last_command_timestamp": "CURRENT_TIMESTAMP",
+        "development_stage": "DOMAIN_IMPLEMENTATION_COMPLETED"
+      },
+      "architecture_status": {
+        "domain_layer": {
+          "status": "OPERATIONAL_OR_COMPLETED",
+          "completion_percentage": "CALCULATE_DOMAIN_COMPLETION",
+          "key_entities": "LIST_IMPLEMENTED_ENTITIES",
+          "value_objects": "LIST_IMPLEMENTED_VALUE_OBJECTS"
+        }
+      }
+    },
+    "system_integration_updates": {
+      "real_time_metrics": {
+        "current_session": {
+          "subagents_invoked": "INCREMENT_BY_1",
+          "metadata_syncs": "INCREMENT_BY_1"
+        }
+      },
+      "integration_health": {
+        "component_status": {
+          "domain_implementation_system": {
+            "last_validation_run": "CURRENT_TIMESTAMP",
+            "business_logic_consistency": "TRACK_CONSISTENCY_METRICS"
+          }
+        }
+      }
+    }
+  },
+  "execution_requirements": {
+    "context_files_required": [
+      ".claude/context/current-command-context.json",
+      ".claude/context/project-context.json",
+      "docs/metadata/project-state.json"
+    ],
+    "subagent_invocation": {
+      "agent_name": "06-implement-domain",
+      "agent_mandatory": true,
+      "fallback_behavior": "error_with_guidance"
+    },
+    "post_execution_updates": [
+      "update_project_metadata",
+      "sync_context_files",
+      "validate_integration_health"
     ]
   }
 }

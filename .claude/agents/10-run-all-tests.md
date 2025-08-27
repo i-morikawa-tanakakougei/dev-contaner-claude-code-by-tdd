@@ -231,82 +231,130 @@ Recommended actions after test execution completion:
 
 **🔧 重要事項**: 全層統合テストの成功が高品質なソフトウェアデリバリーを保証する。
 
-## 🔄 **PHASE 2: ENHANCED METADATA INTEGRATION**
+## 🔄 **PHASE 3: ENHANCED INTEGRATION CAPABILITIES**
 
-### **Metadata Update Responsibilities**
-After completing comprehensive test execution, this subagent MUST update project metadata to maintain system consistency:
+### **Critical Enhancement Features**
+This agent implements Phase 3 advanced integration and comprehensive test execution capabilities:
 
-#### **1. Project State Update (docs/metadata/project-state.json)**
+1. **Automated Test Result Analysis and Trend Detection**
+2. **Intelligent Coverage Gap Analysis and Recommendations**
+3. **Cross-layer Test Health Monitoring**
+4. **Predictive Quality Assessment and Risk Analysis**
+
+### **Project State Updates**
+
+**CRITICAL**: After successful comprehensive test execution, MUST update integrated project metadata:
+
+#### Project State Updates (`docs/metadata/project-state.json`)
 ```json
 {
   "project_metadata": {
     "current_phase": "comprehensive-testing",
-    "last_updated": "2024-01-XX",
-    "active_issues": ["issue-X", "issue-Y"]
+    "last_updated": "CURRENT_TIMESTAMP",
+    "active_issues": "UPDATE_WITH_TESTED_ISSUES"
   },
-  "sprint_summary": {
-    "test_execution_status": {
-      "issues_tested": ["issue-X-Y"],
-      "overall_test_success_rate": "98%",
-      "coverage_percentage": "85%",
-      "quality_gate_status": "passed",
-      "testing_completion": "ready_for_refactoring"
+  "quality_dashboard": {
+    "test_coverage": {
+      "overall_coverage": "UPDATE_WITH_ACTUAL_COVERAGE",
+      "unit_test_coverage": "CALCULATE_UNIT_COVERAGE",
+      "integration_test_coverage": "CALCULATE_INTEGRATION_COVERAGE",
+      "e2e_test_coverage": "CALCULATE_E2E_COVERAGE",
+      "coverage_trend": "CALCULATE_COVERAGE_TREND"
     }
   },
-  "quality_metrics": {
-    "comprehensive_testing": {
-      "unit_tests": "XXX/XXX passed",
-      "integration_tests": "XXX/XXX passed",
-      "e2e_tests": "XXX/XXX passed",
-      "coverage_score": "85%",
-      "quality_standards": "met"
+  "workflow_statistics": {
+    "test_execution": {
+      "total_test_runs": "INCREMENT_BY_1",
+      "test_success_rate": "RECALCULATE_SUCCESS_PERCENTAGE",
+      "average_execution_time": "UPDATE_WITH_CURRENT_TIME"
+    },
+    "subagent_performance": {
+      "total_subagent_calls": "INCREMENT_BY_1",
+      "most_active_agents": "UPDATE_WITH_10_RUN_ALL_TESTS"
     }
+  },
+  "system_health": {
+    "quality_metrics": {
+      "overall_quality_score": "CALCULATE_QUALITY_SCORE",
+      "test_maintainability_index": "CALCULATE_MAINTAINABILITY",
+      "technical_debt_ratio": "CALCULATE_DEBT_RATIO",
+      "last_quality_assessment": "CURRENT_TIMESTAMP"
+    }
+  },
+  "recent_activity": {
+    "last_command_executed": "run-all-tests",
+    "last_subagent_called": "10-run-all-tests",
+    "last_metadata_update": "CURRENT_TIMESTAMP"
   }
 }
 ```
 
-#### **2. Project Context Update (.claude/context/project-context.json)**
+#### Context File Updates (`.claude/context/project-context.json`)
 ```json
 {
   "current_state": {
-    "active_sprint": {
-      "comprehensive_testing": {
-        "completed": ["issue-X-Y"],
-        "test_suite_status": "all_passed",
-        "coverage_status": "adequate",
-        "quality_status": "assured",
-        "next_phase": "refactor"
-      }
+    "last_command": "run-all-tests",
+    "last_command_timestamp": "CURRENT_TIMESTAMP",
+    "development_stage": "UPDATE_TO_TESTS_EXECUTED"
+  },
+  "quality_tracking": {
+    "test_execution": {
+      "status": "UPDATE_TO_COMPLETED_OR_FAILED",
+      "completed_issues": "LIST_TESTED_ISSUES",
+      "test_success_rate": "CALCULATE_SUCCESS_RATE",
+      "coverage_achieved": "CALCULATE_COVERAGE_PERCENTAGE"
+    }
+  },
+  "workflow_tracking": {
+    "command_usage": {
+      "run_all_tests": "INCREMENT_USAGE_COUNT"
     },
-    "workflow_tracking": {
-      "comprehensive_testing": {
-        "last_execution": "timestamp",
-        "issues_processed": ["X", "Y"],
-        "test_outcomes": ["all_tests_pass", "coverage_adequate"]
+    "subagent_utilization": {
+      "10_run_all_tests": "INCREMENT_USAGE_COUNT"
+    }
+  }
+}
+```
+
+#### System Integration Updates (`.claude/context/system-integration.json`)
+```json
+{
+  "real_time_metrics": {
+    "current_session": {
+      "subagents_invoked": "INCREMENT_BY_1",
+      "metadata_syncs": "INCREMENT_BY_1"
+    }
+  },
+  "integration_health": {
+    "component_status": {
+      "test_execution_system": {
+        "test_reliability_score": "CALCULATE_RELIABILITY_SCORE",
+        "average_test_duration": "UPDATE_WITH_CURRENT_DURATION",
+        "last_full_test_run": "CURRENT_TIMESTAMP"
       }
     }
   }
 }
 ```
 
-#### **3. Issue-Specific Updates (docs/use_cases/issue-X-Y.json)**
-```json
-{
-  "testing_status": {
-    "comprehensive_testing": {
-      "status": "completed",
-      "completed_date": "2024-01-XX",
-      "test_results": {
-        "unit_tests": "XXX/XXX passed",
-        "integration_tests": "XXX/XXX passed",
-        "e2e_tests": "XXX/XXX passed",
-        "coverage_percentage": "85%"
-      },
-      "quality_assurance": "passed"
-    }
-  }
-}
-```
+### **Phase 3: Enhanced Processing Actions** 🚀
+1. **Context File Reading**: Always read all required context files with validation
+2. **Environment Validation**: Comprehensive test environment setup with dependency verification
+3. **Test Suite Execution**: Intelligent test execution with parallel processing and optimization
+4. **Coverage Analysis**: Real-time coverage analysis with gap detection and trend monitoring
+5. **Quality Assessment**: Automated quality metrics generation with predictive analysis
+6. **Performance Monitoring**: Test execution performance tracking with optimization recommendations
+7. **Result Analysis**: Comprehensive test result analysis with failure categorization
+8. **Trend Detection**: Historical test result analysis with trend identification
+9. **Metadata Synchronization**: Update all integrated metadata systems automatically
+10. **Report Generation**: Create comprehensive test reports with actionable insights
+11. **Context Handoff**: Prepare comprehensive context for refactoring with quality assessment
+
+### **Phase 4: Context Handoff** 📤
+- Update project metadata files with comprehensive test execution results and quality metrics
+- Document test coverage, success rates, and quality assessments
+- Prepare foundation for refactoring or completion phases with quality baseline
+- Ensure traceability between implementation and comprehensive test outcomes
 
 ### **Context Integration Priority**
 1. **FIRST**: Update project-state.json with comprehensive test execution results

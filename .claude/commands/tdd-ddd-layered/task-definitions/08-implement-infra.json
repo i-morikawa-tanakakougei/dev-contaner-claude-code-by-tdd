@@ -3,7 +3,17 @@
   "description": "Infrastructure layer implementation - concrete repositories and external service integrations",
   "phase": "infrastructure-layer-implementation",
   "category": "implementation",
-  "priority": "high", 
+  "priority": "high",
+  "version": "3.0",
+  "last_updated": "2025-08-27T00:00:00Z",
+  "required_subagent": "08-implement-infra",
+  "subagent_mandatory": true,
+  "phase_3_features": {
+    "infrastructure_health_monitoring": true,
+    "performance_tracking": true,
+    "dependency_validation": true,
+    "integration_optimization": true
+  }, 
   "critical_tasks": [
     "application_layer_verification",
     "repository_implementations",
@@ -84,6 +94,61 @@
       "no.*domain.*import.*infrastructure",
       "repository.*implements.*interface",
       "config.*management"
+    ]
+  },
+  "metadata_integration": {
+    "project_state_updates": {
+      "architecture_overview": {
+        "infrastructure_layer": {
+          "repositories_implemented": "INCREMENT_BY_IMPLEMENTED_COUNT",
+          "database_integrations_setup": "INCREMENT_BY_DB_COUNT",
+          "external_services_connected": "INCREMENT_BY_SERVICE_COUNT",
+          "infrastructure_completion_rate": "RECALCULATE_INFRASTRUCTURE_PERCENTAGE"
+        }
+      },
+      "workflow_statistics": {
+        "subagent_performance": {
+          "total_subagent_calls": "INCREMENT_BY_1",
+          "most_active_agents": "UPDATE_WITH_08_IMPLEMENT_INFRA"
+        }
+      },
+      "recent_activity": {
+        "last_command_executed": "implement-infra",
+        "last_subagent_called": "08-implement-infra",
+        "last_metadata_update": "CURRENT_TIMESTAMP"
+      }
+    },
+    "context_file_updates": {
+      "current_state": {
+        "last_command": "implement-infra",
+        "last_command_timestamp": "CURRENT_TIMESTAMP",
+        "development_stage": "INFRASTRUCTURE_LAYER_COMPLETED"
+      }
+    },
+    "system_integration_updates": {
+      "real_time_metrics": {
+        "current_session": {
+          "subagents_invoked": "INCREMENT_BY_1",
+          "metadata_syncs": "INCREMENT_BY_1"
+        }
+      }
+    }
+  },
+  "execution_requirements": {
+    "context_files_required": [
+      ".claude/context/current-command-context.json",
+      ".claude/context/project-context.json",
+      "docs/metadata/project-state.json"
+    ],
+    "subagent_invocation": {
+      "agent_name": "08-implement-infra",
+      "agent_mandatory": true,
+      "fallback_behavior": "error_with_guidance"
+    },
+    "post_execution_updates": [
+      "update_project_metadata",
+      "sync_context_files",
+      "validate_integration_health"
     ]
   }
 }

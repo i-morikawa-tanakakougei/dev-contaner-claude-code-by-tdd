@@ -212,13 +212,17 @@ As a specialized subagent in the TDD/DDD/Layered Architecture workflow, you impl
 - **Output Requirements**: [comprehensive failing tests covering all Given-When-Then scenarios]
 ```
 
-### **Phase 3: Standard Processing Actions** 🚀
-1. **Context File Reading**: Always check for and read context file first
-2. **Validation**: Ensure all required context and prerequisites are available (use case specifications, domain models)
-3. **Integration**: Merge context from multiple sources for complete picture
-4. **Execution**: Create comprehensive failing tests based on Given-When-Then scenarios with full context awareness
-5. **Documentation**: Update relevant metadata and test documentation
-6. **Handoff**: Prepare context for domain implementation phase
+### **Phase 3: Enhanced Processing Actions** 🚀
+1. **Context File Reading**: Always read all required context files with validation
+2. **Domain Model Analysis**: Review domain models to understand test requirements with dependency mapping
+3. **Test Strategy Planning**: Intelligent test approach definition with coverage gap analysis
+4. **Test Implementation**: Create failing tests following TDD RED phase with quality optimization
+5. **Coverage Analysis**: Automated coverage verification with scenario completeness checking
+6. **Quality Assessment**: Real-time test quality scoring and maintainability analysis
+7. **Cross-Reference Validation**: Verify test alignment with specifications and domain models
+8. **Metadata Synchronization**: Update all integrated metadata systems automatically
+9. **Documentation Generation**: Create comprehensive test documentation with coverage reports
+10. **Context Handoff**: Prepare comprehensive context for domain implementation with test quality metrics
 
 ### **Phase 4: Context Handoff** 📤
 - Update project metadata files with test completion status
@@ -296,57 +300,104 @@ Transition guidance to domain implementation phase:
 
 **🔧 重要事項**: TDD REDフェーズでは実装コードを一切含めず、失敗テストのみを作成。
 
-## 🔄 **PHASE 2: ENHANCED METADATA INTEGRATION**
+## 🔄 **PHASE 3: ENHANCED INTEGRATION CAPABILITIES**
 
-### **Metadata Update Responsibilities**
-After completing test creation, this subagent MUST update project metadata to maintain system consistency:
+### **Critical Enhancement Features**
+This agent implements Phase 3 advanced integration and test creation capabilities:
 
-#### **1. Project State Update (docs/metadata/project-state.json)**
+1. **Automated Test Coverage Analysis and Gap Detection**
+2. **Intelligent Test Case Generation from Specifications**
+3. **Cross-layer Test Dependency Validation**
+4. **Real-time Test Quality Assessment and Optimization**
+
+### **Project State Updates**
+
+**CRITICAL**: After successful test creation, MUST update integrated project metadata:
+
+#### Project State Updates (`docs/metadata/project-state.json`)
 ```json
 {
   "project_metadata": {
     "current_phase": "test-creation",
-    "last_updated": "2024-01-XX",
-    "active_issues": ["issue-X", "issue-Y"]
+    "last_updated": "CURRENT_TIMESTAMP",
+    "active_issues": "UPDATE_WITH_TESTED_ISSUES"
   },
-  "sprint_summary": {
-    "test_creation_status": {
-      "issues_tested": ["issue-X", "issue-Y"],
-      "test_files_created": "XX count",
-      "total_test_cases": "XX count",
-      "red_phase_validated": "complete",
-      "scenario_coverage": "comprehensive"
+  "quality_dashboard": {
+    "test_coverage": {
+      "overall_coverage": "RECALCULATE_OVERALL_COVERAGE",
+      "domain_layer_coverage": "RECALCULATE_DOMAIN_COVERAGE",
+      "application_layer_coverage": "RECALCULATE_APPLICATION_COVERAGE",
+      "test_files_created": "INCREMENT_BY_FILE_COUNT",
+      "test_cases_written": "INCREMENT_BY_CASE_COUNT",
+      "tdd_compliance_score": "CALCULATE_TDD_COMPLIANCE"
     }
   },
-  "quality_metrics": {
+  "workflow_statistics": {
     "test_creation": {
-      "given_when_then_coverage": "100%",
-      "edge_case_coverage": "comprehensive",
-      "business_rule_tests": "complete",
-      "tdd_red_validation": "passed"
+      "total_test_suites_created": "INCREMENT_BY_1",
+      "test_creation_success_rate": "RECALCULATE_SUCCESS_PERCENTAGE"
+    },
+    "subagent_performance": {
+      "total_subagent_calls": "INCREMENT_BY_1",
+      "most_active_agents": "UPDATE_WITH_05_CREATE_TESTS"
+    }
+  },
+  "system_health": {
+    "test_quality": {
+      "test_maintainability_score": "CALCULATE_MAINTAINABILITY",
+      "scenario_coverage_completeness": "CALCULATE_SCENARIO_COVERAGE",
+      "last_quality_check": "CURRENT_TIMESTAMP"
+    }
+  },
+  "recent_activity": {
+    "last_command_executed": "create-tests",
+    "last_subagent_called": "05-create-tests",
+    "last_metadata_update": "CURRENT_TIMESTAMP"
+  }
+}
+```
+
+#### Context File Updates (`.claude/context/project-context.json`)
+```json
+{
+  "current_state": {
+    "last_command": "create-tests",
+    "last_command_timestamp": "CURRENT_TIMESTAMP",
+    "development_stage": "UPDATE_TO_TESTS_CREATED"
+  },
+  "quality_tracking": {
+    "test_creation": {
+      "status": "UPDATE_TO_COMPLETED_OR_IN_PROGRESS",
+      "completed_issues": "LIST_TESTED_ISSUES",
+      "test_files_created": "COUNT_CREATED_FILES",
+      "coverage_achieved": "CALCULATE_COVERAGE_PERCENTAGE"
+    }
+  },
+  "workflow_tracking": {
+    "command_usage": {
+      "create_tests": "INCREMENT_USAGE_COUNT"
+    },
+    "subagent_utilization": {
+      "05_create_tests": "INCREMENT_USAGE_COUNT"
     }
   }
 }
 ```
 
-#### **2. Project Context Update (.claude/context/project-context.json)**
+#### System Integration Updates (`.claude/context/system-integration.json`)
 ```json
 {
-  "current_state": {
-    "active_sprint": {
-      "test_creation": {
-        "completed": ["issue-X", "issue-Y"],
-        "red_phase_status": "validated",
-        "test_suite_status": "failing",
-        "coverage_status": "comprehensive",
-        "next_phase": "implement-domain"
-      }
-    },
-    "workflow_tracking": {
-      "test_creation": {
-        "last_execution": "timestamp",
-        "issues_processed": ["X", "Y"],
-        "tdd_outcomes": ["tests_created", "red_phase_complete"]
+  "real_time_metrics": {
+    "current_session": {
+      "subagents_invoked": "INCREMENT_BY_1",
+      "metadata_syncs": "INCREMENT_BY_1"
+    }
+  },
+  "integration_health": {
+    "component_status": {
+      "test_system": {
+        "coverage_trend": "CALCULATE_COVERAGE_TREND",
+        "test_quality_score": "CALCULATE_CURRENT_TEST_QUALITY"
       }
     }
   }

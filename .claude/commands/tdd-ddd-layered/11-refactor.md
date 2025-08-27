@@ -476,34 +476,90 @@ Important Notes:
 - Document all improvements for team knowledge
 - All user-facing output must be in JAPANESE
 
-## 🔄 Metadata Update Requirements
+## 🔄 **PHASE 3: ENHANCED INTEGRATION CAPABILITIES**
 
-**CRITICAL**: After successful refactoring completion, you MUST update the following files:
+### **Critical Enhancement Features**
+This command implements Phase 3 advanced integration and refactoring capabilities:
 
-1. **Project State Update**:
-   ```bash
-   # Update docs/metadata/project-state.json
-   # - Update quality_dashboard.code_quality metrics
-   # - Update tdd_compliance.refactor_phase_completions count
-   # - Add to recent_activity.last_command_executed
-   # - Update workflow_statistics.command_execution_stats
-   ```
+1. **Code Quality Analysis**: Advanced code quality analysis with complexity assessment and maintainability scoring
+2. **Performance Impact Assessment**: Comprehensive performance impact analysis with optimization opportunity identification
+3. **Technical Debt Reduction**: Systematic technical debt identification and reduction with measurable improvement tracking
+4. **Design Pattern Optimization**: Intelligent design pattern recognition and optimization with architectural consistency validation
 
-2. **Project Context Update**:
-   ```bash
-   # Update .claude/context/project-context.json  
-   # - Update quality_metrics.code_quality indicators
-   # - Increment workflow_tracking.command_usage.refactor
-   # - Set current_state.last_command and last_command_timestamp
-   ```
+### **Project State Updates**
 
-3. **Issue-Specific Metadata**:
-   ```bash
-   # Update docs/use_cases/issue-X-Y.json
-   # - Set refactoring.status to "completed"
-   # - Add refactoring_improvements list
-   # - Update completion timestamp
-   ```
+**CRITICAL**: After successful refactoring completion, MUST update integrated project metadata:
+
+#### Project State Updates (`docs/metadata/project-state.json`)
+```json
+{
+  "project_metadata": {
+    "overall_status": "tdd_refactor_phase_completed",
+    "health_score": "RECALCULATE_WITH_REFACTORING_METRICS",
+    "last_updated": "CURRENT_TIMESTAMP"
+  },
+  "architecture_overview": {
+    "code_quality": {
+      "maintainability_score": "UPDATE_MAINTAINABILITY_SCORE",
+      "technical_debt_reduction": "UPDATE_DEBT_REDUCTION_METRICS",
+      "design_pattern_compliance": "UPDATE_PATTERN_COMPLIANCE",
+      "performance_improvements": "UPDATE_PERFORMANCE_GAINS"
+    }
+  },
+  "workflow_statistics": {
+    "command_execution_stats": {
+      "total_command_executions": "INCREMENT_BY_1",
+      "refactor_completions": "INCREMENT_BY_1"
+    },
+    "subagent_performance": {
+      "most_active_agents": "UPDATE_WITH_11_REFACTOR_SUBAGENT"
+    }
+  },
+  "recent_activity": {
+    "last_command_executed": "refactor",
+    "last_metadata_update": "CURRENT_TIMESTAMP"
+  }
+}
+```
+
+#### Context File Updates (`.claude/context/project-context.json`)
+```json
+{
+  "current_state": {
+    "last_command": "refactor",
+    "last_command_timestamp": "CURRENT_TIMESTAMP"
+  },
+  "workflow_tracking": {
+    "command_usage": {
+      "refactor": "INCREMENT_USAGE_COUNT"
+    }
+  },
+  "refactoring_status": {
+    "tdd_refactor_phase": "completed",
+    "quality_improvements": "UPDATE_QUALITY_IMPROVEMENTS",
+    "technical_debt_status": "UPDATE_DEBT_STATUS",
+    "pattern_optimizations": "UPDATE_PATTERN_OPTIMIZATIONS"
+  }
+}
+```
+
+#### System Integration Updates (`.claude/context/system-integration.json`)
+```json
+{
+  "real_time_metrics": {
+    "current_session": {
+      "commands_executed": "INCREMENT_BY_1",
+      "metadata_syncs": "INCREMENT_BY_1",
+      "refactoring_cycles_completed": "INCREMENT_BY_1"
+    }
+  },
+  "refactoring_quality": {
+    "code_quality_delta": "UPDATE_QUALITY_IMPROVEMENT_DELTA",
+    "performance_impact": "UPDATE_PERFORMANCE_IMPACT_METRICS",
+    "design_consistency": "UPDATE_DESIGN_CONSISTENCY_SCORE"
+  }
+}
+```
 
 **⚠️ Error Handling**: If standard workflow is disrupted:
 - 📖 Consult: [Manual Sync Guide](../../docs/maintenance/manual-sync-guide.md)

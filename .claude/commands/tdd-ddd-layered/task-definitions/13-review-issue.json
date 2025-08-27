@@ -4,6 +4,16 @@
   "phase": "issue-analysis-phase",
   "category": "analysis",
   "priority": "medium",
+  "version": "3.0",
+  "last_updated": "2025-08-27T00:00:00Z",
+  "required_subagent": "13-review-issue",
+  "subagent_mandatory": true,
+  "phase_3_features": {
+    "issue_impact_analysis": true,
+    "feasibility_assessment": true,
+    "priority_optimization": true,
+    "dependency_analysis": true
+  },
   "critical_tasks": [
     "issue_content_analysis",
     "requirements_extraction",
@@ -62,6 +72,61 @@
     ],
     "output_files": [
       "issue_analysis_report.md"
+    ]
+  },
+  "metadata_integration": {
+    "project_state_updates": {
+      "architecture_overview": {
+        "analysis_layer": {
+          "issue_reviews_completed": "INCREMENT_BY_1",
+          "requirements_extracted": "INCREMENT_BY_REQUIREMENT_COUNT",
+          "complexity_assessments_performed": "INCREMENT_BY_1",
+          "analysis_completion_rate": "RECALCULATE_ANALYSIS_PERCENTAGE"
+        }
+      },
+      "workflow_statistics": {
+        "subagent_performance": {
+          "total_subagent_calls": "INCREMENT_BY_1",
+          "most_active_agents": "UPDATE_WITH_13_REVIEW_ISSUE"
+        }
+      },
+      "recent_activity": {
+        "last_command_executed": "review-issue",
+        "last_subagent_called": "13-review-issue",
+        "last_metadata_update": "CURRENT_TIMESTAMP"
+      }
+    },
+    "context_file_updates": {
+      "current_state": {
+        "last_command": "review-issue",
+        "last_command_timestamp": "CURRENT_TIMESTAMP",
+        "development_stage": "ISSUE_REVIEW_COMPLETED"
+      }
+    },
+    "system_integration_updates": {
+      "real_time_metrics": {
+        "current_session": {
+          "subagents_invoked": "INCREMENT_BY_1",
+          "metadata_syncs": "INCREMENT_BY_1"
+        }
+      }
+    }
+  },
+  "execution_requirements": {
+    "context_files_required": [
+      ".claude/context/current-command-context.json",
+      ".claude/context/project-context.json",
+      "docs/metadata/project-state.json"
+    ],
+    "subagent_invocation": {
+      "agent_name": "13-review-issue",
+      "agent_mandatory": true,
+      "fallback_behavior": "error_with_guidance"
+    },
+    "post_execution_updates": [
+      "update_project_metadata",
+      "sync_context_files",
+      "validate_integration_health"
     ]
   }
 }
