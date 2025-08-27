@@ -74,6 +74,30 @@ Use the 02-sprint-planning subagent to plan sprint and create tickets from core 
 
 **🤖 Agent Integration**: This command MUST USE PROACTIVELY the specialized `02-sprint-planning` subagent for optimal sprint planning implementation. Claude Code should automatically delegate this task to the 02-sprint-planning subagent based on the command description.
 
+## 📖 Subagent Document Reading Instructions
+
+This command delegates to the specialized `02-sprint-planning` subagent.
+
+**MANDATORY: The subagent MUST read these files before execution:**
+
+1. `docs/index.md` - Project overview and current status
+2. `.claude/context/project-context.json` - Current project context
+3. `/workspace/.claude/context/current-command-context.json` - Current execution context
+4. `docs/vision/project-vision.md` - Project vision and objectives
+5. `docs/use_cases/core/index.md` - Core scenarios for sprint planning
+6. `docs/use_cases/index.md` - Current implementation status
+7. Any existing `docs/sprints/` folder contents - Previous sprint results and learnings
+8. GitHub Issues (via `gh issue list`) - Current issue status and backlog
+
+**Command-Specific Reading Focus - Sprint Planning:**
+- Review core scenarios to prioritize features for the sprint
+- Check project vision for business priorities and constraints
+- Analyze previous sprint results to understand team velocity
+- Review current implementation status to understand what's completed
+- Examine GitHub issues to understand current backlog and dependencies
+
+**CRITICAL:** Use the Read tool to actually read file contents, not just reference paths.
+
 1. **Pre-execution Validation**:
    ```bash
    # Validate sprint number requirement

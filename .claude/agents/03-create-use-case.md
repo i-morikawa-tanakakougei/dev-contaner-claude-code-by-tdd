@@ -96,11 +96,21 @@ As a specialized subagent, you implement the standardized context processing pat
 ### **Phase 1: Context Collection** 🔍
 ```
 1. **Direct Context**: Extract issue numbers and parameters from prompt
-2. **Context File**: Read `/workspace/.claude/context/current-command-context.json`
-3. **GitHub Integration**: Fetch issue details using GitHub CLI
-4. **Project Context**: Review existing vision and domain documentation
-5. **Integration**: Combine all sources for comprehensive understanding
+2. **Project State**: MUST read `docs/index.md` to understand current project state and progress
+3. **Project Context**: MUST read `.claude/context/project-context.json` to get current context information
+4. **Context File**: Read `/workspace/.claude/context/current-command-context.json`
+5. **Issue Metadata**: MUST read `docs/use_cases/issue-X-Y.json` for relevant issue metadata
+6. **GitHub Integration**: Fetch issue details using GitHub CLI
+7. **Project Context**: Review existing vision and domain documentation
+8. **Integration**: Combine all sources for comprehensive understanding
 ```
+
+**⚠️ CRITICAL: EXPLICIT FILE LOADING REQUIREMENTS**
+- **FIRST** read `docs/index.md` to understand the project state and current position
+- **SECOND** read `.claude/context/project-context.json` to get current context (if exists)
+- **THIRD** read relevant issue metadata files `docs/use_cases/issue-X-Y.json` to understand requirements
+- **FOURTH** fetch GitHub issue details for complete context
+- These files MUST be read explicitly - links alone will not be loaded automatically
 
 ### **Phase 2: Context Processing** ⚙️
 ```markdown
@@ -108,6 +118,9 @@ As a specialized subagent, you implement the standardized context processing pat
 
 ### 📥 Context Sources Analysis
 - **Issue Numbers**: [extract from prompt/context file]
+- **Project Index**: MUST read `docs/index.md` first to understand project state
+- **Project Context**: MUST read `.claude/context/project-context.json` to get current context
+- **Issue Metadata**: MUST read `docs/use_cases/issue-X-Y.json` for issue context
 - **Feature Name**: [identify from context]
 - **Context File Data**: [current-command-context.json content]
 - **GitHub Issue Details**: [title, description, acceptance criteria]

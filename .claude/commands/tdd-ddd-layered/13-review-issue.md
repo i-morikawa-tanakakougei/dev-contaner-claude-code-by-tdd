@@ -201,6 +201,37 @@ $ /review-issue 15
 ## Task Details
 
 **🤖 Agent Integration**: This command MUST USE PROACTIVELY the specialized `13-review-issue` subagent for comprehensive implementation review and quality analysis.
+
+## 📖 Subagent Document Reading Instructions
+
+This command delegates to the specialized `13-review-issue` subagent.
+
+**MANDATORY: The subagent MUST read these files before execution:**
+
+1. `docs/index.md` - Project overview and current status
+2. `/workspace/.claude/context/current-command-context.json` - Current execution context (includes issue numbers)
+3. `src/` - All implementation code to conduct comprehensive quality review
+4. `tests/` - All test files to verify test coverage and quality
+5. `docs/use_cases/issue-X-Y.md` - Use case specifications for compliance verification
+6. `docs/domain/issue-X-Y-domain-model.md` - Domain model design for architecture review
+7. `docs/use_cases/issue-X-Y.json` - Implementation metadata for phase completion tracking
+8. Any quality analysis reports or test coverage outputs
+
+**Command-Specific Reading Focus - Implementation Review:**
+- Conduct comprehensive architecture compliance review (Clean Architecture, DDD principles)
+- Analyze test coverage and Given-When-Then scenario implementation completeness
+- Review code quality, maintainability, and adherence to project standards
+- Validate all layers (domain, application, infrastructure, presentation) for proper separation
+- Generate detailed review report with actionable feedback and recommendations
+
+**Additional Context for Subagent Execution:**
+- Architecture review guidelines and compliance checklists
+- Code quality standards and metrics thresholds
+- Review template formats and reporting requirements
+- Quality gates and acceptance criteria for implementation completion
+- IMPORTANT: Use Read tool to access actual file contents, not just references
+
+**CRITICAL:** Use the Read tool to actually read file contents, not just reference paths.
  Claude Code should automatically delegate this task to the 13-review-issue subagent based on the command description.
 
 Follow these steps:

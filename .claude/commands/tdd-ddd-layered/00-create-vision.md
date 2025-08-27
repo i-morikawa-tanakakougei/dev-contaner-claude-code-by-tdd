@@ -160,6 +160,47 @@ $ /create-vision
 
 **🤖 Agent Integration**: This command MUST USE PROACTIVELY the specialized `00-create-vision` subagent for optimal project vision creation. Claude Code should automatically delegate this task to the 00-create-vision subagent based on the command description.
 
+## 📖 Subagent Document Reading Instructions
+
+This command delegates to the specialized `00-create-vision` subagent.
+
+**MANDATORY: The subagent MUST read these files before execution:**
+
+1. `docs/index.md` - Project overview and current status (if exists)
+2. `.claude/context/project-context.json` - Current project context (if exists)
+3. `/workspace/.claude/context/current-command-context.json` - Current execution context
+4. `README.md` - Project overview and setup information (if available)
+5. Any existing `docs/vision/` folder contents (if exists - for updates)
+6. Any existing `docs/steering/` folder contents (if exists - for consistency)
+
+**Command-Specific Reading Focus - Vision Creation:**
+- Read existing vision documents to understand if this is an update vs. new creation
+- Review any existing core scenarios to maintain consistency
+- Check project structure to understand development stage
+- Review any steering documents for alignment with business/technical policies
+
+**CRITICAL:** Use the Read tool to actually read file contents, not just reference paths.
+
+**Additional Context for Subagent Execution:**
+- `docs/index.md` - Project navigation and status overview (if exists)
+- Existing steering documents to maintain consistency across business/technical policies
+- Any project documentation that provides development methodology context
+- IMPORTANT: Use Read tool to access actual file contents, not just references
+
+## サブエージェント実行指示
+
+このコマンドはサブエージェント `00-create-vision` を呼び出します。
+
+**サブエージェントに対する明示的指示**:
+- 実行開始前に以下のファイルを必ず読み込んでください:
+  1. `docs/index.md` - プロジェクト全体の状態を把握（存在する場合）
+  2. `.claude/context/project-context.json` - 現在のコンテキストを取得（存在する場合）
+  3. `/workspace/.claude/context/current-command-context.json` - 実行コンテキストを確認
+  4. `README.md` - プロジェクト基本情報を確認（存在する場合）
+  5. 既存の`docs/vision/`フォルダ内の文書（存在する場合、更新対象として）
+  
+**重要**: リンクや参照だけでなく、実際にRead toolを使用してファイル内容を読み込むこと
+
 Follow these steps:
 
 1. **Pre-execution Validation**:

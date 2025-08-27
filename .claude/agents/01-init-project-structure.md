@@ -71,10 +71,18 @@ As a specialized subagent in the TDD/DDD/Layered Architecture workflow, you impl
 ### **Phase 1: Context Collection** 🔍
 ```
 1. **Direct Context**: Extract parameters from the prompt directly
-2. **Context File**: Read `/workspace/.claude/context/current-command-context.json` if available
-3. **Persistent Metadata**: Check relevant project files and metadata
-4. **Integration**: Combine all context sources for complete understanding
+2. **Project State**: MUST read `docs/index.md` to understand current project state and progress
+3. **Project Context**: MUST read `.claude/context/project-context.json` to get current context information
+4. **Context File**: Read `/workspace/.claude/context/current-command-context.json` if available
+5. **Persistent Metadata**: Check relevant project files and metadata
+6. **Integration**: Combine all context sources for complete understanding
 ```
+
+**⚠️ CRITICAL: EXPLICIT FILE LOADING REQUIREMENTS**
+- **FIRST** read `docs/index.md` to understand the project state and current position
+- **SECOND** read `.claude/context/project-context.json` to get current context (if exists)
+- **THIRD** read any vision documents from `docs/vision/` if they exist
+- These files MUST be read explicitly - links alone will not be loaded automatically
 
 ### **Phase 2: Context Processing** ⚙️
 ```markdown
@@ -82,7 +90,10 @@ As a specialized subagent in the TDD/DDD/Layered Architecture workflow, you impl
 
 ### 📥 Context Sources Analysis
 - **Prompt Parameters**: [extract any direct parameters]
+- **Project Index**: MUST read `docs/index.md` first to understand project state
+- **Project Context**: MUST read `.claude/context/project-context.json` to get current context
 - **Context File**: [read current-command-context.json if exists]
+- **Vision Documents**: [read existing docs/vision/ files if available]
 - **Project Status**: [check existing project structure]
 - **Phase Dependencies**: [verify prerequisites are met]
 
@@ -95,7 +106,11 @@ As a specialized subagent in the TDD/DDD/Layered Architecture workflow, you impl
 ```
 
 ### **Phase 3: Standard Processing Actions** 🚀
-1. **Context File Reading**: Always check for and read context file first
+1. **EXPLICIT FILE LOADING**: 
+   - FIRST read `docs/index.md` to understand project state
+   - SECOND read `.claude/context/project-context.json` for current context
+   - THIRD read vision documents if available
+   - FOURTH read context file if available
 2. **Validation**: Ensure all required context and prerequisites are available
 3. **Integration**: Merge context from multiple sources for complete picture
 4. **Execution**: Initialize project structure with full context awareness following architectural principles
@@ -113,10 +128,13 @@ As a specialized subagent in the TDD/DDD/Layered Architecture workflow, you impl
 Execute with full context awareness:
 
 ```bash
-# 1. ALWAYS start with context collection
-echo "🔍 Collecting context information..."
+# 1. ALWAYS start with explicit file loading
+echo "🔍 Loading required context documents..."
+echo "📖 Reading docs/index.md for project state..."
+echo "📖 Reading .claude/context/project-context.json for current context..."
+echo "📖 Reading vision documents if available..."
 
-# 2. Check for context file
+# 2. Check for additional context files
 if [[ -f "/workspace/.claude/context/current-command-context.json" ]]; then
     context_data=$(Read /workspace/.claude/context/current-command-context.json)
     parameters=$(extract_parameters(context_data))

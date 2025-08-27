@@ -177,6 +177,29 @@ $ /refactor 15
 **🤖 Agent Integration**: This command MUST USE PROACTIVELY the specialized `11-refactor` subagent for optimal code refactoring.
  Claude Code should automatically delegate this task to the 11-refactor subagent based on the command description.
 
+## 📖 Subagent Document Reading Instructions
+
+This command delegates to the specialized `11-refactor` subagent.
+
+**MANDATORY: The subagent MUST read these files before execution:**
+
+1. `docs/index.md` - Project overview and current status
+2. `.claude/context/project-context.json` - Current project context
+3. `/workspace/.claude/context/current-command-context.json` - Current execution context
+4. `docs/use_cases/issue-X-Y.json` - Issue metadata and current phase status
+5. `docs/test_results/` - Recent test execution results to ensure GREEN state
+6. `src/` directories - All implementation code for quality analysis
+7. `tests/` directories - Test code for understanding coverage and structure
+
+**Command-Specific Reading Focus - TDD Refactoring:**
+- Analyze existing code for refactoring opportunities (duplication, complexity)
+- Review test suite to ensure continuous GREEN state maintenance
+- Check code quality metrics and identify improvement areas
+- Understand architectural patterns and maintain consistency
+- Examine performance bottlenecks and optimization opportunities
+
+**CRITICAL:** Use the Read tool to actually read file contents, not just reference paths.
+
 1. **Pre-execution Validation**:
    ```bash
    # Validate issue number requirement

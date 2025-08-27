@@ -230,6 +230,29 @@ $ /use-case-status
 **🤖 Agent Integration**: This command MUST USE PROACTIVELY the specialized `16-use-case-status` subagent for comprehensive development status analysis and intelligent recommendations.
  Claude Code should automatically delegate this task to the 16-use-case-status subagent based on the command description.
 
+## 📖 Subagent Document Reading Instructions
+
+This command delegates to the specialized `16-use-case-status` subagent.
+
+**MANDATORY: The subagent MUST read these files before execution:**
+
+1. `docs/index.md` - Project overview and current status
+2. `.claude/context/project-context.json` - Current project context
+3. `/workspace/.claude/context/current-command-context.json` - Current execution context
+4. `docs/use_cases/` - All use case files and metadata for comprehensive analysis
+5. `docs/sprints/` - Sprint plans and progress for context
+6. `src/` directories - Implementation status across all layers
+7. `tests/` directories - Test coverage and quality metrics
+
+**Command-Specific Reading Focus - Status Analysis:**
+- Analyze all metadata files to determine completion status across phases
+- Review implementation progress across domain/application/infrastructure/presentation layers
+- Examine test coverage and quality metrics for health assessment
+- Study sprint progress and velocity for timeline projections
+- Calculate completion percentages and identify bottlenecks
+
+**CRITICAL:** Use the Read tool to actually read file contents, not just reference paths.
+
 Follow these steps:
 
 1. **Pre-execution Validation**:

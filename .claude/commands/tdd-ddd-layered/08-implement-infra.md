@@ -306,6 +306,38 @@ $ /implement-infra 3
 ## Task Details
 
 **🤖 Agent Integration**: This command MUST USE PROACTIVELY the specialized `08-implement-infra` subagent for optimal infrastructure layer implementation.
+
+## 📖 Subagent Document Reading Instructions
+
+This command delegates to the specialized `08-implement-infra` subagent.
+
+**MANDATORY: The subagent MUST read these files before execution:**
+
+1. `docs/index.md` - Project overview and current status
+2. `/workspace/.claude/context/current-command-context.json` - Current execution context (includes issue numbers)
+3. `src/domain/repositories/` - Repository interfaces that need concrete implementations
+4. `src/application/` - Application layer to understand data access patterns
+5. `docs/use_cases/issue-X-Y.md` - Use case specifications for persistence requirements
+6. `docs/domain/issue-X-Y-domain-model.md` - Domain model design for data mapping
+7. `tests/` - Test files to understand infrastructure requirements and integration tests
+8. Any existing infrastructure files in `src/infrastructure/` - For pattern consistency
+
+**Command-Specific Reading Focus - Infrastructure Layer Implementation:**
+- Implement concrete repository classes based on domain repository interfaces
+- Understand domain entities to create proper data mapping and persistence logic
+- Review application layer usage patterns to ensure proper integration
+- Analyze test requirements for database integration and external service mocking
+- Design data access patterns that maintain domain boundary integrity
+
+**Additional Context for Subagent Execution:**
+- Database schema design patterns and migration strategies
+- External service integration patterns and error handling
+- Configuration management approaches for different environments
+- Data mapping strategies between domain objects and persistence models
+- IMPORTANT: Use Read tool to access actual file contents, not just references
+
+**CRITICAL:** Use the Read tool to actually read file contents, not just reference paths.
+
  Claude Code should automatically delegate this task to the 08-implement-infra subagent based on the command description.
 
 1. **Pre-execution Validation**:

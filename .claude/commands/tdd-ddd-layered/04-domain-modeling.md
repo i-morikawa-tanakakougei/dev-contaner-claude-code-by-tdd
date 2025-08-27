@@ -74,6 +74,37 @@ Use the 04-domain-modeling subagent to design domain models based on the Given-W
 **🤖 Agent Integration**: This command MUST USE PROACTIVELY the specialized `04-domain-modeling` subagent for optimal domain model design.
  Claude Code should automatically delegate this task to the 04-domain-modeling subagent based on the command description.
 
+## 📖 Subagent Document Reading Instructions
+
+This command delegates to the specialized `04-domain-modeling` subagent.
+
+**MANDATORY: The subagent MUST read these files before execution:**
+
+1. `docs/index.md` - Project overview and current status
+2. `.claude/context/project-context.json` - Current project context
+3. `/workspace/.claude/context/current-command-context.json` - Current execution context (includes issue numbers)
+4. `docs/use_cases/issue-X-Y.md` - Use case specifications to analyze for domain concepts
+5. `docs/vision/project-vision.md` - Project vision for ubiquitous language reference
+6. `docs/use_cases/core/index.md` - Core scenarios for domain understanding
+7. Any existing domain models in `docs/domain/` - For consistency and pattern reuse
+8. `docs/use_cases/index.md` - Current implementation status and dependencies
+
+**Command-Specific Reading Focus - Domain Modeling:**
+- Extract entities, value objects, and aggregates from use case specifications
+- Identify business rules, invariants, and domain logic from Given-When-Then scenarios
+- Review project vision for ubiquitous language terms and domain concepts
+- Check existing domain models to maintain consistency and avoid duplication
+- Understand domain boundaries and integration points with other bounded contexts
+
+**CRITICAL:** Use the Read tool to actually read file contents, not just reference paths.
+
+**Additional Context for Subagent Execution:**
+- `docs/index.md` - Project navigation and status overview for understanding domain modeling context
+- Domain architecture patterns and conventions from existing domain models
+- Business glossary and terminology documentation to ensure domain language consistency
+- Technical architecture constraints that might influence domain design decisions
+- IMPORTANT: Use Read tool to access actual file contents, not just references
+
 1. **Pre-execution Validation**:
    ```bash
    # Validate issue number requirement

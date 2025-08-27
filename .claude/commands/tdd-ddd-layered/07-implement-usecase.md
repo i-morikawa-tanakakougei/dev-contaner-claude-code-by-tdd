@@ -317,6 +317,36 @@ git restore tests/unit/application/
 ## Task Details
 
 **🤖 Agent Integration**: This command MUST USE PROACTIVELY the specialized `07-implement-usecase` subagent for optimal application layer implementation following TDD GREEN phase principles.
+
+## 📖 Subagent Document Reading Instructions
+
+This command delegates to the specialized `07-implement-usecase` subagent.
+
+**MANDATORY: The subagent MUST read these files before execution:**
+
+1. `docs/index.md` - Project overview and current status
+2. `/workspace/.claude/context/current-command-context.json` - Current execution context (includes issue numbers)
+3. `src/domain/` - Domain layer implementation for understanding entities and business logic
+4. `docs/use_cases/issue-X-Y.md` - Use case specifications for application service orchestration
+5. `docs/domain/issue-X-Y-domain-model.md` - Domain model design for proper integration
+6. `tests/` - Test files to understand application layer requirements and validate implementation
+7. Any existing application layer files in `src/application/` - For pattern consistency
+
+**Command-Specific Reading Focus - Application Layer Implementation:**
+- Understand domain entities and services to orchestrate them properly in application layer
+- Extract use case flows from specifications to implement application services
+- Review existing application patterns for consistency and architectural compliance
+- Analyze test requirements to ensure proper implementation of application logic
+- Validate transaction boundaries and error handling requirements
+
+**Additional Context for Subagent Execution:**
+- Application layer implementation guidelines and patterns
+- DTO design conventions for maintaining clean boundaries between layers
+- Transaction management and error handling strategies
+- IMPORTANT: Use Read tool to access actual file contents, not just references
+
+**CRITICAL:** Use the Read tool to actually read file contents, not just reference paths.
+
  Claude Code should automatically delegate this task to the 07-implement-usecase subagent based on the command description.
 
 Follow these steps:

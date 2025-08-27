@@ -74,6 +74,53 @@ Use the 03-create-use-case subagent to create a Given-When-Then use case specifi
 
 **🤖 Agent Integration**: This command MUST USE PROACTIVELY the specialized `03-create-use-case` subagent for optimal use case specification creation. Claude Code should automatically delegate this task to the 03-create-use-case subagent based on the command description.
 
+## 📖 Subagent Document Reading Instructions
+
+This command delegates to the specialized `03-create-use-case` subagent.
+
+**MANDATORY: The subagent MUST read these files before execution:**
+
+1. `docs/index.md` - Project overview and current status
+2. `.claude/context/project-context.json` - Current project context
+3. `/workspace/.claude/context/current-command-context.json` - Current execution context (includes issue numbers)
+4. `docs/vision/project-vision.md` - Project vision for alignment validation
+5. `docs/use_cases/core/index.md` - Core scenarios for consistency checking
+6. `docs/use_cases/index.md` - Current implementation status for context
+7. GitHub issue details for specified issue numbers (via `gh issue view <number>`)
+8. Any existing use case specifications in `docs/use_cases/` for pattern consistency
+
+**Command-Specific Reading Focus - Use Case Specification:**
+- Extract detailed requirements and acceptance criteria from GitHub issues
+- Reference core scenarios to ensure alignment with project vision
+- Review existing use case specifications for consistent format and structure
+- Understand current project status to place new use cases appropriately
+- Validate business value and priority against project objectives
+
+**CRITICAL:** Use the Read tool to actually read file contents, not just reference paths.
+
+**Additional Context for Subagent Execution:**
+- `docs/index.md` - Project navigation and status overview for understanding current development state
+- Existing use case patterns in `docs/use_cases/` directory for maintaining consistent specification structure
+- Business requirements documentation to align new use cases with overall project objectives
+- Any related feature documentation that might influence use case scope and priority
+- IMPORTANT: Use Read tool to access actual file contents, not just references
+
+## サブエージェント実行指示
+
+このコマンドはサブエージェント `03-create-use-case` を呼び出します。
+
+**サブエージェントに対する明示的指示**:
+- 実行開始前に以下のファイルを必ず読み込んでください:
+  1. `docs/index.md` - プロジェクト全体の状態を把握
+  2. `.claude/context/project-context.json` - 現在のコンテキストを取得
+  3. `/workspace/.claude/context/current-command-context.json` - 実行コンテキストとイシュー番号を確認
+  4. `docs/vision/project-vision.md` - プロジェクトビジョンとの整合性確認
+  5. `docs/use_cases/core/index.md` - コアシナリオとの一貫性確認
+  6. 指定されたGitHub Issueの詳細情報（gh issue viewで取得）
+  7. 既存の`docs/use_cases/index.md` - 現在の実装状況を把握
+  
+**重要**: リンクや参照だけでなく、実際にRead toolを使用してファイル内容を読み込むこと
+
 1. **Pre-execution Validation**:
    ```bash
    # Validate issue number requirement

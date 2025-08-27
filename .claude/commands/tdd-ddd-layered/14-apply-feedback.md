@@ -215,6 +215,29 @@ $ /apply-feedback 15
 **🤖 Agent Integration**: This command MUST USE PROACTIVELY the specialized `14-apply-feedback` subagent for systematic feedback implementation and improvement.
  Claude Code should automatically delegate this task to the 14-apply-feedback subagent based on the command description.
 
+## 📖 Subagent Document Reading Instructions
+
+This command delegates to the specialized `14-apply-feedback` subagent.
+
+**MANDATORY: The subagent MUST read these files before execution:**
+
+1. `docs/index.md` - Project overview and current status
+2. `.claude/context/project-context.json` - Current project context
+3. `/workspace/.claude/context/current-command-context.json` - Current execution context
+4. `docs/reviews/` - Review reports containing specific feedback to apply
+5. `docs/use_cases/issue-X-Y.json` - Issue metadata and current implementation status
+6. `src/` directories - Current implementation code that needs improvement
+7. `tests/` directories - Test code that may need updates alongside changes
+
+**Command-Specific Reading Focus - Feedback Application:**
+- Analyze review reports to identify specific feedback items and priorities
+- Understand current implementation structure to plan improvements
+- Review test coverage to ensure improvements don't break functionality
+- Study architectural patterns to maintain consistency during changes
+- Examine code quality issues highlighted in review for targeted fixes
+
+**CRITICAL:** Use the Read tool to actually read file contents, not just reference paths.
+
 Follow these steps:
 
 1. **Pre-execution Validation**:

@@ -68,11 +68,23 @@ As the application layer implementation specialist, you implement advanced conte
 ### **Phase 1: Context Collection** 🔍
 ```
 1. **Direct Context**: Extract issue numbers and implementation parameters
-2. **Context File**: Read `/workspace/.claude/context/current-command-context.json`
-3. **Domain Layer Verification**: Confirm domain implementation completion
-4. **Test Context**: Analyze existing tests to understand expected behavior
-5. **Integration**: Combine all sources for complete implementation context
+2. **Project State**: MUST read `docs/index.md` to understand current project state and progress
+3. **Project Context**: MUST read `.claude/context/project-context.json` to get current context information
+4. **Context File**: Read `/workspace/.claude/context/current-command-context.json`
+5. **Issue Metadata**: MUST read `docs/use_cases/issue-X-Y.json` for relevant issue metadata
+6. **Domain Implementation**: MUST read existing domain layer code to understand available entities and services
+7. **Test Context**: Analyze existing tests to understand expected behavior
+8. **Domain Layer Verification**: Confirm domain implementation completion
+9. **Integration**: Combine all sources for complete implementation context
 ```
+
+**⚠️ CRITICAL: EXPLICIT FILE LOADING REQUIREMENTS**
+- **FIRST** read `docs/index.md` to understand the project state and current position
+- **SECOND** read `.claude/context/project-context.json` to get current context (if exists)
+- **THIRD** read relevant issue metadata files `docs/use_cases/issue-X-Y.json` to understand requirements
+- **FOURTH** read existing domain layer implementation to understand available entities and services
+- **FIFTH** read application layer test files to understand expected behavior
+- These files MUST be read explicitly - links alone will not be loaded automatically
 
 ### **Phase 2: Context Processing** ⚙️
 ```markdown

@@ -176,10 +176,23 @@ As a specialized subagent in the TDD/DDD/Layered Architecture workflow, you impl
 ### **Phase 1: Context Collection** 🔍
 ```
 1. **Direct Context**: Extract parameters from the prompt directly
-2. **Context File**: Read `/workspace/.claude/context/current-command-context.json` if available
-3. **Persistent Metadata**: Check relevant project files and metadata
-4. **Integration**: Combine all context sources for complete understanding
+2. **Project State**: MUST read `docs/index.md` to understand current project state and progress
+3. **Project Context**: MUST read `.claude/context/project-context.json` to get current context information
+4. **Context File**: Read `/workspace/.claude/context/current-command-context.json` if available
+5. **Issue Metadata**: MUST read `docs/use_cases/issue-X-Y.json` for relevant issue metadata
+6. **Domain Model**: MUST read `docs/domain/issue-X-Y-domain-model.md` for domain design
+7. **Use Case Specs**: MUST read `docs/use_cases/issue-X-Y.md` for detailed scenarios
+8. **Persistent Metadata**: Check relevant project files and metadata
+9. **Integration**: Combine all context sources for complete understanding
 ```
+
+**⚠️ CRITICAL: EXPLICIT FILE LOADING REQUIREMENTS**
+- **FIRST** read `docs/index.md` to understand the project state and current position
+- **SECOND** read `.claude/context/project-context.json` to get current context (if exists)
+- **THIRD** read relevant issue metadata files `docs/use_cases/issue-X-Y.json` to understand requirements
+- **FOURTH** read domain model `docs/domain/issue-X-Y-domain-model.md` for design context
+- **FIFTH** read use case specifications `docs/use_cases/issue-X-Y.md` for test scenarios
+- These files MUST be read explicitly - links alone will not be loaded automatically
 
 ### **Phase 2: Context Processing** ⚙️
 ```markdown

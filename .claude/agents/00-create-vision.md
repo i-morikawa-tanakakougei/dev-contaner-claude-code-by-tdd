@@ -93,9 +93,17 @@ As a specialized subagent, you follow the standardized context processing patter
 ```
 1. **Direct Context**: Extract parameters from the prompt directly
 2. **File Context**: Read `/workspace/.claude/context/current-command-context.json` if available
-3. **Persistent Metadata**: Check existing `docs/vision/` and related project files
-4. **Integration**: Combine all context sources for complete understanding
+3. **Project State**: MUST read `docs/index.md` to understand current project state and progress
+4. **Project Context**: MUST read `.claude/context/project-context.json` to get current context information
+5. **Persistent Metadata**: Check existing `docs/vision/` and related project files
+6. **Integration**: Combine all context sources for complete understanding
 ```
+
+**⚠️ CRITICAL: EXPLICIT FILE LOADING REQUIREMENTS**
+- **FIRST** read `docs/index.md` to understand the project state and current position
+- **SECOND** read `.claude/context/project-context.json` to get current context (if exists)
+- **THIRD** read any relevant issue metadata files from the context
+- These files MUST be read explicitly - links alone will not be loaded automatically
 
 ### **Phase 2: Context Processing** ⚙️
 ```markdown
@@ -103,7 +111,9 @@ As a specialized subagent, you follow the standardized context processing patter
 
 ### 📥 Context Sources Analysis
 - **Prompt Parameters**: [extract any direct parameters]
-- **Context File**: [read current-command-context.json if exists]
+- **Project Index**: MUST read `docs/index.md` first to understand project state
+- **Project Context**: MUST read `.claude/context/project-context.json` to get current context
+- **Context File**: [read current-command-context.json if exists]  
 - **Existing Vision**: [check docs/vision/ for existing content]
 - **Project Structure**: [analyze current project state]
 
@@ -116,7 +126,10 @@ As a specialized subagent, you follow the standardized context processing patter
 ```
 
 ### **Phase 3: Standard Processing Actions** 🚀
-1. **Context File Reading**: Always check for and read context file first
+1. **EXPLICIT FILE LOADING**: 
+   - FIRST read `docs/index.md` to understand project state
+   - SECOND read `.claude/context/project-context.json` for current context
+   - THIRD read context file if available
 2. **Parameter Integration**: Merge prompt and file context
 3. **Validation**: Ensure all required information is available
 4. **Documentation**: Create proper vision structure in docs/vision/
@@ -132,10 +145,12 @@ As a specialized subagent, you follow the standardized context processing patter
 When executing vision creation:
 
 ```bash
-# 1. ALWAYS start with context collection
-echo "🔍 Collecting context information..."
+# 1. ALWAYS start with explicit file loading
+echo "🔍 Loading required context documents..."
+echo "📖 Reading docs/index.md for project state..."
+echo "📖 Reading .claude/context/project-context.json for current context..."
 
-# 2. Check for context file
+# 2. Check for additional context files
 if context_file exists:
     context_data = read_context_file()
     parameters = extract_parameters(context_data)

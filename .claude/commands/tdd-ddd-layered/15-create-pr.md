@@ -239,6 +239,29 @@ This command follows the established 4-step agent integration pattern for consis
 **🤖 Agent Integration**: This command MUST USE PROACTIVELY the specialized `15-create-pr` subagent for pull request creation and finalization.
  Claude Code should automatically delegate this task to the 15-create-pr subagent based on the command description.
 
+## 📖 Subagent Document Reading Instructions
+
+This command delegates to the specialized `15-create-pr` subagent.
+
+**MANDATORY: The subagent MUST read these files before execution:**
+
+1. `docs/index.md` - Project overview and current status
+2. `.claude/context/project-context.json` - Current project context
+3. `/workspace/.claude/context/current-command-context.json` - Current execution context
+4. `docs/use_cases/issue-X-Y.json` - Issue metadata and completion status
+5. `docs/reviews/` - Review reports for PR description context
+6. Git history and branch status for PR creation context
+7. Test results and quality metrics for PR validation
+
+**Command-Specific Reading Focus - Pull Request Creation:**
+- Analyze completed implementation for comprehensive PR description
+- Review all related issues to ensure proper linking and closure
+- Examine test results and quality metrics for validation
+- Study architectural changes and business impact for PR context
+- Review feedback application results for completion confirmation
+
+**CRITICAL:** Use the Read tool to actually read file contents, not just reference paths.
+
 Follow these steps:
 
 1. **Pre-execution Validation**:

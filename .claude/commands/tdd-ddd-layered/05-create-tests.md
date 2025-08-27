@@ -106,6 +106,37 @@ Use the 05-create-tests subagent to create TDD tests based on Given-When-Then sp
 **🤖 Agent Integration**: This command MUST USE PROACTIVELY the specialized `05-create-tests` subagent for optimal TDD RED phase implementation.
  Claude Code should automatically delegate this task to the 05-create-tests subagent based on the command description.
 
+## 📖 Subagent Document Reading Instructions
+
+This command delegates to the specialized `05-create-tests` subagent.
+
+**MANDATORY: The subagent MUST read these files before execution:**
+
+1. `docs/index.md` - Project overview and current status
+2. `.claude/context/project-context.json` - Current project context
+3. `/workspace/.claude/context/current-command-context.json` - Current execution context (includes issue numbers)
+4. `docs/use_cases/issue-X-Y.md` - Use case specifications with Given-When-Then scenarios
+5. `docs/domain/issue-X-Y-domain-model.md` - Domain model design for test structure
+6. `docs/vision/project-vision.md` - Project vision for understanding requirements
+7. Any existing test files in `tests/` - For pattern consistency and test structure
+8. `docs/use_cases/index.md` - Current implementation status for context
+
+**Command-Specific Reading Focus - TDD Test Creation:**
+- Convert Given-When-Then scenarios into comprehensive test cases
+- Use domain model design to structure entity and value object tests
+- Create failing tests that clearly specify expected behavior
+- Design test mocks and fixtures based on domain boundaries
+- Ensure test independence and proper isolation of external dependencies
+
+**CRITICAL:** Use the Read tool to actually read file contents, not just reference paths.
+
+**Additional Context for Subagent Execution:**
+- `docs/index.md` - Project navigation and status overview for understanding test creation context
+- Existing test patterns and conventions in `tests/` directory for maintaining consistent test structure
+- Testing strategy documentation to align test implementation with project testing approach
+- Domain model design patterns to structure tests appropriately for entities and value objects
+- IMPORTANT: Use Read tool to access actual file contents, not just references
+
 1. **Pre-execution Validation**:
    ```bash
    # Validate issue number requirement

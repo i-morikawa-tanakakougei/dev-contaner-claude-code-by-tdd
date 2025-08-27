@@ -172,6 +172,29 @@ $ /evolve-scenarios user-management
 **🤖 Agent Integration**: This command MUST USE PROACTIVELY the specialized `12-evolve-scenarios` subagent for optimal scenario evolution and requirements adaptation.
  Claude Code should automatically delegate this task to the 12-evolve-scenarios subagent based on the command description.
 
+## 📖 Subagent Document Reading Instructions
+
+This command delegates to the specialized `12-evolve-scenarios` subagent.
+
+**MANDATORY: The subagent MUST read these files before execution:**
+
+1. `docs/index.md` - Project overview and current status
+2. `.claude/context/project-context.json` - Current project context
+3. `/workspace/.claude/context/current-command-context.json` - Current execution context
+4. `docs/use_cases/core/index.md` - Core scenarios for consistency check
+5. `docs/use_cases/` - All existing use case files for evolution context
+6. `docs/sprints/` - Sprint plans and feedback for evolution triggers
+7. GitHub issue comments and feedback (if available) for requirement discovery
+
+**Command-Specific Reading Focus - Scenario Evolution:**
+- Analyze existing scenarios to identify gaps and evolution opportunities
+- Review sprint feedback and retrospective findings for new requirements
+- Understand domain model and business language for scenario consistency
+- Examine implementation challenges that revealed missing scenarios
+- Study integration issues that suggest additional edge cases
+
+**CRITICAL:** Use the Read tool to actually read file contents, not just reference paths.
+
 Follow these steps:
 
 1. **Pre-execution Validation**:

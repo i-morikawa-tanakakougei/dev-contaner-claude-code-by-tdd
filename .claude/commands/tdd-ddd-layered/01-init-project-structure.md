@@ -101,7 +101,55 @@ $ /init-project-structure
 
 ## Task Details
 
-**🤖 Agent Integration**: This command MUST USE PROACTIVELY the specialized `01-init-project-structure` subagent for optimal project structure initialization. Claude Code should automatically delegate this task to the 01-init-project-structure subagent based on the command description.
+**🤖 Agent Integration**: This command MUST USE PROACTIVELY the specialized `01-init-project-structure` subagent for optimal project structure initialization.
+
+## 📖 Subagent Document Reading Instructions
+
+This command delegates to the specialized `01-init-project-structure` subagent.
+
+**MANDATORY: The subagent MUST read these files before execution:**
+
+1. `docs/index.md` - Project overview and current status (if exists)
+2. `/workspace/.claude/context/current-command-context.json` - Current execution context
+3. `docs/vision/project-vision.md` - Project vision for structure alignment
+4. `docs/use_cases/core/index.md` - Core scenarios for directory planning
+5. Any existing project structure or configuration files
+6. `README.md` - Project overview and setup information (if available)
+
+**Command-Specific Reading Focus - Project Structure Setup:**
+- Create TDD/DDD/Layered Architecture compliant directory structure
+- Set up proper Python project configuration following clean architecture principles
+- Initialize testing framework and quality tools configuration
+- Establish project documentation and governance structure
+
+**Additional Context for Subagent Execution:**
+- Python project structure best practices and conventions
+- TDD/DDD project organization patterns
+- Development tool configuration requirements
+- IMPORTANT: Use Read tool to access actual file contents, not just references
+
+**CRITICAL:** Use the Read tool to actually read file contents, not just reference paths.
+
+ Claude Code should automatically delegate this task to the 01-init-project-structure subagent based on the command description.
+
+**MANDATORY: The subagent MUST read these files before execution:**
+
+1. `docs/index.md` - Project overview and current status
+2. `.claude/context/project-context.json` - Current project context  
+3. `/workspace/.claude/context/current-command-context.json` - Current execution context
+4. `docs/vision/project-vision.md` - Project vision for understanding requirements
+5. `docs/steering/*.md` - Steering documents for technical and structural guidance
+6. Any existing `README.md` - To understand current project setup
+7. Any existing project structure files (`pyproject.toml`, etc.) - For conflict detection
+
+**Command-Specific Reading Focus - Project Structure:**
+- Read vision document to understand project scale and requirements
+- Review technical steering documents for architecture decisions
+- Check existing project files to avoid conflicts
+- Understand team size and development approach from vision
+- Review any existing directory structure for preservation needs
+
+**CRITICAL:** Use the Read tool to actually read file contents, not just reference paths.
 
 1. **Pre-execution Validation**:
    ```bash

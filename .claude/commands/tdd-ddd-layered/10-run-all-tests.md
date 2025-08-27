@@ -166,6 +166,37 @@ $ /run-all-tests 15
 ## Task Details
 
 **🤖 Agent Integration**: This command MUST USE PROACTIVELY the specialized `10-run-all-tests` subagent for optimal test execution and reporting.
+
+## 📖 Subagent Document Reading Instructions
+
+This command delegates to the specialized `10-run-all-tests` subagent.
+
+**MANDATORY: The subagent MUST read these files before execution:**
+
+1. `docs/index.md` - Project overview and current status
+2. `/workspace/.claude/context/current-command-context.json` - Current execution context (includes issue numbers)
+3. `tests/` - All test directories to understand test structure and coverage
+4. `src/` - All implementation code to verify test alignment
+5. `docs/use_cases/issue-X-Y.md` - Use case specifications for scenario validation
+6. `pytest.ini` or `pyproject.toml` - Test configuration and coverage settings
+7. `docs/use_cases/issue-X-Y.json` - Current implementation status for comprehensive testing
+
+**Command-Specific Reading Focus - Test Execution:**
+- Execute all test suites (unit, integration, e2e) and generate comprehensive reports
+- Validate test coverage against Given-When-Then scenarios from specifications
+- Ensure all layers (domain, application, infrastructure, presentation) are tested
+- Generate quality metrics and identify areas needing additional test coverage
+- Verify that all acceptance criteria from use case specifications are tested
+
+**Additional Context for Subagent Execution:**
+- Test execution strategy and coverage reporting guidelines
+- Quality gates and coverage thresholds for the project
+- Test failure analysis and debugging approaches
+- Integration with CI/CD pipeline requirements if applicable
+- IMPORTANT: Use Read tool to access actual file contents, not just references
+
+**CRITICAL:** Use the Read tool to actually read file contents, not just reference paths.
+
  Claude Code should automatically delegate this task to the 10-run-all-tests subagent based on the command description.
 
 1. **Pre-execution Validation**:

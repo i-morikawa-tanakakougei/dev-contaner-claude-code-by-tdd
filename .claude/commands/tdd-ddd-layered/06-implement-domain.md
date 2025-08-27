@@ -106,7 +106,21 @@ Use the 06-implement-domain subagent to implement domain layer to make tests pas
 
 ## Task Details
 
-**🤖 Agent Integration**: This command MUST USE PROACTIVELY the specialized `06-implement-domain` subagent for optimal TDD GREEN phase implementation.
+**🤖 Agent Integration**: This command MUST USE PROACTIVELY the specialized `06-implement-domain` subagent for optimal TDD GREEN phase implementation. Claude Code should automatically delegate this task to the 06-implement-domain subagent based on the command description.
+
+**📖 Required Reading**: Before execution, this command MUST read the following files to understand project context:
+- `/workspace/.claude/context/current-command-context.json` - Current execution context
+- `tests/` - All failing test files for implementation guidance
+- `docs/domain/issue-X-Y-domain-model.md` - Domain design specifications
+- `docs/use_cases/issue-X-Y.md` - Use case specifications for business logic
+
+**Additional Context for Subagent Execution:**
+- `docs/index.md` - Project navigation and status overview for understanding domain implementation context
+- Existing domain implementation patterns in `src/domain/` directory for maintaining consistent code structure
+- Implementation guidelines and coding standards documentation to ensure code quality
+- Domain layer architecture conventions to maintain clean architecture principles
+- IMPORTANT: Use Read tool to access actual file contents, not just references
+
  Claude Code should automatically delegate this task to the 06-implement-domain subagent based on the command description.
 
 1. **Pre-execution Validation**:

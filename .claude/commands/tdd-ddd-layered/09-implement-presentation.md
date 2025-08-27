@@ -290,6 +290,38 @@ $ /implement-presentation 3
 ## Task Details
 
 **🤖 Agent Integration**: This command MUST USE PROACTIVELY the specialized `09-implement-presentation` subagent for optimal presentation layer implementation.
+
+## 📖 Subagent Document Reading Instructions
+
+This command delegates to the specialized `09-implement-presentation` subagent.
+
+**MANDATORY: The subagent MUST read these files before execution:**
+
+1. `docs/index.md` - Project overview and current status
+2. `/workspace/.claude/context/current-command-context.json` - Current execution context (includes issue numbers)
+3. `src/application/` - Application layer use cases to integrate with presentation endpoints
+4. `docs/use_cases/issue-X-Y.md` - Use case specifications for API endpoint or CLI command design
+5. `docs/domain/issue-X-Y-domain-model.md` - Domain model design for input/output model creation
+6. `tests/` - Test files to understand presentation layer requirements and e2e scenarios
+7. Any existing presentation layer files in `src/presentation/` - For pattern consistency
+8. API documentation or CLI specification files for interface consistency
+
+**Command-Specific Reading Focus - Presentation Layer Implementation:**
+- Map Given-When-Then scenarios to API endpoints, CLI commands, or UI interactions
+- Design request/response models based on application layer DTOs
+- Understand user interface requirements from use case specifications
+- Review application services to ensure proper integration without bypassing layers
+- Design input validation and error response patterns for user-friendly interfaces
+
+**Additional Context for Subagent Execution:**
+- API design conventions and REST endpoint patterns
+- CLI command design patterns and user experience guidelines
+- Input validation strategies and error message formatting
+- Authentication and authorization implementation patterns
+- IMPORTANT: Use Read tool to access actual file contents, not just references
+
+**CRITICAL:** Use the Read tool to actually read file contents, not just reference paths.
+
  Claude Code should automatically delegate this task to the 09-implement-presentation subagent based on the command description.
 
 1. **Pre-execution Validation**:
