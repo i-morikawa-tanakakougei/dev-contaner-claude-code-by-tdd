@@ -1,0 +1,200 @@
+{
+  "command": "99-2-create-retroactive-issue",
+  "description": "GitHub issue creation for emergency fixes to restore project traceability and tracking",
+  "phase": "retroactive-issue-creation-phase",
+  "category": "emergency-recovery",
+  "priority": "high",
+  "version": "1.0",
+  "last_updated": null,
+  "required_subagent": "99-2-create-retroactive-issue",
+  "subagent_mandatory": true,
+  "phase_3_features": {
+    "intelligent_commit_analysis": true,
+    "automated_issue_generation": true,
+    "smart_github_integration": true,
+    "enhanced_traceability_linking": true
+  },
+  "critical_tasks": [
+    "commit_range_analysis",
+    "multi_commit_strategy_execution", 
+    "issue_content_generation",
+    "github_integration",
+    "project_tracking_update",
+    "traceability_establishment",
+    "metadata_synchronization"
+  ],
+  "output_requirements": {
+    "critical_patterns": [
+      "✅.*(コミット.*範囲.*分析|コミット分析).*完了",
+      "✅.*戦略.*実行.*完了",
+      "✅.*Issue.*内容.*生成",
+      "✅.*GitHub.*連携.*完了",
+      "✅.*プロジェクト.*追跡.*更新",
+      "✅.*トレーサビリティ.*確立",
+      "✅.*メタデータ.*同期",
+      "(ISSUE_CREATED|ISSUES_CREATED|TRACEABILITY_ESTABLISHED|READY_FOR_DOCUMENTATION_SYNC)"
+    ],
+    "required_sections": [
+      "📊 実行サマリー",
+      "📋 総合判定",
+      "🎫 GitHub Issue作成結果",
+      "🔗 トレーサビリティリンク",
+      "➡️ 次のステップ"
+    ],
+    "success_indicators": [
+      "Issue番号",
+      "リンクされたコミット数",
+      "トレーサビリティ完全性"
+    ]
+  },
+  "prerequisites": [
+    "github_repository_access",
+    "emergency_commits_identified",
+    "github_cli_available"
+  ],
+  "retry_context": {
+    "common_issues": [
+      "Commit hash not found",
+      "GitHub API access denied",
+      "Issue already exists for commit",
+      "Missing commit context information"
+    ],
+    "enhanced_guidance": [
+      "コミットハッシュの正確性確認と完全ハッシュ使用",
+      "GitHub CLI認証の確認と設定",
+      "既存Issue確認と更新モードの活用",
+      "緊急修正コンテキストの詳細抽出"
+    ],
+    "special_focus": "緊急修正のビジネスコンテキストを正確に抽出してIssue品質を確保"
+  },
+  "dependencies": {
+    "previous_commands": ["99-1-emergency-recovery"],
+    "next_commands": ["99-3-sync-documentation", "99-4-retroactive-test"],
+    "required_files": [
+      ".git/log",
+      "docs/vision/project-vision.md"
+    ],
+    "output_files": [
+      "GitHub Issue (external)",
+      "issue-creation-report.md"
+    ]
+  },
+  "metadata_integration": {
+    "project_state_updates": {
+      "issue_tracking": {
+        "emergency_issues": [
+          {
+            "issue_number": "CREATED_ISSUE_NUMBER",
+            "commit_hash": "TARGET_COMMIT_HASH",
+            "creation_timestamp": "CURRENT_TIMESTAMP",
+            "status": "created"
+          }
+        ],
+        "total_emergency_issues": "INCREMENT_COUNT"
+      },
+      "project_metadata": {
+        "overall_status": "Emergency Recovery - Issue Created",
+        "github_integration_status": "active"
+      },
+      "workflow_statistics": {
+        "emergency_recovery_commands": {
+          "create_retroactive_issue": "INCREMENT_BY_1"
+        }
+      },
+      "recent_activity": {
+        "last_command_executed": "create-retroactive-issue",
+        "last_subagent_called": "99-2-create-retroactive-issue",
+        "last_github_issue_created": "CREATED_ISSUE_NUMBER",
+        "last_metadata_update": "CURRENT_TIMESTAMP"
+      }
+    },
+    "context_file_updates": {
+      "issue_tracking": {
+        "emergency_recovery_issues": [
+          {
+            "issue_number": "CREATED_ISSUE_NUMBER",
+            "type": "ISSUE_TYPE",
+            "status": "created"
+          }
+        ]
+      },
+      "current_state": {
+        "current_phase": "Emergency Recovery - Issue Creation Phase",
+        "last_command": "create-retroactive-issue",
+        "last_command_timestamp": "CURRENT_TIMESTAMP"
+      }
+    },
+    "system_integration_updates": {
+      "github_integration_metrics": {
+        "retroactive_issues_created": "INCREMENT_BY_1",
+        "last_github_interaction": "CURRENT_TIMESTAMP"
+      }
+    }
+  },
+  "execution_requirements": {
+    "context_files_required": [
+      ".claude/context/current-command-context.json",
+      ".claude/context/project-context.json",
+      "docs/metadata/project-state.json"
+    ],
+    "subagent_invocation": {
+      "agent_name": "99-2-create-retroactive-issue",
+      "agent_mandatory": true,
+      "fallback_behavior": "error_with_guidance"
+    },
+    "post_execution_updates": [
+      "update_issue_tracking_metadata",
+      "sync_github_integration_status",
+      "prepare_documentation_sync_context"
+    ]
+  },
+  "command_parameters": {
+    "commit_specification": {
+      "description": "コミット指定パラメータ（相互排他、いずれか必須）",
+      "mutually_exclusive": true,
+      "required_one_of": true,
+      "options": {
+        "commit": {
+          "type": "string",
+          "description": "単一コミットハッシュ。指定されたコミットのみを対象"
+        },
+        "since": {
+          "type": "string", 
+          "description": "指定コミット以降（含まない）の全コミット。Git: <hash>..HEAD"
+        },
+        "from": {
+          "type": "string",
+          "description": "指定コミット以降（含む）の全コミット。Git: <hash>~1..HEAD"
+        },
+        "range": {
+          "type": "string",
+          "format": "<start>..<end>",
+          "description": "Git範囲指定。start含まない、end含む"
+        },
+        "last": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 50,
+          "description": "最新N個のコミット。Git: HEAD~<N>..HEAD"
+        }
+      }
+    },
+    "type": {
+      "type": "string",
+      "values": ["bug", "hotfix", "emergency"],
+      "default": "emergency",
+      "description": "Type of emergency fix for appropriate labeling"
+    },
+    "strategy": {
+      "type": "string",
+      "values": ["individual", "consolidated", "interactive"],
+      "default": "individual",
+      "description": "複数コミット処理戦略: individual=個別Issue作成, consolidated=統合Issue作成, interactive=選択式"
+    },
+    "update": {
+      "type": "boolean",
+      "default": false,
+      "description": "既存Issueの更新モード。同一コミットに対する既存Issue情報の詳細化・分類見直し・情報補完を実行"
+    }
+  }
+}

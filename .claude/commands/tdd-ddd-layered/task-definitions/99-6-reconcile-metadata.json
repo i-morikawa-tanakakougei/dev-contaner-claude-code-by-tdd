@@ -1,0 +1,162 @@
+{
+  "command": "99-6-reconcile-metadata",
+  "description": "Comprehensive metadata reconciliation and synchronization after emergency recovery process completion",
+  "phase": "metadata-reconciliation-phase",
+  "category": "emergency-recovery",
+  "priority": "medium",
+  "version": "1.0",
+  "last_updated": null,
+  "required_subagent": "99-6-reconcile-metadata",
+  "subagent_mandatory": true,
+  "phase_3_features": {
+    "intelligent_consistency_analysis": true,
+    "automated_conflict_resolution": true,
+    "smart_scope_reconciliation": true,
+    "enhanced_audit_trail": true
+  },
+  "critical_tasks": [
+    "project_state_analysis",
+    "metadata_consistency_validation",
+    "recovery_progress_sync",
+    "scope_based_reconciliation",
+    "integrity_verification",
+    "reconciliation_documentation"
+  ],
+  "output_requirements": {
+    "critical_patterns": [
+      "✅.*プロジェクト状態.*分析.*完了",
+      "✅.*メタデータ.*整合性.*検証.*完了",
+      "✅.*復旧進捗.*同期.*完了",
+      "✅.*スコープ.*調整.*完了",
+      "✅.*整合性検証.*完了",
+      "✅.*調整記録.*完了",
+      "(METADATA_CONSISTENT|RECOVERY_STATUS_UPDATED|READY_FOR_FINAL_REVIEW)"
+    ],
+    "required_sections": [
+      "📊 実行サマリー",
+      "📋 総合判定",
+      "📊 調整結果",
+      "🔄 メタデータ更新適用",
+      "📈 プロジェクト状態サマリー",
+      "➡️ 次のステップ"
+    ],
+    "success_indicators": [
+      "調整されたファイル数",
+      "解決された不整合数",
+      "整合性スコア"
+    ]
+  },
+  "prerequisites": [
+    "emergency_fix_validated",
+    "metadata_files_available",
+    "recovery_steps_completed"
+  ],
+  "retry_context": {
+    "common_issues": [
+      "Metadata files not found",
+      "Inconsistent metadata state",
+      "Metadata corruption",
+      "JSON syntax errors"
+    ],
+    "enhanced_guidance": [
+      "プロジェクトメタデータ構造の確認と不足ファイルの初期化",
+      "複数メタデータファイル間の競合解決と優先順位付け",
+      "メタデータバックアップからの復旧手順の実施",
+      "JSON構文エラーの特定と修正による整合性確保"
+    ],
+    "special_focus": "すべてのメタデータファイルの完全な整合性確保と将来の一貫性維持"
+  },
+  "dependencies": {
+    "previous_commands": ["99-5-validate-emergency-fix"],
+    "next_commands": ["99-7-review-emergency-recovery"],
+    "required_files": [
+      "docs/metadata/project-state.json",
+      ".claude/context/project-context.json",
+      ".claude/context/execution-history.jsonl"
+    ],
+    "output_files": [
+      "docs/metadata/project-state.json (updated)",
+      ".claude/context/project-context.json (updated)",
+      "metadata-reconciliation-report.md"
+    ]
+  },
+  "metadata_integration": {
+    "project_state_updates": {
+      "metadata_status": {
+        "last_reconciliation_timestamp": "CURRENT_TIMESTAMP",
+        "reconciliation_scope": "RECONCILIATION_SCOPE",
+        "consistency_score": "CALCULATED_CONSISTENCY_PERCENTAGE",
+        "reconciliation_count": "INCREMENT_BY_1"
+      },
+      "project_metadata": {
+        "overall_status": "Emergency Recovery - Metadata Reconciled",
+        "health_score": "UPDATE_BASED_ON_RECONCILIATION",
+        "last_metadata_update": "CURRENT_TIMESTAMP"
+      },
+      "workflow_statistics": {
+        "emergency_recovery_commands": {
+          "reconcile_metadata": "INCREMENT_BY_1"
+        }
+      },
+      "recent_activity": {
+        "last_command_executed": "reconcile-metadata",
+        "last_subagent_called": "99-6-reconcile-metadata",
+        "last_reconciliation": "CURRENT_TIMESTAMP",
+        "last_metadata_update": "CURRENT_TIMESTAMP"
+      }
+    },
+    "context_file_updates": {
+      "metadata_consistency": {
+        "reconciliation_completed": "true",
+        "last_reconciliation_timestamp": "CURRENT_TIMESTAMP",
+        "consistency_validated": "true"
+      },
+      "current_state": {
+        "current_phase": "Emergency Recovery - Metadata Reconciliation Phase",
+        "last_command": "reconcile-metadata",
+        "last_command_timestamp": "CURRENT_TIMESTAMP"
+      }
+    },
+    "system_integration_updates": {
+      "metadata_management_metrics": {
+        "reconciliation_sessions": "INCREMENT_BY_1",
+        "consistency_improvements": "TRACK_CONSISTENCY_GAINS"
+      }
+    }
+  },
+  "execution_requirements": {
+    "context_files_required": [
+      ".claude/context/current-command-context.json",
+      ".claude/context/project-context.json",
+      "docs/metadata/project-state.json"
+    ],
+    "subagent_invocation": {
+      "agent_name": "99-6-reconcile-metadata",
+      "agent_mandatory": true,
+      "fallback_behavior": "error_with_guidance"
+    },
+    "post_execution_updates": [
+      "update_metadata_consistency_status",
+      "sync_all_metadata_files",
+      "prepare_final_review_context"
+    ]
+  },
+  "command_parameters": {
+    "scope": {
+      "type": "string",
+      "values": ["project", "sprint", "issue"],
+      "default": "issue",
+      "description": "Scope of metadata reconciliation"
+    },
+    "validate_json": {
+      "type": "boolean",
+      "default": true,
+      "description": "Validate JSON syntax after reconciliation"
+    },
+    "backup": {
+      "type": "boolean",
+      "default": true,
+      "description": "Create backup before reconciliation"
+    }
+  }
+}

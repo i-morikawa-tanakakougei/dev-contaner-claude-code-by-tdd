@@ -1,0 +1,158 @@
+{
+  "command": "99-1-emergency-recovery",
+  "description": "Emergency fix analysis and comprehensive recovery planning to restore TDD/DDD/Layered Architecture workflow integrity",
+  "phase": "emergency-recovery-analysis-phase",
+  "category": "emergency-recovery",
+  "priority": "critical",
+  "version": "1.0",
+  "last_updated": null,
+  "required_subagent": "99-1-emergency-recovery",
+  "subagent_mandatory": true,
+  "phase_3_features": {
+    "intelligent_emergency_detection": true,
+    "automated_gap_analysis": true,
+    "strategic_recovery_planning": true,
+    "predictive_quality_assessment": true
+  },
+  "critical_tasks": [
+    "emergency_change_identification",
+    "document_code_gap_analysis",
+    "test_coverage_assessment",
+    "recovery_plan_creation",
+    "impact_assessment",
+    "timeline_estimation"
+  ],
+  "output_requirements": {
+    "critical_patterns": [
+      "✅.*緊急修正.*特定",
+      "✅.*ドキュメント.*ギャップ.*分析",
+      "✅.*テストカバレッジ.*評価",
+      "✅.*復旧計画.*作成",
+      "✅.*影響評価.*完了",
+      "✅.*タイムライン.*見積もり",
+      "(EMERGENCY_ANALYZED|RECOVERY_PLAN_CREATED|READY_FOR_RECOVERY)"
+    ],
+    "required_sections": [
+      "📊 実行サマリー",
+      "📋 総合判定",
+      "🚨 緊急修正分析結果",
+      "📋 復旧アクションプラン",
+      "➡️ 次のステップ"
+    ],
+    "success_indicators": [
+      "緊急修正件数",
+      "ドキュメント不整合率",
+      "復旧計画優先度"
+    ]
+  },
+  "prerequisites": [
+    "git_repository_available",
+    "emergency_fixes_identified",
+    "project_metadata_accessible"
+  ],
+  "retry_context": {
+    "common_issues": [
+      "No emergency fixes detected",
+      "Multiple conflicting emergency changes",
+      "Standard workflow files missing",
+      "Insufficient Git history information"
+    ],
+    "enhanced_guidance": [
+      "Gitコミット履歴の詳細分析による緊急修正の特定",
+      "ドキュメントとコードの整合性チェック強化",
+      "テストカバレッジギャップの網羅的評価",
+      "復旧優先度の明確な設定と分類"
+    ],
+    "special_focus": "緊急対応による標準プロセスからの乖離を正確に把握し、体系的な復旧計画を策定"
+  },
+  "dependencies": {
+    "previous_commands": [],
+    "next_commands": ["99-2-create-retroactive-issue", "99-3-sync-documentation"],
+    "required_files": [
+      ".git/log",
+      "docs/vision/",
+      "docs/use_cases/"
+    ],
+    "output_files": [
+      "emergency-recovery-report.md",
+      "recovery-action-plan.md"
+    ]
+  },
+  "metadata_integration": {
+    "project_state_updates": {
+      "emergency_recovery": {
+        "status": "analysis_completed",
+        "analysis_timestamp": "CURRENT_TIMESTAMP",
+        "emergency_changes_count": "DETECTED_CHANGE_COUNT",
+        "recovery_plan_created": "true"
+      },
+      "project_metadata": {
+        "overall_status": "Emergency Recovery - Analysis Complete",
+        "technical_debt_score": "UPDATE_BASED_ON_ANALYSIS"
+      },
+      "workflow_statistics": {
+        "emergency_recovery_commands": {
+          "emergency_recovery": "INCREMENT_BY_1"
+        }
+      },
+      "recent_activity": {
+        "last_command_executed": "emergency-recovery",
+        "last_subagent_called": "99-1-emergency-recovery",
+        "last_metadata_update": "CURRENT_TIMESTAMP"
+      }
+    },
+    "context_file_updates": {
+      "emergency_recovery_status": {
+        "analysis_completed": "true",
+        "recovery_plan_available": "true",
+        "next_recovery_step": "create-retroactive-issue"
+      },
+      "current_state": {
+        "current_phase": "Emergency Recovery - Analysis Phase",
+        "last_command": "emergency-recovery",
+        "last_command_timestamp": "CURRENT_TIMESTAMP"
+      }
+    },
+    "system_integration_updates": {
+      "emergency_response_metrics": {
+        "analysis_sessions": "INCREMENT_BY_1",
+        "recovery_plans_generated": "INCREMENT_BY_1"
+      }
+    }
+  },
+  "execution_requirements": {
+    "context_files_required": [
+      ".claude/context/current-command-context.json",
+      ".claude/context/project-context.json",
+      "docs/metadata/project-state.json"
+    ],
+    "subagent_invocation": {
+      "agent_name": "99-1-emergency-recovery",
+      "agent_mandatory": true,
+      "fallback_behavior": "error_with_guidance"
+    },
+    "post_execution_updates": [
+      "update_emergency_recovery_metadata",
+      "sync_context_files",
+      "prepare_recovery_context"
+    ]
+  },
+  "command_parameters": {
+    "mode": {
+      "type": "string",
+      "values": ["full", "partial", "analysis"],
+      "default": "full",
+      "description": "Recovery analysis mode"
+    },
+    "branch": {
+      "type": "string",
+      "optional": true,
+      "description": "Specific branch to analyze for emergency fixes"
+    },
+    "issue": {
+      "type": "string",
+      "optional": true,
+      "description": "Specific issue number for targeted recovery"
+    }
+  }
+}

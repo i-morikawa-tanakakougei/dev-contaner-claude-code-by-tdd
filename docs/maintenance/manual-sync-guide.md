@@ -21,6 +21,12 @@
 - 外部システムとの連携が必要
 - 複雑なマージ・リファクタリング
 
+### 4. 緊急対応によるドキュメント・コード不整合
+- バグ修正などで直接コードを修正した場合
+- 標準のTDD/DDDプロセスをバイパスした実装
+- ドキュメント（Given-When-Then、ドメインモデル）が実装と乖離
+- テストが未整備または不完全な状態
+
 ## 📋 手動同期チェックリスト
 
 ### Phase 1: 状況確認
@@ -116,6 +122,153 @@ for review_file in docs/reviews/*.md; do
         echo ""
     fi
 done
+```
+
+## 🚨 緊急対応後のドキュメント・コード整合性回復
+
+### 緊急対応検出手順
+```bash
+# 標準プロセスを経ていない変更の検出
+echo "=== 緊急対応による変更検出 ==="
+
+# 最近のコミットでドキュメント更新がない場合を検出
+recent_commits=$(git log --oneline -10)
+for commit in $(git log --format="%H" -10); do
+    doc_changes=$(git diff-tree --no-commit-id --name-only -r $commit | grep -E "(docs/|tests/)" | wc -l)
+    src_changes=$(git diff-tree --no-commit-id --name-only -r $commit | grep -E "src/" | wc -l)
+    
+    if [[ $src_changes -gt 0 && $doc_changes -eq 0 ]]; then
+        echo "⚠️ Commit $commit: ソース変更あり、ドキュメント変更なし"
+        git log --oneline -1 $commit
+    fi
+done
+```
+
+### ドキュメント・コード不整合の分析
+```bash
+# 変更されたソースファイルの特定
+echo "=== 変更ソースファイル分析 ==="
+modified_files=$(git diff --name-only HEAD~5..HEAD | grep -E "\.py$|\.ts$|\.js$")
+
+for file in $modified_files; do
+    echo "File: $file"
+    
+    # 対応するテストファイルの存在確認
+    test_file=$(echo $file | sed 's|src/|tests/|' | sed 's|\.\w*$|_test.py|')
+    if [[ -f "$test_file" ]]; then
+        echo "  ✅ Test exists: $test_file"
+        # テスト更新日時チェック
+        if [[ $(stat -f "%m" "$file") -gt $(stat -f "%m" "$test_file") ]]; then
+            echo "  ⚠️ テストがソースより古い"
+        fi
+    else
+        echo "  ❌ Test missing: $test_file"
+    fi
+    
+    # 対応するドキュメントの存在確認
+    base_name=$(basename "$file" | cut -d. -f1)
+    doc_pattern="docs/*/**/*${base_name}*.md"
+    if ls $doc_pattern >/dev/null 2>&1; then
+        echo "  ✅ Doc exists"
+    else
+        echo "  ❌ Doc missing"
+    fi
+done
+```
+
+### 復旧アプローチの選択
+```bash
+# 復旧方法の判定
+echo "=== 復旧アプローチ判定 ==="
+
+# 変更規模の算出
+lines_changed=$(git diff --stat HEAD~5..HEAD | tail -1 | awk '{print $4}')
+files_changed=$(git diff --name-only HEAD~5..HEAD | wc -l)
+
+echo "変更規模: ${files_changed}ファイル, ${lines_changed}行"
+
+if [[ $files_changed -le 3 ]]; then
+    echo "推奨: 個別復旧アプローチ（99-X番台コマンド）"
+    echo "  1. /emergency-recovery (99-1) --mode analysis で現状分析"
+    echo "  2. /create-retroactive-issue (99-2) --commit HEAD でIssue作成"
+    echo "  3. /sync-documentation (99-3) <issue> で個別ドキュメント同期"
+    echo "  4. /retroactive-test (99-4) <issue> でテスト補完"
+    echo "  5. /validate-emergency-fix (99-5) <issue> で検証"
+    echo "  6. /reconcile-metadata (99-6) --scope issue でメタデータ更新"
+    echo "  7. /review-emergency-recovery (99-7) <issue> で最終レビュー"
+elif [[ $files_changed -le 10 ]]; then
+    echo "推奨: 部分復旧アプローチ（99-X番台コマンド）"
+    echo "  1. /emergency-recovery (99-1) --mode partial で部分復旧"
+    echo "  2. 重要な機能から順次 /validate-emergency-fix (99-5)"
+    echo "  3. /review-emergency-recovery (99-7) --detail-level summary で状況確認"
+else
+    echo "推奨: 完全復旧アプローチ（99-X番台コマンド）"
+    echo "  1. /emergency-recovery (99-1) --mode full で全体復旧"
+    echo "  2. /reconcile-metadata (99-6) --scope project でメタデータ再構築"
+    echo "  3. /review-emergency-recovery (99-7) --detail-level full で総合レビュー"
+fi
+```
+
+### ドキュメント逆生成手順
+```bash
+# Given-When-Thenシナリオの逆生成
+echo "=== シナリオ逆生成 ==="
+
+# 関数やクラスからシナリオを推論
+source_file="src/domain/cart.py"
+if [[ -f "$source_file" ]]; then
+    echo "Analyzing: $source_file"
+    
+    # クラスメソッドの抽出
+    methods=$(grep -E "def\s+\w+\(" "$source_file" | sed 's/def //' | cut -d'(' -f1)
+    
+    for method in $methods; do
+        echo ""
+        echo "Method: $method"
+        echo "推論されるシナリオ:"
+        echo "  Given: [初期状態]"
+        echo "  When: $method が実行される"
+        echo "  Then: [期待される結果]"
+    done
+fi
+```
+
+### テスト補完テンプレート
+```python
+# 緊急対応後のテスト補完用テンプレート
+import pytest
+from datetime import datetime
+
+class TestEmergencyFix:
+    """緊急対応 <commit-hash> に対する補完テスト"""
+    
+    @pytest.fixture
+    def setup(self):
+        """テスト環境のセットアップ"""
+        # TODO: 実装に基づいてセットアップを記述
+        pass
+    
+    def test_emergency_fix_core_functionality(self, setup):
+        """緊急修正の主要機能テスト"""
+        # Given: 緊急対応前の状態
+        # TODO: 初期状態の設定
+        
+        # When: 修正された機能を実行
+        # TODO: 修正機能の呼び出し
+        
+        # Then: 期待される動作を検証
+        # TODO: アサーション追加
+        assert True
+    
+    def test_emergency_fix_edge_cases(self, setup):
+        """緊急修正のエッジケーステスト"""
+        # TODO: エッジケースの実装
+        pass
+    
+    def test_emergency_fix_regression(self, setup):
+        """緊急修正によるリグレッションテスト"""
+        # TODO: 既存機能への影響確認
+        pass
 ```
 
 ## 🔄 プロセス復旧テンプレート
@@ -221,6 +374,15 @@ done
 2. ビジョンフェーズからの完全再実行
 3. データ移行・マージ作業
 
+### Level 4: 緊急対応後の復旧（99-X番台コマンド）
+1. `/emergency-recovery` (99-1) `--mode analysis` で現状分析
+2. `/create-retroactive-issue` (99-2) `--commit <hash>` で必要なIssue作成（範囲指定も可能: `--since`, `--from`, `--range`, `--last`）
+3. `/sync-documentation` (99-3) `<issue>` `--type all` でドキュメント同期
+4. `/retroactive-test` (99-4) `<issue>` `--coverage-target 80` でテスト補完
+5. `/validate-emergency-fix` (99-5) `<issue>` `--strict` で妥当性検証
+6. `/reconcile-metadata` (99-6) `--scope project` でプロジェクト状態の整合性確保
+7. `/review-emergency-recovery` (99-7) `--detail-level summary` で最終確認
+
 ## 📝 トラブルシューティング記録テンプレート
 
 ```markdown
@@ -233,6 +395,21 @@ done
 **最終解決方法**: 
 **予防策**: 
 **備考**: 
+
+### 緊急対応の場合（追加項目）
+**緊急対応の理由**: 
+**標準プロセスをバイパスした範囲**: 
+**影響を受けたファイル**: 
+**ドキュメントとの乖離箇所**: 
+**復旧に使用したコマンド**: 
+**復旧完了確認**: 
+  [ ] (99-1) emergency-recovery実行
+  [ ] (99-2) create-retroactive-issue実行
+  [ ] (99-3) sync-documentation実行
+  [ ] (99-4) retroactive-test実行
+  [ ] (99-5) validate-emergency-fix実行
+  [ ] (99-6) reconcile-metadata実行
+  [ ] (99-7) review-emergency-recovery実行
 ```
 
 ## 💡 ベストプラクティス
@@ -242,12 +419,17 @@ done
 3. **ログ保存**: エラー発生時の詳細ログ保存
 4. **段階実行**: 大きな処理は段階的に実行し確認
 5. **文書更新**: トラブル解決後は本ガイドの更新
+6. **緊急対応記録**: 緊急対応時は必ず理由と範囲を記録
+7. **速やかな復旧**: 緊急対応後は48時間以内に標準プロセスへ復帰
+8. **チームへの通知**: 緊急対応実施時はチームに即座に通知
 
 ## 📚 関連リソース
 
 - [README.md](../README.md) - プロジェクト概要
 - [QUICKSTART.md](../../.claude/commands/tdd-ddd-layered/QUICKSTART.md) - クイックスタート
 - [TASK_VERIFICATION_GUIDE.md](../../.claude/commands/tdd-ddd-layered/TASK_VERIFICATION_GUIDE.md) - タスク確認ガイド
+- [EMERGENCY-RECOVERY-GUIDE.md](../../.claude/commands/tdd-ddd-layered/EMERGENCY-RECOVERY-GUIDE.md) - 緊急復旧コマンドの完全ガイド（99-X番台、438行の包括的な使用手順）
+- [緊急対応復旧コマンド提案 v1.1](../../reviews/emergency-recovery-workflow-commands-proposal-v1.1.md) - 緊急対応後の標準フロー復帰コマンド提案書（99-X番台、設計思想）
 
 ---
 

@@ -1,0 +1,166 @@
+{
+  "command": "99-4-retroactive-test",
+  "description": "Comprehensive test creation for emergency fixes to restore TDD compliance and code coverage",
+  "phase": "retroactive-test-creation-phase",
+  "category": "emergency-recovery",
+  "priority": "high",
+  "version": "1.0",
+  "last_updated": null,
+  "required_subagent": "99-4-retroactive-test",
+  "subagent_mandatory": true,
+  "phase_3_features": {
+    "intelligent_code_analysis": true,
+    "automated_test_generation": true,
+    "smart_coverage_optimization": true,
+    "enhanced_quality_assurance": true
+  },
+  "critical_tasks": [
+    "emergency_change_analysis",
+    "test_coverage_assessment",
+    "test_design_comprehensive",
+    "test_implementation",
+    "coverage_verification",
+    "integration_testing"
+  ],
+  "output_requirements": {
+    "critical_patterns": [
+      "✅.*緊急修正.*分析.*完了",
+      "✅.*テストカバレッジ.*評価.*完了",
+      "✅.*包括的.*テスト設計.*完了",
+      "✅.*テスト実装.*完了",
+      "✅.*カバレッジ検証.*完了",
+      "✅.*統合テスト.*完了",
+      "(TESTS_CREATED|COVERAGE_IMPROVED|READY_FOR_VALIDATION)"
+    ],
+    "required_sections": [
+      "📊 実行サマリー",
+      "📋 総合判定",
+      "🧪 テスト作成結果",
+      "📊 カバレッジ分析",
+      "➡️ 次のステップ"
+    ],
+    "success_indicators": [
+      "作成されたテストファイル数",
+      "カバレッジ向上率",
+      "テストケース数"
+    ]
+  },
+  "prerequisites": [
+    "documentation_synchronized",
+    "github_issue_available",
+    "test_framework_detected"
+  ],
+  "retry_context": {
+    "common_issues": [
+      "Test framework not found",
+      "Cannot identify emergency changes",
+      "Coverage target too ambitious",
+      "Test execution failures"
+    ],
+    "enhanced_guidance": [
+      "プロジェクトの既存テスト構造とフレームワークの確認",
+      "GitHub Issue詳細からの緊急修正内容の正確な抽出",
+      "現実的なカバレッジ目標の設定と段階的改善",
+      "テスト実装品質の確保とフレームワーク整合性の維持"
+    ],
+    "special_focus": "TDD原則に従った高品質なテスト実装による緊急修正の信頼性確保"
+  },
+  "dependencies": {
+    "previous_commands": ["99-3-sync-documentation"],
+    "next_commands": ["99-5-validate-emergency-fix", "99-6-reconcile-metadata"],
+    "required_files": [
+      "docs/use_cases/ (updated)",
+      "existing test files",
+      "source code (emergency changes)"
+    ],
+    "output_files": [
+      "tests/**/*test*.py (or language equivalent)",
+      "test-creation-report.md",
+      "coverage-report.html"
+    ]
+  },
+  "metadata_integration": {
+    "project_state_updates": {
+      "testing_metrics": {
+        "emergency_test_coverage": "FINAL_COVERAGE_PERCENTAGE",
+        "retroactive_tests_created": "INCREMENT_TEST_COUNT",
+        "last_test_creation_timestamp": "CURRENT_TIMESTAMP",
+        "coverage_improvement": {
+          "before": "BEFORE_COVERAGE_PERCENTAGE",
+          "after": "AFTER_COVERAGE_PERCENTAGE",
+          "improvement": "IMPROVEMENT_PERCENTAGE"
+        }
+      },
+      "project_metadata": {
+        "overall_status": "Emergency Recovery - Tests Created",
+        "code_quality_score": "UPDATE_BASED_ON_COVERAGE"
+      },
+      "workflow_statistics": {
+        "emergency_recovery_commands": {
+          "retroactive_test": "INCREMENT_BY_1"
+        }
+      },
+      "recent_activity": {
+        "last_command_executed": "retroactive-test",
+        "last_subagent_called": "99-4-retroactive-test",
+        "last_test_creation": "CURRENT_TIMESTAMP",
+        "last_metadata_update": "CURRENT_TIMESTAMP"
+      }
+    },
+    "context_file_updates": {
+      "testing_status": {
+        "emergency_tests_created": "true",
+        "coverage_target_achieved": "COVERAGE_TARGET_MET",
+        "last_test_issue": "ISSUE_NUMBER",
+        "test_creation_timestamp": "CURRENT_TIMESTAMP"
+      },
+      "current_state": {
+        "current_phase": "Emergency Recovery - Test Creation Phase",
+        "last_command": "retroactive-test",
+        "last_command_timestamp": "CURRENT_TIMESTAMP"
+      }
+    },
+    "system_integration_updates": {
+      "test_automation_metrics": {
+        "retroactive_test_sessions": "INCREMENT_BY_1",
+        "coverage_improvements": "TRACK_COVERAGE_GAINS"
+      }
+    }
+  },
+  "execution_requirements": {
+    "context_files_required": [
+      ".claude/context/current-command-context.json",
+      ".claude/context/project-context.json",
+      "docs/metadata/project-state.json"
+    ],
+    "subagent_invocation": {
+      "agent_name": "99-4-retroactive-test",
+      "agent_mandatory": true,
+      "fallback_behavior": "error_with_guidance"
+    },
+    "post_execution_updates": [
+      "update_testing_metadata",
+      "sync_coverage_metrics",
+      "prepare_validation_context"
+    ]
+  },
+  "command_parameters": {
+    "issue_number": {
+      "type": "string",
+      "required": true,
+      "description": "GitHub issue number for the emergency fix"
+    },
+    "coverage_target": {
+      "type": "integer",
+      "default": 80,
+      "min": 1,
+      "max": 100,
+      "description": "Target test coverage percentage"
+    },
+    "test_types": {
+      "type": "array",
+      "default": ["unit", "integration", "regression"],
+      "description": "Types of tests to create"
+    }
+  }
+}

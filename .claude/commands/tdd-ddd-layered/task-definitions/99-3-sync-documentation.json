@@ -1,0 +1,166 @@
+{
+  "command": "99-3-sync-documentation",
+  "description": "Documentation synchronization with emergency code changes to restore document-code consistency",
+  "phase": "documentation-synchronization-phase",
+  "category": "emergency-recovery",
+  "priority": "high",
+  "version": "1.0",
+  "last_updated": null,
+  "required_subagent": "99-3-sync-documentation",
+  "subagent_mandatory": true,
+  "phase_3_features": {
+    "intelligent_gap_analysis": true,
+    "automated_scenario_generation": true,
+    "smart_domain_sync": true,
+    "enhanced_quality_assurance": true
+  },
+  "critical_tasks": [
+    "change_impact_analysis",
+    "scenario_updates",
+    "domain_model_sync",
+    "documentation_quality_assurance",
+    "traceability_verification",
+    "metadata_updates"
+  ],
+  "output_requirements": {
+    "critical_patterns": [
+      "✅.*変更影響.*分析.*完了",
+      "✅.*シナリオ.*更新.*完了",
+      "✅.*ドメインモデル.*同期.*完了",
+      "✅.*ドキュメント.*品質保証.*完了",
+      "✅.*トレーサビリティ.*検証.*完了",
+      "✅.*メタデータ.*更新.*完了",
+      "(DOCUMENTATION_SYNCHRONIZED|SCENARIOS_ALIGNED|READY_FOR_TESTING)"
+    ],
+    "required_sections": [
+      "📊 実行サマリー",
+      "📋 総合判定",
+      "📚 ドキュメント同期結果",
+      "📄 具体的なファイル変更",
+      "➡️ 次のステップ"
+    ],
+    "success_indicators": [
+      "更新されたシナリオ数",
+      "同期されたドメインモデル数",
+      "整合性スコア"
+    ]
+  },
+  "prerequisites": [
+    "github_issue_created",
+    "documentation_structure_available",
+    "emergency_changes_identified"
+  ],
+  "retry_context": {
+    "common_issues": [
+      "Issue number not found",
+      "No documentation changes needed", 
+      "Conflicting documentation changes",
+      "Missing documentation structure"
+    ],
+    "enhanced_guidance": [
+      "GitHub Issue詳細の確認とアクセス権限の検証",
+      "緊急修正の影響範囲を正確に特定してドキュメント要件を明確化",
+      "複数の緊急修正間の競合解決手順の実施",
+      "プロジェクト構造確認と不足ディレクトリの作成"
+    ],
+    "special_focus": "Given-When-Thenシナリオとドメインモデルの実装コードとの完全な整合性確保"
+  },
+  "dependencies": {
+    "previous_commands": ["99-2-create-retroactive-issue"],
+    "next_commands": ["99-4-retroactive-test", "99-5-validate-emergency-fix"],
+    "required_files": [
+      "docs/use_cases/",
+      "docs/domain/",
+      "GitHub issue details"
+    ],
+    "output_files": [
+      "docs/use_cases/*.md (updated)",
+      "docs/domain/*.md (updated)",
+      "documentation-sync-report.md"
+    ]
+  },
+  "metadata_integration": {
+    "project_state_updates": {
+      "documentation_metrics": {
+        "last_sync_timestamp": "CURRENT_TIMESTAMP",
+        "emergency_sync_count": "INCREMENT_BY_1",
+        "documentation_consistency_score": "CALCULATED_CONSISTENCY_PERCENTAGE",
+        "synchronized_files": "LIST_OF_UPDATED_FILES"
+      },
+      "project_metadata": {
+        "overall_status": "Emergency Recovery - Documentation Synchronized",
+        "documentation_quality_score": "UPDATE_BASED_ON_SYNC_RESULTS"
+      },
+      "workflow_statistics": {
+        "emergency_recovery_commands": {
+          "sync_documentation": "INCREMENT_BY_1"
+        }
+      },
+      "recent_activity": {
+        "last_command_executed": "sync-documentation",
+        "last_subagent_called": "99-3-sync-documentation",
+        "last_documentation_sync": "CURRENT_TIMESTAMP",
+        "last_metadata_update": "CURRENT_TIMESTAMP"
+      }
+    },
+    "context_file_updates": {
+      "documentation_status": {
+        "use_cases_synchronized": "true",
+        "domain_model_synchronized": "true",
+        "last_sync_issue": "ISSUE_NUMBER",
+        "sync_timestamp": "CURRENT_TIMESTAMP"
+      },
+      "current_state": {
+        "current_phase": "Emergency Recovery - Documentation Sync Phase",
+        "last_command": "sync-documentation",
+        "last_command_timestamp": "CURRENT_TIMESTAMP"
+      }
+    },
+    "system_integration_updates": {
+      "documentation_metrics": {
+        "synchronization_sessions": "INCREMENT_BY_1",
+        "consistency_improvements": "TRACK_IMPROVEMENT_PERCENTAGE"
+      }
+    }
+  },
+  "execution_requirements": {
+    "context_files_required": [
+      ".claude/context/current-command-context.json",
+      ".claude/context/project-context.json",
+      "docs/metadata/project-state.json"
+    ],
+    "subagent_invocation": {
+      "agent_name": "99-3-sync-documentation",
+      "agent_mandatory": true,
+      "fallback_behavior": "error_with_guidance"
+    },
+    "post_execution_updates": [
+      "update_documentation_metadata",
+      "sync_consistency_scores",
+      "prepare_test_creation_context"
+    ]
+  },
+  "command_parameters": {
+    "issue_number": {
+      "type": "string",
+      "required": true,
+      "description": "GitHub issue number for the emergency fix"
+    },
+    "type": {
+      "type": "string",
+      "values": ["use-case", "domain", "all"],
+      "default": "all",
+      "description": "Type of documentation to synchronize"
+    },
+    "dry_run": {
+      "type": "boolean",
+      "default": false,
+      "description": "Preview changes without applying them"
+    },
+    "force": {
+      "type": "boolean",
+      "default": false,
+      "description": "Force synchronization even with conflicts"
+    }
+  }
+}

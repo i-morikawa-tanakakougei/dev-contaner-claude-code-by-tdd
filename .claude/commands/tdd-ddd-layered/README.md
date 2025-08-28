@@ -25,7 +25,19 @@ Advanced metadata-driven verification ensures quality:
 ✅ Comprehensive quality gates
 ```
 
-## 📋 **Complete Command List (16 Commands)**
+## 📋 **Complete Command List (23 Commands)**
+
+### **🚨 Emergency Recovery Phase**
+
+| Command | Status | Subagent | Key Features |
+|---------|---------|----------|--------------|
+| `/emergency-recovery` | ✅ | 99-1-emergency-recovery | **Emergency fix analysis and recovery planning** |
+| `/create-retroactive-issue` | ✅ | 99-2-create-retroactive-issue | **GitHub issue creation for emergency fixes** |
+| `/sync-documentation` | ✅ | 99-3-sync-documentation | **Code-to-document reverse generation** |
+| `/retroactive-test` | ✅ | 99-4-retroactive-test | **Post-hoc test creation for emergency fixes** |
+| `/validate-emergency-fix` | ✅ | 99-5-validate-emergency-fix | **Emergency fix validation and refactoring proposals** |
+| `/reconcile-metadata` | ✅ | 99-6-reconcile-metadata | **Project metadata consistency restoration** |
+| `/review-emergency-recovery` | ✅ | 99-7-review-emergency-recovery | **Final emergency recovery completion review** |
 
 ### **🎯 Initial Phase**
 
@@ -520,6 +532,18 @@ When AI detects issues, the system automatically prepares enhanced context for r
 /use-case-status 123
 ```
 
+### **Emergency Recovery Commands**
+```bash
+# Emergency fix recovery workflow
+/emergency-recovery --mode full
+/create-retroactive-issue --commit <hash>
+/sync-documentation <issue> --type all
+/retroactive-test <issue>
+/validate-emergency-fix <issue>
+/reconcile-metadata --scope project
+/review-emergency-recovery
+```
+
 ### **Quality Commands**
 ```bash
 # Critical quality checks (with subagents)
@@ -561,6 +585,7 @@ When AI detects issues, the system automatically prepares enhanced context for r
 
 1. **Quick Start**: Read [QUICKSTART.md](QUICKSTART.md) for immediate hands-on experience
 2. **Detailed Guide**: Check [TASK_VERIFICATION_GUIDE.md](TASK_VERIFICATION_GUIDE.md) for comprehensive usage
-3. **First Command**: Run `/create-vision` to begin your journey
+3. **Emergency Recovery**: See [EMERGENCY-RECOVERY-GUIDE.md](EMERGENCY-RECOVERY-GUIDE.md) for post-emergency workflow restoration
+4. **First Command**: Run `/create-vision` to begin your journey
 
 **The subagent-integrated TDD/DDD/Layered Architecture commands deliver the highest quality development experience with automated intelligence and comprehensive quality assurance.**
