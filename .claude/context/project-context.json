@@ -83,7 +83,14 @@
       "implement_presentation": 0,
       "run_all_tests": 0,
       "refactor": 0,
-      "create_pr": 0
+      "create_pr": 0,
+      "emergency_recovery": 0,
+      "create_retroactive_issue": 0,
+      "sync_documentation": 0,
+      "retroactive_test": 0,
+      "validate_emergency_fix": 0,
+      "reconcile_metadata": 0,
+      "review_emergency_recovery": 0
     },
     "subagent_utilization": {
       "00_create_vision": 0,
@@ -102,7 +109,14 @@
       "13_review_issue": 0,
       "14_apply_feedback": 0,
       "15_create_pr": 0,
-      "16_use_case_status": 0
+      "16_use_case_status": 0,
+      "99_1_emergency_recovery": 0,
+      "99_2_create_retroactive_issue": 0,
+      "99_3_sync_documentation": 0,
+      "99_4_retroactive_test": 0,
+      "99_5_validate_emergency_fix": 0,
+      "99_6_reconcile_metadata": 0,
+      "99_7_review_emergency_recovery": 0
     }
   },
   "documentation_status": {
@@ -132,9 +146,28 @@
   "metadata_references": {
     "project_dashboard": "docs/index.md",
     "manual_sync_guide": "docs/maintenance/manual-sync-guide.md",
+    "emergency_recovery_guide": ".claude/commands/tdd-ddd-layered/EMERGENCY-RECOVERY-GUIDE.md",
     "implementation_reports": "docs/maintenance/",
     "custom_commands": ".claude/commands/tdd-ddd-layered/",
     "subagents": ".claude/agents/",
-    "context_files": ".claude/context/"
+    "context_files": ".claude/context/",
+    "emergency_recovery_commands": {
+      "99_1_emergency_recovery": ".claude/commands/tdd-ddd-layered/99-1-emergency-recovery.md",
+      "99_2_create_retroactive_issue": ".claude/commands/tdd-ddd-layered/99-2-create-retroactive-issue.md",
+      "99_3_sync_documentation": ".claude/commands/tdd-ddd-layered/99-3-sync-documentation.md",
+      "99_4_retroactive_test": ".claude/commands/tdd-ddd-layered/99-4-retroactive-test.md",
+      "99_5_validate_emergency_fix": ".claude/commands/tdd-ddd-layered/99-5-validate-emergency-fix.md",
+      "99_6_reconcile_metadata": ".claude/commands/tdd-ddd-layered/99-6-reconcile-metadata.md",
+      "99_7_review_emergency_recovery": ".claude/commands/tdd-ddd-layered/99-7-review-emergency-recovery.md"
+    },
+    "emergency_recovery_subagents": {
+      "99_1_emergency_recovery": ".claude/agents/99-1-emergency-recovery.md",
+      "99_2_create_retroactive_issue": ".claude/agents/99-2-create-retroactive-issue.md",
+      "99_3_sync_documentation": ".claude/agents/99-3-sync-documentation.md",
+      "99_4_retroactive_test": ".claude/agents/99-4-retroactive-test.md",
+      "99_5_validate_emergency_fix": ".claude/agents/99-5-validate-emergency-fix.md",
+      "99_6_reconcile_metadata": ".claude/agents/99-6-reconcile-metadata.md",
+      "99_7_review_emergency_recovery": ".claude/agents/99-7-review-emergency-recovery.md"
+    }
   }
 }

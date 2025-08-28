@@ -1,9 +1,11 @@
 {
   "integration_metadata": {
-    "system_version": "3.0",
-    "integration_level": "Phase 3: Enhanced Integration",
+    "system_version": "3.1",
+    "integration_level": "Phase 3: Enhanced Integration with Emergency Recovery",
     "last_sync": null,
-    "sync_status": "active"
+    "sync_status": "active",
+    "emergency_recovery_enabled": true,
+    "emergency_recovery_version": "1.0"
   },
   "cross_system_dependencies": {
     "command_to_context": {
@@ -49,6 +51,12 @@
         "status": "operational",
         "accessibility": 100,
         "navigation_completeness": 100
+      },
+      "emergency_recovery_system": {
+        "status": "operational",
+        "commands_available": 7,
+        "subagents_ready": 7,
+        "recovery_success_rate": 0
       }
     }
   },
@@ -59,7 +67,10 @@
         "command_execution_complete",
         "subagent_task_finished", 
         "context_file_updated",
-        "project_state_changed"
+        "project_state_changed",
+        "emergency_recovery_initiated",
+        "emergency_fix_validated",
+        "retroactive_documentation_synced"
       ],
       "sync_rules": [
         {
@@ -76,6 +87,16 @@
           "condition": "health_check_required",
           "action": "recalculate_health_scores",
           "target_files": ["project-state.json", "system-integration.json"]
+        },
+        {
+          "condition": "emergency_recovery_started",
+          "action": "update_emergency_recovery_stats",
+          "target_files": ["project-context.json", "system-integration.json"]
+        },
+        {
+          "condition": "retroactive_process_completed",
+          "action": "sync_metadata_integrity",
+          "target_files": ["project-context.json", "current-command-context.json"]
         }
       ]
     },
@@ -97,6 +118,14 @@
           {
             "condition": "metadata_inconsistency",
             "action": "trigger_manual_sync_guide"
+          },
+          {
+            "condition": "emergency_recovery_failure",
+            "action": "escalate_to_manual_recovery"
+          },
+          {
+            "condition": "retroactive_validation_failed",
+            "action": "revert_to_safe_state"
           }
         ]
       }
@@ -136,7 +165,9 @@
         {"item": "Subagent integration", "status": "pending"},
         {"item": "Context file consistency", "status": "pending"},
         {"item": "Metadata accuracy", "status": "pending"},
-        {"item": "Dashboard accessibility", "status": "pending"}
+        {"item": "Dashboard accessibility", "status": "pending"},
+        {"item": "Emergency recovery system", "status": "pending"},
+        {"item": "Retroactive workflow validation", "status": "pending"}
       ]
     }
   }

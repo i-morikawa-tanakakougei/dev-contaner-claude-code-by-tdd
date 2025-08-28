@@ -8,5 +8,22 @@
   "expected_outputs": [],
   "status": "ready",
   "context_loaded": false,
-  "metadata_updated": false
+  "metadata_updated": false,
+  "emergency_recovery": {
+    "is_emergency_mode": false,
+    "recovery_type": null,
+    "target_commits": [],
+    "bypass_reason": null,
+    "recovery_step": null,
+    "validation_required": false,
+    "rollback_point": null
+  },
+  "retroactive_processing": {
+    "commit_range": null,
+    "range_specification": null,
+    "affected_files": [],
+    "missing_documentation": [],
+    "test_coverage_gaps": [],
+    "metadata_inconsistencies": []
+  }
 }
