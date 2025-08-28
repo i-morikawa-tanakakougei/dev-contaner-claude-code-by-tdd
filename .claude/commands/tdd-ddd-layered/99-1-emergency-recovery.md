@@ -316,6 +316,56 @@ Follow these steps:
    echo "🚨 緊急対応復旧エージェントを起動します..."
    echo "専門エージェントが緊急修正を分析し復旧計画を作成します"
    echo ""
+   
+   # Task tool execution with comprehensive prompt
+   task_prompt="Execute the task.
+
+## CRITICAL: Subagent Specification Reference
+As a fallback mechanism in case the specialized subagent 99-1-emergency-recovery is not properly invoked:
+- MUST READ: /workspace/.claude/agents/99-1-emergency-recovery.md
+- Follow the specifications and requirements defined in this agent file
+- Implement the exact same process and standards as defined in the subagent specification
+- Ensure standardized output format compliance as specified in the agent document
+
+## Context Information Gathering
+1. Emergency Recovery Context:
+   - Read /workspace/.claude/context/current-command-context.json
+
+2. Git History Analysis:
+   - Analyze git commit history for emergency fixes
+   - Check current branch and recent commits
+   - Identify changes that bypassed standard workflow
+
+## Task Execution
+1. Emergency fix analysis and identification
+2. Document-code gap analysis
+3. Test coverage analysis and gap identification
+4. Recovery planning and priority classification
+5. Integration strategy development
+6. Comprehensive recovery plan generation
+
+## IMPORTANT: Standardized Output Format Compliance
+Report MUST end with the following structured sections:
+
+### 📊 Execution Summary
+Mark completion status of each critical task with ✅/❌
+
+### 📋 Overall Assessment
+Provide comprehensive emergency recovery analysis and findings
+
+### 💡 Next Steps
+List specific recovery actions with priorities and timeframes
+
+## Post-Processing
+- Generate emergency recovery analysis report
+- Create prioritized action plan
+- Guide next steps in emergency recovery workflow"
+
+   # Execute with specialized 99-1-emergency-recovery subagent
+   # The 99-1-emergency-recovery subagent will be automatically invoked based on the task description
+   
+   agent_exit_code=$?
+   echo "✅ 専用エージェント実行完了 (終了コード: $agent_exit_code)"
    ```
 
 3. **Agent Result Verification**:

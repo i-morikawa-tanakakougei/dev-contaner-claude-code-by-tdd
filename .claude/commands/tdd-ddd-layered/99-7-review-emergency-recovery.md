@@ -396,6 +396,58 @@ Follow these steps:
    echo "🔍 緊急対応復旧レビューエージェントを起動します..."
    echo "専門エージェントが復旧プロセス全体を包括的にレビューします"
    echo ""
+   
+   # Task tool execution with comprehensive prompt
+   task_prompt="Execute the task.
+
+## CRITICAL: Subagent Specification Reference
+As a fallback mechanism in case the specialized subagent 99-7-review-emergency-recovery is not properly invoked:
+- MUST READ: /workspace/.claude/agents/99-7-review-emergency-recovery.md
+- Follow the specifications and requirements defined in this agent file
+- Implement the exact same process and standards as defined in the subagent specification
+- Ensure standardized output format compliance as specified in the agent document
+
+## Context Information Gathering
+1. Emergency Recovery Context:
+   - Read /workspace/.claude/context/current-command-context.json
+   - Read /workspace/.claude/context/execution-history.jsonl
+
+2. Final State Analysis:
+   - Read /workspace/docs/metadata/project-state.json
+   - Check all documentation modifications
+   - Review test results and coverage reports
+
+## Task Execution
+1. Emergency recovery process completion verification
+2. Quality assessment and standards compliance review
+3. Integration verification and traceability validation
+4. Process efficiency analysis and improvement identification
+5. Final project state validation and readiness assessment
+6. Comprehensive completion report generation
+
+## IMPORTANT: Standardized Output Format Compliance
+Report MUST end with the following structured sections:
+
+### 📊 Execution Summary
+Mark completion status of each critical task with ✅/❌
+
+### 📋 Overall Assessment
+Provide comprehensive emergency recovery completion evaluation
+
+### 💡 Next Steps
+List specific recommendations for returning to standard workflow
+
+## Post-Processing
+- Generate final emergency recovery review report
+- Validate process completion and quality standards
+- Provide clear transition guidance to standard workflow
+- Complete emergency recovery process documentation"
+
+   # Execute with specialized 99-7-review-emergency-recovery subagent
+   # The 99-7-review-emergency-recovery subagent will be automatically invoked based on the task description
+   
+   agent_exit_code=$?
+   echo "✅ 専用エージェント実行完了 (終了コード: $agent_exit_code)"
    ```
 
 3. **Agent Result Verification**:

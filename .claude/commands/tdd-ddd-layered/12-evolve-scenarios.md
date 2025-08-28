@@ -339,43 +339,50 @@ Follow these steps:
    echo ""
    
    # Task tool execution with comprehensive prompt
-   task_prompt="シナリオ進化タスクを実行してください。
+   task_prompt="Execute scenario evolution task.
 
-## コンテキスト情報の取得
-1. 一時コンテキスト（フィーチャー情報）:
-   - /workspace/.claude/context/current-command-context.json を読み込み
+## CRITICAL: Subagent Specification Reference
+As a fallback mechanism in case the specialized subagent 12-evolve-scenarios is not properly invoked:
+- MUST READ: /workspace/.claude/agents/12-evolve-scenarios.md
+- Follow the specifications and requirements defined in this agent file
+- Implement the exact same process and standards as defined in the subagent specification
+- Ensure standardized output format compliance as specified in the agent document
 
-2. 既存シナリオ情報の確認:
-   - docs/use_cases/core/ で既存コアシナリオを確認
-   - docs/analysis/ でスプリントフィードバックを確認
-   - docs/vision/ でプロジェクトビジョンとの整合性を確認
+## Context Information Gathering
+1. Temporary Context (feature information):
+   - Read /workspace/.claude/context/current-command-context.json
 
-## 実行タスク
-1. スプリントフィードバック分析と要件発見
-2. エッジケースとエラーシナリオの特定
-3. パフォーマンス・セキュリティ要件の抽出
-4. 新しいGiven-When-Thenシナリオの作成
-5. ドメインモデル影響評価と更新提案
-6. 優先度・複雑度分析とスプリント計画への統合
-7. シナリオトレーサビリティ文書の作成
-8. ビジョン整合性の検証と品質保証
+2. Existing Scenario Information Review:
+   - Check existing core scenarios in docs/use_cases/core/
+   - Review sprint feedback in docs/analysis/
+   - Verify project vision alignment in docs/vision/
 
-## 重要: 標準化出力形式の遵守
-レポートは必ず以下の構造化セクションで終了してください：
+## Task Execution
+1. Sprint feedback analysis and requirement discovery
+2. Edge case and error scenario identification
+3. Performance and security requirement extraction
+4. New Given-When-Then scenario creation
+5. Domain model impact assessment and update proposals
+6. Priority and complexity analysis with sprint plan integration
+7. Scenario traceability document creation
+8. Vision consistency verification and quality assurance
 
-### 📊 実行サマリー
-各Critical Taskの完了状態を✅/❌で明記
+## IMPORTANT: Standardized Output Format Compliance
+Report MUST end with the following structured sections:
 
-### 📋 総合判定
-COMPLETED/APPROVED/CONDITIONAL_APPROVAL のいずれかを明記
+### 📊 Execution Summary
+Mark completion status of each critical task with ✅/❌
 
-### 💡 次のステップ
-判定に基づく具体的なアクションアイテムを列挙
+### 📋 Overall Assessment
+Specify one of: COMPLETED/APPROVED/CONDITIONAL_APPROVAL
 
-## 処理完了後
-- 進化したシナリオファイルのパス報告
-- フィードバック分析結果の要約報告
-- 次のステップ（イシューレビュー・実装）への案内"
+### 💡 Next Steps
+List specific action items based on the assessment
+
+## After Processing Completion
+- Report paths of evolved scenario files
+- Provide summary of feedback analysis results
+- Provide guidance for next steps (issue review and implementation)"
 
    # Execute with specialized 12-evolve-scenarios subagent
    # The 12-evolve-scenarios subagent will be automatically invoked based on the task description

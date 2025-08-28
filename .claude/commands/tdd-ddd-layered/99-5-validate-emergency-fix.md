@@ -368,6 +368,57 @@ Follow these steps:
    echo "🔍 緊急修正検証エージェントを起動します..."
    echo "専門エージェントが緊急修正のアーキテクチャ適合性を検証します"
    echo ""
+   
+   # Task tool execution with comprehensive prompt
+   task_prompt="Execute the task.
+
+## CRITICAL: Subagent Specification Reference
+As a fallback mechanism in case the specialized subagent 99-5-validate-emergency-fix is not properly invoked:
+- MUST READ: /workspace/.claude/agents/99-5-validate-emergency-fix.md
+- Follow the specifications and requirements defined in this agent file
+- Implement the exact same process and standards as defined in the subagent specification
+- Ensure standardized output format compliance as specified in the agent document
+
+## Context Information Gathering
+1. Emergency Recovery Context:
+   - Read /workspace/.claude/context/current-command-context.json
+
+2. Emergency Fix Analysis:
+   - Read GitHub issue details for emergency fix
+   - Analyze modified source code files
+   - Review existing architectural documentation
+
+## Task Execution
+1. Emergency fix scope and impact identification
+2. Layered architecture compliance validation
+3. DDD principles adherence assessment
+4. Code quality and SOLID principles evaluation
+5. Technical debt impact analysis
+6. Comprehensive validation report generation
+
+## IMPORTANT: Standardized Output Format Compliance
+Report MUST end with the following structured sections:
+
+### 📊 Execution Summary
+Mark completion status of each critical task with ✅/❌
+
+### 📋 Overall Assessment
+Provide comprehensive emergency fix validation results and compliance ratings
+
+### 💡 Next Steps
+List specific follow-up actions and improvement recommendations
+
+## Post-Processing
+- Generate validation report with architectural compliance assessment
+- Provide DDD principle compliance evaluation
+- Offer refactoring recommendations and improvement suggestions
+- Guide next steps in emergency recovery process"
+
+   # Execute with specialized 99-5-validate-emergency-fix subagent
+   # The 99-5-validate-emergency-fix subagent will be automatically invoked based on the task description
+   
+   agent_exit_code=$?
+   echo "✅ 専用エージェント実行完了 (終了コード: $agent_exit_code)"
    ```
 
 3. **Agent Result Verification**:

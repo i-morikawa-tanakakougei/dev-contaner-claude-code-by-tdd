@@ -323,34 +323,41 @@ Follow these steps:
    
    # Actual Claude Code Task tool invocation with hybrid approach
    # Task tool execution with comprehensive prompt
-   task_prompt="タスクを実行してください。
+   task_prompt="Execute the task.
 
-## コンテキスト情報の取得
-1. 一時コンテキスト（プロジェクト情報）:
-   - /workspace/.claude/context/current-command-context.json を読み込み
+## CRITICAL: Subagent Specification Reference
+As a fallback mechanism in case the specialized subagent 13-review-issue is not properly invoked:
+- MUST READ: /workspace/.claude/agents/13-review-issue.md
+- Follow the specifications and requirements defined in this agent file
+- Implement the exact same process and standards as defined in the subagent specification
+- Ensure standardized output format compliance as specified in the agent document
 
-2. プロジェクト状況の確認:
-   - 必要な文書やファイルを確認
-   - 既存の実装や設計を参照
+## Context Information Gathering
+1. Temporary Context (project information):
+   - Read /workspace/.claude/context/current-command-context.json
 
-## 実行タスク
-[13-review-issue固有のタスクを実行]
+2. Project Status Verification:
+   - Check required documents and files
+   - Review existing implementations and designs
 
-## 重要: 標準化出力形式の遵守
-レポートは必ず以下の構造化セクションで終了してください：
+## Task Execution
+[Execute 13-review-issue specific tasks]
 
-### 📊 実行サマリー
-各Critical Taskの完了状態を✅/❌で明記
+## IMPORTANT: Standardized Output Format Compliance
+Report MUST end with the following structured sections:
 
-### 📋 総合判定
-APPROVED/CONDITIONAL_APPROVAL/REJECTED/COMPLETED のいずれかを明記
+### 📊 Execution Summary
+Mark completion status of each critical task with ✅/❌
 
-### 💡 次のステップ
-判定に基づく具体的なアクションアイテムを列挙
+### 📋 Overall Assessment
+Specify one of: APPROVED/CONDITIONAL_APPROVAL/REJECTED/COMPLETED
 
-## 処理完了後
-- 実行結果の報告
-- 次のステップへの案内"
+### 💡 Next Steps
+List specific action items based on the assessment
+
+## After Processing Completion
+- Report execution results
+- Provide guidance for next steps"
 
    # Execute with specialized 13-review-issue subagent
    # The 13-review-issue subagent will be automatically invoked based on the task description

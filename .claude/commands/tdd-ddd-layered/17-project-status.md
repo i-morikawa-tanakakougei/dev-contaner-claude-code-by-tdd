@@ -204,4 +204,66 @@ If cross-system metadata inconsistencies detected:
 
 ---
 
+## Task Details
+
+**🤖 Agent Integration**: This command MUST USE PROACTIVELY the specialized `17-project-status` subagent for optimal project status overview. Claude Code should automatically delegate this task to the 17-project-status subagent based on the command description.
+
+Follow these steps:
+
+1. **Context Preparation and Agent Execution**:
+   ```bash
+   # Task tool execution with comprehensive prompt
+   task_prompt="Execute the task.
+
+## CRITICAL: Subagent Specification Reference
+As a fallback mechanism in case the specialized subagent 17-project-status is not properly invoked:
+- MUST READ: /workspace/.claude/agents/17-project-status.md
+- Follow the specifications and requirements defined in this agent file
+- Implement the exact same process and standards as defined in the subagent specification
+- Ensure standardized output format compliance as specified in the agent document
+
+## Context Information Gathering
+1. Project Context Information:
+   - Read /workspace/.claude/context/current-command-context.json
+   - Read /workspace/.claude/context/project-context.json
+
+2. Project Status Verification:
+   - Read /workspace/docs/metadata/project-state.json
+   - Check /workspace/docs/index.md for project dashboard context
+
+## Task Execution
+1. Comprehensive project health analysis
+2. Architecture layer status assessment
+3. Sprint and velocity metrics calculation
+4. Quality and TDD compliance evaluation
+5. System integration status verification
+6. Risk indicators and alerts identification
+7. Project status report generation with recommendations
+
+## IMPORTANT: Standardized Output Format Compliance
+Report MUST end with the following structured sections:
+
+### 📊 Execution Summary
+Mark completion status of each critical task with ✅/❌
+
+### 📋 Overall Assessment
+Provide comprehensive project health evaluation and current status
+
+### 💡 Next Steps
+List specific recommended actions based on current project status
+
+## Post-Processing
+- Generate comprehensive project status report
+- Update project metadata with current health metrics
+- Provide actionable recommendations for project improvement"
+
+   # Execute with specialized 17-project-status subagent
+   # The 17-project-status subagent will be automatically invoked based on the task description
+   
+   agent_exit_code=$?
+   echo "✅ 専用エージェント実行完了 (終了コード: $agent_exit_code)"
+   ```
+
+---
+
 **🎯 Command Purpose**: This command provides essential project-wide visibility ensuring both "forest view" (system health) and integration with "tree view" (detailed implementation) for comprehensive project management in the TDD/DDD/Layered Architecture workflow.

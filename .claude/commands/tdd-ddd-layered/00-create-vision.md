@@ -279,40 +279,47 @@ Follow these steps:
    echo ""
    
    # Task tool execution with comprehensive prompt
-   task_prompt="プロジェクトビジョン作成タスクを実行してください。
+   task_prompt="Execute project vision creation task.
 
-## コンテキスト情報の取得
-1. 一時コンテキスト（引数情報）:
-   - /workspace/.claude/context/current-command-context.json を読み込み
+## CRITICAL: Subagent Specification Reference
+As a fallback mechanism in case the specialized subagent 00-create-vision is not properly invoked:
+- MUST READ: /workspace/.claude/agents/00-create-vision.md
+- Follow the specifications and requirements defined in this agent file
+- Implement the exact same process and standards as defined in the subagent specification
+- Ensure standardized output format compliance as specified in the agent document
 
-2. プロジェクト状況の確認:
-   - 既存のdocs/構造があれば現在の状況を確認
-   - Gitリポジトリの状態確認
+## Context Information Gathering
+1. Temporary Context (argument information):
+   - Read /workspace/.claude/context/current-command-context.json
 
-## 実行タスク
-1. インタラクティブな情報収集
-2. プロジェクトビジョン文書作成
-3. コアシナリオ定義（Given-When-Then形式）
-4. ユビキタス言語の確立
-5. ステアリング文書作成
-6. 必要なディレクトリ構造の作成
-7. Gitコミットと整合性チェック
+2. Project Status Verification:
+   - Check existing docs/ structure if available
+   - Verify Git repository status
 
-## 重要: 標準化出力形式の遵守
-レポートは必ず以下の構造化セクションで終了してください：
+## Task Execution
+1. Interactive information gathering
+2. Project vision document creation
+3. Core scenario definition (Given-When-Then format)
+4. Ubiquitous language establishment
+5. Steering document creation
+6. Required directory structure creation
+7. Git commit and consistency check
 
-### 📊 実行サマリー
-各Critical Taskの完了状態を✅/❌で明記
+## IMPORTANT: Standardized Output Format Compliance
+Report MUST end with the following structured sections:
 
-### 📋 総合判定
-COMPLETED/APPROVED のいずれかを明記
+### 📊 Execution Summary
+Mark completion status of each critical task with ✅/❌
 
-### 💡 次のステップ
-判定に基づく具体的なアクションアイテムを列挙
+### 📋 Overall Assessment
+Specify one of: COMPLETED/APPROVED
 
-## 処理完了後
-- 作成したファイルのパスを報告
-- 次のステップ（プロジェクト構造初期化）への案内"
+### 💡 Next Steps
+List specific action items based on the assessment
+
+## After Processing Completion
+- Report paths of created files
+- Provide guidance for next steps (project structure initialization)"
 
    # Execute with specialized 00-create-vision subagent
    # The 00-create-vision subagent will be automatically invoked based on the task description

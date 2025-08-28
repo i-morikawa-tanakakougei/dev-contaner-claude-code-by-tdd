@@ -369,6 +369,57 @@ Follow these steps:
    echo "🧪 遡及的テスト作成エージェントを起動します..."
    echo "専門エージェントが緊急修正を分析して包括的なテストを作成します"
    echo ""
+   
+   # Task tool execution with comprehensive prompt
+   task_prompt="Execute the task.
+
+## CRITICAL: Subagent Specification Reference
+As a fallback mechanism in case the specialized subagent 99-4-retroactive-test is not properly invoked:
+- MUST READ: /workspace/.claude/agents/99-4-retroactive-test.md
+- Follow the specifications and requirements defined in this agent file
+- Implement the exact same process and standards as defined in the subagent specification
+- Ensure standardized output format compliance as specified in the agent document
+
+## Context Information Gathering
+1. Emergency Recovery Context:
+   - Read /workspace/.claude/context/current-command-context.json
+
+2. Test Coverage Analysis:
+   - Analyze existing test files and coverage
+   - Review emergency fix code changes
+   - Identify testing gaps and requirements
+
+## Task Execution
+1. Emergency fix analysis and test requirement identification
+2. Test coverage gap analysis and priority assessment
+3. Retroactive test creation for missing coverage
+4. Test execution and validation
+5. Coverage verification and quality assessment
+6. Test integration and documentation updates
+
+## IMPORTANT: Standardized Output Format Compliance
+Report MUST end with the following structured sections:
+
+### 📊 Execution Summary
+Mark completion status of each critical task with ✅/❌
+
+### 📋 Overall Assessment
+Provide comprehensive test creation results and coverage status
+
+### 💡 Next Steps
+List specific follow-up actions for emergency recovery workflow
+
+## Post-Processing
+- Create comprehensive retroactive tests for emergency fixes
+- Execute tests to verify functionality and coverage
+- Update test documentation and metadata
+- Guide next steps in emergency recovery process"
+
+   # Execute with specialized 99-4-retroactive-test subagent
+   # The 99-4-retroactive-test subagent will be automatically invoked based on the task description
+   
+   agent_exit_code=$?
+   echo "✅ 専用エージェント実行完了 (終了コード: $agent_exit_code)"
    ```
 
 3. **Agent Result Verification**:

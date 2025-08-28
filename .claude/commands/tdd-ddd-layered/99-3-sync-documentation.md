@@ -353,6 +353,57 @@ Follow these steps:
    echo "📚 ドキュメント同期エージェントを起動します..."
    echo "専門エージェントがIssue内容を分析してドキュメントを同期します"
    echo ""
+   
+   # Task tool execution with comprehensive prompt
+   task_prompt="Execute the task.
+
+## CRITICAL: Subagent Specification Reference
+As a fallback mechanism in case the specialized subagent 99-3-sync-documentation is not properly invoked:
+- MUST READ: /workspace/.claude/agents/99-3-sync-documentation.md
+- Follow the specifications and requirements defined in this agent file
+- Implement the exact same process and standards as defined in the subagent specification
+- Ensure standardized output format compliance as specified in the agent document
+
+## Context Information Gathering
+1. Emergency Recovery Context:
+   - Read /workspace/.claude/context/current-command-context.json
+
+2. Documentation Analysis:
+   - Read existing use case scenarios in docs/use_cases/
+   - Read domain model documentation in docs/domain/
+   - Check project vision in docs/vision/ (if exists)
+
+## Task Execution
+1. Issue analysis and emergency fix scope identification
+2. Documentation gap identification and impact assessment
+3. Given-When-Then scenario updates and alignment
+4. Domain model synchronization with code changes
+5. Cross-reference validation and traceability maintenance
+6. Documentation consistency verification and updates
+
+## IMPORTANT: Standardized Output Format Compliance
+Report MUST end with the following structured sections:
+
+### 📊 Execution Summary
+Mark completion status of each critical task with ✅/❌
+
+### 📋 Overall Assessment
+Provide comprehensive documentation synchronization results
+
+### 💡 Next Steps
+List specific follow-up actions for emergency recovery workflow
+
+## Post-Processing
+- Update Given-When-Then scenarios to match code changes
+- Synchronize domain model documentation
+- Maintain documentation consistency and style compliance
+- Guide next steps in emergency recovery process"
+
+   # Execute with specialized 99-3-sync-documentation subagent
+   # The 99-3-sync-documentation subagent will be automatically invoked based on the task description
+   
+   agent_exit_code=$?
+   echo "✅ 専用エージェント実行完了 (終了コード: $agent_exit_code)"
    ```
 
 3. **Agent Result Verification**:

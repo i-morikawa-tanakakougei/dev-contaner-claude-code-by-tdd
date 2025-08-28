@@ -339,6 +339,57 @@ Follow these steps:
    echo "📊 メタデータ調整エージェントを起動します..."
    echo "専門エージェントがプロジェクトメタデータを包括的に調整します"
    echo ""
+   
+   # Task tool execution with comprehensive prompt
+   task_prompt="Execute the task.
+
+## CRITICAL: Subagent Specification Reference
+As a fallback mechanism in case the specialized subagent 99-6-reconcile-metadata is not properly invoked:
+- MUST READ: /workspace/.claude/agents/99-6-reconcile-metadata.md
+- Follow the specifications and requirements defined in this agent file
+- Implement the exact same process and standards as defined in the subagent specification
+- Ensure standardized output format compliance as specified in the agent document
+
+## Context Information Gathering
+1. Emergency Recovery Context:
+   - Read /workspace/.claude/context/current-command-context.json
+
+2. Metadata Analysis:
+   - Read existing project metadata files
+   - Check context files for consistency
+   - Analyze project state and health metrics
+
+## Task Execution
+1. Metadata inconsistency detection and analysis
+2. Cross-system synchronization and validation
+3. Project state reconciliation and updates
+4. Context file consistency verification
+5. Health metrics recalculation and updates
+6. Comprehensive metadata integration
+
+## IMPORTANT: Standardized Output Format Compliance
+Report MUST end with the following structured sections:
+
+### 📊 Execution Summary
+Mark completion status of each critical task with ✅/❌
+
+### 📋 Overall Assessment
+Provide comprehensive metadata reconciliation results and consistency status
+
+### 💡 Next Steps
+List specific follow-up actions for emergency recovery completion
+
+## Post-Processing
+- Update all metadata files with consistent information
+- Reconcile project state across all systems
+- Verify cross-system data consistency
+- Guide final steps in emergency recovery process"
+
+   # Execute with specialized 99-6-reconcile-metadata subagent
+   # The 99-6-reconcile-metadata subagent will be automatically invoked based on the task description
+   
+   agent_exit_code=$?
+   echo "✅ 専用エージェント実行完了 (終了コード: $agent_exit_code)"
    ```
 
 3. **Agent Result Verification**:

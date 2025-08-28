@@ -543,6 +543,57 @@ Follow these steps:
    echo "🎫 事後Issue作成エージェントを起動します..."
    echo "専門エージェントがコミットを分析してGitHub Issueを作成します"
    echo ""
+   
+   # Task tool execution with comprehensive prompt
+   task_prompt="Execute the task.
+
+## CRITICAL: Subagent Specification Reference
+As a fallback mechanism in case the specialized subagent 99-2-create-retroactive-issue is not properly invoked:
+- MUST READ: /workspace/.claude/agents/99-2-create-retroactive-issue.md
+- Follow the specifications and requirements defined in this agent file
+- Implement the exact same process and standards as defined in the subagent specification
+- Ensure standardized output format compliance as specified in the agent document
+
+## Context Information Gathering
+1. Emergency Recovery Context:
+   - Read /workspace/.claude/context/current-command-context.json
+
+2. Git Commit Analysis:
+   - Analyze specified commit(s) for emergency fix details
+   - Extract commit messages, file changes, and context
+   - Identify scope and impact of emergency changes
+
+## Task Execution
+1. Git commit analysis and metadata extraction
+2. Emergency fix scope and impact assessment
+3. GitHub issue creation with comprehensive details
+4. Traceability establishment between commits and issues
+5. Documentation and metadata updates
+6. Verification of issue creation and linking
+
+## IMPORTANT: Standardized Output Format Compliance
+Report MUST end with the following structured sections:
+
+### 📊 Execution Summary
+Mark completion status of each critical task with ✅/❌
+
+### 📋 Overall Assessment
+Provide comprehensive issue creation results and traceability status
+
+### 💡 Next Steps
+List specific follow-up actions for emergency recovery workflow
+
+## Post-Processing
+- Generate GitHub issue with proper formatting and labels
+- Establish commit-to-issue traceability
+- Update project metadata with new issue information
+- Guide next steps in emergency recovery process"
+
+   # Execute with specialized 99-2-create-retroactive-issue subagent
+   # The 99-2-create-retroactive-issue subagent will be automatically invoked based on the task description
+   
+   agent_exit_code=$?
+   echo "✅ 専用エージェント実行完了 (終了コード: $agent_exit_code)"
    ```
 
 3. **Agent Result Verification**:
