@@ -100,8 +100,24 @@ RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/
   -a "export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhistory/.bash_history" \
   -x
 
-# Install Claude
-RUN npm install -g @anthropic-ai/claude-code
+# "あの頃"の強かったClaude Codeを少しでも取り戻す方法
+# https://zenn.dev/discus0434/scraps/e0b1a0aa5406eb
+# Claude Codeに対する設定：IDEとの統合をやめる＆オートアップデートを停止する、その他
+ENV CLAUDE_CODE_AUTO_CONNECT_IDE=0
+ENV CLAUDE_CODE_IDE_SKIP_AUTO_INSTALL=1
+ENV CLAUDE_CODE_IDE_SKIP_VALID_CHECK=1
+ENV DISABLE_AUTOUPDATER=1
+ENV CLAUDE_CODE_ENABLE_TELEMETRY=0
+ENV CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1
+ENV DISABLE_ERROR_REPORTING=1
+ENV DISABLE_TELEMETRY=1
+
+# Claude Codeを適当な古いバージョンに変更（1.0.60以前が好ましい気がする）
+RUN npm install -g @anthropic-ai/claude-code@1.0.33 -g
+
+# Claude Codeのオートアップデートを停止
+# RUN claude config set -g autoUpdaterStatus disabled # 1.0.24
+RUN claude config set -g autoUpdates disabled
 
 # # Copy and set up firewall script
 # COPY init-firewall.sh /usr/local/bin/
