@@ -77,15 +77,36 @@ GIT_LOG=$(git log --oneline -10 --no-merges 2>/dev/null || echo "No git history"
 ```
 
 ### GitHub Issue Integration
+
+#### Issue Comment Retrieval and Analysis
 ```bash
 # Load GitHub issue with comments (if issue number provided)
 if [[ -n "$ISSUE_NUMBER" ]]; then
-    # Retrieve issue details
-    gh issue view $ISSUE_NUMBER --json title,body,comments,updatedAt,createdAt
+    echo "Retrieving GitHub issue #$ISSUE_NUMBER with comments for emergency recovery..."
     
-    # Priority: Recent comments are more important
-    # Sort comments by created date (desc) and prioritize latest specifications
-    gh issue view $ISSUE_NUMBER --json comments --jq '.comments | sort_by(.createdAt) | reverse'
+    # Get issue details with comments
+    ISSUE_DATA=$(gh issue view $ISSUE_NUMBER --json title,body,comments,updatedAt,createdAt,labels,assignees)
+    
+    # Extract and prioritize recent comments
+    RECENT_COMMENTS=$(echo "$ISSUE_DATA" | jq -r '.comments | sort_by(.createdAt) | reverse | .[0:5]')
+    
+    COMMENT_COUNT=$(echo "$ISSUE_DATA" | jq '.comments | length')
+    echo "Found $COMMENT_COUNT comments on issue #$ISSUE_NUMBER"
+    echo "Prioritizing latest 5 comments for emergency recovery analysis"
+    
+    # Check for emergency context in comments
+    if [[ $COMMENT_COUNT -gt 0 ]]; then
+        echo "Analyzing comment timeline for emergency context..."
+        # Recent comments take precedence for emergency understanding
+        LATEST_COMMENT_DATE=$(echo "$RECENT_COMMENTS" | jq -r '.[0].createdAt // empty')
+        if [[ -n "$LATEST_COMMENT_DATE" ]]; then
+            echo "Latest emergency update: $LATEST_COMMENT_DATE"
+        fi
+        
+        # Extract emergency-related comments
+        echo "Extracting emergency-related context..."
+        echo "$RECENT_COMMENTS" | jq -r '.[] | select(.body | contains("emergency") or contains("urgent") or contains("critical") or contains("production") or contains("hotfix")) | .body' | head -3
+    fi
 fi
 ```
 

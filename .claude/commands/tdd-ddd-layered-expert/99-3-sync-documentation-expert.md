@@ -91,21 +91,35 @@ RECENT_HISTORY=$(tail -10 .claude/context/execution-history.jsonl 2>/dev/null ||
 
 ## GitHub Issue Integration
 
-### Documentation Update Context Loading
+#### Issue Comment Retrieval and Analysis
 ```bash
-# Load related GitHub issues for context
+# Load related GitHub issues for documentation synchronization context
 if [[ -n "$ISSUE_NUMBERS" ]]; then
-    echo "Loading documentation-related issues for context..."
-    
     for ISSUE_NUM in $ISSUE_NUMBERS; do
-        # Get issue details that may affect documentation
-        ISSUE_DATA=$(gh issue view $ISSUE_NUM --json title,body,labels,comments)
+        echo "Retrieving GitHub issue #$ISSUE_NUM with comments for documentation sync..."
         
-        # Check if issue affects documentation structure
-        DOC_LABELS=$(echo "$ISSUE_DATA" | jq -r '.labels[] | select(.name | contains("documentation")) | .name')
+        # Get issue details with comments
+        ISSUE_DATA=$(gh issue view $ISSUE_NUM --json title,body,comments,updatedAt,createdAt,labels,assignees)
         
-        if [[ -n "$DOC_LABELS" ]]; then
-            echo "Issue #$ISSUE_NUM affects documentation: $DOC_LABELS"
+        # Extract and prioritize recent comments
+        RECENT_COMMENTS=$(echo "$ISSUE_DATA" | jq -r '.comments | sort_by(.createdAt) | reverse | .[0:5]')
+        
+        COMMENT_COUNT=$(echo "$ISSUE_DATA" | jq '.comments | length')
+        echo "Found $COMMENT_COUNT comments on issue #$ISSUE_NUM"
+        echo "Prioritizing latest 5 comments for documentation synchronization"
+        
+        # Check for documentation sync requirements through comments
+        if [[ $COMMENT_COUNT -gt 0 ]]; then
+            echo "Analyzing comment timeline for documentation sync needs..."
+            # Recent comments take precedence for documentation sync
+            LATEST_COMMENT_DATE=$(echo "$RECENT_COMMENTS" | jq -r '.[0].createdAt // empty')
+            if [[ -n "$LATEST_COMMENT_DATE" ]]; then
+                echo "Latest documentation sync update: $LATEST_COMMENT_DATE"
+            fi
+            
+            # Extract documentation sync related comments
+            echo "Extracting documentation synchronization context..."
+            echo "$RECENT_COMMENTS" | jq -r '.[] | select(.body | contains("doc") or contains("documentation") or contains("sync") or contains("update") or contains("spec")) | .body' | head -3
         fi
     done
 fi

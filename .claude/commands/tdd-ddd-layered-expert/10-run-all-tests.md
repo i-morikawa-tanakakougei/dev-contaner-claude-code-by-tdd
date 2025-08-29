@@ -75,18 +75,31 @@ fi
 
 ## GitHub Issue Integration
 
+#### Issue Comment Retrieval and Analysis
 ```bash
 # Load GitHub issue with comments (if issue number provided)
 if [[ -n "$ISSUE_NUMBER" ]]; then
-    echo "🔍 GitHub issue #${ISSUE_NUMBER}の仕様確認中..."
+    echo "Retrieving GitHub issue #$ISSUE_NUMBER with comments for test execution context..."
     
-    # Retrieve issue details with comments
-    gh issue view $ISSUE_NUMBER --json title,body,comments,updatedAt
+    # Get issue details with comments
+    ISSUE_DATA=$(gh issue view $ISSUE_NUMBER --json title,body,comments,updatedAt,createdAt,labels,assignees)
     
-    # Priority: Recent comments are more important for specification updates
-    gh issue view $ISSUE_NUMBER --json comments --jq '.comments | sort_by(.createdAt) | reverse | .[0:3]'
+    # Extract and prioritize recent comments
+    RECENT_COMMENTS=$(echo "$ISSUE_DATA" | jq -r '.comments | sort_by(.createdAt) | reverse | .[0:5]')
     
-    echo "📋 直近のコメントを優先して仕様変更を確認しました"
+    COMMENT_COUNT=$(echo "$ISSUE_DATA" | jq '.comments | length')
+    echo "Found $COMMENT_COUNT comments on issue #$ISSUE_NUMBER"
+    echo "Prioritizing latest 5 comments for test execution verification"
+    
+    # Check for test execution related updates through comments
+    if [[ $COMMENT_COUNT -gt 0 ]]; then
+        echo "Analyzing comment timeline for test requirement changes..."
+        # Recent comments take precedence for test verification
+        LATEST_COMMENT_DATE=$(echo "$RECENT_COMMENTS" | jq -r '.[0].createdAt // empty')
+        if [[ -n "$LATEST_COMMENT_DATE" ]]; then
+            echo "Latest test update: $LATEST_COMMENT_DATE"
+        fi
+    fi
 fi
 ```
 

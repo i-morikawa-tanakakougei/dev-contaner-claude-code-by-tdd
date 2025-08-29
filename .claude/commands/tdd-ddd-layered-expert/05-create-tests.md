@@ -83,13 +83,37 @@ fi
 ```
 
 ### GitHub Issue Integration
+
+#### Issue Comment Retrieval and Analysis
 ```bash
 # Load GitHub issue with comments (if issue number provided)
 if [[ -n "$ISSUE_NUMBERS" ]]; then
     for issue_num in $(echo $ISSUE_NUMBERS | tr ',' ' '); do
-        # Retrieve issue details with recent comments prioritized
-        Bash gh issue view $issue_num --json title,body,comments
-        Bash gh issue view $issue_num --json comments --jq '.comments | sort_by(.createdAt) | reverse | .[0:3]'
+        echo "Retrieving GitHub issue #$issue_num with comments for test creation..."
+        
+        # Get issue details with comments
+        ISSUE_DATA=$(gh issue view $issue_num --json title,body,comments,updatedAt,createdAt,labels,assignees)
+        
+        # Extract and prioritize recent comments
+        RECENT_COMMENTS=$(echo "$ISSUE_DATA" | jq -r '.comments | sort_by(.createdAt) | reverse | .[0:5]')
+        
+        COMMENT_COUNT=$(echo "$ISSUE_DATA" | jq '.comments | length')
+        echo "Found $COMMENT_COUNT comments on issue #$issue_num"
+        echo "Prioritizing latest 5 comments for test specification analysis"
+        
+        # Check for test requirement evolution through comments
+        if [[ $COMMENT_COUNT -gt 0 ]]; then
+            echo "Analyzing comment timeline for test requirement changes..."
+            # Recent comments take precedence for test creation
+            LATEST_COMMENT_DATE=$(echo "$RECENT_COMMENTS" | jq -r '.[0].createdAt // empty')
+            if [[ -n "$LATEST_COMMENT_DATE" ]]; then
+                echo "Latest test requirement update: $LATEST_COMMENT_DATE"
+            fi
+            
+            # Extract test-related comments
+            echo "Extracting test specification context..."
+            echo "$RECENT_COMMENTS" | jq -r '.[] | select(.body | contains("test") or contains("scenario") or contains("given") or contains("when") or contains("then") or contains("expect")) | .body' | head -3
+        fi
     done
 fi
 ```

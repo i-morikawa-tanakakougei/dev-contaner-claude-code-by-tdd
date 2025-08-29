@@ -82,16 +82,35 @@ fi
 
 ## GitHub Issue Integration
 
-### Issue Comment Retrieval
+#### Issue Comment Retrieval and Analysis
 ```bash
-# Load GitHub issue with comments (if issue number provided)
+# Load GitHub issue with comments (if issue number provided)  
 if [[ -n "$ISSUE_NUMBER" ]]; then
-    # Retrieve issue details with full comment timeline
-    Use Bash tool: gh issue view $ISSUE_NUMBER --json title,body,comments,updatedAt
+    echo "Retrieving GitHub issue #$ISSUE_NUMBER with comments for metadata reconciliation..."
     
-    # Priority: Recent comments are more important for specification updates
-    # Sort comments by creation date (desc) and analyze for specification changes
-    Use Bash tool: gh issue view $ISSUE_NUMBER --json comments --jq '.comments | sort_by(.createdAt) | reverse'
+    # Get issue details with comments
+    ISSUE_DATA=$(gh issue view $ISSUE_NUMBER --json title,body,comments,updatedAt,createdAt,labels,assignees)
+    
+    # Extract and prioritize recent comments
+    RECENT_COMMENTS=$(echo "$ISSUE_DATA" | jq -r '.comments | sort_by(.createdAt) | reverse | .[0:5]')
+    
+    COMMENT_COUNT=$(echo "$ISSUE_DATA" | jq '.comments | length')
+    echo "Found $COMMENT_COUNT comments on issue #$ISSUE_NUMBER"
+    echo "Prioritizing latest 5 comments for metadata reconciliation"
+    
+    # Check for metadata reconciliation requirements through comments
+    if [[ $COMMENT_COUNT -gt 0 ]]; then
+        echo "Analyzing comment timeline for metadata updates..."
+        # Recent comments take precedence for metadata reconciliation
+        LATEST_COMMENT_DATE=$(echo "$RECENT_COMMENTS" | jq -r '.[0].createdAt // empty')
+        if [[ -n "$LATEST_COMMENT_DATE" ]]; then
+            echo "Latest metadata update: $LATEST_COMMENT_DATE"
+        fi
+        
+        # Extract metadata reconciliation related comments
+        echo "Extracting metadata reconciliation context..."
+        echo "$RECENT_COMMENTS" | jq -r '.[] | select(.body | contains("metadata") or contains("reconcile") or contains("sync") or contains("status") or contains("state")) | .body' | head -3
+    fi
 fi
 ```
 

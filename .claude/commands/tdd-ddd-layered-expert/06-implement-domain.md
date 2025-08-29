@@ -61,7 +61,37 @@ Read these files in order to gather context:
 3. Read GitHub issue with comments if issue number provided
 
 ### GitHub Issue Context Loading
-If issue number is provided, retrieve issue details and comments, prioritizing recent specification changes.
+#### Issue Comment Retrieval and Analysis
+```bash
+# Load GitHub issue with comments (if issue number provided)
+if [[ -n "$ISSUE_NUMBER" ]]; then
+    echo "Retrieving GitHub issue #$ISSUE_NUMBER with comments for domain implementation..."
+    
+    # Get issue details with comments
+    ISSUE_DATA=$(gh issue view $ISSUE_NUMBER --json title,body,comments,updatedAt,createdAt,labels,assignees)
+    
+    # Extract and prioritize recent comments
+    RECENT_COMMENTS=$(echo "$ISSUE_DATA" | jq -r '.comments | sort_by(.createdAt) | reverse | .[0:5]')
+    
+    COMMENT_COUNT=$(echo "$ISSUE_DATA" | jq '.comments | length')
+    echo "Found $COMMENT_COUNT comments on issue #$ISSUE_NUMBER"
+    echo "Prioritizing latest 5 comments for domain implementation"
+    
+    # Check for domain implementation requirements through comments
+    if [[ $COMMENT_COUNT -gt 0 ]]; then
+        echo "Analyzing comment timeline for domain spec updates..."
+        # Recent comments take precedence for domain implementation
+        LATEST_COMMENT_DATE=$(echo "$RECENT_COMMENTS" | jq -r '.[0].createdAt // empty')
+        if [[ -n "$LATEST_COMMENT_DATE" ]]; then
+            echo "Latest domain spec update: $LATEST_COMMENT_DATE"
+        fi
+        
+        # Extract domain implementation related comments
+        echo "Extracting domain implementation context..."
+        echo "$RECENT_COMMENTS" | jq -r '.[] | select(.body | contains("domain") or contains("entity") or contains("value object") or contains("aggregate") or contains("business")) | .body' | head -3
+    fi
+fi
+```
 
 ## 🚀 Expert Execution Flow
 

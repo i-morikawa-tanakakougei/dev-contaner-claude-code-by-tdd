@@ -81,18 +81,35 @@ LATEST_TEST_REPORT=$(find docs/test_results/ -name "*issue*${ISSUE_NUMBER}*" -ty
 
 ## GitHub Issue Integration
 
+#### Issue Comment Retrieval and Analysis
 ```bash
 # Load GitHub issue with comments (if issue number provided)
 if [[ -n "$ISSUE_NUMBER" ]]; then
-    echo "🔍 GitHub issue #${ISSUE_NUMBER}の実装レビュー中..."
+    echo "Retrieving GitHub issue #$ISSUE_NUMBER with comments for refactoring context..."
     
-    # Retrieve issue details with recent comments
-    gh issue view $ISSUE_NUMBER --json title,body,comments,updatedAt
+    # Get issue details with comments
+    ISSUE_DATA=$(gh issue view $ISSUE_NUMBER --json title,body,comments,updatedAt,createdAt,labels,assignees)
     
-    # Check for any code quality feedback in recent comments
-    gh issue view $ISSUE_NUMBER --json comments --jq '.comments | sort_by(.createdAt) | reverse | .[0:3]'
+    # Extract and prioritize recent comments
+    RECENT_COMMENTS=$(echo "$ISSUE_DATA" | jq -r '.comments | sort_by(.createdAt) | reverse | .[0:5]')
     
-    echo "📋 コード品質に関するフィードバックを確認しました"
+    COMMENT_COUNT=$(echo "$ISSUE_DATA" | jq '.comments | length')
+    echo "Found $COMMENT_COUNT comments on issue #$ISSUE_NUMBER"
+    echo "Prioritizing latest 5 comments for refactoring guidance"
+    
+    # Check for refactoring and quality feedback through comments
+    if [[ $COMMENT_COUNT -gt 0 ]]; then
+        echo "Analyzing comment timeline for refactoring suggestions..."
+        # Recent comments take precedence for refactoring guidance
+        LATEST_COMMENT_DATE=$(echo "$RECENT_COMMENTS" | jq -r '.[0].createdAt // empty')
+        if [[ -n "$LATEST_COMMENT_DATE" ]]; then
+            echo "Latest refactoring update: $LATEST_COMMENT_DATE"
+        fi
+        
+        # Extract refactoring-related comments
+        echo "Extracting code quality feedback..."
+        echo "$RECENT_COMMENTS" | jq -r '.[] | select(.body | contains("refactor") or contains("quality") or contains("clean") or contains("optimize") or contains("improve")) | .body' | head -3
+    fi
 fi
 ```
 

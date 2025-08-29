@@ -52,20 +52,50 @@ git log --oneline -5
 ```
 
 ## GitHub Issue Integration
+
+### Issue Comment Retrieval and Analysis
 ```bash
-# Issue context retrieval for PR linking
+# Issue context retrieval for PR linking with full comment history
 if [ ! -z "$1" ]; then
     ISSUE_NUMBER="$1"
-    echo "Retrieving issue #$ISSUE_NUMBER for PR linking..."
-    gh issue view $ISSUE_NUMBER --json title,body,labels,milestone --jq '{
+    echo "Retrieving issue #$ISSUE_NUMBER with comments for comprehensive PR linking..."
+    
+    # Get issue details with comments
+    ISSUE_DATA=$(gh issue view $ISSUE_NUMBER --json title,body,comments,updatedAt,createdAt,labels,assignees,milestone)
+    
+    # Extract and prioritize recent comments
+    RECENT_COMMENTS=$(echo "$ISSUE_DATA" | jq -r '.comments | sort_by(.createdAt) | reverse | .[0:5]')
+    
+    COMMENT_COUNT=$(echo "$ISSUE_DATA" | jq '.comments | length')
+    echo "Found $COMMENT_COUNT comments on issue #$ISSUE_NUMBER"
+    echo "Prioritizing latest 5 comments for PR context analysis"
+    
+    # Check for requirement evolution through comments
+    if [[ $COMMENT_COUNT -gt 0 ]]; then
+        echo "Analyzing comment timeline for requirement changes..."
+        # Recent comments take precedence for PR description
+        LATEST_COMMENT_DATE=$(echo "$RECENT_COMMENTS" | jq -r '.[0].createdAt // empty')
+        if [[ -n "$LATEST_COMMENT_DATE" ]]; then
+            echo "Latest requirement update: $LATEST_COMMENT_DATE"
+        fi
+    fi
+    
+    # Extract structured issue information for PR
+    ISSUE_INFO=$(echo "$ISSUE_DATA" | jq '{
         title: .title,
         body: .body,
         labels: [.labels[].name],
-        milestone: .milestone.title
-    }'
+        milestone: .milestone.title,
+        recent_comments: (.comments | sort_by(.createdAt) | reverse | .[0:5])
+    }')
     
-    # Get issue acceptance criteria
-    gh issue view $ISSUE_NUMBER --json body | jq -r '.body' | grep -A 10 "## Acceptance Criteria" || echo "No acceptance criteria found"
+    # Get issue acceptance criteria from original body and recent comments
+    echo "Extracting acceptance criteria..."
+    echo "$ISSUE_DATA" | jq -r '.body' | grep -A 10 "## Acceptance Criteria" || echo "No acceptance criteria in original issue"
+    
+    # Check for updated criteria in recent comments
+    echo "Checking for updated criteria in recent comments..."
+    echo "$RECENT_COMMENTS" | jq -r '.[] | select(.body | contains("criteria") or contains("requirement") or contains("spec")) | .body' | head -3
 fi
 ```
 

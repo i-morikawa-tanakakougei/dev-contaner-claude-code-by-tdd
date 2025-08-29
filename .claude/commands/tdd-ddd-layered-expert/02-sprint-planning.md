@@ -90,6 +90,33 @@ fi
 
 ## GitHub Issue Integration
 
+### Issue Comment Retrieval and Analysis
+```bash
+# Check for existing related issues with comments
+echo "Retrieving existing GitHub issues for context..."
+
+# Get all issues for context
+EXISTING_ISSUES=$(gh issue list --state all --limit 50 --json number,title,body,comments,updatedAt,createdAt,labels,assignees)
+
+# Extract and analyze recent comments from existing issues
+for issue_data in $(echo "$EXISTING_ISSUES" | jq -r '.[] | @base64'); do
+    issue_info=$(echo "$issue_data" | base64 --decode)
+    issue_number=$(echo "$issue_info" | jq -r '.number')
+    comment_count=$(echo "$issue_info" | jq '.comments | length')
+    
+    if [[ $comment_count -gt 0 ]]; then
+        echo "Analyzing issue #$issue_number with $comment_count comments"
+        # Get recent comments (latest 3 for each issue)
+        recent_comments=$(echo "$issue_info" | jq -r '.comments | sort_by(.createdAt) | reverse | .[0:3]')
+        latest_comment_date=$(echo "$recent_comments" | jq -r '.[0].createdAt // empty')
+        
+        if [[ -n "$latest_comment_date" ]]; then
+            echo "Issue #$issue_number latest update: $latest_comment_date"
+        fi
+    fi
+done
+```
+
 GitHub milestone and issue creation will be handled in Phase 4 execution flow.
 
 ## 🚀 Expert Execution Flow

@@ -81,18 +81,35 @@ EXISTING_SCENARIOS=$(find docs/use_cases/ -name "*${FEATURE_NAME}*" -type f 2>/d
 
 ## GitHub Issue Integration
 
+#### Issue Comment Retrieval and Analysis
 ```bash
 # Load GitHub issue with comments (if issue number provided)
 if [[ -n "$ISSUE_NUMBER" ]]; then
-    echo "🔍 GitHub issue #${ISSUE_NUMBER}からのシナリオ進化機会を分析中..."
+    echo "Retrieving GitHub issue #$ISSUE_NUMBER with comments for scenario evolution..."
     
-    # Retrieve issue details with all comments
-    gh issue view $ISSUE_NUMBER --json title,body,comments,updatedAt
+    # Get issue details with comments
+    ISSUE_DATA=$(gh issue view $ISSUE_NUMBER --json title,body,comments,updatedAt,createdAt,labels,assignees)
     
-    # Analyze comment timeline for requirement evolution
-    gh issue view $ISSUE_NUMBER --json comments --jq '.comments | sort_by(.createdAt) | reverse'
+    # Extract and prioritize recent comments
+    RECENT_COMMENTS=$(echo "$ISSUE_DATA" | jq -r '.comments | sort_by(.createdAt) | reverse | .[0:5]')
     
-    echo "📋 イシューのコメント履歴から要件変化を分析しました"
+    COMMENT_COUNT=$(echo "$ISSUE_DATA" | jq '.comments | length')
+    echo "Found $COMMENT_COUNT comments on issue #$ISSUE_NUMBER"
+    echo "Prioritizing latest 5 comments for scenario evolution analysis"
+    
+    # Check for scenario evolution opportunities through comments
+    if [[ $COMMENT_COUNT -gt 0 ]]; then
+        echo "Analyzing comment timeline for scenario evolution opportunities..."
+        # Recent comments take precedence for scenario evolution
+        LATEST_COMMENT_DATE=$(echo "$RECENT_COMMENTS" | jq -r '.[0].createdAt // empty')
+        if [[ -n "$LATEST_COMMENT_DATE" ]]; then
+            echo "Latest scenario evolution opportunity: $LATEST_COMMENT_DATE"
+        fi
+        
+        # Extract scenario evolution related comments
+        echo "Extracting scenario evolution context..."
+        echo "$RECENT_COMMENTS" | jq -r '.[] | select(.body | contains("scenario") or contains("requirement") or contains("edge case") or contains("feedback") or contains("discovery")) | .body' | head -3
+    fi
 fi
 
 # Also check related issues for broader context

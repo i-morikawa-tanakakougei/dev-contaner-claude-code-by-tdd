@@ -63,7 +63,37 @@ Read these files in order to gather context:
 4. Read GitHub issue with comments if issue number provided
 
 ### GitHub Issue Context Loading
-If issue number is provided, retrieve issue details and comments, prioritizing recent specification changes.
+#### Issue Comment Retrieval and Analysis
+```bash
+# Load GitHub issue with comments (if issue number provided)
+if [[ -n "$ISSUE_NUMBER" ]]; then
+    echo "Retrieving GitHub issue #$ISSUE_NUMBER with comments for use case implementation..."
+    
+    # Get issue details with comments
+    ISSUE_DATA=$(gh issue view $ISSUE_NUMBER --json title,body,comments,updatedAt,createdAt,labels,assignees)
+    
+    # Extract and prioritize recent comments
+    RECENT_COMMENTS=$(echo "$ISSUE_DATA" | jq -r '.comments | sort_by(.createdAt) | reverse | .[0:5]')
+    
+    COMMENT_COUNT=$(echo "$ISSUE_DATA" | jq '.comments | length')
+    echo "Found $COMMENT_COUNT comments on issue #$ISSUE_NUMBER"
+    echo "Prioritizing latest 5 comments for use case implementation"
+    
+    # Check for use case implementation requirements through comments
+    if [[ $COMMENT_COUNT -gt 0 ]]; then
+        echo "Analyzing comment timeline for use case spec updates..."
+        # Recent comments take precedence for use case implementation
+        LATEST_COMMENT_DATE=$(echo "$RECENT_COMMENTS" | jq -r '.[0].createdAt // empty')
+        if [[ -n "$LATEST_COMMENT_DATE" ]]; then
+            echo "Latest use case spec update: $LATEST_COMMENT_DATE"
+        fi
+        
+        # Extract use case implementation related comments
+        echo "Extracting use case implementation context..."
+        echo "$RECENT_COMMENTS" | jq -r '.[] | select(.body | contains("use case") or contains("application") or contains("workflow") or contains("business") or contains("orchestrat")) | .body' | head -3
+    fi
+fi
+```
 
 ## 🚀 Expert Execution Flow
 

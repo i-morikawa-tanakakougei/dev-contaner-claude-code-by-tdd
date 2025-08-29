@@ -81,6 +81,40 @@ RECENT_HISTORY=$(tail -5 .claude/context/execution-history.jsonl 2>/dev/null || 
 
 ## GitHub Issue Integration
 
+### Existing Issue Comment Retrieval and Analysis
+```bash
+# Retrieve existing issues to understand context before creating new ones
+echo "Retrieving existing GitHub issues for retroactive analysis context..."
+
+# Get related issues for context analysis
+RELATED_ISSUES=$(gh issue list --state all --limit 20 --json number,title,body,comments,updatedAt,createdAt,labels,assignees)
+
+# Analyze recent comments from related issues for context
+echo "Analyzing existing issue context for retroactive issue creation..."
+for issue_data in $(echo "$RELATED_ISSUES" | jq -r '.[] | @base64'); do
+    issue_info=$(echo "$issue_data" | base64 --decode)
+    issue_number=$(echo "$issue_info" | jq -r '.number')
+    comment_count=$(echo "$issue_info" | jq '.comments | length')
+    
+    if [[ $comment_count -gt 0 ]]; then
+        echo "Analyzing issue #$issue_number with $comment_count comments for emergency context"
+        # Get recent comments (latest 3 for context)
+        recent_comments=$(echo "$issue_info" | jq -r '.comments | sort_by(.createdAt) | reverse | .[0:3]')
+        latest_comment_date=$(echo "$recent_comments" | jq -r '.[0].createdAt // empty')
+        
+        if [[ -n "$latest_comment_date" ]]; then
+            echo "Issue #$issue_number latest activity: $latest_comment_date"
+        fi
+        
+        # Check for emergency-related context in comments
+        emergency_context=$(echo "$recent_comments" | jq -r '.[] | select(.body | contains("emergency") or contains("urgent") or contains("production") or contains("hotfix") or contains("critical")) | .body' | head -2)
+        if [[ -n "$emergency_context" ]]; then
+            echo "Found emergency context in issue #$issue_number"
+        fi
+    fi
+done
+```
+
 ### Issue Creation Process
 ```bash
 # Create comprehensive issues based on emergency recovery analysis

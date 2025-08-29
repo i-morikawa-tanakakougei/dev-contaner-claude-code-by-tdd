@@ -53,16 +53,37 @@ fi
 ```
 
 ## GitHub Issue Integration
+
+#### Issue Comment Retrieval and Analysis
 ```bash
-# Issue context retrieval with comment prioritization
-if [ ! -z "$1" ]; then
+# Load GitHub issue with comments (if issue number provided)
+if [[ -n "$1" ]]; then
     ISSUE_NUMBER="$1"
-    echo "Retrieving issue #$ISSUE_NUMBER with comments..."
-    gh issue view $ISSUE_NUMBER --json title,body,comments --jq '{
-        title: .title,
-        body: .body,
-        recent_comments: (.comments | sort_by(.createdAt) | reverse | .[0:5])
-    }'
+    echo "Retrieving GitHub issue #$ISSUE_NUMBER with comments for feedback application..."
+    
+    # Get issue details with comments
+    ISSUE_DATA=$(gh issue view $ISSUE_NUMBER --json title,body,comments,updatedAt,createdAt,labels,assignees)
+    
+    # Extract and prioritize recent comments
+    RECENT_COMMENTS=$(echo "$ISSUE_DATA" | jq -r '.comments | sort_by(.createdAt) | reverse | .[0:5]')
+    
+    COMMENT_COUNT=$(echo "$ISSUE_DATA" | jq '.comments | length')
+    echo "Found $COMMENT_COUNT comments on issue #$ISSUE_NUMBER"
+    echo "Prioritizing latest 5 comments for feedback application"
+    
+    # Check for feedback and improvement suggestions through comments
+    if [[ $COMMENT_COUNT -gt 0 ]]; then
+        echo "Analyzing comment timeline for feedback to apply..."
+        # Recent comments take precedence for feedback application
+        LATEST_COMMENT_DATE=$(echo "$RECENT_COMMENTS" | jq -r '.[0].createdAt // empty')
+        if [[ -n "$LATEST_COMMENT_DATE" ]]; then
+            echo "Latest feedback update: $LATEST_COMMENT_DATE"
+        fi
+        
+        # Extract feedback and improvement related comments
+        echo "Extracting feedback to apply..."
+        echo "$RECENT_COMMENTS" | jq -r '.[] | select(.body | contains("feedback") or contains("improvement") or contains("suggestion") or contains("change") or contains("fix")) | .body' | head -3
+    fi
 fi
 ```
 
