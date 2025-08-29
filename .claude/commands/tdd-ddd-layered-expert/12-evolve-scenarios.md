@@ -104,43 +104,43 @@ fi
 
 ## 🚀 Expert Execution Flow
 
-### Phase 1: フィードバック分析と要件発見
-**Requirements Discovery Specialist として以下を分析:**
+### Phase 1: Feedback Analysis and Requirements Discovery
+**Analyze as Requirements Discovery Specialist:**
 
-1. **スプリントフィードバック分析**
-   - 確認ポイント: レトロスペクティブ、ユーザーフィードバック、ステークホルダーコメント
-   - 発見対象: 未カバーの使用パターン、エラーシナリオ、パフォーマンス要件
+1. **Sprint Feedback Analysis**
+   - Verification Points: Retrospectives, user feedback, stakeholder comments
+   - Discovery Targets: Uncovered usage patterns, error scenarios, performance requirements
 
-2. **開発インサイト抽出**
-   - 確認ポイント: 実装フェーズ（06-09）で発見された技術制約、統合課題
-   - 発見対象: エッジケース、セキュリティ要件、スケーラビリティ考慮事項
+2. **Development Insight Extraction**
+   - Verification Points: Technical constraints and integration issues discovered during implementation phases (06-09)
+   - Discovery Targets: Edge cases, security requirements, scalability considerations
 
-### Phase 2: 新シナリオ特定と分類
-**Requirements Discovery Specialist として以下を特定:**
+### Phase 2: New Scenario Identification and Classification
+**Identify as Requirements Discovery Specialist:**
 
-1. **エッジケースシナリオ**
+1. **Edge Case Scenarios**
    ```
-   Given [境界条件やエラー状態]
-   When [ユーザーアクションやシステムイベント]
-   Then [期待される例外処理や代替フロー]
-   ```
-
-2. **パフォーマンスシナリオ**
-   ```
-   Given [大量データや高負荷状態]
-   When [パフォーマンス重要な操作]
-   Then [応答時間やスループット要件]
+   Given [boundary conditions or error states]
+   When [user actions or system events]
+   Then [expected exception handling or alternative flows]
    ```
 
-3. **セキュリティシナリオ**
+2. **Performance Scenarios**
    ```
-   Given [セキュリティ制約や認可状態]
-   When [セキュリティ関連操作]
-   Then [適切なアクセス制御や監査ログ]
+   Given [large data or high load conditions]
+   When [performance-critical operations]
+   Then [response time or throughput requirements]
    ```
 
-### Phase 3: シナリオ文書化と統合
-**Requirements Discovery Specialist として以下を実行:**
+3. **Security Scenarios**
+   ```
+   Given [security constraints or authorization states]
+   When [security-related operations]
+   Then [appropriate access control or audit logs]
+   ```
+
+### Phase 3: Scenario Documentation and Integration
+**Execute as Requirements Discovery Specialist:**
 
 ```bash
 echo "🌱 フィーチャー '${FEATURE_NAME}' のシナリオ進化を開始します"
@@ -150,29 +150,29 @@ mkdir -p "docs/use_cases/evolved/"
 
 # 2. Document new scenarios with proper structure
 cat > "docs/use_cases/evolved/${FEATURE_NAME}-evolved-scenarios.md" <<EOF
-# ${FEATURE_NAME} - 進化シナリオ
+# ${FEATURE_NAME} - Evolved Scenarios
 
-## 発見源
-- スプリントフィードバック: [日付とソース]
-- 開発インサイト: [実装フェーズでの発見]
-- ユーザーフィードバック: [フィードバック内容]
+## Discovery Sources
+- Sprint Feedback: [date and source]
+- Development Insights: [discoveries from implementation phase]
+- User Feedback: [feedback content]
 
-## 新規シナリオ
+## New Scenarios
 
-### エッジケースシナリオ
-[新しいGiven-When-Thenシナリオ]
+### Edge Case Scenarios
+[new Given-When-Then scenarios]
 
-### パフォーマンスシナリオ  
-[パフォーマンス関連シナリオ]
+### Performance Scenarios  
+[performance-related scenarios]
 
-### セキュリティシナリオ
-[セキュリティ関連シナリオ]
+### Security Scenarios
+[security-related scenarios]
 
-## 既存ビジョンとの整合性
-[ビジョンとの整合性確認]
+## Consistency with Existing Vision
+[vision consistency verification]
 
-## 実装優先度と複雑度
-[各シナリオの実装優先度評価]
+## Implementation Priority and Complexity
+[implementation priority evaluation for each scenario]
 EOF
 
 echo "📝 進化シナリオ文書を作成しました"
@@ -180,30 +180,30 @@ echo "📝 進化シナリオ文書を作成しました"
 
 ## ✅ Built-in Quality Assurance
 
-### 自己診断チェックリスト
-**必須項目（MUST）:**
-- [ ] 新シナリオが既存ビジョンと整合していること
-- [ ] 全てのシナリオがGiven-When-Then形式で記述されていること
-- [ ] シナリオの発見源が明確に記録されていること
-- [ ] 実装優先度と複雑度が評価されていること
+### Self-Diagnosis Checklist
+**Required Items (MUST):**
+- [ ] New scenarios are consistent with existing vision
+- [ ] All scenarios are described in Given-When-Then format
+- [ ] Scenario discovery sources are clearly recorded
+- [ ] Implementation priority and complexity are evaluated
 
-**推奨項目（SHOULD）:**
-- [ ] ドメインモデルへの影響が分析されていること
-- [ ] 関連する既存シナリオとの関係が整理されていること
-- [ ] スプリント統合のための準備が整っていること
+**Recommended Items (SHOULD):**
+- [ ] Impact on domain model has been analyzed
+- [ ] Relationships with related existing scenarios are organized
+- [ ] Preparation for sprint integration is complete
 
-### 品質メトリクス
-| 指標 | 目標値 | 実績値 | 判定 |
-|------|--------|--------|------|
-| 新規シナリオ数 | ≥3個 | [実績値] | ✅/❌ |
-| ビジョン整合性 | 100% | [実績値] | ✅/❌ |
-| 発見源の明確性 | 100% | [実績値] | ✅/❌ |
+### Quality Metrics
+| Indicator | Target Value | Actual Value | Result |
+|-----------|--------------|--------------|--------|
+| New Scenarios Count | ≥3 scenarios | [actual value] | ✅/❌ |
+| Vision Consistency | 100% | [actual value] | ✅/❌ |
+| Discovery Source Clarity | 100% | [actual value] | ✅/❌ |
 
-### エラー処理
-**想定されるエラーと対処:**
-1. **ビジョン不整合**: 既存ビジョンと矛盾するシナリオの検出と調整
-2. **シナリオ重複**: 既存シナリオとの重複検出と統合処理
-3. **発見源不明**: シナリオの根拠が不明確な場合の再調査
+### Error Handling
+**Expected Errors and Countermeasures:**
+1. **Vision Inconsistency**: Detection and adjustment of scenarios that contradict existing vision
+2. **Scenario Duplication**: Detection and integration processing of duplicates with existing scenarios
+3. **Unknown Discovery Source**: Re-investigation when scenario rationale is unclear
 
 ## 📊 Standardized Output Format
 

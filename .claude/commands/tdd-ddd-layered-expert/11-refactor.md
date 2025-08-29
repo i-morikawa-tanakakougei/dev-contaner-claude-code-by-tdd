@@ -98,19 +98,19 @@ fi
 
 ## 🚀 Expert Execution Flow
 
-### Phase 1: コード品質分析
-**Code Quality Improvement Specialist として以下を分析:**
+### Phase 1: Code Quality Analysis
+**Analyze as Code Quality Improvement Specialist:**
 
-1. **コード構造分析**
-   - 確認ポイント: 重複コード、長いメソッド、複雑な条件分岐の特定
-   - 判断基準: コード複雑度メトリクス、重複率、メソッド長の評価
+1. **Code Structure Analysis**
+   - Verification Points: Identify duplicate code, long methods, and complex conditional branching
+   - Judgment Criteria: Evaluate code complexity metrics, duplication rate, and method length
 
-2. **アーキテクチャ準拠性確認**
-   - 確認ポイント: レイヤー間の依存関係、単一責任原則の遵守
-   - 判断基準: Clean Architecture の原則に従った構造になっているか
+2. **Architecture Compliance Verification**
+   - Verification Points: Inter-layer dependencies, adherence to single responsibility principle
+   - Judgment Criteria: Whether structure follows Clean Architecture principles
 
-### Phase 2: 安全なリファクタリング実行
-**Code Quality Improvement Specialist として以下を実行:**
+### Phase 2: Safe Refactoring Execution
+**Execute as Code Quality Improvement Specialist:**
 
 ```bash
 echo "🔧 Issues: #${ISSUE_NUMBER} のリファクタリングを開始します"
@@ -131,26 +131,26 @@ echo "📊 コード品質分析中..."
 uv run --frozen ruff check src/ --output-format=json > /tmp/quality_analysis.json
 ```
 
-### Phase 3: 段階的品質改善
-**Code Quality Improvement Specialist として以下を段階的に実行:**
+### Phase 3: Gradual Quality Improvement
+**Execute the following gradually as Code Quality Improvement Specialist:**
 
-1. **重複コード除去**
-   - アクション: 共通処理の抽出、ユーティリティメソッドの作成
-   - 期待結果: コード重複率の低下、保守性の向上
+1. **Duplicate Code Elimination**
+   - Actions: Extract common processing, create utility methods
+   - Expected Results: Reduced code duplication rate, improved maintainability
 
-2. **メソッド・クラス構造改善**  
-   - アクション: 長いメソッドの分割、単一責任原則の適用
-   - 期待結果: 可読性向上、テスタビリティ改善
+2. **Method and Class Structure Improvement**  
+   - Actions: Split long methods, apply single responsibility principle
+   - Expected Results: Improved readability, enhanced testability
 
-3. **デザインパターン適用**
-   - アクション: 適切な設計パターンの導入（Strategy, Factory, etc.）
-   - 期待結果: 拡張性とフレキシビリティの向上
+3. **Design Pattern Application**
+   - Actions: Introduce appropriate design patterns (Strategy, Factory, etc.)
+   - Expected Results: Improved extensibility and flexibility
 
-4. **パフォーマンス最適化**
-   - アクション: アルゴリズムの改善、データ構造の最適化
-   - 期待結果: 実行速度向上、リソース使用量削減
+4. **Performance Optimization**
+   - Actions: Algorithm improvements, data structure optimization
+   - Expected Results: Improved execution speed, reduced resource usage
 
-**各改善後の継続的検証:**
+**Continuous Verification After Each Improvement:**
 ```bash
 # After each refactoring change
 echo "🧪 改善後テスト実行中..."
@@ -167,30 +167,30 @@ echo "✅ テストGREEN状態維持 - 次の改善に進みます"
 
 ## ✅ Built-in Quality Assurance
 
-### 自己診断チェックリスト
-**必須項目（MUST）:**
-- [ ] 全テストがリファクタリング前後で成功していること
-- [ ] 機能的な変更が一切加えられていないこと
-- [ ] コード品質メトリクスが改善されていること
-- [ ] Clean Architectureの原則が維持されていること
+### Self-Diagnosis Checklist
+**Required Items (MUST):**
+- [ ] All tests succeed before and after refactoring
+- [ ] No functional changes have been made whatsoever
+- [ ] Code quality metrics have improved
+- [ ] Clean Architecture principles are maintained
 
-**推奨項目（SHOULD）:**
-- [ ] コード重複率が削減されていること
-- [ ] メソッド複雑度が適切な範囲内であること
-- [ ] 適切な設計パターンが適用されていること
+**Recommended Items (SHOULD):**
+- [ ] Code duplication rate has been reduced
+- [ ] Method complexity is within appropriate range
+- [ ] Appropriate design patterns have been applied
 
-### 品質メトリクス
-| 指標 | リファクタリング前 | リファクタリング後 | 改善率 |
-|------|-------------------|-------------------|--------|
-| コード重複率 | [Before]% | [After]% | [Improvement]% |
-| 平均メソッド長 | [Before] lines | [After] lines | [Reduction]% |
-| 循環的複雑度 | [Before] | [After] | [Improvement]% |
+### Quality Metrics
+| Indicator | Before Refactoring | After Refactoring | Improvement Rate |
+|-----------|-------------------|-------------------|------------------|
+| Code Duplication Rate | [Before]% | [After]% | [Improvement]% |
+| Average Method Length | [Before] lines | [After] lines | [Reduction]% |
+| Cyclomatic Complexity | [Before] | [After] | [Improvement]% |
 
-### エラー処理
-**想定されるエラーと対処:**
-1. **テスト失敗**: 即座に前の状態に戻し、より小さい単位でリファクタリング再実行
-2. **パフォーマンス劣化**: ベンチマーク比較で性能低下を検出した場合の巻き戻し
-3. **アーキテクチャ違反**: レイヤー間依存関係の問題検出時の修正指導
+### Error Handling
+**Expected Errors and Countermeasures:**
+1. **Test Failure**: Immediately revert to previous state and re-execute refactoring in smaller units
+2. **Performance Degradation**: Rollback when performance decline is detected through benchmark comparison
+3. **Architecture Violation**: Correction guidance when inter-layer dependency issues are detected
 
 ## 📊 Standardized Output Format
 

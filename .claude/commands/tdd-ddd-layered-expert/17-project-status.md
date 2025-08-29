@@ -29,14 +29,14 @@ During command execution, you act as a **Project Health Analyst** with deep expe
 **🏗️ Design**: Domain-Driven Design (Entity, Value Object, Aggregate, Repository)
 
 > 🗺️ **Current Position**: Project Health Analysis Phase (17/16) - Meta-level
-> 🎯 **Phase Purpose**: システム全体の健全性評価と戦略的プロジェクト管理
+> 🎯 **Phase Purpose**: Overall system health assessment and strategic project management
 
-## 🎯 PHASE PURPOSE: プロジェクト総合ステータス分析フェーズ
+## 🎯 PHASE PURPOSE: Comprehensive Project Status Analysis Phase
 **⚠️ Important Notice:**
-- **This step focuses on comprehensive project health assessment** - システム全体の統合状況、健全性、戦略的位置づけを包括的に評価します
-- **Analysis scope includes system integration, organizational health, and strategic alignment** - 技術的統合、組織的健全性、戦略的整合性の多次元分析を行います
+- **This step focuses on comprehensive project health assessment** - Comprehensively evaluates the overall system integration status, health, and strategic positioning
+- **Analysis scope includes system integration, organizational health, and strategic alignment** - Performs multi-dimensional analysis of technical integration, organizational health, and strategic alignment
 
-## 📋 軽量コンテキスト管理
+## 📋 Lightweight Context Management
 ### Required Reading (Comprehensive)
 ```bash
 # Complete project state assessment
@@ -104,9 +104,9 @@ echo "ブランチ保護設定確認..."
 gh api repos/:owner/:repo/branches/main/protection 2>/dev/null | jq '.required_status_checks, .enforce_admins, .required_pull_request_reviews' || echo "ブランチ保護未設定"
 ```
 
-## 🚀 専門家実行フロー
+## 🚀 Expert Execution Flow
 
-### 1. システム統合健全性分析
+### 1. System Integration Health Analysis
 ```bash
 echo "=== システム統合健全性分析 ==="
 
@@ -169,7 +169,7 @@ echo "外部サービス呼び出し箇所: ${EXTERNAL_SERVICES}"
 どの分析レベルを実行しますか？（番号を入力）:
 ```
 
-### 2. 多次元プロジェクト健全性評価
+### 2. Multi-dimensional Project Health Assessment
 ```python
 # Multi-dimensional project health assessment
 import json
@@ -344,7 +344,7 @@ analyzer = ProjectHealthAnalyzer()
 - Create actionable improvement roadmaps with timelines
 - Provide stakeholder-specific reporting formats
 
-### 3. 戦略的ロードマップ生成
+### 3. Strategic Roadmap Generation
 ```bash
 echo "=== 戦略的ロードマップ生成 ==="
 
@@ -467,7 +467,7 @@ EOF
 generate_strategic_roadmap
 ```
 
-### 4. ステークホルダー向けレポート生成
+### 4. Stakeholder Report Generation
 ```bash
 echo "=== ステークホルダー向けレポート生成 ==="
 
@@ -566,7 +566,7 @@ generate_team_dashboard
 echo "✅ 全ステークホルダー向けレポートを生成しました"
 ```
 
-### 5. 継続的改善プロセス設計
+### 5. Continuous Improvement Process Design
 ```bash
 echo "=== 継続的改善プロセス設計 ==="
 
@@ -655,23 +655,23 @@ EOF
 design_improvement_process
 ```
 
-## ✅ 内蔵品質保証
+## ✅ Built-in Quality Assurance
 
-### Must-Have Analysis (必須)
+### Must-Have Analysis (Required)
 - [ ] System integration health is comprehensively assessed
 - [ ] Multi-dimensional health scores are calculated accurately
 - [ ] Strategic roadmap addresses all critical areas
 - [ ] Stakeholder reports are appropriate for their audiences
 - [ ] Continuous improvement process is actionable and sustainable
 
-### Should-Have Analysis (推奨)
+### Should-Have Analysis (Recommended)
 - [ ] Quantitative metrics support all qualitative assessments
 - [ ] ROI calculations are realistic and evidence-based  
 - [ ] Risk assessments are comprehensive and prioritized
 - [ ] Recommendations include specific timelines and resource requirements
 - [ ] Success metrics are measurable and trackable
 
-### Could-Have Enhancements (任意)
+### Could-Have Enhancements (Optional)
 - [ ] Predictive analytics for trend forecasting
 - [ ] Automated report generation and distribution
 - [ ] Integration with external project management tools
@@ -719,7 +719,7 @@ else
 fi
 ```
 
-## 📊 標準化出力フォーマット
+## 📊 Standardized Output Format
 
 ### 包括的プロジェクト健全性レポート
 ```

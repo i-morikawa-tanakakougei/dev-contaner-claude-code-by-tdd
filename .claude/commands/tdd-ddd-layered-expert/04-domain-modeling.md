@@ -55,7 +55,7 @@ During command execution, you act as a **Domain-Driven Design Architect** specia
 
 **CREATE DOMAIN DESIGN DOCUMENTATION ONLY.**
 
-## 📋 軽量コンテキスト管理
+## 📋 Lightweight Context Management
 
 ### Required Reading (Minimal)
 ```bash
@@ -93,26 +93,26 @@ if [[ -n "$ISSUE_NUMBERS" ]]; then
 fi
 ```
 
-## 🚀 専門家実行フロー
+## 🚀 Expert Execution Flow
 
-### Phase 1: 分析と理解
-**専門家として以下を分析 (ユーザーとのやり取りは日本語):**
+### Phase 1: Analysis and Understanding
+**Analyze the following as expert (User interactions in Japanese):**
 
-1. **ユースケース仕様の分析**
+1. **Use Case Specification Analysis**
    - Extract domain concepts from Given-When-Then scenarios using Read tool
    - Identify entities (objects with identity and lifecycle)
    - Identify value objects (immutable, replaceable objects)
    - Extract business rules and invariants
 
-2. **既存ドメインモデルとの整合性確認**
+2. **Existing Domain Model Consistency Check**
    - Check existing domain models using Glob tool
    - Ensure consistency with established ubiquitous language
    - Identify reusable domain patterns
 
-### Phase 2: 設計と計画
-**専門家として以下を設計 (Claude Codeへの指示は英語):**
+### Phase 2: Design and Planning
+**Design the following as expert (Instructions to Claude Code in English):**
 
-1. **エンティティ設計**
+1. **Entity Design**
    ```
    For each identified entity:
    - Define entity identity and lifecycle
@@ -121,7 +121,7 @@ fi
    - Define relationships with other entities
    ```
 
-2. **値オブジェクト設計**
+2. **Value Object Design**
    ```
    For each identified value object:
    - Define immutable properties
@@ -130,7 +130,7 @@ fi
    - Design factory methods if needed
    ```
 
-3. **アグリゲート境界設計**
+3. **Aggregate Boundary Design**
    ```
    For each aggregate:
    - Identify aggregate root
@@ -139,15 +139,15 @@ fi
    - Design repository interface
    ```
 
-### Phase 3: 実装と実行
-**専門家として以下を実行 (Claude Codeへの指示は英語):**
+### Phase 3: Implementation and Execution
+**Execute the following as expert (Instructions to Claude Code in English):**
 
 1. **Validate issue numbers and prerequisites**
    ```bash
    # Validate issue number requirement
    if [[ $# -eq 0 ]]; then
-       echo "エラー: 少なくとも1つのイシュー番号を指定してください"
-       echo "使用例: /domain-modeling 1"
+       echo "Error: At least one issue number must be specified"
+       echo "Usage example: /domain-modeling 1"
        exit 1
    fi
    
@@ -155,8 +155,8 @@ fi
    for issue_num in $(echo $1 | tr ',' ' '); do
        USE_CASE_FILE=$(find docs/use_cases/ -name "*issue*${issue_num}*.md" -type f | head -1)
        if [[ ! -f "$USE_CASE_FILE" ]]; then
-           echo "❌ エラー: Issue #${issue_num} のユースケース仕様が見つかりません"
-           echo "💡 先に /create-use-case ${issue_num} を実行してください"
+           echo "❌ Error: Use case specification for Issue #${issue_num} not found"
+           echo "💡 Please execute /create-use-case ${issue_num} first"
            exit 1
        fi
    done
@@ -215,37 +215,37 @@ Extract business rules from Given-When-Then scenarios.
 "
    ```
 
-## ✅ 内蔵品質保証
+## ✅ Built-in Quality Assurance
 
-### 自己診断チェックリスト
-**必須項目（MUST）:**
-- [ ] すべてのユースケース仕様が分析されている
-- [ ] エンティティが適切に識別され設計されている
-- [ ] 値オブジェクトが適切に定義されている
-- [ ] アグリゲート境界が明確に設定されている
-- [ ] ビジネスルールがドメイン層に適切に配置されている
-- [ ] リポジトリインターフェースが定義されている
+### Self-Diagnosis Checklist
+**Required Items (MUST):**
+- [ ] All use case specifications have been analyzed
+- [ ] Entities are properly identified and designed
+- [ ] Value objects are appropriately defined
+- [ ] Aggregate boundaries are clearly established
+- [ ] Business rules are properly placed in domain layer
+- [ ] Repository interfaces are defined
 
-**推奨項目（SHOULD）:**
-- [ ] ドメインサービスが適切に設計されている
-- [ ] ドメインイベントが識別されている
-- [ ] ユビキタス言語が一貫して使用されている
-- [ ] 既存ドメインモデルとの整合性が確保されている
+**Recommended Items (SHOULD):**
+- [ ] Domain services are appropriately designed
+- [ ] Domain events are identified
+- [ ] Ubiquitous language is consistently used
+- [ ] Consistency with existing domain models is ensured
 
-### 品質メトリクス
-| 指標 | 目標値 | 実績値 | 判定 |
-|------|--------|--------|------|
-| ビジネスルールカバレッジ | 100% | [実績値] | ✅/❌ |
-| アグリゲート設計品質 | 90% | [実績値] | ✅/❌ |
-| ユビキタス言語一貫性 | 95% | [実績値] | ✅/❌ |
+### Quality Metrics
+| Metric | Target | Actual | Assessment |
+|--------|--------|--------|------------|
+| Business Rule Coverage | 100% | [Actual Value] | ✅/❌ |
+| Aggregate Design Quality | 90% | [Actual Value] | ✅/❌ |
+| Ubiquitous Language Consistency | 95% | [Actual Value] | ✅/❌ |
 
-### エラー処理
-**想定されるエラーと対処:**
-1. **ユースケース仕様不足**: 先に /create-use-case を実行するよう日本語で案内
-2. **アグリゲート境界の曖昧さ**: ビジネスルールの再確認を促す
-3. **ドメイン概念の重複**: 既存モデルとの統合を検討
+### Error Handling
+**Expected Errors and Solutions:**
+1. **Insufficient Use Case Specification**: Guide to execute /create-use-case first in Japanese
+2. **Ambiguous Aggregate Boundaries**: Prompt business rule reconfirmation
+3. **Duplicate Domain Concepts**: Consider integration with existing models
 
-## 📊 標準化出力フォーマット
+## 📊 Standardized Output Format
 
 ### 実行サマリー (日本語でユーザーに報告)
 - ✅ **ユースケース仕様分析**: [Issue numbers] の仕様を分析完了

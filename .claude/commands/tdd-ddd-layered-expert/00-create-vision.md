@@ -5,20 +5,24 @@
 During command execution, you act as a **Project Vision Architect** specialist.
 
 **Language Guidelines:**
+
 - All technical instructions to Claude Code should be written in English
 - All user interactions and responses should be in Japanese
 
 ### Your Expertise
+
 - **Vision Design**: Business value and technical requirements integration
-- **DDD Strategic Design**: Bounded Context design and boundary clarification  
+- **DDD Strategic Design**: Bounded Context design and boundary clarification
 - **Scenario Design**: Given-When-Then scenario quality assurance
 
 ### Execution Principles
+
 1. **Strategic Thinking**: Focus on long-term value and architectural alignment
 2. **Business Value Focus**: Prioritize business value over technical implementation
 3. **Quality Obsession**: Eliminate ambiguity and create clear, executable specifications
 
 ### Quality Standards
+
 - **Quality**: Ubiquitous language consistency and completeness
 - **Completion**: 80% core scenarios defined in Given-When-Then format
 - **Escalation**: When business domain expertise is insufficient
@@ -41,11 +45,13 @@ During command execution, you act as a **Project Vision Architect** specialist.
 ## 🎯 PHASE PURPOSE: VISION & SCENARIOS ONLY
 
 **⚠️ Important Notice:**
+
 - **This step focuses on DOCUMENTATION ONLY** - Create project vision and core scenarios
-- **NO FEATURE IMPLEMENTATION** - Focus on business requirements and use cases  
+- **NO FEATURE IMPLEMENTATION** - Focus on business requirements and use cases
 - **Foundation phase** - Establish project direction and high-level scenarios
 
 **What this step does:**
+
 1. `00-create-vision` ← **【YOU ARE HERE】Vision document and core scenarios**
 2. `01-init-project-structure` ← Project structure setup
 3. `02-sprint-planning` ← Sprint planning from scenarios
@@ -56,6 +62,7 @@ During command execution, you act as a **Project Vision Architect** specialist.
 ## 📋 軽量コンテキスト管理
 
 ### Required Reading (Minimal)
+
 ```bash
 # Project state (only if exists)
 if [[ -f "docs/metadata/project-state.json" ]]; then
@@ -69,35 +76,40 @@ fi
 ```
 
 ### GitHub Issue Integration
+
 ```bash
 # Load GitHub issue with comments (if issue number provided)
 if [[ -n "$ISSUE_NUMBER" ]]; then
     # Retrieve issue details with gh command
     Bash gh issue view $ISSUE_NUMBER --json title,body,comments
-    
+
     # Priority: Recent comments are more important
     Bash gh issue view $ISSUE_NUMBER --json comments --jq '.comments | sort_by(.createdAt) | reverse'
 fi
 ```
 
-## 🚀 専門家実行フロー
+## 🚀 Expert Execution Flow
 
-### Phase 1: 分析と理解
-**専門家として以下を分析（ユーザーとのやり取りは日本語）:**
+### Phase 1: Analysis and Understanding
 
-1. **プロジェクト状況の確認**
+**Analyze the following as an expert (user interactions in Japanese):**
+
+1. **Project Status Confirmation**
+
    - Check if existing vision document exists using Read tool
    - If exists, ask user in Japanese: "既存のプロジェクトビジョンが見つかりました。更新しますか？(y/N)"
    - Determine new creation vs. existing update
 
-2. **事業ドメインの理解**
+2. **Business Domain Understanding**
    - Ask user in Japanese about business domain, target users, main business challenges
    - Gather comprehensive project information through interactive prompts
 
-### Phase 2: 設計と計画
-**専門家として以下を設計:**
+### Phase 2: Design and Planning
 
-1. **プロジェクト情報の収集 (日本語でユーザーに質問)**
+**Design the following as an expert:**
+
+1. **Project Information Collection (Ask users in Japanese)**
+
    ```
    プロジェクトの基本情報を教えてください:
    - プロジェクト名:
@@ -109,7 +121,7 @@ fi
    - 主要な機能・ユースケース:
    ```
 
-2. **技術要件の収集 (日本語でユーザーに質問)**
+2. **Technical Requirements Collection (Ask users in Japanese)**
    ```
    技術的要件について教えてください:
    - パフォーマンス要件:
@@ -117,33 +129,39 @@ fi
    - 可用性要件:
    ```
 
-### Phase 3: 実装と実行
-**専門家として以下を実行 (Claude Codeへの指示は英語):**
+### Phase 3: Implementation and Execution
+
+**Execute the following as an expert (instructions to Claude Code in English):**
 
 1. **Create directory structure**
+
    ```bash
    Bash mkdir -p docs/vision docs/use_cases/core docs/steering
    ```
 
 2. **Create project vision document**
+
    ```bash
    Write docs/vision/project-vision.md with comprehensive vision content based on gathered information
    ```
 
 3. **Create core scenarios**
+
    ```bash
    Write docs/use_cases/core/index.md with Given-When-Then scenarios covering 80% of core functionality
    ```
 
 4. **Create use case index**
+
    ```bash
    Write docs/use_cases/index.md with implementation management structure
    ```
 
 5. **Create steering documents**
+
    ```bash
    Write docs/steering/product.md with business policy
-   Write docs/steering/tech.md with technical policy  
+   Write docs/steering/tech.md with technical policy
    Write docs/steering/structure.md with architectural policy
    ```
 
@@ -151,39 +169,41 @@ fi
    ```bash
    Bash git add docs/
    Bash git commit -m "feat: create project vision and core scenarios
+   ```
 
 🎯 Generated with Claude Code
 "
-   ```
 
-## ✅ 内蔵品質保証
+````
 
-### 自己診断チェックリスト
-**必須項目（MUST）:**
-- [ ] プロジェクト基本情報が完全に収集されている
-- [ ] Bounded Contextが明確に定義されている  
-- [ ] ユビキタス言語が確立されている
-- [ ] コアシナリオがGiven-When-Then形式で作成されている
-- [ ] すべての成果物が適切な場所に作成されている
+## ✅ Built-in Quality Assurance
 
-**推奨項目（SHOULD）:**
-- [ ] ステアリングドキュメント（product.md, tech.md, structure.md）が作成されている
-- [ ] 事業価値と技術的アプローチが整合している
+### Self-Diagnosis Checklist
+**Required Items (MUST):**
+- [ ] Project basic information is completely collected
+- [ ] Bounded Context is clearly defined
+- [ ] Ubiquitous language is established
+- [ ] Core scenarios are created in Given-When-Then format
+- [ ] All deliverables are created in appropriate locations
 
-### 品質メトリクス
-| 指標 | 目標値 | 実績値 | 判定 |
+**Recommended Items (SHOULD):**
+- [ ] Steering documents (product.md, tech.md, structure.md) are created
+- [ ] Business value and technical approach are aligned
+
+### Quality Metrics
+| Metric | Target | Actual | Result |
 |------|--------|--------|------|
-| ビジョン完成度 | 100% | [実績値] | ✅/❌ |
-| シナリオカバレッジ | 80% | [実績値] | ✅/❌ |
-| ユビキタス言語一貫性 | 95% | [実績値] | ✅/❌ |
+| Vision Completion | 100% | [Actual] | ✅/❌ |
+| Scenario Coverage | 80% | [Actual] | ✅/❌ |
+| Ubiquitous Language Consistency | 95% | [Actual] | ✅/❌ |
 
-### エラー処理
-**想定されるエラーと対処:**
-1. **既存ビジョンファイルの存在**: ユーザーに日本語で更新確認
-2. **ディレクトリ作成権限エラー**: Check permissions and create in appropriate location
-3. **Git設定不備**: Configure git user.name and user.email if needed
+### Error Handling
+**Expected Errors and Solutions:**
+1. **Existing Vision File**: Confirm update with user in Japanese
+2. **Directory Creation Permission Error**: Check permissions and create in appropriate location
+3. **Git Configuration Issues**: Configure git user.name and user.email if needed
 
-## 📊 標準化出力フォーマット
+## 📊 Standardized Output Format
 
 ### 実行サマリー (日本語でユーザーに報告)
 - ✅ **プロジェクト情報収集**: 完了
@@ -194,31 +214,32 @@ fi
 ### 成果物
 **作成されたファイル:**
 - `docs/vision/project-vision.md`: プロジェクトビジョン
-- `docs/use_cases/core/index.md`: コアシナリオ定義  
+- `docs/use_cases/core/index.md`: コアシナリオ定義
 - `docs/use_cases/index.md`: 実装管理インデックス
 - `docs/steering/`: ステアリングドキュメント群
 
 ### 総合判定
-**ステータス**: `SUCCESS`  
-**品質スコア**: [スコア]/100  
+**ステータス**: `SUCCESS`
+**品質スコア**: [スコア]/100
 **次フェーズ準備**: `READY`
 
 ### 次のステップ (日本語でユーザーに案内)
 1. **即座に実行可能**: `/init-project-structure`
-2. **推奨**: スプリント計画 → `/sprint-planning 1`  
+2. **推奨**: スプリント計画 → `/sprint-planning 1`
 3. **開発開始**: `/create-use-case <issue-number>`
 
 ### メタデータ更新
 ```bash
 # Update project metadata files
 if [[ -f "docs/metadata/project-state.json" ]]; then
-    # Update project state with vision completion status
-    # Set overall_status to "Vision Created - Ready for Sprint Planning"
-    # Update documentation_metrics and workflow_statistics
+ # Update project state with vision completion status
+ # Set overall_status to "Vision Created - Ready for Sprint Planning"
+ # Update documentation_metrics and workflow_statistics
 fi
-```
+````
 
 **ユーザーへのメッセージ (日本語)**:
+
 ```
 🎉 プロジェクトビジョン作成完了！
 

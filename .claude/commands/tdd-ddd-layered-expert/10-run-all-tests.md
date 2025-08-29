@@ -92,19 +92,19 @@ fi
 
 ## 🚀 Expert Execution Flow
 
-### Phase 1: 実行前検証と準備
-**Test Execution Specialist として以下を分析:**
+### Phase 1: Pre-execution Verification and Preparation
+**As Test Execution Specialist, analyze the following:**
 
-1. **実装完了状況確認**
-   - 確認ポイント: 全レイヤー（Domain/Application/Infrastructure/Presentation）の実装完了
-   - 判断基準: 各レイヤーに対応する実装ファイルとテストファイルの存在確認
+1. **Implementation Completion Status Verification**
+   - Verification Points: Implementation completion of all layers (Domain/Application/Infrastructure/Presentation)
+   - Judgment Criteria: Confirm existence of implementation files and test files corresponding to each layer
 
-2. **テスト環境準備**
-   - 確認ポイント: テスト設定ファイル、依存関係、環境変数の準備状況
-   - 判断基準: pytest設定、データベース接続、モック設定の有効性
+2. **Test Environment Preparation**
+   - Verification Points: Test configuration files, dependencies, environment variables preparation status
+   - Judgment Criteria: Effectiveness of pytest configuration, database connection, mock settings
 
-### Phase 2: 包括的テスト実行
-**Test Execution Specialist として以下を実行:**
+### Phase 2: Comprehensive Test Execution
+**As Test Execution Specialist, execute the following:**
 
 ```bash
 echo "🧪 Issues: #${ISSUE_NUMBER} の全テスト実行を開始します"
@@ -130,47 +130,47 @@ if [[ -d "tests/performance" ]]; then
 fi
 ```
 
-### Phase 3: 品質分析とレポート生成
-**Test Execution Specialist として以下を分析:**
+### Phase 3: Quality Analysis and Report Generation
+**As Test Execution Specialist, analyze the following:**
 
-1. **カバレッジ分析**
-   - 分析項目: ライン、ブランチ、関数カバレッジの詳細分析
-   - レポート生成: `docs/test_results/coverage-report-${ISSUE_NUMBER}.html`
+1. **Coverage Analysis**
+   - Analysis Items: Detailed analysis of line, branch, and function coverage
+   - Report Generation: `docs/test_results/coverage-report-${ISSUE_NUMBER}.html`
 
-2. **Given-When-Thenトレーサビリティ検証**
-   - 分析項目: 仕様書のシナリオとテストケースの対応関係
-   - 検証基準: 全ての受入条件がテストでカバーされていること
+2. **Given-When-Then Traceability Verification**
+   - Analysis Items: Correspondence between specification scenarios and test cases
+   - Verification Criteria: All acceptance criteria are covered by tests
 
-3. **アーキテクチャ準拠性確認**
-   - 分析項目: レイヤー間の依存関係とテスト構造の整合性
-   - 検証基準: Clean Architectureの原則に従ったテスト構成
+3. **Architecture Compliance Verification**
+   - Analysis Items: Consistency of inter-layer dependencies and test structure
+   - Verification Criteria: Test configuration following Clean Architecture principles
 
 ## ✅ Built-in Quality Assurance
 
-### 自己診断チェックリスト
-**必須項目（MUST）:**
-- [ ] 全テストが成功していること（失敗テスト = 0）
-- [ ] テストカバレッジが80%以上であること
-- [ ] Critical な品質問題が0件であること
-- [ ] 全レイヤーのテストが実行されていること
+### Self-Diagnostic Checklist
+**Mandatory Items (MUST):**
+- [ ] All tests are successful (failed tests = 0)
+- [ ] Test coverage is 80% or higher
+- [ ] Critical quality issues are 0
+- [ ] Tests for all layers have been executed
 
-**推奨項目（SHOULD）:**
-- [ ] Given-When-Thenシナリオの完全トレーサビリティ
-- [ ] パフォーマンステストの実行（可能な場合）
-- [ ] テスト実行時間が合理的範囲内であること
+**Recommended Items (SHOULD):**
+- [ ] Complete traceability of Given-When-Then scenarios
+- [ ] Performance test execution (when possible)
+- [ ] Test execution time within reasonable range
 
-### 品質メトリクス
-| 指標 | 目標値 | 実績値 | 判定 |
-|------|--------|--------|------|
-| テストカバレッジ | ≥80% | [実測値] | ✅/❌ |
-| 失敗テスト数 | 0件 | [実測値] | ✅/❌ |
-| クリティカル問題 | 0件 | [実測値] | ✅/❌ |
+### Quality Metrics
+| Metric | Target Value | Actual Value | Assessment |
+|--------|--------------|--------------|------------|
+| Test Coverage | ≥80% | [Measured Value] | ✅/❌ |
+| Failed Tests | 0 cases | [Measured Value] | ✅/❌ |
+| Critical Issues | 0 cases | [Measured Value] | ✅/❌ |
 
-### エラー処理
-**想定されるエラーと対処:**
-1. **テスト失敗**: 失敗原因の詳細分析と修正提案の提供
-2. **低カバレッジ**: 未テストコードパスの特定と追加テスト提案
-3. **環境問題**: 依存関係やデータベース接続の問題診断と解決策提示
+### Error Handling
+**Expected Errors and Solutions:**
+1. **Test Failures**: Provide detailed analysis of failure causes and correction suggestions
+2. **Low Coverage**: Identify untested code paths and suggest additional tests
+3. **Environment Issues**: Diagnose dependency or database connection problems and provide solutions
 
 ## 📊 Standardized Output Format
 

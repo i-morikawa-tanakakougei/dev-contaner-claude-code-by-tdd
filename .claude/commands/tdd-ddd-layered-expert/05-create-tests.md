@@ -55,7 +55,7 @@ During command execution, you act as a **Test-Driven Development Architect** spe
 
 **CREATE FAILING TESTS ONLY.**
 
-## 📋 軽量コンテキスト管理
+## 📋 Lightweight Context Management
 
 ### Required Reading (Minimal)
 ```bash
@@ -94,27 +94,27 @@ if [[ -n "$ISSUE_NUMBERS" ]]; then
 fi
 ```
 
-## 🚀 専門家実行フロー
+## 🚀 Expert Execution Flow
 
-### Phase 1: 分析と理解
-**専門家として以下を分析 (ユーザーとのやり取りは日本語):**
+### Phase 1: Analysis and Understanding
+**As an expert, analyze the following (user interactions in Japanese):**
 
-1. **Given-When-Then シナリオの分析**
+1. **Given-When-Then Scenario Analysis**
    - Extract test scenarios from use case specifications using Read tool
    - Map each Given-When-Then to specific test methods
    - Identify acceptance criteria for testable assertions
    - Parse domain model design for entity and behavior expectations
 
-2. **テスト構造の計画**
+2. **Test Structure Planning**
    - Plan unit tests for individual entities and value objects
    - Plan integration tests for repository interfaces and application services
    - Plan e2e tests for complete user scenarios
    - Design test organization following src/ directory hierarchy
 
-### Phase 2: 設計と計画
-**専門家として以下を設計 (Claude Codeへの指示は英語):**
+### Phase 2: Design and Planning
+**As an expert, design the following (instructions to Claude Code in English):**
 
-1. **ドメインレイヤーテスト設計**
+1. **Domain Layer Test Design**
    ```
    For each domain entity:
    - Test entity creation and validation
@@ -123,7 +123,7 @@ fi
    - Test invariant protection
    ```
 
-2. **アプリケーションレイヤーテスト設計**
+2. **Application Layer Test Design**
    ```
    For each use case:
    - Test use case orchestration
@@ -132,7 +132,7 @@ fi
    - Test transaction boundaries
    ```
 
-3. **テストデータとモック設計**
+3. **Test Data and Mock Design**
    ```
    Design test infrastructure:
    - Test fixtures for domain objects
@@ -141,8 +141,8 @@ fi
    - Test database configuration if needed
    ```
 
-### Phase 3: 実装と実行
-**専門家として以下を実行 (Claude Codeへの指示は英語):**
+### Phase 3: Implementation and Execution
+**As an expert, execute the following (instructions to Claude Code in English):**
 
 1. **Validate issue numbers and prerequisites**
    ```bash
@@ -253,37 +253,37 @@ All tests fail as expected in TDD RED phase - ready for implementation.
 "
    ```
 
-## ✅ 内蔵品質保証
+## ✅ Built-in Quality Assurance
 
-### 自己診断チェックリスト
-**必須項目（MUST）:**
-- [ ] すべてのGiven-When-Thenシナリオがテストケースに変換されている
-- [ ] ドメインエンティティと値オブジェクトのテストが作成されている
-- [ ] アプリケーションユースケースのテストが作成されている
-- [ ] すべてのテストが失敗している（TDD RED確認）
-- [ ] 外部依存関係が適切にモック化されている
-- [ ] テストが独立性を保っている
+### Self-Diagnostic Checklist
+**Required Items (MUST):**
+- [ ] All Given-When-Then scenarios are converted to test cases
+- [ ] Domain entity and value object tests are created
+- [ ] Application use case tests are created
+- [ ] All tests are failing (TDD RED confirmation)
+- [ ] External dependencies are properly mocked
+- [ ] Tests maintain independence
 
-**推奨項目（SHOULD）:**
-- [ ] 統合テストが作成されている
-- [ ] エンドツーエンドテストが計画されている
-- [ ] テストフィクスチャが適切に設計されている
-- [ ] テストカバレッジが適切に設定されている
+**Recommended Items (SHOULD):**
+- [ ] Integration tests are created
+- [ ] End-to-end tests are planned
+- [ ] Test fixtures are appropriately designed
+- [ ] Test coverage is properly configured
 
-### 品質メトリクス
-| 指標 | 目標値 | 実績値 | 判定 |
-|------|--------|--------|------|
-| シナリオテストカバレッジ | 100% | [実績値] | ✅/❌ |
-| TDD RED確認 | 100% | [実績値] | ✅/❌ |
-| テスト独立性 | 100% | [実績値] | ✅/❌ |
+### Quality Metrics
+| Metric | Target Value | Actual Value | Assessment |
+|--------|--------------|--------------|------------|
+| Scenario Test Coverage | 100% | [Actual Value] | ✅/❌ |
+| TDD RED Confirmation | 100% | [Actual Value] | ✅/❌ |
+| Test Independence | 100% | [Actual Value] | ✅/❌ |
 
-### エラー処理
-**想定されるエラーと対処:**
-1. **前提条件不足**: ユースケース仕様またはドメインモデルが未作成の場合の案内
-2. **テストが成功してしまう**: 実装コードの混入チェックと修正
-3. **テスト依存性**: テスト間の依存関係検出と修正
+### Error Handling
+**Expected Errors and Countermeasures:**
+1. **Prerequisite Shortage**: Guidance when use case specifications or domain models are not created
+2. **Tests Succeed**: Check and fix for implementation code contamination
+3. **Test Dependencies**: Detection and correction of inter-test dependencies
 
-## 📊 標準化出力フォーマット
+## 📊 Standardized Output Format
 
 ### 実行サマリー (日本語でユーザーに報告)
 - ✅ **Given-When-Then分析**: [Issue numbers] のシナリオを分析完了

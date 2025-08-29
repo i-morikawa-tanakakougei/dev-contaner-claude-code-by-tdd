@@ -103,102 +103,102 @@ fi
 
 ## 🚀 Expert Execution Flow
 
-### Phase 1: 実装完了性検証
-**Implementation Quality Auditor として以下を検証:**
+### Phase 1: Implementation Completeness Verification
+**As Implementation Quality Auditor, verify the following:**
 
-1. **全レイヤー実装確認**
-   - 確認ポイント: Domain/Application/Infrastructure/Presentation の実装完了
-   - 判断基準: 各レイヤーに対応するファイル存在と機能実装の確認
+1. **All Layer Implementation Confirmation**
+   - Verification Point: Domain/Application/Infrastructure/Presentation implementation completion
+   - Criteria: Verify file existence and functional implementation for each layer
 
-2. **Given-When-Thenトレーサビリティ検証**
-   - 確認ポイント: 仕様書のシナリオと実装・テストの対応関係
-   - 判断基準: 全ての受入条件が実装とテストでカバーされているか
+2. **Given-When-Then Traceability Verification**
+   - Verification Point: Correspondence between specification scenarios and implementation/tests
+   - Criteria: Whether all acceptance criteria are covered by implementation and tests
 
-### Phase 2: アーキテクチャ準拠性レビュー
-**Implementation Quality Auditor として以下を分析:**
+### Phase 2: Architecture Compliance Review
+**As Implementation Quality Auditor, analyze the following:**
 
 ```bash
-echo "🔍 Issues: #${ISSUE_NUMBER} の実装レビューを開始します"
+echo "🔍 Starting implementation review for Issue: #${ISSUE_NUMBER}"
 
 # 1. Architecture Compliance Analysis
-echo "🏗️ アーキテクチャ準拠性分析中..."
+echo "🏗️ Analyzing architecture compliance..."
 
 # Check layer dependency directions
-echo "📊 レイヤー依存関係確認中..."
+echo "📊 Checking layer dependencies..."
 find src/domain/ -name "*.py" -exec grep -l "from.*application\|from.*infrastructure\|from.*presentation" {} \;
 if [[ $? -eq 0 ]]; then
-    echo "❌ 警告: ドメイン層が外部レイヤーに依存しています"
+    echo "❌ Warning: Domain layer depends on external layers"
 fi
 
 # 2. Code Quality Analysis
-echo "📊 コード品質分析中..."
+echo "📊 Analyzing code quality..."
 uv run --frozen ruff check src/ --output-format=json > /tmp/quality_review.json
 uv run --frozen pyright src/ --outputjson > /tmp/type_review.json
 
 # 3. Test Coverage Analysis
-echo "🧪 テストカバレッジ分析中..."
+echo "🧪 Analyzing test coverage..."
 uv run --frozen pytest --cov=src --cov-report=json --cov-report=html tests/
 ```
 
-### Phase 3: 包括的品質評価
-**Implementation Quality Auditor として以下を評価:**
+### Phase 3: Comprehensive Quality Assessment
+**As Implementation Quality Auditor, evaluate the following:**
 
-1. **DDD設計品質評価**
-   - エンティティ設計の適切性
-   - 値オブジェクトの不変性と等価性
-   - ドメインサービスの責務分離
-   - アグリゲート境界の妥当性
+1. **DDD Design Quality Assessment**
+   - Entity design appropriateness
+   - Value object immutability and equality
+   - Domain service responsibility separation
+   - Aggregate boundary validity
 
-2. **Clean Architecture準拠性評価**  
-   - 依存関係の方向性（内向き依存）
-   - インターフェース分離の実装
-   - レイヤー間の責務分離
+2. **Clean Architecture Compliance Assessment**  
+   - Dependency direction (inward dependencies)
+   - Interface segregation implementation
+   - Responsibility separation between layers
 
-3. **テスト品質評価**
-   - Given-When-Thenパターンの実装
-   - テストの独立性と再現性
-   - エッジケースのカバレッジ
+3. **Test Quality Assessment**
+   - Given-When-Then pattern implementation
+   - Test independence and reproducibility
+   - Edge case coverage
 
-### Phase 4: ビジネス価値検証
-**Implementation Quality Auditor として以下を確認:**
+### Phase 4: Business Value Verification
+**As Implementation Quality Auditor, confirm the following:**
 
-1. **要件充足性確認**
-   - 受入条件の完全実装
-   - ビジネスルールの正確な実装
-   - ユーザーストーリーの価値実現
+1. **Requirements Fulfillment Confirmation**
+   - Complete implementation of acceptance criteria
+   - Accurate implementation of business rules
+   - User story value realization
 
-2. **パフォーマンスとセキュリティ評価**
-   - 応答性能の妥当性
-   - セキュリティ要件の実装
-   - エラーハンドリングの適切性
+2. **Performance and Security Assessment**
+   - Response performance adequacy
+   - Security requirement implementation
+   - Appropriate error handling
 
 ## ✅ Built-in Quality Assurance
 
-### 自己診断チェックリスト
-**必須項目（MUST）:**
-- [ ] 全レイヤーの実装が完了していること
-- [ ] Clean Architectureの依存関係が正しい方向であること
-- [ ] 全てのGiven-When-Thenシナリオが実装されていること
-- [ ] テストカバレッジが80%以上であること
+### Self-Diagnosis Checklist
+**Required Items (MUST):**
+- [ ] All layer implementations are complete
+- [ ] Clean Architecture dependencies are in correct direction
+- [ ] All Given-When-Then scenarios are implemented
+- [ ] Test coverage is 80% or higher
 
-**推奨項目（SHOULD）:**
-- [ ] DDD設計原則が適切に適用されていること
-- [ ] コード品質メトリクスが基準値を満たしていること
-- [ ] セキュリティとパフォーマンス要件が満たされていること
+**Recommended Items (SHOULD):**
+- [ ] DDD design principles are properly applied
+- [ ] Code quality metrics meet baseline standards
+- [ ] Security and performance requirements are satisfied
 
-### 品質メトリクス
-| 指標 | 基準値 | 実測値 | 判定 |
-|------|--------|--------|------|
-| テストカバレッジ | ≥80% | [実測値]% | ✅/❌ |
-| アーキテクチャ準拠性 | 100% | [実測値]% | ✅/❌ |
-| Given-When-Thenカバレッジ | 100% | [実測値]% | ✅/❌ |
-| コード品質スコア | ≥80 | [実測値] | ✅/❌ |
+### Quality Metrics
+| Metric | Baseline | Actual | Result |
+|--------|----------|--------|--------|
+| Test Coverage | ≥80% | [Actual Value]% | ✅/❌ |
+| Architecture Compliance | 100% | [Actual Value]% | ✅/❌ |
+| Given-When-Then Coverage | 100% | [Actual Value]% | ✅/❌ |
+| Code Quality Score | ≥80 | [Actual Value] | ✅/❌ |
 
-### エラー処理
-**想定されるエラーと対処:**
-1. **アーキテクチャ違反**: レイヤー間依存関係の問題と修正指導
-2. **テストカバレッジ不足**: 未テスト領域の特定と追加テスト提案
-3. **要件未実装**: 実装漏れの特定と追加実装提案
+### Error Handling
+**Expected Errors and Actions:**
+1. **Architecture Violations**: Layer dependency issues and correction guidance
+2. **Insufficient Test Coverage**: Identification of untested areas and additional test proposals
+3. **Unimplemented Requirements**: Identification of implementation gaps and additional implementation proposals
 
 ## 📊 Standardized Output Format
 
@@ -282,12 +282,12 @@ Issue metadata (`docs/use_cases/issue-${ISSUE_NUMBER}.json`) を更新:
 📋 次のステップ: /create-pr 15
 ```
 
-## 重要な注意点
+## Important Notes
 
-1. **新要件発見時の対応**: レビュー中に新しい課題や改善点、要件変更を発見した場合は、作業を中断して `/evolve-scenarios <feature-name>` を実行すること
+1. **Response to New Requirements Discovery**: When new issues, improvements, or requirement changes are discovered during review, interrupt the work and execute `/evolve-scenarios <feature-name>`
 
-2. **品質基準の厳格適用**: 基準値を下回る場合は明確な改善指導を提供
+2. **Strict Application of Quality Standards**: Provide clear improvement guidance when values fall below baseline standards
 
-3. **トレーサビリティの重視**: Given-When-Thenシナリオから実装・テストまでの完全な追跡可能性を確保
+3. **Emphasis on Traceability**: Ensure complete traceability from Given-When-Then scenarios to implementation and tests
 
-4. **ビジネス価値の検証**: 技術的品質だけでなく、ビジネス価値の実現も評価
+4. **Business Value Verification**: Evaluate not only technical quality but also business value realization

@@ -29,14 +29,14 @@ During command execution, you act as a **Feedback Application Specialist** with 
 **🏗️ Design**: Domain-Driven Design (Entity, Value Object, Aggregate, Repository)
 
 > 🗺️ **Current Position**: Feedback Application Phase (14/16)
-> 🎯 **Phase Purpose**: レビューフィードバックの体系的な適用とコード品質の向上
+> 🎯 **Phase Purpose**: Systematic application of review feedback and code quality improvement
 
-## 🎯 PHASE PURPOSE: レビューフィードバック適用フェーズ
+## 🎯 PHASE PURPOSE: Review Feedback Application Phase
 **⚠️ Important Notice:**
-- **This step focuses on systematic application of review feedback** - 優先度に基づいてフィードバックを適用し、システムの品質と安定性を向上させます
-- **Implementation scope includes code improvements, architecture refinements, and documentation updates** - テストカバレッジを維持しながら、段階的に改善を実装します
+- **This step focuses on systematic application of review feedback** - Apply feedback based on priority to improve system quality and stability
+- **Implementation scope includes code improvements, architecture refinements, and documentation updates** - Implement improvements incrementally while maintaining test coverage
 
-## 📋 軽量コンテキスト管理
+## 📋 Lightweight Context Management
 ### Required Reading (Minimal)
 ```bash
 # Project state and execution history (latest 5 entries only)
@@ -66,20 +66,20 @@ if [ ! -z "$1" ]; then
 fi
 ```
 
-## 🚀 専門家実行フロー
+## 🚀 Expert Execution Flow
 
-### 1. フィードバック収集と分析
+### 1. Feedback Collection and Analysis
 ```bash
-echo "=== フィードバック収集フェーズ ==="
+echo "=== Feedback Collection Phase ==="
 
 # GitHub PR/Issue comments analysis
 if [ ! -z "$ISSUE_NUMBER" ]; then
-    echo "GitHubコメントからフィードバックを収集中..."
+    echo "Collecting feedback from GitHub comments..."
     gh issue view $ISSUE_NUMBER --json comments | jq -r '.comments[] | select(.body | contains("feedback") or contains("review") or contains("improvement")) | .body'
 fi
 
 # Code review feedback from recent PRs
-echo "最近のPRからレビューフィードバックを収集中..."
+echo "Collecting review feedback from recent PRs..."
 gh pr list --state merged --limit 5 --json number,title | jq -r '.[] | "PR #\(.number): \(.title)"'
 ```
 
@@ -96,7 +96,7 @@ gh pr list --state merged --limit 5 --json number,title | jq -r '.[] | "PR #\(.n
 どのフィードバックから開始しますか？
 ```
 
-### 2. フィードバック優先度付けと計画
+### 2. Feedback Prioritization and Planning
 ```python
 # Feedback prioritization matrix
 feedback_matrix = {
@@ -113,29 +113,29 @@ feedback_matrix = {
 - Create implementation plan with incremental steps
 - Identify dependencies between feedback items
 
-### 3. 段階的フィードバック適用
+### 3. Incremental Feedback Application
 ```bash
-echo "=== フィードバック適用実行 ==="
+echo "=== Feedback Application Execution ==="
 
 # Apply high-priority, low-risk feedback first
 apply_feedback_incrementally() {
     local feedback_type=$1
-    echo "適用中: $feedback_type"
+    echo "Applying: $feedback_type"
     
     # Run tests before changes
-    echo "変更前テスト実行..."
+    echo "Running pre-change tests..."
     uv run --frozen pytest
     
     # Apply specific feedback
-    echo "フィードバック適用中..."
+    echo "Applying feedback..."
     # Implementation logic here
     
     # Run tests after changes
-    echo "変更後テスト実行..."
+    echo "Running post-change tests..."
     uv run --frozen pytest
     
     # Check code quality
-    echo "コード品質チェック..."
+    echo "Code quality check..."
     uv run --frozen ruff check .
     uv run --frozen pyright
 }
@@ -148,27 +148,27 @@ apply_feedback_incrementally() {
 4. **Architecture Compliance**: Ensure changes follow Clean Architecture principles
 5. **Documentation Updates**: Update relevant documentation to reflect changes
 
-### 4. テストカバレッジとコード品質の維持
+### 4. Test Coverage and Code Quality Maintenance
 ```bash
-echo "=== 品質メトリクス検証 ==="
+echo "=== Quality Metrics Verification ==="
 
 # Test coverage analysis
-echo "テストカバレッジ分析中..."
+echo "Test coverage analysis..."
 uv run --frozen pytest --cov=src --cov-report=term-missing
 
 # Code quality metrics
-echo "コード品質メトリクス..."
+echo "Code quality metrics..."
 uv run --frozen ruff check . --statistics
 uv run --frozen pyright --stats
 
 # Architecture compliance check
-echo "アーキテクチャ準拠性チェック..."
+echo "Architecture compliance check..."
 find src -name "*.py" | xargs grep -l "import.*domain" | head -5
 ```
 
-### 5. 変更の文書化と記録
+### 5. Change Documentation and Recording
 ```bash
-echo "=== 変更記録とドキュメント更新 ==="
+echo "=== Change Recording and Documentation Update ==="
 
 # Update execution history
 cat >> .claude/context/execution-history.jsonl << EOF
@@ -195,23 +195,23 @@ if [ -f "docs/metadata/project-state.json" ]; then
 fi
 ```
 
-## ✅ 内蔵品質保証
+## ✅ Built-in Quality Assurance
 
-### Must-Have Validation (必須)
+### Must-Have Validation (Required)
 - [ ] All existing tests continue to pass
 - [ ] Code quality metrics maintain or improve
 - [ ] No new security vulnerabilities introduced
 - [ ] Architecture principles maintained (Domain layer purity, etc.)
 - [ ] Documentation updated to reflect changes
 
-### Should-Have Validation (推奨)
+### Should-Have Validation (Recommended)
 - [ ] Test coverage improved or maintained above 80%
 - [ ] Performance impact assessed and documented
 - [ ] Error handling improved where applicable
 - [ ] Logging and monitoring enhanced
 - [ ] Code complexity reduced where possible
 
-### Could-Have Enhancements (任意)
+### Could-Have Enhancements (Optional)
 - [ ] Additional edge cases covered in tests
 - [ ] Performance benchmarks established
 - [ ] Code duplication further reduced
@@ -220,23 +220,23 @@ fi
 ### Quality Metrics Tracking
 ```bash
 # Before/after comparison
-echo "=== 品質メトリクス比較 ==="
-echo "変更前:"
-echo "- テストカバレッジ: ${COVERAGE_BEFORE}%"
+echo "=== Quality Metrics Comparison ==="
+echo "Before changes:"
+echo "- Test coverage: ${COVERAGE_BEFORE}%"
 echo "- Ruff Issues: ${RUFF_ISSUES_BEFORE}"
-echo "- 複雑度: ${COMPLEXITY_BEFORE}"
+echo "- Complexity: ${COMPLEXITY_BEFORE}"
 
-echo "変更後:"
-echo "- テストカバレッジ: ${COVERAGE_AFTER}%"
+echo "After changes:"
+echo "- Test coverage: ${COVERAGE_AFTER}%"
 echo "- Ruff Issues: ${RUFF_ISSUES_AFTER}"  
-echo "- 複雑度: ${COMPLEXITY_AFTER}"
+echo "- Complexity: ${COMPLEXITY_AFTER}"
 
-echo "改善度:"
-echo "- カバレッジ変化: $((COVERAGE_AFTER - COVERAGE_BEFORE))%"
-echo "- 問題減少: $((RUFF_ISSUES_BEFORE - RUFF_ISSUES_AFTER))"
+echo "Improvement:"
+echo "- Coverage change: $((COVERAGE_AFTER - COVERAGE_BEFORE))%"
+echo "- Issue reduction: $((RUFF_ISSUES_BEFORE - RUFF_ISSUES_AFTER))"
 ```
 
-## 📊 標準化出力フォーマット
+## 📊 Standardized Output Format
 
 ### 完了レポート
 ```
@@ -282,8 +282,8 @@ echo "- 問題減少: $((RUFF_ISSUES_BEFORE - RUFF_ISSUES_AFTER))"
    - レイヤー間の境界を明確化
 ```
 
-**最終確認事項:**
-- すべてのフィードバックが適切に文書化されている
-- 変更によってシステムの品質が向上している  
-- 次のフェーズ（PR作成）の準備が整っている
-- チームメンバーが変更内容を理解できる状態にある
+**Final Verification Items:**
+- All feedback has been properly documented
+- System quality has improved through the changes
+- Preparation for the next phase (PR creation) is complete
+- Team members can understand the changes made

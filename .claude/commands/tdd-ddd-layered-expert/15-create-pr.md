@@ -29,14 +29,14 @@ During command execution, you act as a **Pull Request Creation Specialist** with
 **🏗️ Design**: Domain-Driven Design (Entity, Value Object, Aggregate, Repository)
 
 > 🗺️ **Current Position**: Pull Request Creation Phase (15/16)
-> 🎯 **Phase Purpose**: 実装完了した機能のプルリクエスト作成と統合準備
+> 🎯 **Phase Purpose**: Pull request creation and integration preparation for completed features
 
-## 🎯 PHASE PURPOSE: プルリクエスト作成フェーズ
+## 🎯 PHASE PURPOSE: Pull Request Creation Phase
 **⚠️ Important Notice:**
-- **This step focuses on creating comprehensive pull requests** - 実装完了した機能を本流ブランチに統合するための包括的なPRを作成します
-- **Implementation scope includes PR description, issue linking, and merge readiness validation** - 品質ゲートを通過し、レビューしやすい形でのPR作成を行います
+- **This step focuses on creating comprehensive pull requests** - Create comprehensive PRs for integrating completed features into the main branch
+- **Implementation scope includes PR description, issue linking, and merge readiness validation** - Create PRs in a reviewable format that passes quality gates
 
-## 📋 軽量コンテキスト管理
+## 📋 Lightweight Context Management
 ### Required Reading (Minimal)
 ```bash
 # Project state and execution history (latest 5 entries only)
@@ -69,9 +69,9 @@ if [ ! -z "$1" ]; then
 fi
 ```
 
-## 🚀 専門家実行フロー
+## 🚀 Expert Execution Flow
 
-### 1. Pre-PR品質ゲート検証
+### 1. Pre-PR Quality Gate Validation
 ```bash
 echo "=== Pre-PR品質ゲート検証 ==="
 
@@ -119,7 +119,7 @@ fi
 Issue番号を入力してください (例: 123):
 ```
 
-### 2. Git状態確認とコミット最適化
+### 2. Git State Verification and Commit Optimization
 ```bash
 echo "=== Git状態確認とコミット最適化 ==="
 
@@ -164,7 +164,7 @@ echo "ブランチをリモートにプッシュ中..."
 git push -u origin $CURRENT_BRANCH
 ```
 
-### 3. 包括的PR説明の生成
+### 3. Comprehensive PR Description Generation
 ```python
 # PR description template generation
 def generate_pr_description(issue_number=None):
@@ -286,7 +286,7 @@ Brief description of what this PR accomplishes.
 - Include links to related issues and documentation
 - Add specific technical details relevant to the changes made
 
-### 4. PR作成と設定
+### 4. PR Creation and Configuration
 ```bash
 echo "=== プルリクエスト作成 ==="
 
@@ -365,7 +365,7 @@ echo "✅ PR作成完了: $PR_URL"
 rm pr_description.md
 ```
 
-### 5. Issue自動クローズとマイルストーン管理
+### 5. Automatic Issue Closure and Milestone Management
 ```bash
 echo "=== Issue管理と後処理 ==="
 
@@ -399,7 +399,7 @@ if [ -f "docs/metadata/project-state.json" ]; then
 fi
 ```
 
-## ✅ 内蔵品質保証
+## ✅ Built-in Quality Assurance
 
 ### Must-Have Validation (必須)
 - [ ] All tests pass (100% success rate)
@@ -474,7 +474,7 @@ else
 fi
 ```
 
-## 📊 標準化出力フォーマット
+## 📊 Standardized Output Format
 
 ### 完了レポート
 ```
@@ -535,8 +535,8 @@ fi
    - 権限確認: Issue編集権限があることを確認
 ```
 
-**最終確認事項:**
-- PRが正常に作成され、適切なレビュアーがアサインされている
-- 全ての品質ゲートが通過している
-- 関連Issueが適切にリンクされ、クローズ設定されている
-- 次のフェーズ（ステータス確認）の準備が整っている
+**Final Checklist:**
+- PR is successfully created with appropriate reviewers assigned
+- All quality gates have passed
+- Related issues are properly linked and configured for closure
+- Next phase (status confirmation) is ready to proceed

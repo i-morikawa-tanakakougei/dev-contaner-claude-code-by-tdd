@@ -29,14 +29,14 @@ During command execution, you act as a **Development Progress Analyst** with dee
 **🏗️ Design**: Domain-Driven Design (Entity, Value Object, Aggregate, Repository)
 
 > 🗺️ **Current Position**: Status Analysis Phase (16/16)
-> 🎯 **Phase Purpose**: 包括的な開発進捗分析と次期計画の策定
+> 🎯 **Phase Purpose**: Comprehensive development progress analysis and next-phase planning
 
-## 🎯 PHASE PURPOSE: ユースケース開発ステータス分析フェーズ
+## 🎯 PHASE PURPOSE: Use Case Development Status Analysis Phase
 **⚠️ Important Notice:**
-- **This step focuses on comprehensive development progress analysis** - 全ユースケースの開発状況を分析し、プロジェクト健全性を評価します
-- **Analysis scope includes technical progress, quality metrics, and strategic recommendations** - 技術的進捗、品質指標、戦略的推奨事項の包括的分析を行います
+- **This step focuses on comprehensive development progress analysis** - Analyzes development status of all use cases and evaluates project health
+- **Analysis scope includes technical progress, quality metrics, and strategic recommendations** - Performs comprehensive analysis of technical progress, quality metrics, and strategic recommendations
 
-## 📋 軽量コンテキスト管理
+## 📋 Lightweight Context Management
 ### Required Reading (Minimal)
 ```bash
 # Project state and execution history (comprehensive analysis)
@@ -82,9 +82,9 @@ echo "Current sprint issues..."
 gh issue list --label "current-sprint" --json number,title,state,assignees
 ```
 
-## 🚀 専門家実行フロー
+## 🚀 Expert Execution Flow
 
-### 1. 包括的プロジェクト状況分析
+### 1. Comprehensive Project Status Analysis
 ```bash
 echo "=== 包括的プロジェクト状況分析 ==="
 
@@ -220,7 +220,7 @@ def analyze_single_use_case(filepath):
 - Identify blockers and dependencies
 - Generate trend analysis comparing to previous assessments
 
-### 3. 品質メトリクス履歴分析
+### 3. Quality Metrics History Analysis
 ```bash
 echo "=== 品質メトリクス履歴分析 ==="
 
@@ -267,7 +267,7 @@ if [ -f "docs/metrics/quality-history.jsonl" ]; then
 fi
 ```
 
-### 4. スプリント velocity と予測分析
+### 4. Sprint Velocity and Predictive Analysis
 ```bash
 echo "=== スプリント分析と予測 ==="
 
@@ -308,7 +308,7 @@ if [ -n "$WEEKLY_VELOCITY" ] && [ "$WEEKLY_VELOCITY" != "0" ]; then
 fi
 ```
 
-### 5. リスク評価とボトルネック特定
+### 5. Risk Assessment and Bottleneck Identification
 ```python
 # Risk assessment and bottleneck identification
 def identify_project_risks():
@@ -366,7 +366,7 @@ risk_analysis = identify_project_risks()
 - Generate predictive models for completion timelines
 - Create actionable risk mitigation recommendations
 
-### 6. 戦略的推奨事項の生成
+### 6. Strategic Recommendations Generation
 ```bash
 echo "=== 戦略的推奨事項生成 ==="
 
@@ -426,23 +426,23 @@ EOF
 generate_strategic_recommendations
 ```
 
-## ✅ 内蔵品質保証
+## ✅ Built-in Quality Assurance
 
-### Must-Have Analysis (必須)
+### Must-Have Analysis (Required)
 - [ ] All use cases have status tracking and completion percentage
 - [ ] Quality metrics are current and accurate
 - [ ] Risk assessment covers technical, process, and timeline aspects
 - [ ] Recommendations are specific and actionable
 - [ ] Data sources are reliable and up-to-date
 
-### Should-Have Analysis (推奨)
+### Should-Have Analysis (Recommended)
 - [ ] Trend analysis shows historical patterns
 - [ ] Predictive modeling provides realistic timelines
 - [ ] Bottleneck identification is thorough and evidence-based
 - [ ] Stakeholder-specific reporting formats available
 - [ ] Automated data collection where possible
 
-### Could-Have Enhancements (任意)
+### Could-Have Enhancements (Optional)
 - [ ] Interactive dashboards for real-time monitoring
 - [ ] Integration with external project management tools
 - [ ] Advanced analytics with machine learning insights
@@ -490,7 +490,7 @@ else
 fi
 ```
 
-## 📊 標準化出力フォーマット
+## 📊 Standardized Output Format
 
 ### ステータス分析レポート
 ```
@@ -562,8 +562,8 @@ ${foreach use_case in use_cases}
 ${endforeach}
 ```
 
-**最終確認事項:**
-- すべての重要メトリクスが収集・分析されている
-- リスク評価が包括的で実用的である
-- 推奨事項が具体的で実行可能である
-- ステークホルダーが意思決定に必要な情報を得られる
+**Final Verification Items:**
+- All important metrics are collected and analyzed
+- Risk assessment is comprehensive and practical
+- Recommendations are specific and actionable
+- Stakeholders can obtain the information necessary for decision-making

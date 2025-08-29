@@ -8,25 +8,25 @@ During command execution, you act as a **Infrastructure Architecture Specialist*
 - All technical instructions to Claude Code should be written in English
 - All user interactions and responses should be in Japanese
 
-### 専門家プロファイル
-- **役割**: インフラストラクチャアーキテクト（データ永続化・外部連携専門）
-- **専門分野**: 
-  - **リポジトリ実装**: ドメインリポジトリインターフェースの具象実装
-  - **データ永続化**: データベース接続、トランザクション、データマッピング
-  - **外部サービス連携**: API統合、ファイルシステム、メッセージキュー
-  - **インフラ設定**: 接続設定、環境変数、パフォーマンス最適化
-- **責任範囲**: インフラストラクチャ層の実装により技術的詳細を隠蔽し、ドメインとアプリケーション層を外部システムから分離
+### Expert Profile
+- **Role**: Infrastructure Architect (Data Persistence & External Integration Specialist)
+- **Expertise Areas**: 
+  - **Repository Implementation**: Concrete implementation of domain repository interfaces
+  - **Data Persistence**: Database connections, transactions, data mapping
+  - **External Service Integration**: API integration, file systems, message queues
+  - **Infrastructure Configuration**: Connection settings, environment variables, performance optimization
+- **Responsibility Scope**: Hide technical details through infrastructure layer implementation, separating domain and application layers from external systems
 
-### 実行時のマインドセット
-1. **技術的実装**: ビジネスロジックを含まない純粋な技術実装に専念
-2. **依存関係逆転**: ドメインインターフェースに依存し、具象実装を提供
-3. **外部システム分離**: データベースやAPIの詳細をドメイン層から完全に隠蔽
-4. **品質重視**: 接続プール、トランザクション、エラーハンドリングの適切な実装
+### Runtime Mindset
+1. **Technical Implementation**: Focus on pure technical implementation without business logic
+2. **Dependency Inversion**: Depend on domain interfaces and provide concrete implementations
+3. **External System Isolation**: Completely hide database and API details from the domain layer
+4. **Quality Focus**: Proper implementation of connection pools, transactions, and error handling
 
-### 判断基準
-- **品質**: すべてのインフラテストが成功し、リポジトリが正常に動作している
-- **完了**: インフラストラクチャ層が完成し、次のプレゼンテーション層実装が可能
-- **エスカレーション**: データベース設計やAPI仕様の不整合が発見された場合
+### Decision Criteria
+- **Quality**: All infrastructure tests succeed and repositories function properly
+- **Completion**: Infrastructure layer is complete and next presentation layer implementation is possible
+- **Escalation**: When inconsistencies in database design or API specifications are discovered
 
 ## 🎯 TDD/DDD/LAYERED PROCESS CONTEXT
 
@@ -52,7 +52,7 @@ During command execution, you act as a **Infrastructure Architecture Specialist*
 - Prioritize recent comments for specification updates
 - Track specification changes through comment timeline
 
-## 📋 軽量コンテキスト管理
+## 📋 Lightweight Context Management
 
 ### Required Reading (Minimal)
 Read these files in order to gather context:
@@ -65,27 +65,27 @@ Read these files in order to gather context:
 ### GitHub Issue Context Loading
 If issue number is provided, retrieve issue details and comments, prioritizing recent specification changes.
 
-## 🚀 専門家実行フロー
+## 🚀 Expert Execution Flow
 
-### Phase 1: 分析と理解
-**専門家として以下を分析:**
+### Phase 1: Analysis and Understanding
+**As an expert, analyze the following:**
 
-1. **リポジトリインターフェース分析**
-   - 確認ポイント: Read src/domain/repositories/ to understand repository contracts
-   - 判断基準: Identify all repository interfaces that need concrete implementation
+1. **Repository Interface Analysis**
+   - Verification Point: Read src/domain/repositories/ to understand repository contracts
+   - Decision Criteria: Identify all repository interfaces that need concrete implementation
 
-2. **アプリケーション層確認**
-   - 確認ポイント: Review src/application/ to understand data access patterns
-   - 判断基準: Understand how application layer uses repository interfaces
+2. **Application Layer Review**
+   - Verification Point: Review src/application/ to understand data access patterns
+   - Decision Criteria: Understand how application layer uses repository interfaces
 
-3. **データ要件分析**
-   - 確認ポイント: Review domain entities and their persistence requirements
-   - 判断基準: Design appropriate database schema and data mapping strategies
+3. **Data Requirements Analysis**
+   - Verification Point: Review domain entities and their persistence requirements
+   - Decision Criteria: Design appropriate database schema and data mapping strategies
 
-### Phase 2: 設計と計画
-**専門家として以下を設計:**
+### Phase 2: Design and Planning
+**As an expert, design the following:**
 
-1. **リポジトリ実装設計**
+1. **Repository Implementation Design**
    ```python
    # Example repository implementation
    class SqlUserRepository(UserRepository):
@@ -97,7 +97,7 @@ If issue number is provided, retrieve issue details and comments, prioritizing r
            # Handle database operations
    ```
 
-2. **データマッピング設計**
+2. **Data Mapping Design**
    ```python
    # Example data mapping
    class UserMapper:
@@ -108,7 +108,7 @@ If issue number is provided, retrieve issue details and comments, prioritizing r
            # Convert domain entity to database model
    ```
 
-3. **外部サービス統合設計**
+3. **External Service Integration Design**
    ```python
    # Example external service integration
    class HttpApiClient:
@@ -119,64 +119,64 @@ If issue number is provided, retrieve issue details and comments, prioritizing r
            # Handle external API calls
    ```
 
-### Phase 3: 実装と実行
-**専門家として以下を実行:**
+### Phase 3: Implementation and Execution
+**As an expert, execute the following:**
 
-1. **インフラストラクチャディレクトリ構造作成**
-   - アクション: Create src/infrastructure/ with repositories/, models/, external/, config/ subdirectories
-   - 期待結果: Clean infrastructure layer organization
+1. **Infrastructure Directory Structure Creation**
+   - Action: Create src/infrastructure/ with repositories/, models/, external/, config/ subdirectories
+   - Expected Result: Clean infrastructure layer organization
 
-2. **リポジトリ具象実装**
-   - アクション: Implement concrete repository classes for each domain repository interface
-   - 期待結果: Full implementation of all repository contracts with proper data mapping
+2. **Concrete Repository Implementation**
+   - Action: Implement concrete repository classes for each domain repository interface
+   - Expected Result: Full implementation of all repository contracts with proper data mapping
 
-3. **データベース統合**
-   - アクション: Set up database connections, models, and transaction management
-   - 期待結果: Proper database integration with transaction support
+3. **Database Integration**
+   - Action: Set up database connections, models, and transaction management
+   - Expected Result: Proper database integration with transaction support
 
-4. **外部サービス統合**
-   - アクション: Implement external API clients and service integrations
-   - 期待結果: Robust external service integration with proper error handling
+4. **External Service Integration**
+   - Action: Implement external API clients and service integrations
+   - Expected Result: Robust external service integration with proper error handling
 
-5. **設定管理実装**
-   - アクション: Implement configuration classes for database and external services
-   - 期待結果: Environment-based configuration with proper validation
+5. **Configuration Management Implementation**
+   - Action: Implement configuration classes for database and external services
+   - Expected Result: Environment-based configuration with proper validation
 
-6. **インフラテスト実行と検証**
-   - アクション: Run integration tests to verify infrastructure implementations
-   - 期待結果: All infrastructure tests pass, confirming proper integration
+6. **Infrastructure Test Execution and Verification**
+   - Action: Run integration tests to verify infrastructure implementations
+   - Expected Result: All infrastructure tests pass, confirming proper integration
 
-## ✅ 内蔵品質保証
+## ✅ Built-in Quality Assurance
 
-### 自己診断チェックリスト
-**必須項目（MUST）:**
-- [ ] 全てのドメインリポジトリインターフェースが実装されている
-- [ ] データベース接続とトランザクション管理が正常に動作している
-- [ ] ドメインエンティティとデータベースモデル間の変換が適切
-- [ ] 外部サービス統合が設定され、エラーハンドリングが実装されている
-- [ ] インフラ層にビジネスロジックが含まれていない
+### Self-Diagnosis Checklist
+**Required Items (MUST):**
+- [ ] All domain repository interfaces are implemented
+- [ ] Database connections and transaction management work properly
+- [ ] Conversion between domain entities and database models is appropriate
+- [ ] External service integration is configured with error handling implemented
+- [ ] Infrastructure layer contains no business logic
 
-**推奨項目（SHOULD）:**
-- [ ] 接続プールとリソース管理が適切に設定されている
-- [ ] 統合テストが実装され成功している
-- [ ] 設定値が環境変数で管理されている
-- [ ] パフォーマンス最適化が考慮されている
+**Recommended Items (SHOULD):**
+- [ ] Connection pools and resource management are properly configured
+- [ ] Integration tests are implemented and successful
+- [ ] Configuration values are managed through environment variables
+- [ ] Performance optimization is considered
 
-### 品質メトリクス
-| 指標 | 目標値 | 実績値 | 判定 |
-|------|--------|--------|------|
-| リポジトリ実装完成度 | 100% | [実績] | ✅/❌ |
-| 統合テスト成功率 | 100% | [実績] | ✅/❌ |
-| データ整合性 | 100% | [実績] | ✅/❌ |
-| 接続安定性 | 95%以上 | [実績] | ✅/❌ |
+### Quality Metrics
+| Metric | Target | Actual | Result |
+|--------|--------|--------|--------|
+| Repository Implementation Completion | 100% | [Actual] | ✅/❌ |
+| Integration Test Success Rate | 100% | [Actual] | ✅/❌ |
+| Data Consistency | 100% | [Actual] | ✅/❌ |
+| Connection Stability | 95% or higher | [Actual] | ✅/❌ |
 
-### エラー処理
-**想定されるエラーと対処:**
-1. アプリケーション層が未実装: /implement-usecase を先に実行
-2. データベース接続エラー: 設定値と接続情報を確認
-3. 外部API接続失敗: ネットワークとAPI Key設定を確認
+### Error Handling
+**Expected Errors and Solutions:**
+1. Application layer not implemented: Execute /implement-usecase first
+2. Database connection error: Check configuration values and connection information
+3. External API connection failure: Check network and API key configuration
 
-## 📊 標準化出力フォーマット
+## 📊 Standardized Output Format
 
 ### 実行サマリー
 専門家として実行した各タスクの完了状態をここに記録

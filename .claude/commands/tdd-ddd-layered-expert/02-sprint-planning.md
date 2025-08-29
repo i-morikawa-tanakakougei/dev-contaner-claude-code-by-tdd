@@ -43,14 +43,14 @@ During command execution, you act as an **Agile Sprint Planning Expert** special
 - **1-SCENARIO = 1-TICKET BASELINE** - Maintain traceability between scenarios and implementation tickets
 
 **What this step does:**
-1. `/create-vision` ← ビジョンと中核シナリオを作成済み
-2. `/sprint-planning` ← **【YOU ARE HERE】中核シナリオをスプリントチケットに変換**
-3. `/create-use-case` ← 個別チケットの詳細仕様を作成
+1. `/create-vision` ← Vision and core scenarios already created
+2. `/sprint-planning` ← **【YOU ARE HERE】Convert core scenarios to sprint tickets**
+3. `/create-use-case` ← Create detailed specifications for individual tickets
 4. Then proceed with TDD implementation workflow
 
 **PLAN SPRINTS AND CREATE GITHUB ISSUES. DO NOT IMPLEMENT CODE.**
 
-## 📋 軽量コンテキスト管理
+## 📋 Lightweight Context Management
 
 ### Required Reading (Minimal)
 ```bash
@@ -90,27 +90,16 @@ fi
 
 ## GitHub Issue Integration
 
-### Issue and Milestone Management
-```bash
-# Setup sprint milestone
-MILESTONE_NAME="Sprint $SPRINT_NUMBER"
-echo "Creating or checking milestone: $MILESTONE_NAME"
+GitHub milestone and issue creation will be handled in Phase 4 execution flow.
 
-# Create milestone if not exists
-gh api repos/:owner/:repo/milestones --method POST --field title="$MILESTONE_NAME" --field description="Sprint $SPRINT_NUMBER implementation milestone" --field due_on="$(date -d '+2 weeks' --iso-8601)" || echo "Milestone may already exist"
+## 🚀 Expert Execution Flow
 
-# Get milestone number for issue assignment
-MILESTONE_NUMBER=$(gh api repos/:owner/:repo/milestones --jq ".[] | select(.title==\"$MILESTONE_NAME\") | .number")
-```
+Execute using the following phased approach as an Agile Sprint Planning Expert:
 
-## 🚀 専門家実行フロー
+### Phase 1: Vision and Scenario Analysis
+**Analyze the following as an expert:**
 
-アジャイルスプリント計画エキスパートとして以下の段階的なアプローチで実行します：
-
-### Phase 1: ビジョンとシナリオ分析
-**専門家として以下を分析:**
-
-1. **ビジョンドキュメント詳細分析**
+1. **Detailed Vision Document Analysis**
    ```bash
    # Analyze project vision
    Read docs/vision/vision.md
@@ -118,70 +107,80 @@ MILESTONE_NUMBER=$(gh api repos/:owner/:repo/milestones --jq ".[] | select(.titl
    Read docs/vision/ubiquitous_language.md
    ```
 
-2. **中核シナリオの評価と分類**
+2. **Core Scenario Evaluation and Classification**
    ```bash
    # Load and analyze all core scenarios
    Glob "docs/use_cases/core/*.md"
    # For each scenario file, read and extract complexity indicators
    ```
-   - 確認ポイント: シナリオの完整性、技術的複雑度、ビジネス価値
-   - 判断基準: 実装可能性、テスト容易性、依存関係の複雑さ
+   - Check points: Scenario completeness, technical complexity, business value
+   - Criteria: Implementability, testability, dependency complexity
 
-### Phase 2: チケット分割戦略策定
-**専門家として以下を設計:**
+### Phase 2: Ticket Decomposition Strategy Development
+**Design the following as an expert:**
 
-1. **シナリオ-チケット分割ルール適用**
+1. **Scenario-to-Ticket Split Rule Application**
    ```markdown
-   # 分割戦略テンプレート
-   ## 基本原則: 1シナリオ = 1チケット
-   - シンプルシナリオ: そのまま1チケット
-   - 複雑シナリオ: 複数チケットに分割（UI/API/DB等）
-   - 横断的関心事: 独立したチケットとして抽出
+   # Split Strategy Template
+   ## Basic Principle: 1 Scenario = 1 Ticket
+   - Simple scenarios: Keep as 1 ticket
+   - Complex scenarios: Split into multiple tickets (UI/API/DB etc.)
+   - Cross-cutting concerns: Extract as independent tickets
    
-   ## 技術的複雑度による調整
-   - Low: 1-2日で実装可能
-   - Medium: 3-5日、複数サブタスクに分割
-   - High: 1週間以上、Phase分割を検討
+   ## Technical Complexity Adjustments
+   - Low: 1-2 days implementable
+   - Medium: 3-5 days, split into multiple subtasks
+   - High: 1+ weeks, consider phase splitting
    ```
 
-2. **依存関係とリスク分析**
+2. **Dependency and Risk Analysis**
    ```markdown
-   # 依存関係マッピング
-   - 技術的依存: インフラ → ドメイン → アプリケーション → UI
-   - データ依存: Entity定義 → Repository → UseCase → Controller  
-   - 外部依存: 外部API、サードパーティライブラリ
+   # Dependency Mapping
+   - Technical dependencies: Infrastructure → Domain → Application → UI
+   - Data dependencies: Entity definition → Repository → UseCase → Controller  
+   - External dependencies: External APIs, third-party libraries
    ```
 
-### Phase 3: スプリント容量計画
-**専門家として以下を実行:**
+### Phase 3: Sprint Capacity Planning
+**Execute the following as an expert:**
 
-1. **チーム容量算出**
-   - アクション: Available development days calculation, skill matrix consideration
-   - 期待結果: Realistic sprint capacity in story points or ideal days
+1. **Team Capacity Calculation**
+   - Action: Available development days calculation, skill matrix consideration
+   - Expected result: Realistic sprint capacity in story points or ideal days
 
-2. **優先順位付けとスプリント割り当て**
+2. **Prioritization and Sprint Assignment**
    ```markdown
-   # 優先順位付け基準
-   ## ビジネス価値 (1-5)
-   - 5: 必須機能（MVP構成要素）
-   - 4: 高価値機能  
-   - 3: 有用な機能
+   # Prioritization Criteria
+   ## Business Value (1-5)
+   - 5: Essential features (MVP components)
+   - 4: High-value features  
+   - 3: Useful features
    - 2: Nice-to-have
-   - 1: 将来検討
+   - 1: Future consideration
    
-   ## 技術リスク (1-5) 
-   - 5: 未知の技術領域
-   - 4: 複雑な統合
-   - 3: 通常の実装
-   - 2: 既知のパターン
-   - 1: 定型作業
+   ## Technical Risk (1-5) 
+   - 5: Unknown technology areas
+   - 4: Complex integrations
+   - 3: Standard implementations
+   - 2: Known patterns
+   - 1: Routine work
    ```
 
-### Phase 4: GitHub Issue作成とスプリント文書化
-**専門家として以下を実行:**
+### Phase 4: GitHub Issue Creation and Sprint Documentation
+**Execute the following as an expert:**
 
-1. **詳細チケット作成**
+1. **Detailed Ticket Creation**
    ```bash
+   # Setup sprint milestone first
+   MILESTONE_NAME="Sprint $SPRINT_NUMBER"
+   echo "Creating or checking milestone: $MILESTONE_NAME"
+   
+   # Create milestone if not exists
+   gh api repos/:owner/:repo/milestones --method POST --field title="$MILESTONE_NAME" --field description="Sprint $SPRINT_NUMBER implementation milestone" --field due_on="$(date -d '+2 weeks' --iso-8601)" || echo "Milestone may already exist"
+   
+   # Get milestone number for issue assignment
+   MILESTONE_NUMBER=$(gh api repos/:owner/:repo/milestones --jq ".[] | select(.title==\"$MILESTONE_NAME\") | .number")
+   
    # For each planned ticket, create GitHub issue
    for ticket in "${planned_tickets[@]}"; do
      gh issue create \
@@ -193,40 +192,56 @@ MILESTONE_NUMBER=$(gh api repos/:owner/:repo/milestones --jq ".[] | select(.titl
    done
    ```
 
-2. **スプリントドキュメント生成**
-   - アクション: Create comprehensive sprint plan with ticket mapping
-   - 期待結果: Sprint plan document with clear goals and success criteria
+2. **Sprint Document Generation**
+   - Action: Create comprehensive sprint plan with ticket mapping
+   - Expected result: Sprint plan document with clear goals and success criteria
 
-## ✅ 内蔵品質保証
+## ✅ Built-in Quality Assurance
 
-### 自己診断チェックリスト
-**必須項目（MUST）:**
-- [ ] 全ての中核シナリオがチケット化されている
-- [ ] 各チケットにGiven-When-Then受け入れ基準が設定されている
-- [ ] スプリント目標が明確に定義されている
-- [ ] GitHub Issuesが作成され適切にラベル付けされている
-- [ ] 依存関係とリスクが識別されている
+### Self-Diagnostic Checklist
+**Mandatory Items (MUST):**
+- [ ] All core scenarios have been converted to tickets
+- [ ] Each ticket has Given-When-Then acceptance criteria
+- [ ] Sprint goals are clearly defined
+- [ ] GitHub Issues are created and properly labeled
+- [ ] Dependencies and risks are identified
 
-**推奨項目（SHOULD）:**
-- [ ] チームの容量と実装予定が適切にバランスしている
-- [ ] 技術的負債やリファクタリングタスクが考慮されている
-- [ ] ステークホルダーレビューが計画されている
+**Recommended Items (SHOULD):**
+- [ ] Team capacity and implementation schedule are properly balanced
+- [ ] Technical debt and refactoring tasks are considered
+- [ ] Stakeholder reviews are planned
 
-### 品質メトリクス
-| 指標 | 目標値 | 実績値 | 判定 |
-|------|--------|--------|------|
-| シナリオ-チケット変換率 | 100% | [計算] | ✅/❌ |
-| 受け入れ基準完備率 | 100% | [計算] | ✅/❌ |
-| スプリント容量適合率 | 80-120% | [計算] | ✅/❌ |
-| GitHub Issue作成率 | 100% | [計算] | ✅/❌ |
+### Quality Metrics
+| Metric | Target | Actual | Result |
+|--------|--------|--------|--------|
+| Scenario-to-Ticket Conversion Rate | 100% | [calculated] | ✅/❌ |
+| Acceptance Criteria Completion Rate | 100% | [calculated] | ✅/❌ |
+| Sprint Capacity Utilization Rate | 80-120% | [calculated] | ✅/❌ |
+| GitHub Issue Creation Rate | 100% | [calculated] | ✅/❌ |
 
-### エラー処理
-**想定されるエラーと対処:**
-1. GitHub API制限エラー: Rate limiting対応、バッチ処理への変更
-2. スプリント容量超過: 優先順位再評価、次スプリントへの延期
-3. 依存関係循環: 依存関係の再整理、実装順序の調整
+### Error Handling
+**Expected Errors and Solutions:**
+1. GitHub API rate limiting errors: Implement rate limiting handling, switch to batch processing
+2. Sprint capacity overflow: Re-evaluate priorities, defer to next sprint
+3. Circular dependencies: Reorganize dependencies, adjust implementation order
 
-## 📊 標準化出力フォーマット
+### Error Recovery Procedures
+**If GitHub API rate limiting:**
+1. Wait 60 minutes or check rate limit reset time: `gh api rate_limit`
+2. Resume from last successful ticket creation
+3. Use batch processing: Create issues in groups of 5
+
+**If Sprint capacity overflow:**
+1. Re-prioritize using business value matrix
+2. Move lowest priority tickets to backlog
+3. Update sprint goals accordingly
+
+**If Circular dependencies:**
+1. Create dependency graph: `docs/sprint/dependencies.md`
+2. Break cycles by introducing interfaces/abstractions
+3. Adjust implementation order in sprint plan
+
+## 📊 Standardized Output Format
 
 ### 実行サマリー
 - ✅ **シナリオ分析**: [分析されたシナリオ数とカテゴリ分け]

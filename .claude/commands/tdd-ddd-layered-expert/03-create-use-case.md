@@ -43,9 +43,9 @@ During command execution, you act as a **Requirements Analysis and Use Case Desi
 - **GITHUB ISSUE INTEGRATION** - Prioritize recent comments and track specification evolution through comment history
 
 **What this step does:**
-1. `/sprint-planning` ← スプリントチケットを作成済み
-2. `/create-use-case <issue-number>` ← **【YOU ARE HERE】GitHub Issueから詳細仕様を作成**
-3. `/domain-modeling <issue-number>` ← ユースケースからドメインモデルを設計
+1. `/sprint-planning` ← Sprint tickets already created
+2. `/create-use-case <issue-number>` ← **【YOU ARE HERE】Create detailed specifications from GitHub Issues**
+3. `/domain-modeling <issue-number>` ← Design domain model from use cases
 4. Then proceed with TDD implementation workflow
 
 **ANALYZE GITHUB ISSUES AND CREATE SPECIFICATIONS. DO NOT IMPLEMENT CODE.**
@@ -120,14 +120,14 @@ fi
 5. **Specification Completeness**: Identify missing requirements or ambiguous specifications
 ```
 
-## 🚀 専門家実行フロー
+## 🚀 Expert Execution Flow
 
-要求分析・ユースケース設計エキスパートとして以下の段階的なアプローチで実行します：
+As a requirements analysis and use case design expert, execute the following step-by-step approach:
 
-### Phase 1: GitHub Issue詳細分析
-**専門家として以下を分析:**
+### Phase 1: Detailed GitHub Issue Analysis
+**As an expert, analyze the following:**
 
-1. **Issue内容の包括的理解**
+1. **Comprehensive Issue Understanding**
    ```bash
    # Analyze issue details from retrieved data
    echo "Issue Title: $(echo "$ISSUE_DATA" | jq -r '.title')"
@@ -136,7 +136,7 @@ fi
    echo "Labels: $(echo "$ISSUE_DATA" | jq -r '.labels[].name' | tr '\n' ', ')"
    ```
 
-2. **コメント履歴による仕様進化分析**
+2. **Specification Evolution Analysis Through Comment History**
    ```bash
    # Process comments chronologically to understand requirement evolution
    if [[ $COMMENT_COUNT -gt 0 ]]; then
@@ -144,13 +144,13 @@ fi
      echo "$RECENT_COMMENTS" | jq -r '.[] | "[\(.createdAt)] \(.author.login): \(.body[0:100])..."'
    fi
    ```
-   - 確認ポイント: 要求の明確性、制約条件、受け入れ基準の完全性
-   - 判断基準: 実装可能性、テスト可能性、ビジネス価値の明確性
+   - Verification Points: Requirement clarity, constraints, acceptance criteria completeness
+   - Evaluation Criteria: Implementability, testability, business value clarity
 
-### Phase 2: ドメイン概念抽出と言語整合性確認
-**専門家として以下を設計:**
+### Phase 2: Domain Concept Extraction and Language Consistency Verification
+**As an expert, design the following:**
 
-1. **新しいドメイン概念の識別**
+1. **New Domain Concept Identification**
    ```bash
    # Read existing ubiquitous language
    if [[ $UBIQUITOUS_LANGUAGE_EXISTS == true ]]; then
@@ -161,60 +161,60 @@ fi
    # Extract nouns and domain-specific terms from issue description and comments
    ```
 
-2. **既存ユビキタス言語との整合性確認**
+2. **Consistency Check with Existing Ubiquitous Language**
    ```markdown
-   # 言語整合性チェックテンプレート
-   ## 新規概念候補
-   - **[概念名]**: [Issue内での使用文脈]
-   - **既存用語との関係**: [類似概念の有無、命名の一貫性]
-   - **境界コンテキスト内での位置**: [ドメイン境界内での役割]
+   # Language Consistency Check Template
+   ## New Concept Candidates
+   - **[Concept Name]**: [Usage context within issue]
+   - **Relationship with Existing Terms**: [Presence of similar concepts, naming consistency]
+   - **Position within Bounded Context**: [Role within domain boundaries]
    ```
 
-### Phase 3: メインシナリオ設計
-**専門家として以下を実行:**
+### Phase 3: Main Scenario Design
+**As an expert, execute the following:**
 
-1. **主要フローのGiven-When-Then化**
+1. **Converting Main Flows to Given-When-Then**
    ```markdown
-   # メインシナリオテンプレート
-   ## シナリオ: [Issue要件に基づくシナリオ名]
+   # Main Scenario Template
+   ## Scenario: [Scenario name based on issue requirements]
    
-   ### 背景と目的
-   [Issueから抽出した背景情報とビジネス目的]
+   ### Background and Purpose
+   [Background information and business purpose extracted from issue]
    
-   ### メインフロー
-   **Given** [前提条件 - システム状態とデータ準備]
-   **When** [実行アクション - ユーザー操作や外部イベント]  
-   **Then** [期待結果 - システム応答と状態変化]
+   ### Main Flow
+   **Given** [Preconditions - System state and data preparation]
+   **When** [Execution action - User operations or external events]  
+   **Then** [Expected results - System response and state changes]
    
-   ### 受け入れ基準
-   - [ ] [検証可能な条件1]
-   - [ ] [検証可能な条件2]
-   - [ ] [検証可能な条件3]
+   ### Acceptance Criteria
+   - [ ] [Verifiable condition 1]
+   - [ ] [Verifiable condition 2]
+   - [ ] [Verifiable condition 3]
    ```
 
-2. **代替シナリオとエラーケース設計**
+2. **Alternative Scenarios and Error Case Design**
    ```markdown
-   # 代替・例外シナリオテンプレート
-   ## Alternative Flow 1: [代替条件]
-   **Given** [代替前提条件]
-   **When** [代替アクション]
-   **Then** [代替結果]
+   # Alternative and Exception Scenario Template
+   ## Alternative Flow 1: [Alternative condition]
+   **Given** [Alternative preconditions]
+   **When** [Alternative action]
+   **Then** [Alternative result]
    
-   ## Exception Flow 1: [例外条件]  
-   **Given** [例外前提条件]
-   **When** [例外発生アクション]
-   **Then** [例外処理結果とエラーメッセージ]
+   ## Exception Flow 1: [Exception condition]  
+   **Given** [Exception preconditions]
+   **When** [Exception triggering action]
+   **Then** [Exception handling result and error message]
    ```
 
-### Phase 4: 受け入れテスト設計
-**専門家として以下を実行:**
+### Phase 4: Acceptance Test Design
+**As an expert, execute the following:**
 
-1. **テストケース詳細化**
+1. **Test Case Detailing**
    ```markdown
-   # 受け入れテストケーステンプレート
-   ## Test Case 1: [テストケース名]
+   # Acceptance Test Case Template
+   ## Test Case 1: [Test case name]
    
-   ### テストデータ準備
+   ### Test Data Preparation
    ```json
    {
      "initial_state": {...},
@@ -223,49 +223,49 @@ fi
    }
    ```
    
-   ### 実行ステップ
-   1. [準備ステップ]
-   2. [実行ステップ]  
-   3. [検証ステップ]
+   ### Execution Steps
+   1. [Preparation step]
+   2. [Execution step]  
+   3. [Verification step]
    
-   ### 期待結果
-   - [具体的な検証ポイント]
+   ### Expected Results
+   - [Specific verification points]
    ```
 
-2. **自動化テスト準備**
-   - アクション: Design test automation strategy and identify testable components
-   - 期待結果: Clear guidance for TDD implementation in subsequent phases
+2. **Test Automation Preparation**
+   - Action: Design test automation strategy and identify testable components
+   - Expected Result: Clear guidance for TDD implementation in subsequent phases
 
-## ✅ 内蔵品質保証
+## ✅ Built-in Quality Assurance
 
-### 自己診断チェックリスト
-**必須項目（MUST）:**
-- [ ] GitHub Issueの全要件がGiven-When-Thenシナリオ化されている
-- [ ] コメント履歴が適切に分析され最新の仕様が反映されている
-- [ ] メインフロー、代替フロー、例外処理が全て定義されている
-- [ ] 全シナリオが受け入れテスト可能な形で記述されている
-- [ ] ドメイン概念がユビキタス言語と整合している
+### Self-Diagnostic Checklist
+**Mandatory Items (MUST):**
+- [ ] All GitHub issue requirements are converted to Given-When-Then scenarios
+- [ ] Comment history is properly analyzed with latest specifications reflected
+- [ ] Main flow, alternative flows, and exception handling are all defined
+- [ ] All scenarios are described in acceptance testable form
+- [ ] Domain concepts are consistent with ubiquitous language
 
-**推奨項目（SHOULD）:**
-- [ ] エッジケースとバウンダリ条件が十分に考慮されている
-- [ ] パフォーマンス要件やセキュリティ制約が明記されている  
-- [ ] 他のユースケースとの依存関係が明確化されている
+**Recommended Items (SHOULD):**
+- [ ] Edge cases and boundary conditions are sufficiently considered
+- [ ] Performance requirements and security constraints are clearly stated  
+- [ ] Dependencies with other use cases are clarified
 
-### 品質メトリクス
-| 指標 | 目標値 | 実績値 | 判定 |
+### Quality Metrics
+| Indicator | Target Value | Actual Value | Result |
 |------|--------|--------|------|
-| シナリオ完備率 | 100% | [メイン/代替/例外の完成率] | ✅/❌ |
-| 受け入れ基準明確度 | 90%以上 | [明確な基準数/総基準数] | ✅/❌ |
-| テストケースカバレッジ | 85%以上 | [カバーされた条件/総条件] | ✅/❌ |
-| ドメイン言語整合性 | 100% | [整合概念数/新規概念数] | ✅/❌ |
+| Scenario Completeness Rate | 100% | [Main/Alternative/Exception completion rate] | ✅/❌ |
+| Acceptance Criteria Clarity | 90% or above | [Clear criteria count/Total criteria count] | ✅/❌ |
+| Test Case Coverage | 85% or above | [Covered conditions/Total conditions] | ✅/❌ |
+| Domain Language Consistency | 100% | [Consistent concept count/New concept count] | ✅/❌ |
 
-### エラー処理
-**想定されるエラーと対処:**
-1. Issue存在エラー: Issue番号の確認、アクセス権限の確認
-2. 仕様矛盾エラー: ステークホルダーへの確認要求、優先順位の明確化  
-3. ドメイン概念競合: 既存言語との調整、新規概念の再定義
+### Error Handling
+**Expected Errors and Solutions:**
+1. Issue Existence Error: Verify issue number, check access permissions
+2. Specification Conflict Error: Request stakeholder confirmation, clarify priorities  
+3. Domain Concept Conflict: Adjust with existing language, redefine new concepts
 
-## 📊 標準化出力フォーマット
+## 📊 Standardized Output Format
 
 ### 実行サマリー
 - ✅ **Issue分析**: [分析完了したIssue情報とコメント数]
