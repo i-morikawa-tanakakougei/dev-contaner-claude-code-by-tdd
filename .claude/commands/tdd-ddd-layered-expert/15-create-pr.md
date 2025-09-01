@@ -37,18 +37,37 @@ During command execution, you act as a **Pull Request Creation Specialist** with
 - **Implementation scope includes PR description, issue linking, and merge readiness validation** - Create PRs in a reviewable format that passes quality gates
 
 ## 📋 Lightweight Context Management
+
 ### Required Reading (Minimal)
 ```bash
-# Project state and execution history (latest 5 entries only)
-if [ -f "docs/metadata/project-state.json" ]; then
-    echo "Reading project state..."
-    cat docs/metadata/project-state.json | jq '.current_phase, .active_issues, .recent_activities | last(5)'
+# Validate issue number parameter
+if [[ -z "$1" ]]; then
+    echo "ERROR: Issue number required. Usage: /create-pr <issue-number>"
+    exit 1
 fi
 
-# Git status and branch information
-echo "Current branch and changes:"
-git status --porcelain
-git log --oneline -5
+ISSUE_NUMBER="$1"
+echo "🚀 Executing create-pr with automated Python implementation..."
+
+# Execute the enhanced Python implementation
+SCRIPT_PATH=".claude/commands/tdd-ddd-layered-expert/utils/15-create-pr.py"
+
+if [[ -f "$SCRIPT_PATH" ]]; then
+    echo "✅ Found enhanced implementation: $SCRIPT_PATH"
+    python3 "$SCRIPT_PATH" "$ISSUE_NUMBER"
+    EXIT_CODE=$?
+    
+    if [[ $EXIT_CODE -eq 0 ]]; then
+        echo "✅ Pull request creation completed successfully"
+    else
+        echo "❌ Pull request creation failed with exit code: $EXIT_CODE"
+        exit $EXIT_CODE
+    fi
+else
+    echo "❌ Enhanced implementation not found: $SCRIPT_PATH"
+    echo "💡 Please ensure the Python implementation is available"
+    exit 1
+fi
 ```
 
 ## GitHub Issue Integration

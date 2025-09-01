@@ -55,12 +55,36 @@ During command execution, you act as a **Infrastructure Architecture Specialist*
 ## 📋 Lightweight Context Management
 
 ### Required Reading (Minimal)
-Read these files in order to gather context:
+```bash
+# Validate issue number parameter
+if [[ -z "$1" ]]; then
+    echo "ERROR: Issue number required. Usage: /implement-infra <issue-number>"
+    exit 1
+fi
 
-1. Check if project state file exists and read current phase
-2. Read execution history (latest 5 entries only)
-3. Verify domain and application layers are implemented
-4. Read GitHub issue with comments if issue number provided
+ISSUE_NUMBER="$1"
+echo "🏗️ Executing implement-infra with automated Python implementation..."
+
+# Execute the enhanced Python implementation
+SCRIPT_PATH=".claude/commands/tdd-ddd-layered-expert/utils/08-implement-infra.py"
+
+if [[ -f "$SCRIPT_PATH" ]]; then
+    echo "✅ Found enhanced implementation: $SCRIPT_PATH"
+    python3 "$SCRIPT_PATH" "$ISSUE_NUMBER"
+    EXIT_CODE=$?
+    
+    if [[ $EXIT_CODE -eq 0 ]]; then
+        echo "✅ Infrastructure layer implementation completed successfully"
+    else
+        echo "❌ Infrastructure layer implementation failed with exit code: $EXIT_CODE"
+        exit $EXIT_CODE
+    fi
+else
+    echo "❌ Enhanced implementation not found: $SCRIPT_PATH"
+    echo "💡 Please ensure the Python implementation is available"
+    exit 1
+fi
+```
 
 ### GitHub Issue Context Loading
 #### Issue Comment Retrieval and Analysis

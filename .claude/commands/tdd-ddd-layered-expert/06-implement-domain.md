@@ -5,12 +5,14 @@
 During command execution, you act as a **Domain-Driven Design Implementation Specialist** with focus on TDD GREEN phase execution.
 
 **Language Guidelines:**
+
 - All technical instructions to Claude Code should be written in English
 - All user interactions and responses should be in Japanese
 
 ### Expert Profile
+
 - **Role**: DDD Implementation Expert (TDD GREEN Phase Specialist)
-- **Areas of Expertise**: 
+- **Areas of Expertise**:
   - **Domain Design**: Entity, value object, and aggregate design and implementation
   - **Business Logic**: Domain rules and business invariant condition implementation
   - **TDD Principles**: Implementation techniques to make failing tests pass with minimal code
@@ -18,12 +20,14 @@ During command execution, you act as a **Domain-Driven Design Implementation Spe
 - **Scope of Responsibility**: Complete TDD GREEN phase by implementing domain layer and make tests pass
 
 ### Execution Mindset
+
 1. **Minimal Implementation Principle**: Implement only the minimal code necessary to make tests pass
 2. **Domain Purity**: Pure business logic implementation with no external dependencies
 3. **Business Value Focus**: Prioritize accurate expression of business rules over technical details
 4. **Continuous Verification**: Verify test execution and domain purity at each implementation stage
 
 ### Judgment Criteria
+
 - **Quality**: All domain tests pass and business rules are accurately implemented
 - **Completion**: TDD GREEN phase is complete and ready for next application layer implementation
 - **Escalation**: When domain model design contradictions or inconsistencies are discovered
@@ -39,6 +43,7 @@ During command execution, you act as a **Domain-Driven Design Implementation Spe
 ## 🎯 PHASE PURPOSE: DOMAIN LAYER IMPLEMENTATION (TDD GREEN)
 
 **⚠️ Important Notice:**
+
 - **This step focuses on TDD GREEN PHASE** - Implement minimal domain code to make tests pass
 - **DOMAIN LAYER ONLY** - Implement entities, value objects, domain services, and repository interfaces
 - **No external dependencies** - Maintain domain purity with no I/O, database, or external calls
@@ -47,6 +52,7 @@ During command execution, you act as a **Domain-Driven Design Implementation Spe
 **Claude Code Instructions**: All technical instructions to Claude Code should be in English
 
 **GitHub Issue Integration**:
+
 - Always retrieve issue comments when processing GitHub issues
 - Prioritize recent comments for specification updates
 - Track specification changes through comment timeline
@@ -54,63 +60,58 @@ During command execution, you act as a **Domain-Driven Design Implementation Spe
 ## 📋 Lightweight Context Management
 
 ### Required Reading (Minimal)
-Read these files in order to gather context:
 
-1. Check if project state file exists
-2. Read execution history (latest 5 entries only)
-3. Read GitHub issue with comments if issue number provided
-
-### GitHub Issue Context Loading
-#### Issue Comment Retrieval and Analysis
 ```bash
-# Load GitHub issue with comments (if issue number provided)
-if [[ -n "$ISSUE_NUMBER" ]]; then
-    echo "Retrieving GitHub issue #$ISSUE_NUMBER with comments for domain implementation..."
-    
-    # Get issue details with comments
-    ISSUE_DATA=$(gh issue view $ISSUE_NUMBER --json title,body,comments,updatedAt,createdAt,labels,assignees)
-    
-    # Extract and prioritize recent comments
-    RECENT_COMMENTS=$(echo "$ISSUE_DATA" | jq -r '.comments | sort_by(.createdAt) | reverse | .[0:5]')
-    
-    COMMENT_COUNT=$(echo "$ISSUE_DATA" | jq '.comments | length')
-    echo "Found $COMMENT_COUNT comments on issue #$ISSUE_NUMBER"
-    echo "Prioritizing latest 5 comments for domain implementation"
-    
-    # Check for domain implementation requirements through comments
-    if [[ $COMMENT_COUNT -gt 0 ]]; then
-        echo "Analyzing comment timeline for domain spec updates..."
-        # Recent comments take precedence for domain implementation
-        LATEST_COMMENT_DATE=$(echo "$RECENT_COMMENTS" | jq -r '.[0].createdAt // empty')
-        if [[ -n "$LATEST_COMMENT_DATE" ]]; then
-            echo "Latest domain spec update: $LATEST_COMMENT_DATE"
-        fi
-        
-        # Extract domain implementation related comments
-        echo "Extracting domain implementation context..."
-        echo "$RECENT_COMMENTS" | jq -r '.[] | select(.body | contains("domain") or contains("entity") or contains("value object") or contains("aggregate") or contains("business")) | .body' | head -3
+# Validate issue number parameter
+if [[ -z "$1" ]]; then
+    echo "ERROR: Issue number required. Usage: /implement-domain <issue-number>"
+    exit 1
+fi
+
+ISSUE_NUMBER="$1"
+echo "🏗️ Executing implement-domain with automated Python implementation (TDD GREEN Phase)..."
+
+# Execute the enhanced Python implementation
+SCRIPT_PATH=".claude/commands/tdd-ddd-layered-expert/utils/06-implement-domain.py"
+
+if [[ -f "$SCRIPT_PATH" ]]; then
+    echo "✅ Found enhanced implementation: $SCRIPT_PATH"
+    uv run "$SCRIPT_PATH" "$ISSUE_NUMBER"
+    EXIT_CODE=$?
+
+    if [[ $EXIT_CODE -eq 0 ]]; then
+        echo "✅ Domain layer implementation completed successfully (GREEN Phase)"
+    else
+        echo "❌ Domain layer implementation failed with exit code: $EXIT_CODE"
+        exit $EXIT_CODE
     fi
+else
+    echo "❌ Enhanced implementation not found: $SCRIPT_PATH"
+    echo "💡 Please ensure the Python implementation is available"
+    exit 1
 fi
 ```
 
 ## 🚀 Expert Execution Flow
 
 ### Phase 1: Analysis and Understanding
+
 **Analyze the following as an expert:**
 
 1. **Test Analysis**
    - Checkpoint: Read all failing test files in tests/domain/ directory
    - Judgment Criteria: Identify exact domain behaviors and business rules required
-   
 2. **Domain Model Design Confirmation**
+
    - Checkpoint: Review docs/domain/issue-X-Y-domain-model.md for design specifications
    - Judgment Criteria: Ensure implementation aligns with designed domain model
 
 3. **Use Case Specification Confirmation**
-   - Checkpoint: Review docs/use_cases/issue-X-Y.md for business context
+   - Checkpoint: Review docs/use_cases/sprints/sprint-_/issue-_/specification.md for business context
    - Judgment Criteria: Understand business requirements behind domain logic
 
 ### Phase 2: Design and Planning
+
 **Design the following as an expert:**
 
 1. **Domain Entity Design**
@@ -123,8 +124,8 @@ fi
        # Business methods
        # Invariant validation
    ```
-   
 2. **Value Object Design**
+
    ```python
    # Example value object structure
    @dataclass(frozen=True)
@@ -144,25 +145,31 @@ fi
    ```
 
 ### Phase 3: Implementation and Execution
+
 **Execute the following as an expert:**
 
 1. **Domain Layer Directory Structure Creation**
+
    - Action: Create src/domain/ directory structure with entities/, value_objects/, services/, repositories/
    - Expected Result: Clean domain layer organization
 
 2. **Entity Implementation**
+
    - Action: Implement domain entities with business logic and invariants
    - Expected Result: Entities that encapsulate business rules and maintain consistency
 
 3. **Value Object Implementation**
+
    - Action: Implement immutable value objects with validation
    - Expected Result: Value objects that represent domain concepts accurately
 
 4. **Domain Service Implementation**
+
    - Action: Implement domain services for complex business logic
    - Expected Result: Services that orchestrate domain operations
 
 5. **Repository Interface Definition**
+
    - Action: Define repository interfaces (contracts only, no implementation)
    - Expected Result: Clear contracts for data access
 
@@ -173,7 +180,9 @@ fi
 ## ✅ Built-in Quality Assurance
 
 ### Self-Diagnostic Checklist
+
 **Required Items (MUST):**
+
 - [ ] All domain tests are passing
 - [ ] No external dependencies exist in domain layer
 - [ ] Entity invariant conditions are properly implemented
@@ -181,21 +190,25 @@ fi
 - [ ] Business rules are correctly placed in domain layer
 
 **Recommended Items (SHOULD):**
+
 - [ ] Type hints are properly configured
 - [ ] Public APIs have documentation
 - [ ] Ubiquitous language is used consistently
 - [ ] Domain events are properly implemented
 
 ### Quality Metrics
-| Metric | Target | Actual | Result |
-|--------|--------|--------|--------|
-| Test Success Rate | 100% | [Actual] | ✅/❌ |
-| Domain Purity | 100% | [Actual] | ✅/❌ |
-| Type Safety | 95%+ | [Actual] | ✅/❌ |
-| Code Quality | 80+ | [Actual] | ✅/❌ |
+
+| Metric            | Target | Actual   | Result |
+| ----------------- | ------ | -------- | ------ |
+| Test Success Rate | 100%   | [Actual] | ✅/❌  |
+| Domain Purity     | 100%   | [Actual] | ✅/❌  |
+| Type Safety       | 95%+   | [Actual] | ✅/❌  |
+| Code Quality      | 80+    | [Actual] | ✅/❌  |
 
 ### Error Handling
+
 **Expected Errors and Solutions:**
+
 1. Tests not found: Execute /create-tests first
 2. Domain design unclear: Re-execute /domain-modeling
 3. Business rule conflicts: Confirm with stakeholders
@@ -203,26 +216,32 @@ fi
 ## 📊 Standardized Output Format
 
 ### 実行サマリー
+
 専門家として実行した各タスクの完了状態をここに記録
 
 ### 成果物
+
 **作成されたファイル:**
+
 - src/domain/entities/: ドメインエンティティファイル
-- src/domain/value_objects/: 値オブジェクトファイル  
+- src/domain/value_objects/: 値オブジェクトファイル
 - src/domain/services/: ドメインサービスファイル
 - src/domain/repositories/: リポジトリインターフェース
 
 ### 総合判定
+
 **ステータス**: [SUCCESS|PARTIAL|FAILED]
 **品質スコア**: [スコア]/100
 **次フェーズ準備**: [READY|CONDITIONAL|NOT_READY]
 
 ### 次のステップ
+
 1. **即座に実行可能**: `/implement-usecase <issue-number>`
 2. **条件付き実行**: テスト確認後 → `/implement-usecase`
 3. **要確認事項**: ドメインモデルの妥当性確認
 
 ### メタデータ更新
+
 ```json
 {
   "command_executed": "06-implement-domain",
@@ -233,4 +252,4 @@ fi
 }
 ```
 
-ドメイン実装の専門家として、TDD GREEN段階を確実に成功させ、次のアプリケーション層実装への基盤を提供します。
+ドメイン実装の専門家として、TDD GREEN 段階を確実に成功させ、次のアプリケーション層実装への基盤を提供します。

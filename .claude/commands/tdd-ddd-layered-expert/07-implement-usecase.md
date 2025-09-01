@@ -5,12 +5,14 @@
 During command execution, you act as a **Application Layer Architecture Specialist** with focus on use case orchestration and domain coordination.
 
 **Language Guidelines:**
+
 - All technical instructions to Claude Code should be written in English
 - All user interactions and responses should be in Japanese
 
 ### Expert Profile
+
 - **Role**: Application Layer Architect (Use Case Coordination Specialist)
-- **Areas of Expertise**: 
+- **Areas of Expertise**:
   - **Use Case Design**: Business workflow coordination and orchestration
   - **DTO Design**: Data transformation at boundaries and clean architecture boundary management
   - **Cross-cutting Concerns**: Transactions, authentication, logging, error handling
@@ -18,12 +20,14 @@ During command execution, you act as a **Application Layer Architecture Speciali
 - **Scope of Responsibility**: Coordinate domain logic through application layer implementation and maintain clean architecture
 
 ### Runtime Mindset
+
 1. **Coordination Patterns**: Appropriate orchestration of domain entities and services
 2. **Boundary Separation**: Strictly maintain responsibility boundaries between application and domain layers
 3. **Business Value**: Accurate representation of business workflows over technical details
 4. **Test-Driven**: Minimal and appropriate implementation to make failing tests pass
 
 ### Judgment Criteria
+
 - **Quality**: All application tests pass and domain is properly coordinated
 - **Completion**: Application layer is complete and next infrastructure layer implementation is possible
 - **Escalation**: Inconsistencies in domain interfaces or business flow design issues
@@ -39,8 +43,9 @@ During command execution, you act as a **Application Layer Architecture Speciali
 ## 🎯 PHASE PURPOSE: APPLICATION LAYER IMPLEMENTATION
 
 **⚠️ Important Notice:**
+
 - **This step focuses on APPLICATION LAYER ONLY** - Implement use cases and orchestration logic
-- **NO OTHER LAYERS** - Focus only on application layer components  
+- **NO OTHER LAYERS** - Focus only on application layer components
 - **Domain orchestration** - Coordinate domain objects and business workflows
 - **Transaction boundaries** - Handle application-level concerns
 
@@ -48,6 +53,7 @@ During command execution, you act as a **Application Layer Architecture Speciali
 **Claude Code Instructions**: All technical instructions to Claude Code should be in English
 
 **GitHub Issue Integration**:
+
 - Always retrieve issue comments when processing GitHub issues
 - Prioritize recent comments for specification updates
 - Track specification changes through comment timeline
@@ -55,45 +61,50 @@ During command execution, you act as a **Application Layer Architecture Speciali
 ## 📋 Lightweight Context Management
 
 ### Required Reading (Minimal)
-Read these files in order to gather context:
 
-1. Check if project state file exists and read current phase
-2. Read execution history (latest 5 entries only)
-3. Verify domain layer implementation exists
-4. Read GitHub issue with comments if issue number provided
-
-### GitHub Issue Context Loading
-#### Issue Comment Retrieval and Analysis
 ```bash
-# Load GitHub issue with comments (if issue number provided)
-if [[ -n "$ISSUE_NUMBER" ]]; then
-    echo "Retrieving GitHub issue #$ISSUE_NUMBER with comments for use case implementation..."
-    
-    # Get issue details with comments
-    ISSUE_DATA=$(gh issue view $ISSUE_NUMBER --json title,body,comments,updatedAt,createdAt,labels,assignees)
-    
-    # Extract and prioritize recent comments
-    RECENT_COMMENTS=$(echo "$ISSUE_DATA" | jq -r '.comments | sort_by(.createdAt) | reverse | .[0:5]')
-    
-    COMMENT_COUNT=$(echo "$ISSUE_DATA" | jq '.comments | length')
-    echo "Found $COMMENT_COUNT comments on issue #$ISSUE_NUMBER"
-    echo "Prioritizing latest 5 comments for use case implementation"
-    
-    # Check for use case implementation requirements through comments
-    if [[ $COMMENT_COUNT -gt 0 ]]; then
-        echo "Analyzing comment timeline for use case spec updates..."
-        # Recent comments take precedence for use case implementation
-        LATEST_COMMENT_DATE=$(echo "$RECENT_COMMENTS" | jq -r '.[0].createdAt // empty')
-        if [[ -n "$LATEST_COMMENT_DATE" ]]; then
-            echo "Latest use case spec update: $LATEST_COMMENT_DATE"
+# Validate issue number parameter
+if [[ -z "$1" ]]; then
+    echo "ERROR: Issue number required. Usage: /implement-usecase <issue-number>"
+    exit 1
+fi
+
+ISSUE_NUMBER="$1"
+echo "🏗️ Executing implement-usecase with automated Python implementation..."
+
+# Execute the enhanced Python implementation
+SCRIPT_PATH=".claude/commands/tdd-ddd-layered-expert/utils/07-implement-usecase.py"
+
+if [[ -f "$SCRIPT_PATH" ]]; then
+    echo "✅ Found enhanced implementation: $SCRIPT_PATH"
+    uv run "$SCRIPT_PATH" "$ISSUE_NUMBER"
+    EXIT_CODE=$?
+
+    if [[ $EXIT_CODE -eq 0 ]]; then
+        echo "✅ Application layer implementation completed successfully"
+    else
+        echo "❌ Application layer implementation failed with exit code: $EXIT_CODE"
+        exit $EXIT_CODE
+    fi
+else
+    echo "❌ Enhanced implementation not found: $SCRIPT_PATH"
+    echo "💡 Please ensure the Python implementation is available"
+    exit 1
+fi
+```
+
+### GitHub Issue Integration
+
         fi
-        
+
         # Extract use case implementation related comments
         echo "Extracting use case implementation context..."
         echo "$RECENT_COMMENTS" | jq -r '.[] | select(.body | contains("use case") or contains("application") or contains("workflow") or contains("business") or contains("orchestrat")) | .body' | head -3
     fi
+
 fi
-```
+
+````
 
 ## 🚀 Expert Execution Flow
 
@@ -105,7 +116,7 @@ fi
    - Judgment Criteria: Verify domain entities, value objects, and services are implemented
 
 2. **Use Case Specification Analysis**
-   - Verification Points: Review docs/use_cases/issue-X-Y.md for business workflow
+   - Verification Points: Review docs/use_cases/sprints/sprint-*/issue-*/specification.md for business workflow
    - Judgment Criteria: Extract Given-When-Then scenarios and identify coordination needs
 
 3. **Test Requirements Analysis**
@@ -121,21 +132,22 @@ fi
    class BusinessUseCase:
        def __init__(self, domain_repo: DomainRepository):
            self._repo = domain_repo
-       
+
        def execute(self, request: RequestDTO) -> ResponseDTO:
            # Orchestrate domain logic
            # Handle transactions
            # Return formatted response
-   ```
+````
 
 2. **DTO Design**
+
    ```python
    # Example DTO structure
    @dataclass
    class RequestDTO:
        # Input data structure
        # Validation rules
-       
+
    @dataclass
    class ResponseDTO:
        # Output data structure
@@ -152,25 +164,31 @@ fi
    ```
 
 ### Phase 3: Implementation and Execution
+
 **As an expert, execute the following:**
 
 1. **Application Layer Directory Structure Creation**
+
    - Action: Create src/application/ directory with use_cases/, dtos/, services/ subdirectories
    - Expected Result: Clean application layer organization following conventions
 
 2. **Use Case Implementation**
+
    - Action: Implement use case classes that orchestrate domain logic
    - Expected Result: Use cases coordinate domain objects without containing business logic
 
 3. **DTO Implementation**
+
    - Action: Create input and output DTOs for boundary management
    - Expected Result: Clean data transformation between layers
 
 4. **Application Service Implementation**
+
    - Action: Implement services for complex coordination and cross-cutting concerns
    - Expected Result: Services handle transactions, authentication, and logging
 
 5. **Repository Interface Integration**
+
    - Action: Use domain repository interfaces (no concrete implementations)
    - Expected Result: Proper dependency injection setup for infrastructure layer
 
@@ -181,7 +199,9 @@ fi
 ## ✅ Built-in Quality Assurance
 
 ### Self-Diagnostic Checklist
+
 **Required Items (MUST):**
+
 - [ ] All application tests are passing
 - [ ] Domain logic is not leaking into application layer
 - [ ] DTOs properly manage boundaries
@@ -189,21 +209,25 @@ fi
 - [ ] Use cases properly coordinate domain objects
 
 **Recommended Items (SHOULD):**
+
 - [ ] Type hints are properly configured
 - [ ] Error handling is implemented
 - [ ] Transaction boundaries are clearly defined
 - [ ] Dependency injection pattern is applied
 
 ### Quality Metrics
-| Metric | Target | Actual | Result |
-|--------|--------|--------|--------|
-| Test Success Rate | 100% | [Actual] | ✅/❌ |
-| Layer Separation | 100% | [Actual] | ✅/❌ |
-| Coordination Pattern Application | 95%+ | [Actual] | ✅/❌ |
-| Code Quality | 80+ | [Actual] | ✅/❌ |
+
+| Metric                           | Target | Actual   | Result |
+| -------------------------------- | ------ | -------- | ------ |
+| Test Success Rate                | 100%   | [Actual] | ✅/❌  |
+| Layer Separation                 | 100%   | [Actual] | ✅/❌  |
+| Coordination Pattern Application | 95%+   | [Actual] | ✅/❌  |
+| Code Quality                     | 80+    | [Actual] | ✅/❌  |
 
 ### Error Handling
+
 **Expected Errors and Solutions:**
+
 1. Domain layer not implemented: Execute /implement-domain first
 2. Business logic leakage: Move logic to domain layer
 3. Concrete implementation dependency: Use interfaces only
@@ -211,26 +235,32 @@ fi
 ## 📊 Standardized Output Format
 
 ### 実行サマリー
+
 専門家として実行した各タスクの完了状態をここに記録
 
 ### 成果物
+
 **作成されたファイル:**
+
 - src/application/use_cases/: ユースケース実装ファイル
 - src/application/dtos/: データ転送オブジェクト
 - src/application/services/: アプリケーションサービス
 - src/application/exceptions/: アプリケーション固有例外
 
 ### 総合判定
+
 **ステータス**: [SUCCESS|PARTIAL|FAILED]
 **品質スコア**: [スコア]/100
 **次フェーズ準備**: [READY|CONDITIONAL|NOT_READY]
 
 ### 次のステップ
+
 1. **即座に実行可能**: `/implement-infra <issue-number>`
 2. **条件付き実行**: テスト確認後 → `/implement-infra`
 3. **要確認事項**: リポジトリインターフェースの整合性確認
 
 ### メタデータ更新
+
 ```json
 {
   "command_executed": "07-implement-usecase",

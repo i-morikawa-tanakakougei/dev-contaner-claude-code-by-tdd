@@ -136,7 +136,7 @@ fi
 1. **Create directory structure**
 
    ```bash
-   Bash mkdir -p docs/vision docs/use_cases/core docs/steering
+   Bash mkdir -p docs/vision docs/use_cases/core docs/use_cases/evolved docs/use_cases/sprints docs/use_cases/archived docs/steering
    ```
 
 2. **Create project vision document**
@@ -154,7 +154,7 @@ fi
 4. **Create use case index**
 
    ```bash
-   Write docs/use_cases/index.md with implementation management structure
+   Write docs/use_cases/index.md with new hierarchical structure navigation including sprints/ subdirectory
    ```
 
 5. **Create steering documents**

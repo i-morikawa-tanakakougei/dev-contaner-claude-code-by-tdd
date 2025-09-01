@@ -180,7 +180,7 @@ fi
 
 - [ ] src/domain, src/application, src/infrastructure, src/presentation directories are created
 - [ ] tests/unit, tests/integration, tests/e2e directories are created
-- [ ] docs/vision, docs/use_cases, docs/domain directories are created
+- [ ] docs/vision, docs/use_cases (with core/, evolved/, sprints/, archived/ subdirectories), docs/domain directories are created
 - [ ] **init**.py files are created in all Python directories
 - [ ] pyproject.toml file is created with appropriate dependencies configured
 - [ ] .gitignore file is created with appropriate exclusion patterns configured

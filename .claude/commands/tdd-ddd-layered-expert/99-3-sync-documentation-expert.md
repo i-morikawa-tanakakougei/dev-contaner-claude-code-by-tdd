@@ -84,7 +84,7 @@ RECENT_HISTORY=$(tail -10 .claude/context/execution-history.jsonl 2>/dev/null ||
 
 ### Optional Reading (As Needed)
 - Current project vision: `docs/vision/project-vision.md`
-- Use case specifications: `docs/use_cases/`
+- Use case specifications: `docs/use_cases/sprints/`, `docs/use_cases/core/`, `docs/use_cases/evolved/`
 - Domain model documentation: `docs/domain/`
 - Architecture decision records: `docs/adr/`
 - Recent commits affecting documentation: `git log --oneline --name-only -10 -- docs/`
@@ -224,7 +224,7 @@ git log --oneline -20 --grep="docs\|documentation\|README" --all
 ### 成果物
 **更新されたドキュメント:**
 - `docs/vision/project-vision.md`: 緊急対応で明らかになった要求・制約を反映
-- `docs/use_cases/`: 実装変更に合わせたシナリオ更新
+- `docs/use_cases/sprints/`, `docs/use_cases/evolved/`: 実装変更に合わせたシナリオ更新
 - `docs/domain/`: ドメインモデル変更の文書化
 - `docs/adr/ADR-YYYYMMDD-emergency-response.md`: 技術的決定記録
 

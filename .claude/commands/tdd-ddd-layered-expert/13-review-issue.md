@@ -60,24 +60,38 @@ During command execution, you act as a **Implementation Quality Auditor** with c
 
 ### Required Reading (Minimal)
 ```bash
-# Project state (only if exists)
-if [[ -f "docs/metadata/project-state.json" ]]; then
-    PROJECT_STATE=$(cat docs/metadata/project-state.json)
-    CURRENT_PHASE=$(echo $PROJECT_STATE | jq -r '.current_phase')
+# Validate issue number parameter
+if [[ -z "$1" ]]; then
+    echo "ERROR: Issue number required. Usage: /review-issue <issue-number>"
+    exit 1
 fi
 
-# Issue metadata and implementation status
-if [[ -f "docs/use_cases/issue-${ISSUE_NUMBER}.json" ]]; then
-    ISSUE_METADATA=$(cat docs/use_cases/issue-${ISSUE_NUMBER}.json)
-fi
+ISSUE_NUMBER="$1"
+echo "🔍 Executing review-issue with automated Python implementation..."
 
-# Latest test results and refactoring reports
-LATEST_TEST_REPORT=$(find docs/test_results/ -name "*issue*${ISSUE_NUMBER}*" -type f | sort | tail -1)
-LATEST_REFACTOR_REPORT=$(find docs/refactoring/ -name "*issue*${ISSUE_NUMBER}*" -type f | sort | tail -1)
+# Execute the enhanced Python implementation
+SCRIPT_PATH=".claude/commands/tdd-ddd-layered-expert/utils/13-review-issue.py"
+
+if [[ -f "$SCRIPT_PATH" ]]; then
+    echo "✅ Found enhanced implementation: $SCRIPT_PATH"
+    python3 "$SCRIPT_PATH" "$ISSUE_NUMBER"
+    EXIT_CODE=$?
+    
+    if [[ $EXIT_CODE -eq 0 ]]; then
+        echo "✅ Implementation quality review completed successfully"
+    else
+        echo "❌ Implementation quality review failed with exit code: $EXIT_CODE"
+        exit $EXIT_CODE
+    fi
+else
+    echo "❌ Enhanced implementation not found: $SCRIPT_PATH"
+    echo "💡 Please ensure the Python implementation is available"
+    exit 1
+fi
 ```
 
 ### Optional Reading (As Needed)
-- Implementation specifications: `docs/use_cases/issue-${ISSUE_NUMBER}.md`
+- Implementation specifications: `docs/use_cases/sprints/sprint-*/issue-${ISSUE_NUMBER}/specification.md`
 - Domain model design: `docs/domain/issue-${ISSUE_NUMBER}-domain-model.md`
 - All implementation code: `src/` directory structure
 
@@ -260,7 +274,7 @@ uv run --frozen pytest --cov=src --cov-report=json --cov-report=html tests/
 3. **REJECTED時**: 指摘事項の修正後、再度 `/review-issue ${ISSUE_NUMBER}`
 
 ### メタデータ更新
-Issue metadata (`docs/use_cases/issue-${ISSUE_NUMBER}.json`) を更新:
+Issue metadata (`docs/use_cases/sprints/sprint-*/issue-${ISSUE_NUMBER}/metadata.json`) を更新:
 ```json
 {
   "phases": {

@@ -5,18 +5,21 @@
 During command execution, you act as a **Test Execution Specialist** with comprehensive quality assurance expertise.
 
 ### Your Expertise
+
 - **Test Suite Orchestration**: Execute and coordinate unit, integration, and end-to-end test suites with comprehensive reporting
 - **Quality Metrics Analysis**: Analyze test coverage, performance metrics, and quality indicators with actionable insights
 - **TDD Verification**: Validate Test-Driven Development cycle completion and ensure all Given-When-Then scenarios are properly tested
 - **Architecture Validation**: Verify Clean Architecture compliance through test execution patterns and layer isolation
 
 ### Execution Principles
+
 1. **Comprehensive Coverage**: Execute all test types (unit, integration, e2e) with detailed coverage analysis
 2. **Quality Gate Enforcement**: Apply strict quality standards with 80%+ coverage and zero critical failures
 3. **Architecture Compliance**: Validate that tests maintain proper layer separation and dependency direction
 4. **Traceability Verification**: Ensure complete mapping between Given-When-Then scenarios and test implementations
 
 **Language Guidelines:**
+
 - All technical instructions to Claude Code should be written in English
 - All user interactions and responses should be in Japanese
 
@@ -39,12 +42,14 @@ During command execution, you act as a **Test Execution Specialist** with compre
 ## 🎯 PHASE PURPOSE: COMPREHENSIVE TEST EXECUTION AND VALIDATION
 
 **⚠️ Important Notice:**
+
 - **This step is TEST EXECUTION ONLY** - Run tests and generate comprehensive reports
-- **NO IMPLEMENTATION CHANGES** - Focus exclusively on testing existing code  
+- **NO IMPLEMENTATION CHANGES** - Focus exclusively on testing existing code
 - **Quality Verification Focus** - Validate all layers work correctly and meet quality standards
 - **Architecture Validation** - Ensure Clean Architecture principles are maintained through test execution
 
 **TDD Cycle Position:**
+
 1. `05-create-tests` ← TDD RED (failing tests created)
 2. `06-09-implement-*` ← TDD GREEN (implementation completed)
 3. `10-run-all-tests` ← **【YOU ARE HERE】Comprehensive test execution and validation**
@@ -55,20 +60,40 @@ During command execution, you act as a **Test Execution Specialist** with compre
 ## 📋 Lightweight Context Management
 
 ### Required Reading (Minimal)
+
 ```bash
-# Project state (only if exists)
-if [[ -f "docs/metadata/project-state.json" ]]; then
-    PROJECT_STATE=$(cat docs/metadata/project-state.json)
-    CURRENT_PHASE=$(echo $PROJECT_STATE | jq -r '.current_phase')
+# Validate issue number parameter
+if [[ -z "$1" ]]; then
+    echo "ERROR: Issue number required. Usage: /run-all-tests <issue-number>"
+    exit 1
 fi
 
-# Issue metadata for test execution scope
-if [[ -f "docs/use_cases/issue-${ISSUE_NUMBER}.json" ]]; then
-    ISSUE_METADATA=$(cat docs/use_cases/issue-${ISSUE_NUMBER}.json)
+ISSUE_NUMBER="$1"
+echo "🧪 Executing run-all-tests with automated Python implementation..."
+
+# Execute the enhanced Python implementation
+SCRIPT_PATH=".claude/commands/tdd-ddd-layered-expert/utils/10-run-all-tests.py"
+
+if [[ -f "$SCRIPT_PATH" ]]; then
+    echo "✅ Found enhanced implementation: $SCRIPT_PATH"
+    uv run "$SCRIPT_PATH" "$ISSUE_NUMBER"
+    EXIT_CODE=$?
+
+    if [[ $EXIT_CODE -eq 0 ]]; then
+        echo "✅ Test execution and quality analysis completed successfully"
+    else
+        echo "❌ Test execution failed with exit code: $EXIT_CODE"
+        exit $EXIT_CODE
+    fi
+else
+    echo "❌ Enhanced implementation not found: $SCRIPT_PATH"
+    echo "💡 Please ensure the Python implementation is available"
+    exit 1
 fi
 ```
 
 ### Optional Reading (As Needed)
+
 - Test configuration: `pytest.ini` or `pyproject.toml`
 - Test structure: `tests/` directory organization
 - Implementation code: `src/` for understanding test scope
@@ -76,21 +101,22 @@ fi
 ## GitHub Issue Integration
 
 #### Issue Comment Retrieval and Analysis
+
 ```bash
 # Load GitHub issue with comments (if issue number provided)
 if [[ -n "$ISSUE_NUMBER" ]]; then
     echo "Retrieving GitHub issue #$ISSUE_NUMBER with comments for test execution context..."
-    
+
     # Get issue details with comments
     ISSUE_DATA=$(gh issue view $ISSUE_NUMBER --json title,body,comments,updatedAt,createdAt,labels,assignees)
-    
+
     # Extract and prioritize recent comments
     RECENT_COMMENTS=$(echo "$ISSUE_DATA" | jq -r '.comments | sort_by(.createdAt) | reverse | .[0:5]')
-    
+
     COMMENT_COUNT=$(echo "$ISSUE_DATA" | jq '.comments | length')
     echo "Found $COMMENT_COUNT comments on issue #$ISSUE_NUMBER"
     echo "Prioritizing latest 5 comments for test execution verification"
-    
+
     # Check for test execution related updates through comments
     if [[ $COMMENT_COUNT -gt 0 ]]; then
         echo "Analyzing comment timeline for test requirement changes..."
@@ -106,9 +132,11 @@ fi
 ## 🚀 Expert Execution Flow
 
 ### Phase 1: Pre-execution Verification and Preparation
+
 **As Test Execution Specialist, analyze the following:**
 
 1. **Implementation Completion Status Verification**
+
    - Verification Points: Implementation completion of all layers (Domain/Application/Infrastructure/Presentation)
    - Judgment Criteria: Confirm existence of implementation files and test files corresponding to each layer
 
@@ -117,6 +145,7 @@ fi
    - Judgment Criteria: Effectiveness of pytest configuration, database connection, mock settings
 
 ### Phase 2: Comprehensive Test Execution
+
 **As Test Execution Specialist, execute the following:**
 
 ```bash
@@ -126,7 +155,7 @@ echo "🧪 Issues: #${ISSUE_NUMBER} の全テスト実行を開始します"
 echo "📊 ユニットテスト実行とカバレッジ分析中..."
 uv run --frozen pytest tests/unit/ -v --cov=src --cov-report=html --cov-report=term --cov-report=json
 
-# 2. Integration Tests  
+# 2. Integration Tests
 echo "🔗 統合テスト実行中..."
 uv run --frozen pytest tests/integration/ -v
 
@@ -144,13 +173,16 @@ fi
 ```
 
 ### Phase 3: Quality Analysis and Report Generation
+
 **As Test Execution Specialist, analyze the following:**
 
 1. **Coverage Analysis**
+
    - Analysis Items: Detailed analysis of line, branch, and function coverage
    - Report Generation: `docs/test_results/coverage-report-${ISSUE_NUMBER}.html`
 
 2. **Given-When-Then Traceability Verification**
+
    - Analysis Items: Correspondence between specification scenarios and test cases
    - Verification Criteria: All acceptance criteria are covered by tests
 
@@ -161,26 +193,32 @@ fi
 ## ✅ Built-in Quality Assurance
 
 ### Self-Diagnostic Checklist
+
 **Mandatory Items (MUST):**
+
 - [ ] All tests are successful (failed tests = 0)
 - [ ] Test coverage is 80% or higher
 - [ ] Critical quality issues are 0
 - [ ] Tests for all layers have been executed
 
 **Recommended Items (SHOULD):**
+
 - [ ] Complete traceability of Given-When-Then scenarios
 - [ ] Performance test execution (when possible)
 - [ ] Test execution time within reasonable range
 
 ### Quality Metrics
-| Metric | Target Value | Actual Value | Assessment |
-|--------|--------------|--------------|------------|
-| Test Coverage | ≥80% | [Measured Value] | ✅/❌ |
-| Failed Tests | 0 cases | [Measured Value] | ✅/❌ |
-| Critical Issues | 0 cases | [Measured Value] | ✅/❌ |
+
+| Metric          | Target Value | Actual Value     | Assessment |
+| --------------- | ------------ | ---------------- | ---------- |
+| Test Coverage   | ≥80%         | [Measured Value] | ✅/❌      |
+| Failed Tests    | 0 cases      | [Measured Value] | ✅/❌      |
+| Critical Issues | 0 cases      | [Measured Value] | ✅/❌      |
 
 ### Error Handling
+
 **Expected Errors and Solutions:**
+
 1. **Test Failures**: Provide detailed analysis of failure causes and correction suggestions
 2. **Low Coverage**: Identify untested code paths and suggest additional tests
 3. **Environment Issues**: Diagnose dependency or database connection problems and provide solutions
@@ -188,6 +226,7 @@ fi
 ## 📊 Standardized Output Format
 
 ### 実行サマリー
+
 ```
 🧪 Issues: #${ISSUE_NUMBER} の全テスト実行を開始します
 
@@ -197,7 +236,7 @@ fi
 
 🏃 テストスイート実行結果:
 ✅ ユニットテスト: XX passed, 0 failed
-✅ 統合テスト: XX passed, 0 failed  
+✅ 統合テスト: XX passed, 0 failed
 ✅ E2Eテスト: XX passed, 0 failed
 
 📊 品質メトリクス:
@@ -209,23 +248,29 @@ fi
 ```
 
 ### 成果物
+
 **作成されたファイル:**
-- `docs/test_results/test-execution-report-${TIMESTAMP}.html`: 詳細なHTMLカバレッジレポート
-- `docs/test_results/test-metrics-${ISSUE_NUMBER}.json`: 実行メトリクスJSON
+
+- `docs/test_results/test-execution-report-${TIMESTAMP}.html`: 詳細な HTML カバレッジレポート
+- `docs/test_results/test-metrics-${ISSUE_NUMBER}.json`: 実行メトリクス JSON
 - `docs/test_results/quality-analysis-${ISSUE_NUMBER}.md`: 品質分析レポート
 
 ### 総合判定
+
 **ステータス**: `SUCCESS|PARTIAL|FAILED`
 **品質スコア**: [スコア]/100
 **次フェーズ準備**: `READY|CONDITIONAL|NOT_READY`
 
 ### 次のステップ
+
 1. **即座に実行可能**: `/refactor ${ISSUE_NUMBER}`（全テストが成功した場合）
 2. **条件付き実行**: テスト修正完了後 → `/run-all-tests ${ISSUE_NUMBER}`
 3. **要確認事項**: カバレッジ不足やアーキテクチャ問題がある場合の対処
 
 ### メタデータ更新
+
 Issue metadata (`docs/use_cases/issue-${ISSUE_NUMBER}.json`) を更新:
+
 ```json
 {
   "phases": {

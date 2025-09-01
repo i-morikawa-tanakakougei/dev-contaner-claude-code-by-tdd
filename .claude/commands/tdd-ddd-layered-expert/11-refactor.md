@@ -5,18 +5,21 @@
 During command execution, you act as a **Code Quality Improvement Specialist** with advanced refactoring expertise.
 
 ### Your Expertise
+
 - **Code Structure Optimization**: Improve code organization, eliminate duplication, and enhance maintainability without changing functionality
 - **Design Pattern Implementation**: Apply appropriate design patterns (Strategy, Factory, Observer) to improve code flexibility and extensibility
 - **Performance Optimization**: Identify and resolve performance bottlenecks while maintaining code readability and testability
 - **Architecture Refinement**: Ensure Clean Architecture compliance and optimize layer separation for better maintainability
 
 ### Execution Principles
+
 1. **Functionality Preservation**: All tests must remain GREEN throughout the refactoring process
 2. **Incremental Improvement**: Make small, safe changes with continuous test validation
 3. **Quality Focus**: Prioritize code readability, maintainability, and architectural consistency
 4. **Test-Driven Safety**: Use existing tests as safety net and add tests for refactored components when needed
 
 **Language Guidelines:**
+
 - All technical instructions to Claude Code should be written in English
 - All user interactions and responses should be in Japanese
 
@@ -39,18 +42,21 @@ During command execution, you act as a **Code Quality Improvement Specialist** w
 ## 🎯 PHASE PURPOSE: TDD REFACTOR - CODE QUALITY IMPROVEMENT ONLY
 
 **⚠️ Important Notice:**
+
 - **This step is TDD REFACTOR PHASE** - Improve code quality while maintaining functionality
-- **ALL TESTS MUST REMAIN GREEN** - Do not break existing functionality  
+- **ALL TESTS MUST REMAIN GREEN** - Do not break existing functionality
 - **Quality Improvement Focus** - Remove duplication, improve readability, optimize performance
 - **No New Features** - Only improve existing implementation structure and quality
 
 **TDD Cycle Completion:**
+
 1. `05-create-tests` ← TDD RED (failing tests created)
 2. `06-09-implement-*` ← TDD GREEN (implementation completed)
 3. `10-run-all-tests` ← All tests passing verification
 4. `11-refactor` ← **【YOU ARE HERE】TDD REFACTOR (quality improvement)**
 
 **Refactoring Rules:**
+
 - ✅ Improve code structure and readability
 - ✅ All tests must remain GREEN throughout refactoring
 - ❌ No new features or functionality
@@ -58,23 +64,40 @@ During command execution, you act as a **Code Quality Improvement Specialist** w
 ## 📋 Lightweight Context Management
 
 ### Required Reading (Minimal)
+
 ```bash
-# Project state (only if exists)
-if [[ -f "docs/metadata/project-state.json" ]]; then
-    PROJECT_STATE=$(cat docs/metadata/project-state.json)
-    CURRENT_PHASE=$(echo $PROJECT_STATE | jq -r '.current_phase')
+# Validate issue number parameter
+if [[ -z "$1" ]]; then
+    echo "ERROR: Issue number required. Usage: /refactor <issue-number>"
+    exit 1
 fi
 
-# Issue metadata and test results
-if [[ -f "docs/use_cases/issue-${ISSUE_NUMBER}.json" ]]; then
-    ISSUE_METADATA=$(cat docs/use_cases/issue-${ISSUE_NUMBER}.json)
-fi
+ISSUE_NUMBER="$1"
+echo "🔧 Executing refactor with automated Python implementation (TDD REFACTOR Phase)..."
 
-# Latest test results to ensure GREEN state
-LATEST_TEST_REPORT=$(find docs/test_results/ -name "*issue*${ISSUE_NUMBER}*" -type f | sort | tail -1)
+# Execute the enhanced Python implementation
+SCRIPT_PATH=".claude/commands/tdd-ddd-layered-expert/utils/11-refactor.py"
+
+if [[ -f "$SCRIPT_PATH" ]]; then
+    echo "✅ Found enhanced implementation: $SCRIPT_PATH"
+    uv run "$SCRIPT_PATH" "$ISSUE_NUMBER"
+    EXIT_CODE=$?
+
+    if [[ $EXIT_CODE -eq 0 ]]; then
+        echo "✅ Refactoring completed successfully (REFACTOR Phase)"
+    else
+        echo "❌ Refactoring failed with exit code: $EXIT_CODE"
+        exit $EXIT_CODE
+    fi
+else
+    echo "❌ Enhanced implementation not found: $SCRIPT_PATH"
+    echo "💡 Please ensure the Python implementation is available"
+    exit 1
+fi
 ```
 
 ### Optional Reading (As Needed)
+
 - Implementation code: `src/` for refactoring analysis
 - Test files: `tests/` for understanding coverage and structure
 - Code quality reports: Previous analysis results
@@ -82,21 +105,22 @@ LATEST_TEST_REPORT=$(find docs/test_results/ -name "*issue*${ISSUE_NUMBER}*" -ty
 ## GitHub Issue Integration
 
 #### Issue Comment Retrieval and Analysis
+
 ```bash
 # Load GitHub issue with comments (if issue number provided)
 if [[ -n "$ISSUE_NUMBER" ]]; then
     echo "Retrieving GitHub issue #$ISSUE_NUMBER with comments for refactoring context..."
-    
+
     # Get issue details with comments
     ISSUE_DATA=$(gh issue view $ISSUE_NUMBER --json title,body,comments,updatedAt,createdAt,labels,assignees)
-    
+
     # Extract and prioritize recent comments
     RECENT_COMMENTS=$(echo "$ISSUE_DATA" | jq -r '.comments | sort_by(.createdAt) | reverse | .[0:5]')
-    
+
     COMMENT_COUNT=$(echo "$ISSUE_DATA" | jq '.comments | length')
     echo "Found $COMMENT_COUNT comments on issue #$ISSUE_NUMBER"
     echo "Prioritizing latest 5 comments for refactoring guidance"
-    
+
     # Check for refactoring and quality feedback through comments
     if [[ $COMMENT_COUNT -gt 0 ]]; then
         echo "Analyzing comment timeline for refactoring suggestions..."
@@ -105,7 +129,7 @@ if [[ -n "$ISSUE_NUMBER" ]]; then
         if [[ -n "$LATEST_COMMENT_DATE" ]]; then
             echo "Latest refactoring update: $LATEST_COMMENT_DATE"
         fi
-        
+
         # Extract refactoring-related comments
         echo "Extracting code quality feedback..."
         echo "$RECENT_COMMENTS" | jq -r '.[] | select(.body | contains("refactor") or contains("quality") or contains("clean") or contains("optimize") or contains("improve")) | .body' | head -3
@@ -116,9 +140,11 @@ fi
 ## 🚀 Expert Execution Flow
 
 ### Phase 1: Code Quality Analysis
+
 **Analyze as Code Quality Improvement Specialist:**
 
 1. **Code Structure Analysis**
+
    - Verification Points: Identify duplicate code, long methods, and complex conditional branching
    - Judgment Criteria: Evaluate code complexity metrics, duplication rate, and method length
 
@@ -127,6 +153,7 @@ fi
    - Judgment Criteria: Whether structure follows Clean Architecture principles
 
 ### Phase 2: Safe Refactoring Execution
+
 **Execute as Code Quality Improvement Specialist:**
 
 ```bash
@@ -149,17 +176,21 @@ uv run --frozen ruff check src/ --output-format=json > /tmp/quality_analysis.jso
 ```
 
 ### Phase 3: Gradual Quality Improvement
+
 **Execute the following gradually as Code Quality Improvement Specialist:**
 
 1. **Duplicate Code Elimination**
+
    - Actions: Extract common processing, create utility methods
    - Expected Results: Reduced code duplication rate, improved maintainability
 
-2. **Method and Class Structure Improvement**  
+2. **Method and Class Structure Improvement**
+
    - Actions: Split long methods, apply single responsibility principle
    - Expected Results: Improved readability, enhanced testability
 
 3. **Design Pattern Application**
+
    - Actions: Introduce appropriate design patterns (Strategy, Factory, etc.)
    - Expected Results: Improved extensibility and flexibility
 
@@ -168,6 +199,7 @@ uv run --frozen ruff check src/ --output-format=json > /tmp/quality_analysis.jso
    - Expected Results: Improved execution speed, reduced resource usage
 
 **Continuous Verification After Each Improvement:**
+
 ```bash
 # After each refactoring change
 echo "🧪 改善後テスト実行中..."
@@ -185,26 +217,32 @@ echo "✅ テストGREEN状態維持 - 次の改善に進みます"
 ## ✅ Built-in Quality Assurance
 
 ### Self-Diagnosis Checklist
+
 **Required Items (MUST):**
+
 - [ ] All tests succeed before and after refactoring
 - [ ] No functional changes have been made whatsoever
 - [ ] Code quality metrics have improved
 - [ ] Clean Architecture principles are maintained
 
 **Recommended Items (SHOULD):**
+
 - [ ] Code duplication rate has been reduced
 - [ ] Method complexity is within appropriate range
 - [ ] Appropriate design patterns have been applied
 
 ### Quality Metrics
-| Indicator | Before Refactoring | After Refactoring | Improvement Rate |
-|-----------|-------------------|-------------------|------------------|
-| Code Duplication Rate | [Before]% | [After]% | [Improvement]% |
-| Average Method Length | [Before] lines | [After] lines | [Reduction]% |
-| Cyclomatic Complexity | [Before] | [After] | [Improvement]% |
+
+| Indicator             | Before Refactoring | After Refactoring | Improvement Rate |
+| --------------------- | ------------------ | ----------------- | ---------------- |
+| Code Duplication Rate | [Before]%          | [After]%          | [Improvement]%   |
+| Average Method Length | [Before] lines     | [After] lines     | [Reduction]%     |
+| Cyclomatic Complexity | [Before]           | [After]           | [Improvement]%   |
 
 ### Error Handling
+
 **Expected Errors and Countermeasures:**
+
 1. **Test Failure**: Immediately revert to previous state and re-execute refactoring in smaller units
 2. **Performance Degradation**: Rollback when performance decline is detected through benchmark comparison
 3. **Architecture Violation**: Correction guidance when inter-layer dependency issues are detected
@@ -212,6 +250,7 @@ echo "✅ テストGREEN状態維持 - 次の改善に進みます"
 ## 📊 Standardized Output Format
 
 ### 実行サマリー
+
 ```
 🔧 Issues: #${ISSUE_NUMBER} のリファクタリングを開始します
 
@@ -221,7 +260,7 @@ echo "✅ テストGREEN状態維持 - 次の改善に進みます"
 
 🎨 リファクタリング実行結果:
 ✅ 重複コード除去: XX箇所改善
-✅ メソッド構造改善: XX個のメソッドを最適化  
+✅ メソッド構造改善: XX個のメソッドを最適化
 ✅ デザインパターン適用: XX個のパターン導入
 ✅ パフォーマンス最適化: XX%の処理速度改善
 
@@ -231,23 +270,29 @@ echo "✅ テストGREEN状態維持 - 次の改善に進みます"
 ```
 
 ### 成果物
+
 **作成されたファイル:**
+
 - `docs/refactoring/refactor-report-${ISSUE_NUMBER}.md`: リファクタリング詳細レポート
 - `docs/refactoring/quality-metrics-${ISSUE_NUMBER}.json`: 品質改善メトリクス
 - `docs/refactoring/before-after-comparison-${ISSUE_NUMBER}.md`: 改善前後比較
 
 ### 総合判定
+
 **ステータス**: `SUCCESS|PARTIAL|FAILED`
 **品質改善スコア**: [改善度]/100
 **次フェーズ準備**: `READY|CONDITIONAL|NOT_READY`
 
 ### 次のステップ
+
 1. **即座に実行可能**: `/evolve-scenarios feature-name`（新しいシナリオ発見時）
 2. **即座に実行可能**: `/review-issue ${ISSUE_NUMBER}`（レビューフェーズへ）
 3. **要確認事項**: 重大な品質問題が残っている場合の追加改善
 
 ### メタデータ更新
-Issue metadata (`docs/use_cases/issue-${ISSUE_NUMBER}.json`) を更新:
+
+Issue metadata (`docs/use_cases/sprints/sprint-*/issue-${ISSUE_NUMBER}/metadata.json`) を更新:
+
 ```json
 {
   "phases": {
@@ -280,7 +325,7 @@ Issue metadata (`docs/use_cases/issue-${ISSUE_NUMBER}.json`) を更新:
 
 ## 重要な注意事項
 
-1. **テスト駆動の安全性**: 各改善ステップの後に必ずテストを実行し、GREEN状態を維持
+1. **テスト駆動の安全性**: 各改善ステップの後に必ずテストを実行し、GREEN 状態を維持
 2. **機能不変の原則**: リファクタリングは機能を変更せず、構造のみを改善
 3. **段階的アプローチ**: 大きな変更を避け、小さな改善を積み重ねる
 4. **品質測定**: 改善前後の定量的比較で効果を検証

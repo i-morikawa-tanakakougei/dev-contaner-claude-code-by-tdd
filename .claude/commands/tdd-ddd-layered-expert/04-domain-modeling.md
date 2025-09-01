@@ -5,21 +5,25 @@
 During command execution, you act as a **Domain-Driven Design Architect** specialist.
 
 **Language Guidelines:**
+
 - All technical instructions to Claude Code should be written in English
 - All user interactions and responses should be in Japanese
 
 ### Your Expertise
+
 - **DDD Tactical Design**: Entity, Value Object, Aggregate, and Repository design
 - **Business Rule Modeling**: Complex business logic extraction and formalization
 - **Aggregate Boundary Design**: Consistency boundary identification and optimization
 - **Domain Service Architecture**: Complex business operation orchestration
 
 ### Execution Principles
+
 1. **Domain Purity**: Keep domain layer free from infrastructure concerns
 2. **Business Rule Focus**: Extract and formalize all business invariants and rules
 3. **Aggregate Consistency**: Design proper transactional boundaries
 
 ### Quality Standards
+
 - **Business Rule Coverage**: All Given-When-Then rules captured in domain model
 - **Aggregate Boundaries**: Clear consistency boundaries with single aggregate roots
 - **Ubiquitous Language**: Consistent domain terminology throughout
@@ -43,12 +47,14 @@ During command execution, you act as a **Domain-Driven Design Architect** specia
 ## 🎯 PHASE PURPOSE: DOMAIN MODEL DESIGN ONLY
 
 **⚠️ Important Notice:**
+
 - **This step focuses on DESIGN DOCUMENTATION** - Create domain model specifications
 - **NO CODE IMPLEMENTATION** - Pure design and documentation phase
 - **DDD Tactical Design** - Focus on entities, value objects, aggregates, services
 
 **What this step does:**
-1. `03-create-use-case` ← Previous: Use case specifications  
+
+1. `03-create-use-case` ← Previous: Use case specifications
 2. `04-domain-modeling` ← **【YOU ARE HERE】Domain model design**
 3. `05-create-tests` ← Next: TDD test creation
 4. `06-implement-domain` ← Next: Domain layer implementation
@@ -58,48 +64,58 @@ During command execution, you act as a **Domain-Driven Design Architect** specia
 ## 📋 Lightweight Context Management
 
 ### Required Reading (Minimal)
+
 ```bash
-# Issue numbers from command arguments
-ISSUE_NUMBERS="$1"
-
-# Read use case specifications for each issue
-for issue_num in $(echo $ISSUE_NUMBERS | tr ',' ' '); do
-    USE_CASE_FILE=$(find docs/use_cases/ -name "*issue*${issue_num}*.md" -type f | head -1)
-    if [[ -f "$USE_CASE_FILE" ]]; then
-        Read "$USE_CASE_FILE"
-    fi
-done
-
-# Read project vision for ubiquitous language
-if [[ -f "docs/vision/project-vision.md" ]]; then
-    Read docs/vision/project-vision.md
+# Validate issue number parameter
+if [[ -z "$1" ]]; then
+    echo "ERROR: Issue number required. Usage: /domain-modeling <issue-number>"
+    exit 1
 fi
 
-# Read existing domain models for consistency
-if [[ -d "docs/domain" ]]; then
-    Glob docs/domain/*.md
+ISSUE_NUMBER="$1"
+echo "🏗️ Executing domain-modeling with automated Python implementation..."
+
+# Execute the enhanced Python implementation
+SCRIPT_PATH=".claude/commands/tdd-ddd-layered-expert/utils/04-domain-modeling.py"
+
+if [[ -f "$SCRIPT_PATH" ]]; then
+    echo "✅ Found enhanced implementation: $SCRIPT_PATH"
+    uv run "$SCRIPT_PATH" "$ISSUE_NUMBER"
+    EXIT_CODE=$?
+
+    if [[ $EXIT_CODE -eq 0 ]]; then
+        echo "✅ Domain modeling completed successfully"
+    else
+        echo "❌ Domain modeling failed with exit code: $EXIT_CODE"
+        exit $EXIT_CODE
+    fi
+else
+    echo "❌ Enhanced implementation not found: $SCRIPT_PATH"
+    echo "💡 Please ensure the Python implementation is available"
+    exit 1
 fi
 ```
 
 ### GitHub Issue Integration
 
 #### Issue Comment Retrieval and Analysis
+
 ```bash
 # Load GitHub issue with comments (if issue number provided)
 if [[ -n "$ISSUE_NUMBERS" ]]; then
     for issue_num in $(echo $ISSUE_NUMBERS | tr ',' ' '); do
         echo "Retrieving GitHub issue #$issue_num with comments for domain modeling..."
-        
+
         # Get issue details with comments
         ISSUE_DATA=$(gh issue view $issue_num --json title,body,comments,updatedAt,createdAt,labels,assignees)
-        
+
         # Extract and prioritize recent comments
         RECENT_COMMENTS=$(echo "$ISSUE_DATA" | jq -r '.comments | sort_by(.createdAt) | reverse | .[0:5]')
-        
+
         COMMENT_COUNT=$(echo "$ISSUE_DATA" | jq '.comments | length')
         echo "Found $COMMENT_COUNT comments on issue #$issue_num"
         echo "Prioritizing latest 5 comments for domain modeling analysis"
-        
+
         # Check for domain model evolution through comments
         if [[ $COMMENT_COUNT -gt 0 ]]; then
             echo "Analyzing comment timeline for domain model updates..."
@@ -116,9 +132,11 @@ fi
 ## 🚀 Expert Execution Flow
 
 ### Phase 1: Analysis and Understanding
+
 **Analyze the following as expert (User interactions in Japanese):**
 
 1. **Use Case Specification Analysis**
+
    - Extract domain concepts from Given-When-Then scenarios using Read tool
    - Identify entities (objects with identity and lifecycle)
    - Identify value objects (immutable, replaceable objects)
@@ -130,9 +148,11 @@ fi
    - Identify reusable domain patterns
 
 ### Phase 2: Design and Planning
+
 **Design the following as expert (Instructions to Claude Code in English):**
 
 1. **Entity Design**
+
    ```
    For each identified entity:
    - Define entity identity and lifecycle
@@ -142,6 +162,7 @@ fi
    ```
 
 2. **Value Object Design**
+
    ```
    For each identified value object:
    - Define immutable properties
@@ -160,9 +181,11 @@ fi
    ```
 
 ### Phase 3: Implementation and Execution
+
 **Execute the following as expert (Instructions to Claude Code in English):**
 
 1. **Validate issue numbers and prerequisites**
+
    ```bash
    # Validate issue number requirement
    if [[ $# -eq 0 ]]; then
@@ -170,7 +193,7 @@ fi
        echo "Usage example: /domain-modeling 1"
        exit 1
    fi
-   
+
    # Check for use case specifications
    for issue_num in $(echo $1 | tr ',' ' '); do
        USE_CASE_FILE=$(find docs/use_cases/ -name "*issue*${issue_num}*.md" -type f | head -1)
@@ -183,14 +206,15 @@ fi
    ```
 
 2. **Create domain model documents**
+
    ```bash
    # Create docs/domain directory if not exists
    Bash mkdir -p docs/domain
-   
+
    # For each issue, create domain model document
    for issue_num in $(echo $1 | tr ',' ' '); do
        DOMAIN_FILE="docs/domain/issue-${issue_num}-domain-model.md"
-       
+
        # Create comprehensive domain model document
        Write "$DOMAIN_FILE" with domain model content including:
        # - Domain overview and bounded context
@@ -206,17 +230,18 @@ fi
    ```
 
 3. **Update project metadata**
+
    ```bash
    # Update use case metadata files
    for issue_num in $(echo $1 | tr ',' ' '); do
-       METADATA_FILE=$(find docs/use_cases/ -name "*issue*${issue_num}*.json" -type f | head -1)
+       METADATA_FILE=$(find docs/use_cases/sprints/ -name "*issue*${issue_num}*.json" -type f | head -1)
        if [[ -f "$METADATA_FILE" ]]; then
            # Update metadata to mark domain modeling as complete
            # Set phases.domain_model.created to true
            # Add domain model file reference
        fi
    done
-   
+
    # Update use cases index
    if [[ -f "docs/use_cases/index.md" ]]; then
        # Update index to reflect domain modeling completion status
@@ -227,13 +252,15 @@ fi
    ```bash
    Bash git add docs/domain/
    Bash git commit -m "feat: create domain models for issues $(echo $1 | tr ',' ' ')
+   ```
 
 Design entities, value objects, and aggregates based on DDD principles.
 Extract business rules from Given-When-Then scenarios.
 
 🎯 Generated with Claude Code
 "
-   ```
+
+````
 
 ## ✅ Built-in Quality Assurance
 
@@ -280,7 +307,7 @@ Extract business rules from Given-When-Then scenarios.
 
 ### 総合判定
 **ステータス**: `SUCCESS`
-**品質スコア**: [スコア]/100  
+**品質スコア**: [スコア]/100
 **次フェーズ準備**: `READY`
 
 ### 次のステップ (日本語でユーザーに案内)
@@ -292,19 +319,20 @@ Extract business rules from Given-When-Then scenarios.
 ```bash
 # Update project state metadata
 if [[ -f "docs/metadata/project-state.json" ]]; then
-    # Update overall_status to "domain_model_designed"
-    # Increment domain modeling completions
-    # Update architecture overview with domain metrics
+ # Update overall_status to "domain_model_designed"
+ # Increment domain modeling completions
+ # Update architecture overview with domain metrics
 fi
-```
+````
 
 **ユーザーへのメッセージ (日本語)**:
+
 ```
 🎉 ドメインモデリング完了！
 
 🏗️ ドメイン設計要素:
    📊 エンティティ: [count] 個
-   📊 値オブジェクト: [count] 個  
+   📊 値オブジェクト: [count] 個
    📊 アグリゲート: [count] 個
    📊 ドメインサービス: [count] 個
 

@@ -5,18 +5,21 @@
 During command execution, you act as a **Requirements Analysis and Use Case Design Expert** specialist.
 
 ### Your Expertise
+
 - **Requirements Engineering**: Comprehensive requirement extraction from GitHub issues with specification conflict resolution and stakeholder alignment
 - **Use Case Architecture**: Detailed use case specification design with Given-When-Then scenario modeling and acceptance test creation
-- **Domain Analysis**: Domain concept identification with ubiquitous language integration and boundary context alignment  
+- **Domain Analysis**: Domain concept identification with ubiquitous language integration and boundary context alignment
 - **Test Design**: Acceptance test case creation with comprehensive edge case coverage and automated testing preparation
 
 ### Execution Principles
+
 1. **Issue-Driven Analysis**: Extract comprehensive requirements from GitHub issues including comment history and specification evolution
 2. **Scenario Completeness**: Create main scenarios, alternative flows, edge cases, and exception handling with full test coverage
 3. **Domain Consistency**: Ensure all domain concepts align with established ubiquitous language and bounded context
 4. **Implementation Readiness**: Produce specifications that enable direct TDD implementation without ambiguity
 
 **Language Guidelines:**
+
 - All technical instructions to Claude Code should be written in English
 - All user interactions and responses should be in Japanese
 
@@ -38,11 +41,13 @@ During command execution, you act as a **Requirements Analysis and Use Case Desi
 ## 🎯 PHASE PURPOSE: USE CASE SPECIFICATION FROM GITHUB ISSUES
 
 **⚠️ Important Notice:**
+
 - **This step focuses on DETAILED SPECIFICATION CREATION** - Convert GitHub issues into comprehensive Given-When-Then specifications with full test coverage
 - **NO IMPLEMENTATION** - Focus only on requirements analysis and specification design
 - **GITHUB ISSUE INTEGRATION** - Prioritize recent comments and track specification evolution through comment history
 
 **What this step does:**
+
 1. `/sprint-planning` ← Sprint tickets already created
 2. `/create-use-case <issue-number>` ← **【YOU ARE HERE】Create detailed specifications from GitHub Issues**
 3. `/domain-modeling <issue-number>` ← Design domain model from use cases
@@ -53,6 +58,7 @@ During command execution, you act as a **Requirements Analysis and Use Case Desi
 ## 📋 軽量コンテキスト管理
 
 ### Required Reading (Minimal)
+
 ```bash
 # Validate issue number parameter
 if [[ -z "$1" ]]; then
@@ -61,30 +67,39 @@ if [[ -z "$1" ]]; then
 fi
 
 ISSUE_NUMBER="$1"
-echo "Creating use case specification for Issue #$ISSUE_NUMBER"
+echo "🚀 Executing create-use-case with automated Python implementation..."
 
-# Load project context
-if [[ -f "docs/vision/ubiquitous_language.md" ]]; then
-    echo "Loading ubiquitous language definitions..."
-    UBIQUITOUS_LANGUAGE_EXISTS=true
+# Execute the enhanced Python implementation
+SCRIPT_PATH=".claude/commands/tdd-ddd-layered-expert/utils/03-create-use-case.py"
+
+if [[ -f "$SCRIPT_PATH" ]]; then
+    echo "✅ Found enhanced implementation: $SCRIPT_PATH"
+    uv run "$SCRIPT_PATH" "$ISSUE_NUMBER"
+    EXIT_CODE=$?
+
+    if [[ $EXIT_CODE -eq 0 ]]; then
+        echo "✅ Use case creation completed successfully"
+    else
+        echo "❌ Use case creation failed with exit code: $EXIT_CODE"
+        exit $EXIT_CODE
+    fi
 else
-    echo "WARNING: Ubiquitous language not found. May need to update during specification."
-    UBIQUITOUS_LANGUAGE_EXISTS=false
+    echo "❌ Enhanced implementation not found: $SCRIPT_PATH"
+    echo "💡 Please ensure the Python implementation is available"
+    exit 1
 fi
-
-# Check for existing use case directory
-mkdir -p "docs/use_cases/issue_$ISSUE_NUMBER"
-echo "Use case directory prepared: docs/use_cases/issue_$ISSUE_NUMBER"
 ```
 
 ### Optional Reading (As Needed)
+
 - Project vision: `docs/vision/vision.md` (understand overall context)
 - Bounded context: `docs/vision/bounded_context.md` (verify domain boundaries)
-- Related use cases: `docs/use_cases/issue_*/` (identify patterns and dependencies)
+- Related use cases: `docs/use_cases/sprints/*/issue-*/` (identify patterns and dependencies)
 
 ## GitHub Issue Integration
 
 ### Issue Comment Retrieval and Analysis
+
 ```bash
 # Retrieve issue with full comment history
 echo "Retrieving GitHub issue #$ISSUE_NUMBER with comments..."
@@ -111,10 +126,12 @@ fi
 ```
 
 ### Specification Evolution Tracking
+
 ```markdown
 ## Comment Analysis Strategy
+
 1. **Latest First**: Recent comments override earlier specifications
-2. **Authority Recognition**: Identify specification authors vs. discussants  
+2. **Authority Recognition**: Identify specification authors vs. discussants
 3. **Change Tracking**: Monitor requirement evolution through timeline
 4. **Conflict Detection**: Flag contradictory requirements between original issue and comments
 5. **Specification Completeness**: Identify missing requirements or ambiguous specifications
@@ -125,9 +142,11 @@ fi
 As a requirements analysis and use case design expert, execute the following step-by-step approach:
 
 ### Phase 1: Detailed GitHub Issue Analysis
+
 **As an expert, analyze the following:**
 
 1. **Comprehensive Issue Understanding**
+
    ```bash
    # Analyze issue details from retrieved data
    echo "Issue Title: $(echo "$ISSUE_DATA" | jq -r '.title')"
@@ -148,15 +167,17 @@ As a requirements analysis and use case design expert, execute the following ste
    - Evaluation Criteria: Implementability, testability, business value clarity
 
 ### Phase 2: Domain Concept Extraction and Language Consistency Verification
+
 **As an expert, design the following:**
 
 1. **New Domain Concept Identification**
+
    ```bash
    # Read existing ubiquitous language
    if [[ $UBIQUITOUS_LANGUAGE_EXISTS == true ]]; then
      Read docs/vision/ubiquitous_language.md
    fi
-   
+
    # Analyze issue for new domain concepts
    # Extract nouns and domain-specific terms from issue description and comments
    ```
@@ -164,57 +185,73 @@ As a requirements analysis and use case design expert, execute the following ste
 2. **Consistency Check with Existing Ubiquitous Language**
    ```markdown
    # Language Consistency Check Template
+
    ## New Concept Candidates
+
    - **[Concept Name]**: [Usage context within issue]
    - **Relationship with Existing Terms**: [Presence of similar concepts, naming consistency]
    - **Position within Bounded Context**: [Role within domain boundaries]
    ```
 
 ### Phase 3: Main Scenario Design
+
 **As an expert, execute the following:**
 
 1. **Converting Main Flows to Given-When-Then**
+
    ```markdown
    # Main Scenario Template
+
    ## Scenario: [Scenario name based on issue requirements]
-   
+
    ### Background and Purpose
+
    [Background information and business purpose extracted from issue]
-   
+
    ### Main Flow
+
    **Given** [Preconditions - System state and data preparation]
    **When** [Execution action - User operations or external events]  
    **Then** [Expected results - System response and state changes]
-   
+
    ### Acceptance Criteria
+
    - [ ] [Verifiable condition 1]
    - [ ] [Verifiable condition 2]
    - [ ] [Verifiable condition 3]
    ```
 
 2. **Alternative Scenarios and Error Case Design**
+
    ```markdown
    # Alternative and Exception Scenario Template
+
    ## Alternative Flow 1: [Alternative condition]
+
    **Given** [Alternative preconditions]
    **When** [Alternative action]
    **Then** [Alternative result]
-   
-   ## Exception Flow 1: [Exception condition]  
+
+   ## Exception Flow 1: [Exception condition]
+
    **Given** [Exception preconditions]
    **When** [Exception triggering action]
    **Then** [Exception handling result and error message]
    ```
 
 ### Phase 4: Acceptance Test Design
+
 **As an expert, execute the following:**
 
 1. **Test Case Detailing**
-   ```markdown
+
+   ````markdown
    # Acceptance Test Case Template
+
    ## Test Case 1: [Test case name]
-   
+
    ### Test Data Preparation
+
    ```json
    {
      "initial_state": {...},
@@ -222,14 +259,20 @@ As a requirements analysis and use case design expert, execute the following ste
      "expected_output": {...}
    }
    ```
-   
+   ````
+
    ### Execution Steps
+
    1. [Preparation step]
-   2. [Execution step]  
+   2. [Execution step]
    3. [Verification step]
-   
+
    ### Expected Results
+
    - [Specific verification points]
+
+   ```
+
    ```
 
 2. **Test Automation Preparation**
@@ -239,7 +282,9 @@ As a requirements analysis and use case design expert, execute the following ste
 ## ✅ Built-in Quality Assurance
 
 ### Self-Diagnostic Checklist
+
 **Mandatory Items (MUST):**
+
 - [ ] All GitHub issue requirements are converted to Given-When-Then scenarios
 - [ ] Comment history is properly analyzed with latest specifications reflected
 - [ ] Main flow, alternative flows, and exception handling are all defined
@@ -247,63 +292,73 @@ As a requirements analysis and use case design expert, execute the following ste
 - [ ] Domain concepts are consistent with ubiquitous language
 
 **Recommended Items (SHOULD):**
+
 - [ ] Edge cases and boundary conditions are sufficiently considered
-- [ ] Performance requirements and security constraints are clearly stated  
+- [ ] Performance requirements and security constraints are clearly stated
 - [ ] Dependencies with other use cases are clarified
 
 ### Quality Metrics
-| Indicator | Target Value | Actual Value | Result |
-|------|--------|--------|------|
-| Scenario Completeness Rate | 100% | [Main/Alternative/Exception completion rate] | ✅/❌ |
-| Acceptance Criteria Clarity | 90% or above | [Clear criteria count/Total criteria count] | ✅/❌ |
-| Test Case Coverage | 85% or above | [Covered conditions/Total conditions] | ✅/❌ |
-| Domain Language Consistency | 100% | [Consistent concept count/New concept count] | ✅/❌ |
+
+| Indicator                   | Target Value | Actual Value                                 | Result |
+| --------------------------- | ------------ | -------------------------------------------- | ------ |
+| Scenario Completeness Rate  | 100%         | [Main/Alternative/Exception completion rate] | ✅/❌  |
+| Acceptance Criteria Clarity | 90% or above | [Clear criteria count/Total criteria count]  | ✅/❌  |
+| Test Case Coverage          | 85% or above | [Covered conditions/Total conditions]        | ✅/❌  |
+| Domain Language Consistency | 100%         | [Consistent concept count/New concept count] | ✅/❌  |
 
 ### Error Handling
+
 **Expected Errors and Solutions:**
+
 1. Issue Existence Error: Verify issue number, check access permissions
-2. Specification Conflict Error: Request stakeholder confirmation, clarify priorities  
+2. Specification Conflict Error: Request stakeholder confirmation, clarify priorities
 3. Domain Concept Conflict: Adjust with existing language, redefine new concepts
 
 ## 📊 Standardized Output Format
 
 ### 実行サマリー
-- ✅ **Issue分析**: [分析完了したIssue情報とコメント数]
+
+- ✅ **Issue 分析**: [分析完了した Issue 情報とコメント数]
 - ✅ **シナリオ作成**: [作成されたメイン/代替/例外シナリオ数]
 - ✅ **受け入れ基準**: [定義された受け入れ基準数とテストケース数]
 - ✅ **ドメイン概念**: [新規定義または更新されたドメイン概念数]
 
 ### 成果物
+
 **作成されたファイル:**
-- `docs/use_cases/issue_<number>/specification.md`: ユースケース仕様書
-- `docs/use_cases/issue_<number>/scenarios.md`: Given-When-Thenシナリオ集
-- `docs/use_cases/issue_<number>/domain_concepts.md`: 関連ドメイン概念定義
-- `docs/use_cases/issue_<number>/acceptance_tests.md`: 受け入れテストケース
+
+- `docs/use_cases/sprints/sprint-*/issue-<number>/specification.md`: ユースケース仕様書
+- `docs/use_cases/sprints/sprint-*/issue-<number>/scenarios.md`: Given-When-Then シナリオ集
+- `docs/use_cases/sprints/sprint-*/issue-<number>/domain_concepts.md`: 関連ドメイン概念定義
+- `docs/use_cases/sprints/sprint-*/issue-<number>/acceptance_tests.md`: 受け入れテストケース
 - `docs/vision/ubiquitous_language.md`: 更新されたユビキタス言語辞書
 
 ### 総合判定
+
 **ステータス**: `[SUCCESS|PARTIAL|FAILED]`
 **品質スコア**: [スコア]/100
 **次フェーズ準備**: `[READY|CONDITIONAL|NOT_READY]`
 
 ### 次のステップ
+
 1. **即座に実行可能**: `/domain-modeling <issue-number>` でドメインモデル設計開始
 2. **条件付き実行**: 仕様レビュー完了後 → `/create-tests <issue-number>`
 3. **要確認事項**: [不明確な要件、外部システム仕様、パフォーマンス要件詳細]
 
 ### メタデータ更新
+
 ```json
 {
-  "command_executed": "create-use-case", 
+  "command_executed": "create-use-case",
   "timestamp": "[ISO-8601 timestamp]",
   "status": "[SUCCESS|PARTIAL|FAILED]",
   "phase": "use-case-specification",
   "issue_number": "[issue-number]",
   "deliverables": {
-    "specification": "docs/use_cases/issue_<number>/specification.md",
-    "scenarios": "docs/use_cases/issue_<number>/scenarios.md", 
-    "domain_concepts": "docs/use_cases/issue_<number>/domain_concepts.md",
-    "acceptance_tests": "docs/use_cases/issue_<number>/acceptance_tests.md"
+    "specification": "docs/use_cases/sprints/sprint-*/issue-<number>/specification.md",
+    "scenarios": "docs/use_cases/sprints/sprint-*/issue-<number>/scenarios.md",
+    "domain_concepts": "docs/use_cases/sprints/sprint-*/issue-<number>/domain_concepts.md",
+    "acceptance_tests": "docs/use_cases/sprints/sprint-*/issue-<number>/acceptance_tests.md"
   },
   "metrics": {
     "scenarios_created": "[main/alternative/exception count]",
@@ -318,9 +373,10 @@ As a requirements analysis and use case design expert, execute the following ste
 
 ---
 
-🎯 GitHub Issueからユースケース仕様作成を開始します。要求分析エキスパートとして、実装可能で包括的な仕様を作成いたします。
+🎯 GitHub Issue からユースケース仕様作成を開始します。要求分析エキスパートとして、実装可能で包括的な仕様を作成いたします。
 
-**使用方法**: 
+**使用方法**:
+
 ```bash
 /create-use-case <issue-number>
 

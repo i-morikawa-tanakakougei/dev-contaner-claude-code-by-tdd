@@ -60,18 +60,34 @@ During command execution, you act as a **Requirements Discovery Specialist** wit
 
 ### Required Reading (Minimal)
 ```bash
-# Project vision and existing scenarios
-if [[ -f "docs/vision/project-vision.md" ]]; then
-    PROJECT_VISION=$(cat docs/vision/project-vision.md)
+# Validate feature name parameter
+if [[ -z "$1" ]]; then
+    echo "ERROR: Feature name required. Usage: /evolve-scenarios <feature-name>"
+    exit 1
 fi
 
-# Current sprint status and feedback
-if [[ -f "docs/sprints/current-sprint.json" ]]; then
-    SPRINT_STATUS=$(cat docs/sprints/current-sprint.json)
-fi
+FEATURE_NAME="$1"
+echo "🌱 Executing evolve-scenarios with automated Python implementation..."
 
-# Feature-related existing scenarios
-EXISTING_SCENARIOS=$(find docs/use_cases/ -name "*${FEATURE_NAME}*" -type f 2>/dev/null)
+# Execute the enhanced Python implementation
+SCRIPT_PATH=".claude/commands/tdd-ddd-layered-expert/utils/12-evolve-scenarios.py"
+
+if [[ -f "$SCRIPT_PATH" ]]; then
+    echo "✅ Found enhanced implementation: $SCRIPT_PATH"
+    python3 "$SCRIPT_PATH" "$FEATURE_NAME"
+    EXIT_CODE=$?
+    
+    if [[ $EXIT_CODE -eq 0 ]]; then
+        echo "✅ Scenario evolution completed successfully"
+    else
+        echo "❌ Scenario evolution failed with exit code: $EXIT_CODE"
+        exit $EXIT_CODE
+    fi
+else
+    echo "❌ Enhanced implementation not found: $SCRIPT_PATH"
+    echo "💡 Please ensure the Python implementation is available"
+    exit 1
+fi
 ```
 
 ### Optional Reading (As Needed)

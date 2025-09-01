@@ -39,34 +39,27 @@ During command execution, you act as a **Project Health Analyst** with deep expe
 ## 📋 Lightweight Context Management
 ### Required Reading (Comprehensive)
 ```bash
-# Complete project state assessment
-echo "=== 完全なプロジェクト状態評価 ==="
+echo "📊 Executing project-status with comprehensive project health analysis..."
 
-# Project metadata and history
-if [ -f "docs/metadata/project-state.json" ]; then
-    echo "プロジェクトメタデータ読み込み中..."
-    cat docs/metadata/project-state.json
+# Execute the enhanced Python implementation
+SCRIPT_PATH=".claude/commands/tdd-ddd-layered-expert/utils/17-project-status.py"
+
+if [[ -f "$SCRIPT_PATH" ]]; then
+    echo "✅ Found enhanced implementation: $SCRIPT_PATH"
+    python3 "$SCRIPT_PATH"
+    EXIT_CODE=$?
+    
+    if [[ $EXIT_CODE -eq 0 ]]; then
+        echo "✅ Project status analysis completed successfully"
+    else
+        echo "❌ Project status analysis failed with exit code: $EXIT_CODE"
+        exit $EXIT_CODE
+    fi
+else
+    echo "❌ Enhanced implementation not found: $SCRIPT_PATH"
+    echo "💡 Please ensure the Python implementation is available"
+    exit 1
 fi
-
-# Vision and strategic alignment
-if [ -f "docs/vision/project-vision.md" ]; then
-    echo "プロジェクトビジョン確認中..."
-    head -n 20 docs/vision/project-vision.md
-fi
-
-# Architecture documentation
-echo "アーキテクチャドキュメント分析中..."
-find docs -name "*architecture*" -type f
-
-# Quality and metrics history
-if [ -f "docs/metrics/quality-history.jsonl" ]; then
-    echo "品質メトリクス履歴読み込み中..."
-    tail -n 20 docs/metrics/quality-history.jsonl
-fi
-
-# Sprint and milestone data
-echo "スプリント・マイルストーン情報取得中..."
-find docs/sprints -name "*.json" -type f | head -5
 ```
 
 ## GitHub Organization Integration

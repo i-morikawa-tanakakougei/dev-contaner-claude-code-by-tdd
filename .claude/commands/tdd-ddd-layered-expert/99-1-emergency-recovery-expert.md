@@ -159,7 +159,7 @@ find docs/ -name "*.md" -mtime +7 -print
 **Technical Instructions for Gap Analysis:**
 ```bash
 # Document-code consistency check
-Read docs/use_cases/ directory contents
+Read docs/use_cases/sprints docs/use_cases/core docs/use_cases/evolved directory contents
 Read docs/domain/ directory contents
 Compare with recent code changes
 

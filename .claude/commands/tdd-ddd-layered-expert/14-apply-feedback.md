@@ -37,18 +37,36 @@ During command execution, you act as a **Feedback Application Specialist** with 
 - **Implementation scope includes code improvements, architecture refinements, and documentation updates** - Implement improvements incrementally while maintaining test coverage
 
 ## 📋 Lightweight Context Management
+
 ### Required Reading (Minimal)
 ```bash
-# Project state and execution history (latest 5 entries only)
-if [ -f "docs/metadata/project-state.json" ]; then
-    echo "Reading project state..."
-    cat docs/metadata/project-state.json | jq '.current_phase, .active_issues, .recent_activities | last(5)'
+# Validate issue number parameter
+if [[ -z "$1" ]]; then
+    echo "ERROR: Issue number required. Usage: /apply-feedback <issue-number>"
+    exit 1
 fi
 
-# Execution history (latest entries)
-if [ -f ".claude/context/execution-history.jsonl" ]; then
-    echo "Reading execution history..."
-    tail -n 5 .claude/context/execution-history.jsonl
+ISSUE_NUMBER="$1"
+echo "🔄 Executing apply-feedback with automated Python implementation..."
+
+# Execute the enhanced Python implementation
+SCRIPT_PATH=".claude/commands/tdd-ddd-layered-expert/utils/14-apply-feedback.py"
+
+if [[ -f "$SCRIPT_PATH" ]]; then
+    echo "✅ Found enhanced implementation: $SCRIPT_PATH"
+    python3 "$SCRIPT_PATH" "$ISSUE_NUMBER"
+    EXIT_CODE=$?
+    
+    if [[ $EXIT_CODE -eq 0 ]]; then
+        echo "✅ Feedback application completed successfully"
+    else
+        echo "❌ Feedback application failed with exit code: $EXIT_CODE"
+        exit $EXIT_CODE
+    fi
+else
+    echo "❌ Enhanced implementation not found: $SCRIPT_PATH"
+    echo "💡 Please ensure the Python implementation is available"
+    exit 1
 fi
 ```
 

@@ -39,26 +39,33 @@ During command execution, you act as a **Development Progress Analyst** with dee
 ## 📋 Lightweight Context Management
 ### Required Reading (Minimal)
 ```bash
-# Project state and execution history (comprehensive analysis)
-if [ -f "docs/metadata/project-state.json" ]; then
-    echo "Reading comprehensive project state..."
-    cat docs/metadata/project-state.json
+# Validate issue number parameter
+if [[ -z "$1" ]]; then
+    echo "ERROR: Issue number required. Usage: /use-case-status <issue-number>"
+    exit 1
 fi
 
-# Use case documentation analysis
-echo "Analyzing use case documentation..."
-find docs/use_cases -name "*.md" -type f | head -10
+ISSUE_NUMBER="$1"
+echo "📊 Executing use-case-status with enhanced analysis capabilities..."
 
-# Sprint progress tracking
-if [ -f "docs/sprints/current-sprint.json" ]; then
-    echo "Reading current sprint data..."
-    cat docs/sprints/current-sprint.json
-fi
+# Execute the enhanced Python implementation
+SCRIPT_PATH=".claude/commands/tdd-ddd-layered-expert/utils/16-use-case-status.py"
 
-# Quality metrics history
-if [ -f "docs/metrics/quality-history.jsonl" ]; then
-    echo "Reading quality metrics history..."
-    tail -n 10 docs/metrics/quality-history.jsonl
+if [[ -f "$SCRIPT_PATH" ]]; then
+    echo "✅ Found enhanced implementation: $SCRIPT_PATH"
+    python3 "$SCRIPT_PATH" "$ISSUE_NUMBER"
+    EXIT_CODE=$?
+    
+    if [[ $EXIT_CODE -eq 0 ]]; then
+        echo "✅ Status analysis completed successfully"
+    else
+        echo "❌ Status analysis failed with exit code: $EXIT_CODE"
+        exit $EXIT_CODE
+    fi
+else
+    echo "❌ Enhanced implementation not found: $SCRIPT_PATH"
+    echo "💡 Please ensure the Python implementation is available"
+    exit 1
 fi
 ```
 
@@ -158,14 +165,15 @@ def analyze_use_case_progress():
     }
     
     # Analyze use case documentation
-    use_case_dir = "docs/use_cases"
-    if os.path.exists(use_case_dir):
-        for filename in os.listdir(use_case_dir):
-            if filename.endswith('.md'):
-                use_case_analysis = analyze_single_use_case(
-                    os.path.join(use_case_dir, filename)
-                )
-                progress_data["use_cases"].append(use_case_analysis)
+    for use_case_subdir in ["docs/use_cases/sprints", "docs/use_cases/core", "docs/use_cases/evolved"]:
+        if os.path.exists(use_case_subdir):
+            for root, dirs, files in os.walk(use_case_subdir):
+                for filename in files:
+                    if filename.endswith('.md'):
+                        use_case_analysis = analyze_single_use_case(
+                            os.path.join(root, filename)
+                        )
+                        progress_data["use_cases"].append(use_case_analysis)
     
     # Generate summary statistics
     for uc in progress_data["use_cases"]:
