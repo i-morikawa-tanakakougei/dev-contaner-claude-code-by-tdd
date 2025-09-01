@@ -56,28 +56,42 @@ During command execution, you act as a **Retrospective Issue Analysis & GitHub I
 ## 📋 Lightweight Context Management
 
 ### Required Reading (Minimal)
+
 ```bash
-# Emergency recovery state (if exists)
-if [[ -f ".claude/context/emergency-recovery-state.json" ]]; then
-    EMERGENCY_STATE=$(cat .claude/context/emergency-recovery-state.json)
-    RECOVERY_CONTEXT=$(echo $EMERGENCY_STATE | jq -r '.recovery_context // "none"')
-    IDENTIFIED_ISSUES=$(echo $EMERGENCY_STATE | jq -r '.identified_issues // []')
+# Validate optional commit hash or analysis mode parameter
+if [[ -n "$1" ]]; then
+    COMMIT_HASH_OR_MODE="$1"
+    echo "📝 Executing create-retroactive-issue with context: $COMMIT_HASH_OR_MODE"
+else
+    echo "📝 Executing create-retroactive-issue in auto-analysis mode"
 fi
 
-# Project state (only if exists)
-if [[ -f "docs/metadata/project-state.json" ]]; then
-    PROJECT_STATE=$(cat docs/metadata/project-state.json)
-    CURRENT_PHASE=$(echo $PROJECT_STATE | jq -r '.current_phase')
-fi
+echo "📝 Executing create-retroactive-issue with automated Python implementation..."
 
-# Execution history (latest 5 entries only)
-RECENT_HISTORY=$(tail -5 .claude/context/execution-history.jsonl 2>/dev/null || echo "[]")
+# Execute the enhanced Python implementation
+SCRIPT_PATH=".claude/commands/tdd-ddd-layered-expert/utils/99-2-create-retroactive-issue-expert.py"
+
+if [[ -f "$SCRIPT_PATH" ]]; then
+    echo "✅ Found enhanced implementation: $SCRIPT_PATH"
+    if [[ -n "$COMMIT_HASH_OR_MODE" ]]; then
+        uv run "$SCRIPT_PATH" "$COMMIT_HASH_OR_MODE"
+    else
+        uv run "$SCRIPT_PATH"
+    fi
+    EXIT_CODE=$?
+
+    if [[ $EXIT_CODE -eq 0 ]]; then
+        echo "✅ Retroactive issue creation completed successfully"
+    else
+        echo "❌ Retroactive issue creation failed with exit code: $EXIT_CODE"
+        exit $EXIT_CODE
+    fi
+else
+    echo "❌ Enhanced implementation not found: $SCRIPT_PATH"
+    echo "💡 Please ensure the Python implementation is available"
+    exit 1
+fi
 ```
-
-### Optional Reading (As Needed)
-- Emergency recovery logs: `.claude/context/emergency-recovery-*.log`
-- Recent commits: `git log --oneline -10`
-- Current repository state: `git status`
 
 ## GitHub Issue Integration
 
@@ -237,20 +251,48 @@ done
    - 技術的負債対応の実装計画確認
 
 ### メタデータ更新
+
+実行履歴と緊急復旧Issue作成情報が自動的にJSONファイルに記録されます：
+
 ```json
 {
-  "command_executed": "99-2-create-retroactive-issue-expert",
-  "timestamp": "[ISO-8601]",
-  "status": "[SUCCESS/PARTIAL/FAILED]",
-  "issues_created": [
-    {
-      "issue_number": 0,
-      "title": "string",
-      "type": "bug|enhancement|technical-debt|documentation|testing",
-      "priority": "high|medium|low"
-    }
-  ],
-  "next_recommended": ["99-3-sync-documentation"],
-  "quality_score": 0
+  "retroactive_issues": {
+    "creation_completed_at": "[ISO-8601]",
+    "status": "SUCCESS|PARTIAL|FAILED",
+    "total_issues_created": [count],
+    "issues_by_type": {
+      "bug": [count],
+      "enhancement": [count],
+      "technical_debt": [count],
+      "documentation": [count],
+      "testing": [count]
+    },
+    "issues_by_priority": {
+      "high": [count],
+      "medium": [count],
+      "low": [count]
+    },
+    "created_issues": [
+      {
+        "issue_number": [number],
+        "title": "[title]",
+        "type": "bug|enhancement|technical-debt|documentation|testing",
+        "priority": "high|medium|low",
+        "url": "[github_url]"
+      }
+    ],
+    "report_file": "docs/issues/retroactive-issues-YYYYMMDD.md",
+    "next_actions": ["/sync-documentation", "/create-tests"]
+  },
+  "execution_history": {
+    "commands_executed": [
+      {
+        "command": "/create-retroactive-issue [commit-hash]",
+        "executed_at": "[ISO-8601]",
+        "status": "success|failed",
+        "files_affected": ["report_files...", "github_issues..."]
+      }
+    ]
+  }
 }
 ```

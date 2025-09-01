@@ -59,16 +59,41 @@ During command execution, you act as an **Emergency Recovery Review Specialist**
 ## 📋 Lightweight Context Management
 
 ### Required Reading (Minimal)
+
 ```bash
-# Project state (only if exists)
-if [[ -f "docs/metadata/project-state.json" ]]; then
-    PROJECT_STATE=$(cat docs/metadata/project-state.json)
-    CURRENT_PHASE=$(echo $PROJECT_STATE | jq -r '.current_phase')
-    EMERGENCY_STATUS=$(echo $PROJECT_STATE | jq -r '.emergency_recovery.final_review_completed')
+# Validate optional issue number parameter
+if [[ -n "$1" ]]; then
+    ISSUE_NUMBER="$1"
+    echo "🔍 Executing review-emergency-recovery with issue: $ISSUE_NUMBER"
+else
+    echo "🔍 Executing review-emergency-recovery in comprehensive analysis mode"
 fi
 
-# Execution history (emergency recovery commands only)
-EMERGENCY_HISTORY=$(grep -E "99-[1-7]-" .claude/context/execution-history.jsonl 2>/dev/null | tail -20 || echo "[]")
+echo "🔍 Executing review-emergency-recovery with automated Python implementation..."
+
+# Execute the enhanced Python implementation
+SCRIPT_PATH=".claude/commands/tdd-ddd-layered-expert/utils/99-7-review-emergency-recovery-expert.py"
+
+if [[ -f "$SCRIPT_PATH" ]]; then
+    echo "✅ Found enhanced implementation: $SCRIPT_PATH"
+    if [[ -n "$ISSUE_NUMBER" ]]; then
+        uv run "$SCRIPT_PATH" "$ISSUE_NUMBER"
+    else
+        uv run "$SCRIPT_PATH"
+    fi
+    EXIT_CODE=$?
+
+    if [[ $EXIT_CODE -eq 0 ]]; then
+        echo "✅ Emergency recovery review completed successfully"
+    else
+        echo "❌ Emergency recovery review failed with exit code: $EXIT_CODE"
+        exit $EXIT_CODE
+    fi
+else
+    echo "❌ Enhanced implementation not found: $SCRIPT_PATH"
+    echo "💡 Please ensure the Python implementation is available"
+    exit 1
+fi
 ```
 
 ### GitHub Issue Context Loading
@@ -200,15 +225,74 @@ fi
 3. **チーム共有**: 緊急対応学習事項の共有とプロセス改善検討
 
 ### メタデータ更新
+
+実行履歴と緊急復旧最終レビュー情報が自動的にJSONファイルに記録されます：
+
 ```json
 {
-  "command_executed": "99-7-review-emergency-recovery",
-  "timestamp": "[ISO-8601]",
-  "emergency_recovery_completed": true,
-  "quality_score": "[score]",
-  "standard_workflow_ready": true,
-  "improvement_recommendations_count": "[count]",
-  "next_recommended": ["return_to_standard_workflow"]
+  "emergency_recovery_final_review": {
+    "review_completed_at": "[ISO-8601]",
+    "status": "SUCCESS|CONDITIONAL|FAILED",
+    "target_context": "[issue_number|comprehensive]",
+    "process_completion_analysis": {
+      "total_emergency_commands": 7,
+      "executed_commands": "[count]",
+      "completion_percentage": "[percentage]",
+      "missing_steps": "[list]",
+      "execution_timeline_valid": "[boolean]"
+    },
+    "quality_assessment": {
+      "document_consistency_score": "[percentage]",
+      "test_coverage_achievement": "[boolean]",
+      "architecture_compliance_score": "[percentage]",
+      "overall_quality_score": "[score_out_of_100]"
+    },
+    "deliverables_verification": {
+      "emergency_recovery_reports": "[count]",
+      "retroactive_tests_created": "[count]",
+      "metadata_files_updated": "[count]",
+      "documentation_synchronized": "[boolean]"
+    },
+    "standard_workflow_readiness": {
+      "project_state_health": "HEALTHY|CONDITIONAL|UNHEALTHY",
+      "build_status": "PASSING|FAILING",
+      "test_suite_status": "PASSING|FAILING",
+      "ready_for_standard_workflow": "[boolean]"
+    },
+    "improvement_recommendations": [
+      {
+        "category": "process|quality|automation|documentation",
+        "priority": "critical|high|medium|low",
+        "description": "[improvement_description]",
+        "estimated_effort": "[effort_estimation]"
+      }
+    ],
+    "lessons_learned": [
+      {
+        "area": "emergency_response|quality_assurance|process_improvement",
+        "lesson": "[lesson_description]",
+        "actionable_item": "[action_item]"
+      }
+    ],
+    "generated_reports": [
+      {
+        "report_type": "final_review|quality_assessment|improvement_plan",
+        "file_path": "[path_to_report]",
+        "summary": "[brief_summary]"
+      }
+    ],
+    "next_actions": ["return_to_standard_workflow", "implement_improvements"]
+  },
+  "execution_history": {
+    "commands_executed": [
+      {
+        "command": "/review-emergency-recovery [issue-number]",
+        "executed_at": "[ISO-8601]",
+        "status": "success|failed",
+        "files_affected": ["review_reports...", "metadata_files..."]
+      }
+    ]
+  }
 }
 ```
 

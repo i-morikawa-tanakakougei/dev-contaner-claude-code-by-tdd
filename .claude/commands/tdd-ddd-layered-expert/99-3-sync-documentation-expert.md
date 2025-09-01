@@ -56,30 +56,41 @@ During command execution, you act as a **Documentation Synchronization & Knowled
 ## 📋 Lightweight Context Management
 
 ### Required Reading (Minimal)
+
 ```bash
-# Emergency recovery state (if exists)
-if [[ -f ".claude/context/emergency-recovery-state.json" ]]; then
-    EMERGENCY_STATE=$(cat .claude/context/emergency-recovery-state.json)
-    RECOVERY_CONTEXT=$(echo $EMERGENCY_STATE | jq -r '.recovery_context // "none"')
-    IDENTIFIED_ISSUES=$(echo $EMERGENCY_STATE | jq -r '.identified_issues // []')
-    DOCUMENTATION_IMPACTS=$(echo $EMERGENCY_STATE | jq -r '.documentation_impacts // []')
+# Validate optional parameters (this command can work with various contexts)
+if [[ -n "$1" ]]; then
+    CONTEXT_TYPE="$1"
+    echo "📚 Executing sync-documentation with context type: $CONTEXT_TYPE"
+else
+    echo "📚 Executing sync-documentation in comprehensive analysis mode"
 fi
 
-# Issue creation results (from previous command)
-if [[ -f ".claude/context/issue-creation-log.json" ]]; then
-    ISSUE_LOG=$(cat .claude/context/issue-creation-log.json)
-    CREATED_ISSUES=$(echo $ISSUE_LOG | jq -r '.issues_created // []')
-fi
+echo "📚 Executing sync-documentation with automated Python implementation..."
 
-# Project state (only if exists)
-if [[ -f "docs/metadata/project-state.json" ]]; then
-    PROJECT_STATE=$(cat docs/metadata/project-state.json)
-    CURRENT_PHASE=$(echo $PROJECT_STATE | jq -r '.current_phase')
-    DOCUMENTATION_STATUS=$(echo $PROJECT_STATE | jq -r '.documentation_status // {}')
-fi
+# Execute the enhanced Python implementation
+SCRIPT_PATH=".claude/commands/tdd-ddd-layered-expert/utils/99-3-sync-documentation-expert.py"
 
-# Execution history (latest 10 entries for broader context)
-RECENT_HISTORY=$(tail -10 .claude/context/execution-history.jsonl 2>/dev/null || echo "[]")
+if [[ -f "$SCRIPT_PATH" ]]; then
+    echo "✅ Found enhanced implementation: $SCRIPT_PATH"
+    if [[ -n "$CONTEXT_TYPE" ]]; then
+        uv run "$SCRIPT_PATH" "$CONTEXT_TYPE"
+    else
+        uv run "$SCRIPT_PATH"
+    fi
+    EXIT_CODE=$?
+
+    if [[ $EXIT_CODE -eq 0 ]]; then
+        echo "✅ Documentation synchronization completed successfully"
+    else
+        echo "❌ Documentation synchronization failed with exit code: $EXIT_CODE"
+        exit $EXIT_CODE
+    fi
+else
+    echo "❌ Enhanced implementation not found: $SCRIPT_PATH"
+    echo "💡 Please ensure the Python implementation is available"
+    exit 1
+fi
 ```
 
 ### Optional Reading (As Needed)
@@ -249,35 +260,55 @@ git log --oneline -20 --grep="docs\|documentation\|README" --all
    - 教訓文書の共有と周知計画
 
 ### メタデータ更新
+
+実行履歴とドキュメント同期情報が自動的にJSONファイルに記録されます：
+
 ```json
 {
-  "command_executed": "99-3-sync-documentation-expert",
-  "timestamp": "[ISO-8601]",
-  "status": "[SUCCESS/PARTIAL/FAILED]",
-  "documentation_updates": {
-    "updated_files": [
+  "documentation_sync": {
+    "sync_completed_at": "[ISO-8601]",
+    "status": "SUCCESS|PARTIAL|FAILED",
+    "total_files_processed": [count],
+    "updated_files": [count],
+    "created_files": [count],
+    "documentation_updates": {
+      "vision_updates": [count],
+      "use_case_updates": [count],
+      "domain_model_updates": [count],
+      "architecture_updates": [count],
+      "test_documentation_updates": [count]
+    },
+    "traceability_enhancements": [
       {
-        "path": "string",
-        "type": "vision|use_case|domain|architecture|test",
-        "change_type": "major|minor|patch"
+        "from_type": "requirement|issue|emergency_fix",
+        "to_type": "design|implementation|test|documentation",
+        "links_established": [count],
+        "consistency_score": [percentage]
       }
     ],
-    "created_files": [
+    "quality_improvements": {
+      "documentation_coverage": [percentage],
+      "consistency_score": [percentage],
+      "knowledge_preservation_score": [percentage]
+    },
+    "created_artifacts": [
       {
-        "path": "string",
-        "type": "incident|lesson_learned|adr",
-        "purpose": "string"
+        "type": "incident_report|adr|lesson_learned|sync_report",
+        "file_path": "[path]",
+        "purpose": "[description]"
+      }
+    ],
+    "next_actions": ["/retroactive-test", "/validate-emergency-fix"]
+  },
+  "execution_history": {
+    "commands_executed": [
+      {
+        "command": "/sync-documentation [context-type]",
+        "executed_at": "[ISO-8601]",
+        "status": "success|failed",
+        "files_affected": ["doc_files...", "metadata_files..."]
       }
     ]
-  },
-  "traceability_enhancements": [
-    {
-      "from": "requirement|issue",
-      "to": "design|implementation|test",
-      "link_established": "boolean"
-    }
-  ],
-  "next_recommended": ["99-4-retroactive-test"],
-  "quality_score": 0
+  }
 }
 ```

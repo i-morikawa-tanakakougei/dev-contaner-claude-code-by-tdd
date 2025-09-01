@@ -63,15 +63,41 @@ During command execution, you act as an **Emergency Fix Validation Architecture 
 ## 📋 Lightweight Context Management
 
 ### Required Reading (Minimal)
+
 ```bash
-# Project state (only if exists)
-if [[ -f "docs/metadata/project-state.json" ]]; then
-    PROJECT_STATE=$(cat docs/metadata/project-state.json)
-    CURRENT_PHASE=$(echo $PROJECT_STATE | jq -r '.current_phase')
+# Validate optional issue number parameter
+if [[ -n "$1" ]]; then
+    ISSUE_NUMBER="$1"
+    echo "🔍 Executing validate-emergency-fix with issue: $ISSUE_NUMBER"
+else
+    echo "🔍 Executing validate-emergency-fix in comprehensive analysis mode"
 fi
 
-# Execution history (latest 5 entries only)
-RECENT_HISTORY=$(tail -5 .claude/context/execution-history.jsonl 2>/dev/null || echo "[]")
+echo "🔍 Executing validate-emergency-fix with automated Python implementation..."
+
+# Execute the enhanced Python implementation
+SCRIPT_PATH=".claude/commands/tdd-ddd-layered-expert/utils/99-5-validate-emergency-fix-expert.py"
+
+if [[ -f "$SCRIPT_PATH" ]]; then
+    echo "✅ Found enhanced implementation: $SCRIPT_PATH"
+    if [[ -n "$ISSUE_NUMBER" ]]; then
+        uv run "$SCRIPT_PATH" "$ISSUE_NUMBER"
+    else
+        uv run "$SCRIPT_PATH"
+    fi
+    EXIT_CODE=$?
+
+    if [[ $EXIT_CODE -eq 0 ]]; then
+        echo "✅ Emergency fix validation completed successfully"
+    else
+        echo "❌ Emergency fix validation failed with exit code: $EXIT_CODE"
+        exit $EXIT_CODE
+    fi
+else
+    echo "❌ Enhanced implementation not found: $SCRIPT_PATH"
+    echo "💡 Please ensure the Python implementation is available"
+    exit 1
+fi
 ```
 
 #### Issue Comment Retrieval and Analysis
@@ -231,19 +257,71 @@ prepare_improvement_recommendations()
 3. **要確認事項**: 技術的負債解消の優先度とタイムライン
 
 ### メタデータ更新
+
+実行履歴と緊急修正検証情報が自動的にJSONファイルに記録されます：
+
 ```json
 {
-  "command_executed": "99-5-validate-emergency-fix-expert",
-  "timestamp": "[ISO-8601]",
-  "status": "[ARCHITECTURE_VALIDATED|QUALITY_ASSESSED|READY_FOR_METADATA_RECONCILE]",
-  "validation_results": {
-    "architecture_score": "[score]",
-    "ddd_compliance": "[percentage]",
-    "quality_score": "[score]",
-    "technical_debt_impact": "[points]"
+  "emergency_fix_validation": {
+    "validation_completed_at": "[ISO-8601]",
+    "status": "SUCCESS|PARTIAL|FAILED",
+    "target_context": "[issue_number|comprehensive]",
+    "validation_results": {
+      "architecture_compliance": {
+        "layered_architecture_score": "[percentage]",
+        "dependency_violations": [count],
+        "boundary_violations": [count],
+        "overall_architecture_score": "[score_out_of_5]"
+      },
+      "ddd_compliance": {
+        "entity_integrity_score": "[percentage]",
+        "value_object_immutability": "[boolean]",
+        "aggregate_boundary_score": "[percentage]",
+        "ubiquitous_language_consistency": "[boolean]",
+        "overall_ddd_score": "[score_out_of_5]"
+      },
+      "code_quality": {
+        "cyclomatic_complexity": "[average]",
+        "solid_principles_adherence": "[percentage]",
+        "code_duplication": "[percentage]",
+        "maintainability_index": "[score_out_of_100]",
+        "overall_quality_score": "[score_out_of_5]"
+      },
+      "technical_debt": {
+        "newly_introduced_debt": "[points]",
+        "debt_categories": ["architecture", "code_quality", "documentation"],
+        "high_priority_items": [count],
+        "recommended_resolution_sprints": [count],
+        "impact_level": "LOW|MEDIUM|HIGH"
+      }
+    },
+    "improvement_recommendations": [
+      {
+        "priority": "critical|high|medium|low",
+        "category": "architecture|ddd|quality|debt",
+        "description": "[recommendation_description]",
+        "estimated_effort": "[effort_in_hours]"
+      }
+    ],
+    "validation_reports": [
+      {
+        "report_type": "architecture|ddd|quality|debt",
+        "file_path": "[path_to_report]",
+        "summary": "[brief_summary]"
+      }
+    ],
+    "next_actions": ["/reconcile-metadata", "/review-emergency-recovery"]
   },
-  "next_recommended": ["99-6-reconcile-metadata", "99-7-review-emergency-recovery"],
-  "quality_score": "[overall_score]"
+  "execution_history": {
+    "commands_executed": [
+      {
+        "command": "/validate-emergency-fix [issue-number]",
+        "executed_at": "[ISO-8601]",
+        "status": "success|failed",
+        "files_affected": ["validation_reports...", "metadata_files..."]
+      }
+    ]
+  }
 }
 ```
 

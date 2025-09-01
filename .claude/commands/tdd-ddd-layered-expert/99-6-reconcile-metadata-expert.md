@@ -59,20 +59,37 @@ During command execution, you act as a **Metadata Reconciliation Specialist** wh
 ## 📋 Lightweight Context Management
 
 ### Required Reading (Minimal)
+
 ```bash
-# Project state (only if exists)
-if [[ -f "docs/metadata/project-state.json" ]]; then
-    Read the file docs/metadata/project-state.json to understand current project state
+# Validate optional scope parameter
+if [[ -n "$1" ]]; then
+    RECONCILE_SCOPE="$1"
+    echo "🔄 Executing reconcile-metadata with scope: $RECONCILE_SCOPE"
+else
+    echo "🔄 Executing reconcile-metadata in default scope mode"
+    RECONCILE_SCOPE="project"
 fi
 
-# Project context for consistency
-if [[ -f ".claude/context/project-context.json" ]]; then
-    Read the file .claude/context/project-context.json for project context information
-fi
+echo "🔄 Executing reconcile-metadata with automated Python implementation..."
 
-# Execution history (latest entries only)
-if [[ -f ".claude/context/execution-history.jsonl" ]]; then
-    Use Read tool to examine recent emergency recovery command history
+# Execute the enhanced Python implementation
+SCRIPT_PATH=".claude/commands/tdd-ddd-layered-expert/utils/99-6-reconcile-metadata-expert.py"
+
+if [[ -f "$SCRIPT_PATH" ]]; then
+    echo "✅ Found enhanced implementation: $SCRIPT_PATH"
+    uv run "$SCRIPT_PATH" "$RECONCILE_SCOPE"
+    EXIT_CODE=$?
+
+    if [[ $EXIT_CODE -eq 0 ]]; then
+        echo "✅ Metadata reconciliation completed successfully"
+    else
+        echo "❌ Metadata reconciliation failed with exit code: $EXIT_CODE"
+        exit $EXIT_CODE
+    fi
+else
+    echo "❌ Enhanced implementation not found: $SCRIPT_PATH"
+    echo "💡 Please ensure the Python implementation is available"
+    exit 1
 fi
 ```
 
@@ -241,16 +258,78 @@ fi
 3. **要確認事項**: [確認が必要な事項]
 
 ### メタデータ更新
+
+実行履歴とメタデータ調整情報が自動的にJSONファイルに記録されます：
+
 ```json
 {
-  "command_executed": "reconcile-metadata-expert",
-  "timestamp": "CURRENT_ISO_TIMESTAMP", 
-  "reconciliation_scope": "SPECIFIED_SCOPE",
-  "status": "SUCCESS",
-  "consistency_score": "CALCULATED_PERCENTAGE",
-  "files_updated": ["list", "of", "updated", "files"],
-  "next_recommended": ["review-emergency-recovery"],
-  "quality_score": "CALCULATED_SCORE"
+  "metadata_reconciliation": {
+    "reconciliation_completed_at": "[ISO-8601]",
+    "status": "SUCCESS|PARTIAL|FAILED",
+    "reconciliation_scope": "issue|sprint|project",
+    "consistency_analysis": {
+      "inconsistencies_detected": [count],
+      "inconsistencies_resolved": [count],
+      "consistency_score_before": "[percentage]",
+      "consistency_score_after": "[percentage]",
+      "metadata_files_analyzed": [count]
+    },
+    "validation_results": {
+      "json_syntax_validation": {
+        "total_files": [count],
+        "validation_errors": [count],
+        "syntax_accuracy": "[percentage]"
+      },
+      "cross_file_consistency": {
+        "timestamp_consistency": "[boolean]",
+        "status_consistency": "[boolean]",
+        "content_consistency": "[boolean]"
+      },
+      "data_completeness": {
+        "required_fields_present": "[percentage]",
+        "missing_field_count": [count],
+        "data_integrity_score": "[percentage]"
+      }
+    },
+    "updates_performed": {
+      "project_state_updates": [count],
+      "context_file_updates": [count],
+      "execution_history_entries": [count],
+      "backup_files_created": [count]
+    },
+    "conflict_resolution": [
+      {
+        "conflict_type": "timestamp|status|content",
+        "files_involved": ["file1", "file2"],
+        "resolution_strategy": "latest_priority|manual_merge|backup_restore",
+        "resolved_successfully": "[boolean]"
+      }
+    ],
+    "quality_metrics": {
+      "overall_consistency_score": "[percentage]",
+      "metadata_accuracy": "[percentage]",
+      "reconciliation_efficiency": "[score]",
+      "data_integrity_maintained": "[boolean]"
+    },
+    "generated_artifacts": [
+      {
+        "artifact_type": "reconciliation_report|backup|updated_metadata",
+        "file_path": "[path]",
+        "description": "[brief_description]"
+      }
+    ],
+    "next_actions": ["/review-emergency-recovery", "/project-status"]
+  },
+  "execution_history": {
+    "commands_executed": [
+      {
+        "command": "/reconcile-metadata [scope]",
+        "executed_at": "[ISO-8601]",
+        "status": "success|failed",
+        "files_affected": ["metadata_files...", "backup_files..."]
+      }
+    ]
+  }
 }
 ```
 

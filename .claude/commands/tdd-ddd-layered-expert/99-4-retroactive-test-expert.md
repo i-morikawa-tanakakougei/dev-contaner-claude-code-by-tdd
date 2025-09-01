@@ -59,17 +59,41 @@ During command execution, you act as a **Retroactive Test Creation Specialist** 
 ## 📋 Lightweight Context Management
 
 ### Required Reading (Minimal)
-Read only necessary context for efficient retroactive test creation:
 
 ```bash
-# Project state (only if exists)
-if [[ -f "docs/metadata/project-state.json" ]]; then
-    PROJECT_STATE=$(cat docs/metadata/project-state.json)
-    CURRENT_PHASE=$(echo $PROJECT_STATE | jq -r '.current_phase')
+# Validate optional issue number or context parameter
+if [[ -n "$1" ]]; then
+    ISSUE_OR_CONTEXT="$1"
+    echo "🧪 Executing retroactive-test with context: $ISSUE_OR_CONTEXT"
+else
+    echo "🧪 Executing retroactive-test in comprehensive analysis mode"
 fi
 
-# Execution history (latest 5 entries only)
-RECENT_HISTORY=$(tail -5 .claude/context/execution-history.jsonl 2>/dev/null || echo "[]")
+echo "🧪 Executing retroactive-test with automated Python implementation..."
+
+# Execute the enhanced Python implementation
+SCRIPT_PATH=".claude/commands/tdd-ddd-layered-expert/utils/99-4-retroactive-test-expert.py"
+
+if [[ -f "$SCRIPT_PATH" ]]; then
+    echo "✅ Found enhanced implementation: $SCRIPT_PATH"
+    if [[ -n "$ISSUE_OR_CONTEXT" ]]; then
+        uv run "$SCRIPT_PATH" "$ISSUE_OR_CONTEXT"
+    else
+        uv run "$SCRIPT_PATH"
+    fi
+    EXIT_CODE=$?
+
+    if [[ $EXIT_CODE -eq 0 ]]; then
+        echo "✅ Retroactive test creation completed successfully"
+    else
+        echo "❌ Retroactive test creation failed with exit code: $EXIT_CODE"
+        exit $EXIT_CODE
+    fi
+else
+    echo "❌ Enhanced implementation not found: $SCRIPT_PATH"
+    echo "💡 Please ensure the Python implementation is available"
+    exit 1
+fi
 ```
 
 #### Issue Comment Retrieval and Analysis
@@ -240,15 +264,61 @@ fi
 3. **要確認事項**: テスト実行失敗時の緊急修正コード見直し
 
 ### メタデータ更新
+
+実行履歴と遡及的テスト作成情報が自動的にJSONファイルに記録されます：
+
 ```json
 {
-  "command_executed": "retroactive-test-expert",
-  "timestamp": "[ISO-8601]",
-  "status": "SUCCESS",
-  "issue_number": "[issue-number]",
-  "coverage_achieved": "[percentage]",
-  "tests_created": "[count]",
-  "next_recommended": ["validate-emergency-fix"],
-  "quality_score": "[score]"
+  "retroactive_tests": {
+    "creation_completed_at": "[ISO-8601]",
+    "status": "SUCCESS|PARTIAL|FAILED",
+    "target_context": "[issue_number|comprehensive]",
+    "emergency_fixes_covered": [count],
+    "test_statistics": {
+      "total_tests_created": [count],
+      "unit_tests": [count],
+      "integration_tests": [count],
+      "regression_tests": [count],
+      "test_files_created": [count]
+    },
+    "coverage_analysis": {
+      "baseline_coverage": [percentage],
+      "target_coverage": [percentage],
+      "achieved_coverage": [percentage],
+      "coverage_improvement": [percentage],
+      "uncovered_critical_areas": [count]
+    },
+    "test_quality_metrics": {
+      "test_success_rate": [percentage],
+      "assertion_density": [average_per_test],
+      "test_complexity_score": [score],
+      "maintainability_score": [score]
+    },
+    "emergency_fix_analysis": {
+      "analyzed_commits": [count],
+      "code_changes_tested": [count],
+      "edge_cases_covered": [count],
+      "regression_scenarios": [count]
+    },
+    "created_test_files": [
+      {
+        "file_path": "[path]",
+        "test_type": "unit|integration|regression",
+        "tests_count": [count],
+        "coverage_target": "[module_or_function]"
+      }
+    ],
+    "next_actions": ["/validate-emergency-fix", "/run-all-tests"]
+  },
+  "execution_history": {
+    "commands_executed": [
+      {
+        "command": "/retroactive-test [issue-or-context]",
+        "executed_at": "[ISO-8601]",
+        "status": "success|failed",
+        "files_affected": ["test_files...", "coverage_reports..."]
+      }
+    ]
+  }
 }
 ```

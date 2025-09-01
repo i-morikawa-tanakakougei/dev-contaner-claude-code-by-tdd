@@ -62,18 +62,41 @@ During command execution, you act as an **Emergency Recovery Specialist** with d
 ## 📋 Lightweight Context Management
 
 ### Required Reading (Minimal)
+
 ```bash
-# Project state (only if exists)
-if [[ -f "docs/metadata/project-state.json" ]]; then
-    PROJECT_STATE=$(cat docs/metadata/project-state.json)
-    CURRENT_PHASE=$(echo $PROJECT_STATE | jq -r '.current_phase')
+# Validate optional issue number parameter (emergency recovery can work without specific issue)
+if [[ -n "$1" ]]; then
+    ISSUE_NUMBER="$1"
+    echo "🚨 Executing emergency-recovery with issue context: #$ISSUE_NUMBER"
+else
+    echo "🚨 Executing emergency-recovery in global analysis mode"
 fi
 
-# Execution history (latest 5 entries only)
-RECENT_HISTORY=$(tail -5 .claude/context/execution-history.jsonl 2>/dev/null || echo "[]")
+echo "🚨 Executing emergency-recovery with automated Python implementation..."
 
-# Git commit history for emergency fix identification
-GIT_LOG=$(git log --oneline -10 --no-merges 2>/dev/null || echo "No git history")
+# Execute the enhanced Python implementation
+SCRIPT_PATH=".claude/commands/tdd-ddd-layered-expert/utils/99-1-emergency-recovery-expert.py"
+
+if [[ -f "$SCRIPT_PATH" ]]; then
+    echo "✅ Found enhanced implementation: $SCRIPT_PATH"
+    if [[ -n "$ISSUE_NUMBER" ]]; then
+        uv run "$SCRIPT_PATH" "$ISSUE_NUMBER"
+    else
+        uv run "$SCRIPT_PATH"
+    fi
+    EXIT_CODE=$?
+
+    if [[ $EXIT_CODE -eq 0 ]]; then
+        echo "✅ Emergency recovery analysis completed successfully"
+    else
+        echo "❌ Emergency recovery analysis failed with exit code: $EXIT_CODE"
+        exit $EXIT_CODE
+    fi
+else
+    echo "❌ Enhanced implementation not found: $SCRIPT_PATH"
+    echo "💡 Please ensure the Python implementation is available"
+    exit 1
+fi
 ```
 
 ### GitHub Issue Integration
@@ -240,15 +263,36 @@ Write recovery-action-plan.md with structured sections:
 3. **要確認事項**: 複雑な競合が検出された場合は手動レビューが必要
 
 ### メタデータ更新
+
+実行履歴と緊急復旧分析情報が自動的にJSONファイルに記録されます：
+
 ```json
 {
-  "command_executed": "99-1-emergency-recovery-expert",
-  "timestamp": "[ISO-8601]",
-  "status": "SUCCESS",
-  "next_recommended": ["99-2-create-retroactive-issue", "99-3-sync-documentation"],
-  "quality_score": 95,
-  "emergency_fixes_detected": "[数]",
-  "recovery_priority": "high"
+  "emergency_recovery": {
+    "analysis_completed_at": "[ISO-8601]",
+    "status": "SUCCESS|PARTIAL_SUCCESS|FAILED",
+    "emergency_fixes_detected": [count],
+    "critical_gaps": [count],
+    "recovery_priority": "critical|high|medium|low",
+    "estimated_recovery_hours": [hours],
+    "report_file": "docs/emergency/emergency-recovery-report-YYYYMMDD.md",
+    "action_plan_file": "docs/emergency/recovery-action-plan-YYYYMMDD.md",
+    "next_actions": {
+      "immediate": ["/create-retroactive-issue", "/sync-documentation"],
+      "short_term": ["/create-tests", "/run-all-tests"],
+      "medium_term": ["/refactor", "/review-issue"]
+    }
+  },
+  "execution_history": {
+    "commands_executed": [
+      {
+        "command": "/emergency-recovery [issue-number]",
+        "executed_at": "[ISO-8601]",
+        "status": "success|failed",
+        "files_affected": ["report_files...", "analysis_files..."]
+      }
+    ]
+  }
 }
 ```
 
