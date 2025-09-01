@@ -11,6 +11,7 @@
 - **開発ツール充実**: Docker、GitHub CLI、zsh、fzf、delta などの便利なツールを同梱
 - **自動品質管理**: pre-commit フックによるコード品質の自動チェック
 - **MCP 対応**: context7 によるドキュメント検索機能
+- **MCP 対応**: Serena による「LSP を活用したコード理解、セマンティック（意味的）なコード検索・編集機能、大規模で複雑なプロジェクトでの効率的なコンテキスト取得、find_symbol、find_referencing_symbols、insert_after_symbol などの専用ツール」
 
 ## システム要件
 
