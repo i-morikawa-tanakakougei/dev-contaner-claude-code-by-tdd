@@ -188,6 +188,23 @@ Others:
 
    When using Context7, please generate an accurate answer that is optimized for the user's request based on the information you have obtained.
 
+2. Serena
+
+- **Use Serena proactively** when complex code analysis or understanding of architecture is required.
+- **Recommended for Serena:**
+  - Understanding the overall structure of a codebase
+  - Investigating cross-references between symbols
+  - Identifying where classes, functions, and variables are used
+  - Analyzing dependencies between files
+  - Investigating the scope of impact for large-scale refactoring
+  - Searching for implementation locations of design patterns
+  - Locating related code that may be causing a bug
+- **Recommended for standard tools:**
+  - Simple file reading and editing
+  - Direct changes to known files and functions
+  - Simple string searching and replacing
+- Utilize Serena MCP's features to perform efficient and accurate code analysis.
+
 ## Python Tools
 
 ## Code Formatting
