@@ -177,3 +177,6 @@ reviews/.gitkeep
 
 # backup
 .claude/backup/
+
+# serena MCP 
+.serena

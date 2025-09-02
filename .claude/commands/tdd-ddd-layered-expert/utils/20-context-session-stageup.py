@@ -14,6 +14,15 @@ from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Optional, Any
 
+# Add utils to path for json_format_utils integration
+sys.path.insert(0, str(Path(__file__).parent))
+from json_format_utils import (
+    create_mcp_session_context,
+    update_design_rationale,
+    add_learning_outcome,
+    get_mcp_context_summary
+)
+
 # Configure logging
 logging.basicConfig(
     level=logging.INFO,
@@ -355,8 +364,13 @@ class MCPSessionManager:
             logger.info("🔄 Phase 5: Creating recovery checkpoint...")
             self.create_recovery_checkpoint()
             
+            # Phase 6: Integrate existing use case JSONs with MCP context
+            logger.info("🔗 Phase 6: Integrating existing use cases with MCP context...")
+            integrated_files = self.integrate_existing_use_cases()
+            
             # Generate final report
             report = self.generate_session_report()
+            report["integrated_use_cases"] = integrated_files
             logger.info("✅ MCP session initialization completed successfully!")
             
             return report
@@ -364,6 +378,51 @@ class MCPSessionManager:
         except Exception as e:
             logger.exception("MCP session initialization failed")
             raise
+    
+    def integrate_existing_use_cases(self) -> List[str]:
+        """既存のユースケースJSONファイルにMCPコンテキストを統合"""
+        integrated_files = []
+        
+        try:
+            use_cases_dir = self.project_path / "docs/use_cases"
+            if not use_cases_dir.exists():
+                logger.info("No use_cases directory found, skipping integration")
+                return integrated_files
+            
+            # Find JSON files in use_cases directory
+            json_files = list(use_cases_dir.rglob("*.json"))
+            
+            for json_file in json_files:
+                try:
+                    # Integrate MCP context into each use case file
+                    create_mcp_session_context(
+                        json_path=str(json_file),
+                        session_id=self.session_id,
+                        project_analysis_data=self.session_metadata.get("analysis_summary", {}),
+                        mcp_memories=[]  # Would be populated from actual MCP calls
+                    )
+                    
+                    # Add design rationale for session initialization
+                    update_design_rationale(
+                        json_path=str(json_file),
+                        decision_key="session_initialization",
+                        rationale=f"Initialized MCP-enhanced session {self.session_id} with project analysis and memory management",
+                        alternatives_considered=["Standard workflow", "Manual context management"],
+                        decision_maker="mcp_session_stageup"
+                    )
+                    
+                    integrated_files.append(str(json_file.relative_to(self.project_path)))
+                    logger.info(f"✅ Integrated MCP context into: {json_file.name}")
+                    
+                except Exception as e:
+                    logger.warning(f"Failed to integrate {json_file}: {e}")
+            
+            logger.info(f"Integrated MCP context into {len(integrated_files)} use case files")
+            
+        except Exception as e:
+            logger.error(f"Failed to integrate existing use cases: {e}")
+        
+        return integrated_files
 
 
 async def main():
@@ -396,12 +455,15 @@ async def main():
         print("\n📊 MCP Capabilities Enabled:")
         for mcp_name, capabilities in report['mcp_capabilities'].items():
             print(f"  ✅ {mcp_name}: {', '.join([k for k, v in capabilities.items() if v])}")
+        print(f"\n🔗 Use Case Integration:")
+        integrated_count = len(report.get('integrated_use_cases', []))
+        print(f"  ✅ Integrated {integrated_count} use case files with MCP context")
         print("\n🚀 Next Steps:")
         for step in report['next_steps']:
             print(f"  • {step}")
         print("="*60)
         
-        sys.exit(0)
+        return 0  # Success exit code
         
     except KeyboardInterrupt:
         logger.info("Initialization cancelled by user")

@@ -1,0 +1,70 @@
+{
+  "mcp_integration": {
+    "version": "1.0",
+    "enabled": true,
+    "servers": {
+      "serena": {
+        "enabled": true,
+        "description": "Code analysis and project memory management",
+        "capabilities": [
+          "get_symbols_overview",
+          "find_symbol", 
+          "find_referencing_symbols",
+          "search_for_pattern",
+          "write_memory",
+          "read_memory",
+          "list_memories",
+          "list_dir",
+          "activate_project",
+          "check_onboarding_performed"
+        ]
+      },
+      "context7": {
+        "enabled": true,
+        "description": "Latest technical documentation and best practices",
+        "capabilities": [
+          "resolve-library-id",
+          "get-library-docs"
+        ]
+      }
+    },
+    "session_management": {
+      "serena_sessions_path": "/workspace/.serena/sessions",
+      "serena_memory_path": "/workspace/.serena/memory", 
+      "serena_checkpoints_path": "/workspace/.serena/checkpoints",
+      "claude_sessions_path": "/workspace/.claude/sessions",
+      "backup_path": "/workspace/.claude/backup/sessions",
+      "retention_days": 30,
+      "compression_enabled": true,
+      "session_metadata_file": "session-metadata.json",
+      "checkpoint_metadata_file": "checkpoint-metadata.json",
+      "recovery_script_file": "recovery-script.sh"
+    },
+    "enhanced_commands": {
+      "20-context-session-stageup": {
+        "requires_mcp": ["serena", "context7"],
+        "creates_session": true
+      },
+      "21-checkpoint-session": {
+        "requires_mcp": ["serena"],
+        "manages_checkpoints": true
+      },
+      "22-recovery-session": {
+        "requires_mcp": ["serena"],
+        "recovers_session": true
+      },
+      "04-domain-modeling-enhanced": {
+        "requires_mcp": ["serena", "context7"],
+        "fallback_mode": "standard"
+      },
+      "05-create-tests-enhanced": {
+        "requires_mcp": ["serena", "context7"], 
+        "fallback_mode": "standard"
+      },
+      "25-analytics-dashboard": {
+        "requires_mcp": ["serena", "context7"],
+        "provides_analytics": true
+      }
+    }
+  }
+}

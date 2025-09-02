@@ -16,6 +16,14 @@ from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Optional, Any, Tuple
 
+# Add utils to path for json_format_utils integration
+sys.path.insert(0, str(Path(__file__).parent))
+from json_format_utils import (
+    restore_from_checkpoint_data,
+    get_mcp_context_summary,
+    load_use_case_json
+)
+
 # Configure logging
 logging.basicConfig(
     level=logging.INFO,
