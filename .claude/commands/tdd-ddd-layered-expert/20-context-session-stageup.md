@@ -66,7 +66,7 @@ During command execution, you act as a **MCP Session Management Architect** spec
 ```bash
 # Validate MCP availability
 if [[ -z "$1" ]]; then
-    echo "ERROR: Project path required. Usage: /initialize-mcp-session <project-path>"
+    echo "ERROR: Project path required. Usage: /context-session-stageup <project-path>"
     exit 1
 fi
 

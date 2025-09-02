@@ -36,7 +36,7 @@ TDD/DDD/Layered expert カスタムコマンド群における**MCP セッショ
 ### 20-context-session-stageup: 「賢い再スタート」
 
 ```bash
-/initialize-mcp-session /path/to/project
+/context-session-stageup /path/to/project
 ```
 
 #### 実際の処理内容
@@ -175,7 +175,7 @@ git checkout feature/auth-v1    # コード復旧
 
 ```bash
 # 【セッション1】ユーザー認証機能の設計・実装（2-3週間）
-/initialize-mcp-session
+/context-session-stageup
 /create-use-case 101    # 認証機能
 /domain-modeling 101
 /create-tests 101
@@ -187,7 +187,7 @@ git checkout feature/auth-v1    # コード復旧
 # セッション自然終了（認証機能完了）
 
 # 【セッション2】決済機能の設計・実装（数週間後）
-/initialize-mcp-session  # 過去の認証設計記憶を整理・活用
+/context-session-stageup  # 過去の認証設計記憶を整理・活用
 /create-use-case 201    # 決済機能（認証との連携を考慮した設計が可能）
 ```
 
@@ -212,7 +212,7 @@ git reset --hard HEAD~10                    # コード復旧
 # 新メンバーによるプロジェクト参加
 git clone ...                              # コード取得
 /recovery-session team_knowledge_base      # プロジェクトの思考プロセス復元
-/initialize-mcp-session                    # 新メンバー用コンテキスト初期化
+/context-session-stageup                    # 新メンバー用コンテキスト初期化
 ```
 
 ## 🔧 MCP セッション管理の価値
@@ -247,11 +247,11 @@ git clone ...                              # コード取得
 
 ```bash
 ❌ 毎日実行するものではない:
-毎朝9時: /initialize-mcp-session  # 過剰
+毎朝9時: /context-session-stageup  # 過剰
 毎夕6時: /checkpoint-session      # 無意味
 
 ✅ 論理的区切りでの実行:
-スプリント開始: /initialize-mcp-session
+スプリント開始: /context-session-stageup
 重要マイルストーン: /checkpoint-session
 設計方向転換前: /recovery-session
 ```
@@ -292,11 +292,11 @@ git checkout target-branch
 ```bash
 # スプリント境界
 完了したスプリント → /checkpoint-session
-新しいスプリント → /initialize-mcp-session
+新しいスプリント → /context-session-stageup
 
 # 設計フェーズ境界
 設計完了 → /checkpoint-session
-実装開始 → /initialize-mcp-session
+実装開始 → /context-session-stageup
 ```
 
 ## 📊 期待される効果
@@ -423,7 +423,7 @@ MCP セッション管理は、**コード管理（git）とは独立した思�
 # 重要な節目でのセッション管理
 /checkpoint-session milestone_v1    # 重要な成果の記録
 /analytics-dashboard                # 戦略的評価と次期計画
-/initialize-mcp-session             # 新フェーズの最適化されたスタート
+/context-session-stageup             # 新フェーズの最適化されたスタート
 ```
 
 ## 🎪 ベストプラクティス（追加）

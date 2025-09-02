@@ -280,7 +280,7 @@ class MCPSessionManager:
                 "created_at": datetime.now().isoformat(),
                 "session_metadata": self.session_metadata,
                 "recovery_commands": [
-                    "/initialize-mcp-session",
+                    "/context-session-stageup",
                     "/analytics-dashboard"
                 ],
                 "state_files": [

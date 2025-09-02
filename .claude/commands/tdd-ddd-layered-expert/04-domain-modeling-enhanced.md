@@ -12,12 +12,14 @@ During command execution, you act as a **Domain-Driven Design Architect** specia
 ### Your Expertise (Core + MCP Enhanced)
 
 **Core DDD Expertise:**
+
 - **DDD Tactical Design**: Entity, Value Object, Aggregate, and Repository design
 - **Business Rule Modeling**: Complex business logic extraction and formalization
 - **Aggregate Boundary Design**: Consistency boundary identification and optimization
 - **Domain Service Architecture**: Complex business operation orchestration
 
 **MCP-Enhanced Capabilities:**
+
 - **Intelligent Code Analysis**: Automated domain pattern discovery using Serena MCP
 - **Pattern Reference Integration**: Context7-based latest DDD patterns and best practices
 - **Cross-Reference Architecture**: Complete domain dependency analysis and optimization
@@ -26,23 +28,23 @@ During command execution, you act as a **Domain-Driven Design Architect** specia
 ### Execution Principles (Core + MCP Enhanced)
 
 **Core Principles:**
+
 1. **Domain Purity**: Keep domain layer free from infrastructure concerns
 2. **Business Rule Focus**: Extract and formalize all business invariants and rules
 3. **Aggregate Consistency**: Design proper transactional boundaries
 
-**MCP-Enhanced Principles:**
-4. **Intelligent Analysis**: Leverage Serena for deep code analysis and pattern discovery
-5. **Context-Rich Design**: Enhance domain models with Context7 pattern guidance
-6. **Progressive Enhancement**: Build upon existing domain models with intelligent recommendations
+**MCP-Enhanced Principles:** 4. **Intelligent Analysis**: Leverage Serena for deep code analysis and pattern discovery 5. **Context-Rich Design**: Enhance domain models with Context7 pattern guidance 6. **Progressive Enhancement**: Build upon existing domain models with intelligent recommendations
 
 ### Quality Standards (Core + MCP Enhanced)
 
 **Core Standards:**
+
 - **Business Rule Coverage**: All Given-When-Then rules captured in domain model
 - **Aggregate Boundaries**: Clear consistency boundaries with single aggregate roots
 - **Ubiquitous Language**: Consistent domain terminology throughout
 
 **MCP-Enhanced Standards:**
+
 - **Pattern Discovery Coverage**: 95% of existing DDD patterns identified and documented
 - **Automated Rule Extraction**: 100% business rules extracted from code and requirements
 - **Cross-Reference Accuracy**: 100% domain dependency mapping with Serena MCP
@@ -83,12 +85,14 @@ During command execution, you act as a **Domain-Driven Design Architect** specia
 4. `06-implement-domain` ← Next: Domain layer implementation
 
 **Core Activities (Traditional):**
+
 - Extract domain concepts from Given-When-Then scenarios
 - Design entities, value objects, and aggregates
 - Define business rules and invariants
 - Create domain model documentation
 
 **MCP-Enhanced Activities (Additional):**
+
 - Analyze existing codebase for domain patterns using Serena MCP
 - Extract business rules automatically from existing code
 - Integrate Context7 DDD patterns and best practices
@@ -117,7 +121,7 @@ if [[ -f ".serena/sessions/current/session-metadata.json" ]]; then
     MCP_AVAILABLE="true"
 else
     echo "ℹ️ MCP session not found - Running in standard mode"
-    echo "💡 To enable MCP enhancements, run /initialize-mcp-session first"
+    echo "💡 To enable MCP enhancements, run /context-session-stageup first"
     MCP_AVAILABLE="false"
 fi
 
@@ -149,7 +153,9 @@ fi
 **Analyze the following as expert (User interactions in Japanese):**
 
 **Core Analysis Activities:**
+
 1. **Use Case Specification Analysis**
+
    - Extract domain concepts from Given-When-Then scenarios using Read tool
    - Identify entities (objects with identity and lifecycle)
    - Identify value objects (immutable, replaceable objects)
@@ -160,16 +166,16 @@ fi
    - Ensure consistency with established ubiquitous language
    - Identify reusable domain patterns
 
-**MCP-Enhanced Analysis (if available):**
-3. **Automated Domain Pattern Discovery**
-   - Use mcp__serena__get_symbols_overview to scan entire codebase
-   - Use mcp__serena__find_symbol to identify potential entities and value objects
-   - Use mcp__serena__search_for_pattern to find existing business rules
-   - Create memory using mcp__serena__write_memory for discovered patterns
+**MCP-Enhanced Analysis (if available):** 3. **Automated Domain Pattern Discovery**
+
+- Use mcp**serena**get_symbols_overview to scan entire codebase
+- Use mcp**serena**find_symbol to identify potential entities and value objects
+- Use mcp**serena**search_for_pattern to find existing business rules
+- Create memory using mcp**serena**write_memory for discovered patterns
 
 4. **Intelligent Business Logic Mining**
-   - Use mcp__serena__find_symbol with pattern matching for business methods
-   - Use mcp__serena__find_referencing_symbols to trace business logic flows
+   - Use mcp**serena**find_symbol with pattern matching for business methods
+   - Use mcp**serena**find_referencing_symbols to trace business logic flows
    - Extract validation rules and business invariants automatically
    - Document findings in architecture memory
 
@@ -178,7 +184,9 @@ fi
 **Design the following as expert (Instructions to Claude Code in English):**
 
 **Core Design Activities:**
+
 1. **Entity Design**
+
    ```
    For each identified entity:
    - Define entity identity and lifecycle
@@ -188,6 +196,7 @@ fi
    ```
 
 2. **Value Object Design**
+
    ```
    For each identified value object:
    - Define immutable properties
@@ -205,14 +214,14 @@ fi
    - Design repository interface
    ```
 
-**MCP-Enhanced Design (if available):**
-4. **Context7 DDD Pattern Integration**
-   ```
-   Use mcp__context7__resolve-library-id for "domain-driven-design"
-   Use mcp__context7__get-library-docs for DDD tactical patterns
-   Use mcp__context7__get-library-docs for aggregate design patterns
-   Integrate latest best practices into domain model design
-   ```
+**MCP-Enhanced Design (if available):** 4. **Context7 DDD Pattern Integration**
+
+```
+Use mcp__context7__resolve-library-id for "domain-driven-design"
+Use mcp__context7__get-library-docs for DDD tactical patterns
+Use mcp__context7__get-library-docs for aggregate design patterns
+Integrate latest best practices into domain model design
+```
 
 5. **Technology-Specific Pattern Enhancement**
    ```
@@ -227,7 +236,9 @@ fi
 **Execute the following as expert (Instructions to Claude Code in English):**
 
 **Core Implementation Steps:**
+
 1. **Validate issue numbers and prerequisites**
+
    ```bash
    # Validate issue number requirement
    if [[ $# -eq 0 ]]; then
@@ -248,6 +259,7 @@ fi
    ```
 
 2. **Create standard domain model documents**
+
    ```bash
    # Create docs/domain directory if not exists
    Bash mkdir -p docs/domain
@@ -270,18 +282,19 @@ fi
    done
    ```
 
-**MCP-Enhanced Implementation (if available):**
-3. **Intelligent Entity Design Enhancement**
-   ```bash
-   # Enhanced entity models with MCP analysis
-   For each identified entity from Serena analysis:
-   - Extract existing behavior patterns from code
-   - Identify missing business methods using pattern analysis
-   - Generate complete entity specification with Context7 patterns
-   - Document entity relationships and dependencies
-   ```
+**MCP-Enhanced Implementation (if available):** 3. **Intelligent Entity Design Enhancement**
+
+```bash
+# Enhanced entity models with MCP analysis
+For each identified entity from Serena analysis:
+- Extract existing behavior patterns from code
+- Identify missing business methods using pattern analysis
+- Generate complete entity specification with Context7 patterns
+- Document entity relationships and dependencies
+```
 
 4. **Automated Value Object Discovery**
+
    ```bash
    # Intelligent value object identification
    Use Serena MCP to identify primitive obsession patterns
@@ -304,6 +317,7 @@ fi
 **Execute the following as expert (Instructions to Claude Code in English):**
 
 1. **Create core domain documentation (always)**
+
    ```bash
    # Standard domain model document (always created)
    Write "docs/domain/issue-${ISSUE_NUMBER}-domain-model.md" with:
@@ -319,6 +333,7 @@ fi
    ```
 
 2. **Create MCP analysis documents (if available)**
+
    ```bash
    if [[ "$MCP_AVAILABLE" == "true" ]]; then
        # MCP-enhanced analysis document
@@ -328,7 +343,7 @@ fi
        # - Cross-reference dependency mapping
        # - Context7-enhanced design recommendations
        # - Implementation improvement suggestions
-       
+
        # MCP detailed reports
        Write "docs/domain/issue-${ISSUE_NUMBER}-mcp-analysis-report.md" with:
        # - Serena MCP codebase analysis summary
@@ -353,7 +368,9 @@ fi
        # - Pattern discovery summary
    fi
    ```
+
 3. **Update project metadata**
+
    ```bash
    # Update use case metadata files
    for issue_num in $(echo $1 | tr ',' ' '); do
@@ -376,19 +393,19 @@ fi
    Bash git add docs/domain/
    if [[ "$MCP_AVAILABLE" == "true" ]]; then
        Bash git commit -m "feat: create domain models for issues $(echo $1 | tr ',' ' ') with MCP enhancement
-       
+
    Design entities, value objects, and aggregates based on DDD principles.
    Extract business rules from Given-When-Then scenarios.
    Enhanced with MCP intelligent analysis and pattern discovery.
-       
+
    🎯 Generated with Claude Code
        "
    else
        Bash git commit -m "feat: create domain models for issues $(echo $1 | tr ',' ' ')
-       
+
    Design entities, value objects, and aggregates based on DDD principles.
    Extract business rules from Given-When-Then scenarios.
-       
+
    🎯 Generated with Claude Code
        "
    fi
@@ -397,7 +414,9 @@ fi
 ## ✅ Built-in Quality Assurance
 
 ### Self-Diagnosis Checklist
+
 **Required Items (MUST):**
+
 - [ ] Serena MCP codebase analysis completed
 - [ ] Context7 pattern integration applied
 - [ ] Enhanced domain models generated with intelligence
@@ -406,17 +425,19 @@ fi
 - [ ] Implementation guidance created
 
 **Recommended Items (SHOULD):**
+
 - [ ] Anti-pattern identification and recommendations provided
 - [ ] Performance implications analyzed and documented
 - [ ] Refactoring roadmap created with priorities
 - [ ] Test strategy aligned with domain model enhancements
 
 ### Quality Metrics
-| Metric | Target | Actual | Assessment |
-|--------|--------|--------|------------|
-| Business Rule Coverage | 100% | [Actual Value] | ✅/❌ |
-| Aggregate Design Quality | 90% | [Actual Value] | ✅/❌ |
-| Ubiquitous Language Consistency | 95% | [Actual Value] | ✅/❌ |
+
+| Metric                          | Target | Actual         | Assessment |
+| ------------------------------- | ------ | -------------- | ---------- |
+| Business Rule Coverage          | 100%   | [Actual Value] | ✅/❌      |
+| Aggregate Design Quality        | 90%    | [Actual Value] | ✅/❌      |
+| Ubiquitous Language Consistency | 95%    | [Actual Value] | ✅/❌      |
 
 **MCP-Enhanced Metrics (if MCP Available):**
 | Metric | Target | Actual | Assessment |
@@ -429,39 +450,47 @@ fi
 ## 📊 Standardized Output Format
 
 ### 実行サマリー (日本語でユーザーに報告)
+
 **基本機能 (常に実行):**
+
 - ✅ **ユースケース仕様分析**: [Issue numbers] の仕様を分析完了
-- ✅ **ドメインモデル設計**: エンティティ X個、値オブジェクト Y個を設計
-- ✅ **アグリゲート境界定義**: Z個のアグリゲートを定義完了
+- ✅ **ドメインモデル設計**: エンティティ X 個、値オブジェクト Y 個を設計
+- ✅ **アグリゲート境界定義**: Z 個のアグリゲートを定義完了
 - ✅ **ドキュメント作成**: docs/domain/issue-X-domain-model.md 作成
 
-**MCP拡張機能 (利用可能時):**
-- ✅ **MCPコードベース分析**: [X]個のファイル、[Y]個のシンボル分析完了
+**MCP 拡張機能 (利用可能時):**
+
+- ✅ **MCP コードベース分析**: [X]個のファイル、[Y]個のシンボル分析完了
 - ✅ **ドメインパターン発見**: エンティティ[A]個、値オブジェクト[B]個を自動発見
 - ✅ **ビジネスルール抽出**: [C]個のビジネスルールを自動抽出
-- ✅ **Context7パターン統合**: 最新DDD設計パターン適用完了
-- ✅ **実装ガイダンス生成**: MCP分析に基づく実装計画作成
+- ✅ **Context7 パターン統合**: 最新 DDD 設計パターン適用完了
+- ✅ **実装ガイダンス生成**: MCP 分析に基づく実装計画作成
 
 ### 成果物
+
 **基本ファイル (常に作成):**
+
 - `docs/domain/issue-X-domain-model.md`: ドメインモデル設計書
 - Updated metadata files: 対応する use case metadata の更新
 
-**MCP拡張ファイル (利用可能時):**
-- `docs/domain/issue-X-mcp-analysis.md`: MCP分析結果
-- `docs/domain/issue-X-mcp-analysis-report.md`: 詳細MCP分析レポート
+**MCP 拡張ファイル (利用可能時):**
+
+- `docs/domain/issue-X-mcp-analysis.md`: MCP 分析結果
+- `docs/domain/issue-X-mcp-analysis-report.md`: 詳細 MCP 分析レポート
 - `docs/domain/issue-X-implementation-guidance.md`: 実装ガイダンス
 - Updated MCP memory files: ドメイン分析結果の永続化
 
 ### 総合判定
-**ステータス**: `SUCCESS` (基本) / `MCP_ENHANCED_SUCCESS` (MCP利用時)
+
+**ステータス**: `SUCCESS` (基本) / `MCP_ENHANCED_SUCCESS` (MCP 利用時)
 **品質スコア**: [スコア]/100
-**MCPインテリジェンス品質**: [スコア]/100 (利用時のみ)
+**MCP インテリジェンス品質**: [スコア]/100 (利用時のみ)
 **次フェーズ準備**: `READY`
 
 ### 次のステップ (日本語でユーザーに案内)
+
 1. **即座に実行可能**: `/create-tests [issue-numbers]` または `/create-tests-enhanced [issue-numbers]`
-2. **推奨**: TDDテスト作成フェーズに進む
+2. **推奨**: TDD テスト作成フェーズに進む
 3. **確認推奨**: ドメインモデル設計のレビュー
 
 **ユーザーへのメッセージ (日本語)**:
@@ -484,7 +513,7 @@ fi
    📋 抽出ビジネスルール: [C]個
    🌐 Context7統合: 最新DDD設計パターン適用
    ✅ docs/domain/issue-X-mcp-analysis.md
-   ✅ docs/domain/issue-X-mcp-analysis-report.md  
+   ✅ docs/domain/issue-X-mcp-analysis-report.md
    ✅ docs/domain/issue-X-implementation-guidance.md
    ✅ MCP メモリファイル更新
 

@@ -130,7 +130,7 @@ Serena (記憶・分析) → Context7 (最新手法) → Sequential (論理検�
 
 #### Week 3
 
-- [ ] `/initialize-mcp-session`コマンド実装
+- [ ] `/context-session-stageup`コマンド実装
 - [ ] セッション初期化ロジック
 - [ ] プロジェクト分析機能
 
@@ -199,7 +199,7 @@ Serena (記憶・分析) → Context7 (最新手法) → Sequential (論理検�
 **目的**: MCP セッション初期化とプロジェクト分析
 
 ```bash
-/initialize-mcp-session /path/to/project
+/context-session-stageup /path/to/project
 ```
 
 **機能**:

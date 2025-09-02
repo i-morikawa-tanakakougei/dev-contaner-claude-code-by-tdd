@@ -72,7 +72,7 @@ echo "📊 Launching MCP-powered analytics dashboard for comprehensive project a
 # Check MCP session availability
 if [[ ! -f ".serena/sessions/current/session-metadata.json" ]]; then
     echo "⚠️ MCP session not found. Running basic analytics mode."
-    echo "💡 For enhanced analytics, run /initialize-mcp-session first"
+    echo "💡 For enhanced analytics, run /context-session-stageup first"
 fi
 
 # Execute the analytics dashboard
@@ -103,14 +103,15 @@ fi
 **Collect data as expert (User interactions in Japanese):**
 
 1. **MCP Session Data Analysis**
-   - Use mcp__serena__list_memories to gather all stored analysis data
-   - Use mcp__serena__read_memory for detailed memory content analysis
+
+   - Use mcp**serena**list_memories to gather all stored analysis data
+   - Use mcp**serena**read_memory for detailed memory content analysis
    - Collect session metadata and integration status
    - Analyze development progress and completion metrics
 
 2. **Project Structure Intelligence**
-   - Use mcp__serena__list_dir for comprehensive project structure analysis
-   - Use mcp__serena__get_symbols_overview for codebase complexity assessment
+   - Use mcp**serena**list_dir for comprehensive project structure analysis
+   - Use mcp**serena**get_symbols_overview for codebase complexity assessment
    - Analyze file organization patterns and architecture adherence
    - Generate project health and organization metrics
 
@@ -119,6 +120,7 @@ fi
 **Analyze the following as expert (Instructions to Claude Code in English):**
 
 1. **Code Quality Analytics**
+
    ```
    Analyze codebase using Serena MCP symbol analysis
    Calculate complexity metrics and technical debt indicators
@@ -127,6 +129,7 @@ fi
    ```
 
 2. **Development Progress Analytics**
+
    ```
    Analyze TDD/DDD workflow completion status
    Calculate sprint progress and milestone achievement
@@ -147,6 +150,7 @@ fi
 **Generate insights as expert (Instructions to Claude Code in English):**
 
 1. **Performance Analytics Dashboard**
+
    ```bash
    Create "docs/analytics/performance_dashboard.md" with:
    # - Code complexity and performance metrics
@@ -156,6 +160,7 @@ fi
    ```
 
 2. **Development Insights Report**
+
    ```bash
    Create "docs/analytics/development_insights.md" with:
    # - Development velocity and productivity analysis
@@ -178,6 +183,7 @@ fi
 **Execute the following as expert (Instructions to Claude Code in English):**
 
 1. **Create comprehensive analytics dashboard**
+
    ```bash
    Create "docs/analytics/project_analytics_dashboard.html" with:
    # - Interactive charts and visualizations
@@ -198,38 +204,45 @@ fi
 ## ✅ Built-in Quality Assurance
 
 ### Self-Diagnosis Checklist
+
 **Required Items (MUST):**
+
 - [ ] Comprehensive data collection from all MCP sources
-- [ ] Multi-dimensional analysis across all key metrics  
+- [ ] Multi-dimensional analysis across all key metrics
 - [ ] Strategic insights and recommendations generated
 - [ ] Interactive dashboard created with visualizations
 - [ ] Executive summary prepared for stakeholders
 - [ ] Actionable improvement priorities identified
 
 **Recommended Items (SHOULD):**
+
 - [ ] Predictive analytics and trend forecasting included
 - [ ] Benchmark comparisons with industry standards
 - [ ] Risk assessment and mitigation strategies provided
 - [ ] Performance optimization roadmap created
 
 ### Quality Metrics
-| Metric | Target | Actual | Assessment |
-|--------|--------|--------|------------|
-| Data Coverage | 100% | [Actual Value] | ✅/❌ |
-| Insight Relevance | 95% | [Actual Value] | ✅/❌ |
-| Recommendation Actionability | 90% | [Actual Value] | ✅/❌ |
+
+| Metric                       | Target | Actual         | Assessment |
+| ---------------------------- | ------ | -------------- | ---------- |
+| Data Coverage                | 100%   | [Actual Value] | ✅/❌      |
+| Insight Relevance            | 95%    | [Actual Value] | ✅/❌      |
+| Recommendation Actionability | 90%    | [Actual Value] | ✅/❌      |
 
 ## 📊 Standardized Output Format
 
 ### 実行サマリー (日本語でユーザーに報告)
-- ✅ **MCPデータ収集**: [X]個のメモリファイル、[Y]個のセッションデータ分析完了
+
+- ✅ **MCP データ収集**: [X]個のメモリファイル、[Y]個のセッションデータ分析完了
 - ✅ **多次元分析**: コード品質、進捗、アーキテクチャ、戦略分析完了
 - ✅ **インサイト生成**: [Z]個の戦略的推奨事項、[W]個のパフォーマンス改善提案
 - ✅ **ダッシュボード作成**: インタラクティブ分析ダッシュボード生成完了
 - ✅ **エグゼクティブサマリー**: 経営層向けプロジェクト健全性レポート作成
 
 ### 成果物
+
 **作成されたファイル:**
+
 - `docs/analytics/project_analytics_dashboard.html`: インタラクティブ分析ダッシュボード
 - `docs/analytics/performance_dashboard.md`: パフォーマンス分析レポート
 - `docs/analytics/development_insights.md`: 開発インサイトレポート
@@ -237,11 +250,13 @@ fi
 - `docs/analytics/executive_summary.md`: エグゼクティブサマリー
 
 ### 総合判定
+
 **ステータス**: `ANALYTICS_COMPLETE`
 **プロジェクト健全性スコア**: [スコア]/100
 **戦略的優先度**: [優先度レベル]
 
 ### 次のステップ (日本語でユーザーに案内)
+
 1. **即座に確認可能**: 生成された分析ダッシュボードとレポートの確認
 2. **推奨**: 戦略的推奨事項の実装優先順位付け
 3. **継続改善**: 定期的な分析ダッシュボード更新とモニタリング
@@ -265,7 +280,7 @@ fi
 
 📊 生成された分析資料:
    📈 パフォーマンスダッシュボード
-   🎯 開発インサイトレポート  
+   🎯 開発インサイトレポート
    🗺️ 戦略的推奨事項
    📋 エグゼクティブサマリー
    🌐 インタラクティブダッシュボード

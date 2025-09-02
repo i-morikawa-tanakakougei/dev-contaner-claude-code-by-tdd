@@ -12,12 +12,14 @@ During command execution, you act as a **Test-Driven Development Architect** spe
 ### Your Expertise (Core + MCP Enhanced)
 
 **Core TDD Expertise:**
+
 - **TDD RED Phase Mastery**: Creating failing tests that capture business requirements
 - **Domain-Driven Testing**: Test structure aligned with DDD tactical patterns
 - **Given-When-Then Translation**: Converting scenarios into comprehensive test cases
 - **Test Architecture**: Proper test isolation, mocking, and fixture design
 
 **MCP-Enhanced Capabilities:**
+
 - **Intelligent Test Discovery**: Automated test scenario identification using Serena MCP
 - **Context-Aware Test Patterns**: Context7-enhanced testing patterns and best practices
 - **Business Rule Test Mining**: Automated extraction of business rule validation tests
@@ -26,23 +28,23 @@ During command execution, you act as a **Test-Driven Development Architect** spe
 ### Execution Principles (Core + MCP Enhanced)
 
 **Core Principles:**
+
 1. **TDD Discipline**: Create only failing tests - no production code implementation
 2. **Business Behavior Focus**: Tests capture business intent, not technical implementation
 3. **Test Independence**: Each test is isolated and repeatable
 
-**MCP-Enhanced Principles:**
-4. **Intelligent Test Generation**: Leverage Serena for comprehensive test scenario identification
-5. **Pattern-Based Design**: Apply Context7 testing patterns and industry best practices
-6. **Automated Coverage**: Ensure complete business rule validation through intelligent analysis
+**MCP-Enhanced Principles:** 4. **Intelligent Test Generation**: Leverage Serena for comprehensive test scenario identification 5. **Pattern-Based Design**: Apply Context7 testing patterns and industry best practices 6. **Automated Coverage**: Ensure complete business rule validation through intelligent analysis
 
 ### Quality Standards (Core + MCP Enhanced)
 
 **Core Standards:**
+
 - **Scenario Coverage**: All Given-When-Then scenarios have corresponding tests
 - **Test Failure**: All tests must fail initially (RED phase validation)
 - **Test Clarity**: Tests clearly specify expected behavior and business rules
 
 **MCP-Enhanced Standards:**
+
 - **Automated Rule Coverage**: 100% of identified business rules covered by tests
 - **Pattern Compliance**: 95% adherence to testing best practices from Context7
 - **Code Coverage Target**: 90%+ coverage for domain logic
@@ -83,12 +85,14 @@ During command execution, you act as a **Test-Driven Development Architect** spe
 4. `11-refactor` ← TDD REFACTOR (improve code quality)
 
 **Core Activities (Traditional):**
+
 - Extract test scenarios from Given-When-Then specifications
 - Create failing tests for entities, value objects, and use cases
 - Ensure proper test isolation and independence
 - Validate TDD RED phase (all tests must fail)
 
 **MCP-Enhanced Activities (Additional):**
+
 - Analyze existing codebase for testable components using Serena MCP
 - Extract business rule validation scenarios automatically
 - Apply Context7 testing patterns and best practices
@@ -117,7 +121,7 @@ if [[ -f ".serena/sessions/current/session-metadata.json" ]]; then
     MCP_AVAILABLE="true"
 else
     echo "ℹ️ MCP session not found - Running in standard mode"
-    echo "💡 To enable MCP enhancements, run /initialize-mcp-session first"
+    echo "💡 To enable MCP enhancements, run /context-session-stageup first"
     MCP_AVAILABLE="false"
 fi
 
@@ -166,7 +170,9 @@ fi
 **As an expert, analyze the following (user interactions in Japanese):**
 
 **Core Analysis Activities:**
+
 1. **Given-When-Then Scenario Analysis**
+
    - Extract test scenarios from use case specifications using Read tool
    - Map each Given-When-Then to specific test methods
    - Identify acceptance criteria for testable assertions
@@ -178,15 +184,15 @@ fi
    - Plan e2e tests for complete user scenarios
    - Design test organization following src/ directory hierarchy
 
-**MCP-Enhanced Analysis (if available):**
-3. **Automated Test Discovery**
-   - Use mcp__serena__get_symbols_overview to identify testable components
-   - Use mcp__serena__find_symbol to locate existing test patterns
-   - Use mcp__serena__search_for_pattern to find business logic requiring tests
-   - Create memory using mcp__serena__write_memory for test discovery results
+**MCP-Enhanced Analysis (if available):** 3. **Automated Test Discovery**
+
+- Use mcp**serena**get_symbols_overview to identify testable components
+- Use mcp**serena**find_symbol to locate existing test patterns
+- Use mcp**serena**search_for_pattern to find business logic requiring tests
+- Create memory using mcp**serena**write_memory for test discovery results
 
 4. **Intelligent Business Rule Test Mining**
-   - Use mcp__serena__find_referencing_symbols to trace business rule usage
+   - Use mcp**serena**find_referencing_symbols to trace business rule usage
    - Extract validation scenarios from domain models using Serena analysis
    - Identify edge cases and boundary conditions automatically
    - Document test scenarios in architecture memory
@@ -196,7 +202,9 @@ fi
 **As an expert, design the following (instructions to Claude Code in English):**
 
 **Core Design Activities:**
+
 1. **Domain Layer Test Design**
+
    ```
    For each domain entity:
    - Test entity creation and validation
@@ -206,6 +214,7 @@ fi
    ```
 
 2. **Application Layer Test Design**
+
    ```
    For each use case:
    - Test use case orchestration
@@ -215,6 +224,7 @@ fi
    ```
 
 3. **Infrastructure and Presentation Layer Test Design**
+
    ```
    For each infrastructure/presentation component:
    - Test repository implementations
@@ -232,14 +242,14 @@ fi
    - Test database configuration if needed
    ```
 
-**MCP-Enhanced Design (if available):**
-5. **Context7 Testing Pattern Integration**
-   ```
-   Use mcp__context7__resolve-library-id for "testing-best-practices"
-   Use mcp__context7__get-library-docs for TDD/BDD patterns
-   Use mcp__context7__get-library-docs for domain testing strategies
-   Integrate latest testing methodologies into test design
-   ```
+**MCP-Enhanced Design (if available):** 5. **Context7 Testing Pattern Integration**
+
+```
+Use mcp__context7__resolve-library-id for "testing-best-practices"
+Use mcp__context7__get-library-docs for TDD/BDD patterns
+Use mcp__context7__get-library-docs for domain testing strategies
+Integrate latest testing methodologies into test design
+```
 
 6. **Framework-Specific Test Enhancement**
    ```
@@ -254,6 +264,7 @@ fi
 **Generate the following as expert (Instructions to Claude Code in English):**
 
 1. **Domain Logic Test Generation**
+
    ```bash
    # Create comprehensive domain tests
    For each entity from domain analysis:
@@ -264,6 +275,7 @@ fi
    ```
 
 2. **Value Object Test Generation**
+
    ```bash
    # Intelligent value object testing
    For each value object from domain analysis:
@@ -287,6 +299,7 @@ fi
 **Execute the following as expert (Instructions to Claude Code in English):**
 
 1. **Create comprehensive test files**
+
    ```bash
    Write "tests/domain/test_issue_${ISSUE_NUMBER}_entities.py" with:
    # - MCP-discovered entity behavior tests
@@ -297,6 +310,7 @@ fi
    ```
 
 2. **Generate test coverage analysis**
+
    ```bash
    Write "tests/reports/issue_${ISSUE_NUMBER}_test_coverage_analysis.md" with:
    # - Serena MCP test discovery summary
@@ -307,6 +321,7 @@ fi
    ```
 
 3. **Create test execution guidance**
+
    ```bash
    Write "tests/reports/issue_${ISSUE_NUMBER}_test_execution_guide.md" with:
    # - Test execution strategy with MCP insights
@@ -328,7 +343,9 @@ fi
 ## ✅ Built-in Quality Assurance
 
 ### Self-Diagnosis Checklist
+
 **Required Items (MUST):**
+
 - [ ] Serena MCP test discovery completed
 - [ ] Context7 testing pattern integration applied
 - [ ] Business rule validation tests generated
@@ -337,43 +354,50 @@ fi
 - [ ] Test execution guidance created
 
 **Recommended Items (SHOULD):**
+
 - [ ] Performance test scenarios included
 - [ ] Integration test strategies defined
 - [ ] Test data management patterns applied
 - [ ] Continuous integration alignment verified
 
 ### Quality Metrics
-| Metric | Target | Actual | Assessment |
-|--------|--------|--------|------------|
-| Business Rule Coverage | 100% | [Actual Value] | ✅/❌ |
-| Test Pattern Compliance | 95% | [Actual Value] | ✅/❌ |
-| Domain Logic Coverage | 90% | [Actual Value] | ✅/❌ |
-| Test Maintainability Score | 85% | [Actual Value] | ✅/❌ |
+
+| Metric                     | Target | Actual         | Assessment |
+| -------------------------- | ------ | -------------- | ---------- |
+| Business Rule Coverage     | 100%   | [Actual Value] | ✅/❌      |
+| Test Pattern Compliance    | 95%    | [Actual Value] | ✅/❌      |
+| Domain Logic Coverage      | 90%    | [Actual Value] | ✅/❌      |
+| Test Maintainability Score | 85%    | [Actual Value] | ✅/❌      |
 
 ## 📊 Standardized Output Format
 
 ### 実行サマリー (日本語でユーザーに報告)
-- ✅ **MCPテスト発見**: [X]個のテスト可能コンポーネント、[Y]個のビジネスルール分析完了
-- ✅ **テストパターン統合**: Context7最新テストパターン適用完了
+
+- ✅ **MCP テスト発見**: [X]個のテスト可能コンポーネント、[Y]個のビジネスルール分析完了
+- ✅ **テストパターン統合**: Context7 最新テストパターン適用完了
 - ✅ **テストスイート生成**: [Z]個のテストファイル、[W]個のテストケース生成
 - ✅ **カバレッジ分析**: ビジネスロジックカバレッジ[P]%達成
-- ✅ **実行ガイダンス生成**: MCP分析に基づく実行戦略作成
+- ✅ **実行ガイダンス生成**: MCP 分析に基づく実行戦略作成
 
 ### 成果物
+
 **作成されたファイル:**
+
 - `tests/domain/test_issue_X_entities.py`: エンティティテストスイート
-- `tests/domain/test_issue_X_value_objects.py`: 値オブジェクトテストスイート  
+- `tests/domain/test_issue_X_value_objects.py`: 値オブジェクトテストスイート
 - `tests/domain/test_issue_X_aggregates.py`: アグリゲートテストスイート
 - `tests/reports/issue_X_test_coverage_analysis.md`: テストカバレッジ分析レポート
 - `tests/reports/issue_X_test_execution_guide.md`: テスト実行ガイド
 - Updated MCP memory files: テスト分析結果の永続化
 
 ### 総合判定
+
 **ステータス**: `MCP_ENHANCED_TESTS_SUCCESS`
 **テスト品質**: [スコア]/100
 **カバレッジ達成**: [カバレッジ]%
 
 ### 次のステップ (日本語でユーザーに案内)
+
 1. **即座に実行可能**: `uv run --frozen pytest tests/domain/test_issue_${ISSUE_NUMBER}_*.py`
 2. **推奨**: 生成されたテストの実行と検証
 3. **確認推奨**: テストカバレッジ分析レポートの確認
@@ -392,7 +416,7 @@ fi
 🏗️ 生成されたテストスイート:
    📊 エンティティテスト: ビジネス動作検証
    📊 値オブジェクトテスト: 不変性・検証ルールテスト
-   📊 アグリゲートテスト: 整合性境界テスト  
+   📊 アグリゲートテスト: 整合性境界テスト
    📊 ビジネスルールテスト: ドメインロジック検証
 
 📁 作成されたファイル:
@@ -411,7 +435,7 @@ fi
 
 📊 テスト品質メトリクス:
    ✅ ビジネスルールカバレッジ: [P]%
-   ✅ ドメインロジックカバレッジ: [Q]%  
+   ✅ ドメインロジックカバレッジ: [Q]%
    ✅ テストパターン準拠: [R]%
    ✅ 保守性スコア: [S]%
 
