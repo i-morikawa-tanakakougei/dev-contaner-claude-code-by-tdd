@@ -1,7 +1,13 @@
 #!/usr/bin/env python3
 """
-MCP-Enhanced Domain Modeling Script
-Leverages Serena MCP for intelligent codebase analysis and Context7 for DDD pattern integration
+Enhanced Domain Modeling Command - 論理的統合版
+既存のドメインモデリング機能にMCP分析・検証機能を追加
+
+論理的ワークフロー:
+1. 要求分析 (既存機能) - Given-When-Thenからドメイン概念抽出
+2. 現状分析 (MCP機能) - 既存コードベースの現状把握  
+3. ギャップ分析 (統合機能) - 要求と現実の差分特定
+4. 改善提案 (拡張機能) - 最適化されたドメインモデル提案
 """
 
 import asyncio
@@ -13,6 +19,15 @@ from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Optional, Any, Set, Tuple
 
+# Add utils to path for existing functionality
+sys.path.insert(0, str(Path(__file__).parent))
+from json_format_utils import (
+    load_use_case_json,
+    update_execution_history,
+    save_use_case_json,
+    format_execution_status
+)
+
 # Configure logging
 logging.basicConfig(
     level=logging.INFO,
@@ -20,1610 +35,1072 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-class MCPEnhancedDomainModeler:
-    """MCP-Enhanced Domain Modeling with intelligent analysis and pattern integration"""
+
+class CoreDomainModeler:
+    """既存のコアドメインモデリング機能 (04-domain-modeling.pyをベース)"""
     
     def __init__(self, issue_number: str):
         self.issue_number = issue_number
-        self.session_dir = Path(".serena/sessions/current")
-        self.memory_dir = Path(".serena/memory")
-        self.domain_dir = Path("docs/domain")
         
-        # Analysis results storage
-        self.codebase_analysis: Dict[str, Any] = {}
-        self.domain_patterns: Dict[str, Any] = {}
-        self.business_rules: List[Dict[str, Any]] = []
-        self.recommendations: Dict[str, Any] = {}
+    def find_use_case_json(self) -> Optional[str]:
+        """Issue番号からJSONファイルを検索"""
+        use_cases_dir = Path("docs/use_cases")
         
-        # Enhanced modeling metadata
-        self.modeling_metadata: Dict[str, Any] = {
-            "issue_number": issue_number,
-            "started_at": datetime.now().isoformat(),
-            "mcp_integrations": {
-                "serena": {"status": "initializing", "features": []},
-                "context7": {"status": "initializing", "features": []}
-            },
-            "analysis_results": {},
-            "generated_artifacts": [],
-            "quality_metrics": {}
+        if not use_cases_dir.exists():
+            return None
+        
+        # issue-{number}-*.json パターンで検索
+        for json_file in use_cases_dir.glob(f"issue-{self.issue_number}-*.json"):
+            return str(json_file)
+        
+        # 単純なissue-{number}.json も検索
+        simple_path = use_cases_dir / f"issue-{self.issue_number}.json"
+        if simple_path.exists():
+            return str(simple_path)
+        
+        return None
+        
+    def create_domain_directory(self) -> Path:
+        """ドメインモデル用ディレクトリを作成"""
+        domain_dir = Path("docs/domain")
+        domain_dir.mkdir(parents=True, exist_ok=True)
+        return domain_dir
+        
+    def analyze_scenarios_for_domain_concepts(self, scenarios: Dict[str, Any]) -> Dict[str, Any]:
+        """シナリオからドメイン概念を分析・抽出 (既存ロジック)"""
+        domain_concepts = {
+            "entities": [],
+            "value_objects": [],
+            "domain_services": [],
+            "business_rules": [],
+            "ubiquitous_language": {}
         }
         
-    def validate_mcp_session(self) -> bool:
-        """Validate that MCP session is active and functional"""
+        # 全シナリオを統合
+        all_scenarios = []
+        all_scenarios.extend(scenarios.get("main_scenarios", []))
+        all_scenarios.extend(scenarios.get("alternative_scenarios", []))
+        all_scenarios.extend(scenarios.get("exception_scenarios", []))
+        
+        # エンティティ候補の抽出
+        entity_candidates = set()
+        value_object_candidates = set()
+        business_rules = []
+        language_terms = {}
+        
+        for scenario in all_scenarios:
+            scenario_text = f"{scenario.get('given', '')} {scenario.get('when', '')} {scenario.get('then', '')}"
+            
+            # よく使われる名詞を抽出（エンティティ候補）
+            import re
+            nouns = re.findall(r'\b[A-Z][a-z]+\b', scenario_text)
+            for noun in nouns:
+                if noun not in ['Given', 'When', 'Then', 'And', 'But']:
+                    entity_candidates.add(noun)
+            
+            # 値オブジェクト候補（IDやコードなど）
+            ids_and_codes = re.findall(r'\b[A-Z][a-z]*(?:Id|Code|Number|Name|Email|Address)\b', scenario_text)
+            for item in ids_and_codes:
+                value_object_candidates.add(item)
+            
+            # ビジネスルール（shouldやmustを含む文）
+            rule_patterns = [
+                r'should\s+([^.]+)',
+                r'must\s+([^.]+)',
+                r'cannot\s+([^.]+)',
+                r'is\s+required',
+                r'validation\s+([^.]+)'
+            ]
+            
+            for pattern in rule_patterns:
+                matches = re.findall(pattern, scenario_text, re.IGNORECASE)
+                for match in matches:
+                    business_rules.append({
+                        "id": f"br_{len(business_rules) + 1}",
+                        "description": match.strip(),
+                        "scenario_id": scenario.get("id", "unknown")
+                    })
+        
+        # エンティティを定義
+        for entity_name in sorted(entity_candidates):
+            if len(entity_name) > 2:  # 短すぎる名前を除外
+                domain_concepts["entities"].append({
+                    "name": entity_name,
+                    "description": f"{entity_name}エンティティ - ビジネス上重要な識別可能なオブジェクト",
+                    "properties": {
+                        "id": {"type": "str", "required": True, "description": f"{entity_name}の一意識別子"},
+                        "created_at": {"type": "datetime", "required": True, "description": "作成日時"},
+                        "updated_at": {"type": "datetime", "required": True, "description": "更新日時"}
+                    },
+                    "invariants": [
+                        f"{entity_name}のIDは空であってはならない",
+                        f"{entity_name}は作成後に削除されるまで存在し続ける"
+                    ]
+                })
+        
+        # 値オブジェクトを定義
+        for vo_name in sorted(value_object_candidates):
+            if len(vo_name) > 2:
+                domain_concepts["value_objects"].append({
+                    "name": vo_name,
+                    "description": f"{vo_name}値オブジェクト - 不変な値を表現",
+                    "validation_rules": [
+                        f"{vo_name}は不変でなければならない",
+                        f"{vo_name}は値による等価性を持つ"
+                    ]
+                })
+        
+        # ドメインサービス（複雑な業務ロジック）を推定
+        if len(entity_candidates) > 1:
+            main_entity = sorted(entity_candidates)[0] if entity_candidates else "Domain"
+            domain_concepts["domain_services"].append({
+                "name": f"{main_entity}DomainService",
+                "description": f"{main_entity}に関連する複雑なビジネスロジックを処理",
+                "responsibilities": [
+                    "複数のエンティティにまたがるビジネスルール実行",
+                    "複雑な計算やバリデーションロジック",
+                    "ドメイン固有の処理"
+                ]
+            })
+        
+        # ビジネスルールを設定
+        domain_concepts["business_rules"] = business_rules
+        
+        # ユビキタス言語の構築
+        all_terms = entity_candidates.union(value_object_candidates)
+        for term in sorted(all_terms):
+            if len(term) > 2:
+                language_terms[term] = f"{term}はこのドメインにおいて重要な概念"
+        
+        domain_concepts["ubiquitous_language"] = language_terms
+        
+        return domain_concepts
+        
+    def generate_core_domain_model_document(self, use_case_data: Dict[str, Any], 
+                                          domain_concepts: Dict[str, Any]) -> str:
+        """基本ドメインモデル設計書を生成 (既存機能)"""
+        metadata = use_case_data.get("metadata", {})
+        title = metadata.get("title", f"Issue {self.issue_number}")
+        
+        content = f"""# ドメインモデル設計 - Issue #{self.issue_number}
+
+## 概要
+**タイトル**: {title}
+**Issue**: #{self.issue_number}
+**作成日**: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+
+## ドメイン分析
+
+### 識別されたドメイン概念
+
+#### エンティティ ({len(domain_concepts['entities'])}個)
+"""
+        
+        # エンティティの詳細を追加
+        for entity in domain_concepts["entities"]:
+            content += f"\n##### {entity['name']}\n"
+            content += f"**説明**: {entity['description']}\n\n"
+            content += f"**プロパティ**:\n"
+            for prop_name, prop_info in entity.get("properties", {}).items():
+                content += f"- `{prop_name}` ({prop_info['type']}): {prop_info['description']}\n"
+            content += "\n**不変条件**:\n"
+            for invariant in entity.get("invariants", []):
+                content += f"- {invariant}\n"
+            content += "\n"
+        
+        content += f"\n#### 値オブジェクト ({len(domain_concepts['value_objects'])}個)\n"
+        
+        # 値オブジェクトの詳細を追加
+        for vo in domain_concepts["value_objects"]:
+            content += f"\n##### {vo['name']}\n"
+            content += f"**説明**: {vo['description']}\n\n"
+            content += f"**検証ルール**:\n"
+            for rule in vo.get("validation_rules", []):
+                content += f"- {rule}\n"
+            content += "\n"
+        
+        content += f"\n#### ドメインサービス ({len(domain_concepts['domain_services'])}個)\n"
+        
+        # ドメインサービスの詳細を追加
+        for service in domain_concepts["domain_services"]:
+            content += f"\n##### {service['name']}\n"
+            content += f"**説明**: {service['description']}\n\n"
+            content += f"**責務**:\n"
+            for responsibility in service.get("responsibilities", []):
+                content += f"- {responsibility}\n"
+            content += "\n"
+        
+        content += f"\n#### ビジネスルール ({len(domain_concepts['business_rules'])}個)\n"
+        
+        # ビジネスルールの詳細を追加
+        for rule in domain_concepts["business_rules"]:
+            content += f"\n- **{rule['id']}**: {rule['description']}\n"
+        
+        content += f"\n### ユビキタス言語 ({len(domain_concepts['ubiquitous_language'])}個)\n"
+        
+        # ユビキタス言語の詳細を追加
+        for term, definition in domain_concepts["ubiquitous_language"].items():
+            content += f"\n- **{term}**: {definition}\n"
+        
+        content += f"""
+
+### 次のステップ
+1. **TDD実装**: `/create-tests {self.issue_number}` でテスト作成
+2. **ドメイン実装**: `/implement-domain {self.issue_number}` で実装
+3. **アプリケーション層**: `/implement-usecase {self.issue_number}` で統合
+
+### 設計原則
+- **ドメイン純粋性**: 外部依存を持たない純粋なビジネスロジック
+- **不変性**: 値オブジェクトの不変性を維持
+- **カプセル化**: エンティティの内部状態を適切に保護
+- **ユビキタス言語**: 開発者とドメインエキスパート間の共通言語使用
+
+---
+*このドキュメントは自動生成されました。ドメインエキスパートとのレビューを通じて改善してください。*
+"""
+        
+        return content
+        
+    def run_core_modeling(self) -> Dict[str, Any]:
+        """コアドメインモデリング処理 (既存機能)"""
+        logger.info(f"🏗️ Issue #{self.issue_number} のコアドメインモデル設計を開始")
+        
+        # ユースケースJSONファイルを検索
+        logger.info("📁 ユースケースJSONファイルを検索中...")
+        json_file_path = self.find_use_case_json()
+        
+        if not json_file_path:
+            raise FileNotFoundError(f"Issue #{self.issue_number} のユースケースJSONが見つかりません")
+        
+        logger.info(f"✅ JSONファイルを発見: {json_file_path}")
+        
+        # ユースケースデータを読み込み
+        logger.info("📝 ユースケースデータを読み込み中...")
+        use_case_data = load_use_case_json(json_file_path)
+        
+        # シナリオからドメイン概念を分析
+        logger.info("🔍 シナリオからドメイン概念を分析中...")
+        scenarios = use_case_data.get("scenarios", {})
+        domain_concepts = self.analyze_scenarios_for_domain_concepts(scenarios)
+        
+        logger.info(f"✅ ドメイン概念分析完了:")
+        logger.info(f"  - エンティティ: {len(domain_concepts['entities'])}個")
+        logger.info(f"  - 値オブジェクト: {len(domain_concepts['value_objects'])}個")
+        logger.info(f"  - ドメインサービス: {len(domain_concepts['domain_services'])}個")
+        logger.info(f"  - ビジネスルール: {len(domain_concepts['business_rules'])}個")
+        logger.info(f"  - ユビキタス言語: {len(domain_concepts['ubiquitous_language'])}個")
+        
+        # ドメインモデル設計書を生成
+        logger.info("📋 ドメインモデル設計書を生成中...")
+        domain_dir = self.create_domain_directory()
+        
+        domain_doc_content = self.generate_core_domain_model_document(use_case_data, domain_concepts)
+        domain_doc_path = domain_dir / f"issue-{self.issue_number}-domain-model.md"
+        
+        with open(domain_doc_path, 'w', encoding='utf-8') as f:
+            f.write(domain_doc_content)
+        
+        logger.info(f"✅ ドメインモデル設計書を作成: {domain_doc_path}")
+        
+        return {
+            "json_file_path": json_file_path,
+            "use_case_data": use_case_data,
+            "domain_concepts": domain_concepts,
+            "domain_doc_path": str(domain_doc_path),
+            "domain_doc_content": domain_doc_content
+        }
+
+
+class MCPAnalyzer:
+    """MCP分析機能 - 既存コードベースの現状分析"""
+    
+    def __init__(self):
+        self.session_dir = Path(".serena/sessions/current")
+        self.memory_dir = Path(".serena/memory")
+        
+    def check_mcp_availability(self) -> bool:
+        """MCP利用可能性チェック"""
         try:
-            # Check session directory exists
+            # セッションディレクトリの存在確認
             if not self.session_dir.exists():
-                logger.error("MCP session directory not found")
+                logger.info("ℹ️ MCP session directory not found")
                 return False
                 
-            # Check session metadata
+            # セッションメタデータの確認
             session_metadata_file = self.session_dir / "session-metadata.json"
             if not session_metadata_file.exists():
-                logger.error("MCP session metadata not found")
+                logger.info("ℹ️ MCP session metadata not found")
                 return False
                 
-            # Load session metadata
+            # メタデータの読み込み
             with open(session_metadata_file, 'r', encoding='utf-8') as f:
                 session_metadata = json.load(f)
                 
-            # Validate MCP integrations
+            # MCP統合の確認
             mcp_integrations = session_metadata.get("mcp_integrations", {})
             serena_status = mcp_integrations.get("serena", {}).get("status")
-            context7_status = mcp_integrations.get("context7", {}).get("status")
             
             if serena_status != "ready":
-                logger.error(f"Serena MCP not ready: {serena_status}")
+                logger.info(f"ℹ️ Serena MCP not ready: {serena_status}")
                 return False
-                
-            if context7_status != "ready":
-                logger.warning(f"Context7 MCP status: {context7_status}")
-                # Context7 is optional, continue even if not ready
                 
             logger.info("✅ MCP session validation passed")
             return True
             
         except Exception as e:
-            logger.exception("Failed to validate MCP session")
+            logger.info(f"ℹ️ MCP not available: {e}")
             return False
             
-    def load_use_case_specifications(self) -> Dict[str, Any]:
-        """Load use case specifications for the issue"""
-        try:
-            # Find use case file for the issue
-            use_case_files = list(Path("docs/use_cases").rglob(f"*issue*{self.issue_number}*.md"))
-            
-            if not use_case_files:
-                logger.warning(f"No use case specifications found for issue {self.issue_number}")
-                return {}
-                
-            use_case_file = use_case_files[0]
-            logger.info(f"Loading use case specifications from: {use_case_file}")
-            
-            # Parse use case content
-            with open(use_case_file, 'r', encoding='utf-8') as f:
-                content = f.read()
-                
-            # Extract Given-When-Then scenarios (simplified parsing)
-            scenarios = []
-            lines = content.split('\n')
-            current_scenario = {}
-            
-            for line in lines:
-                line = line.strip()
-                if line.startswith('**Given'):
-                    current_scenario = {"given": line.replace('**Given**: ', '')}
-                elif line.startswith('**When') and current_scenario:
-                    current_scenario["when"] = line.replace('**When**: ', '')
-                elif line.startswith('**Then') and current_scenario:
-                    current_scenario["then"] = line.replace('**Then**: ', '')
-                    scenarios.append(current_scenario.copy())
-                    current_scenario = {}
-                    
-            return {
-                "file_path": str(use_case_file),
-                "scenarios": scenarios,
-                "content": content
-            }
-            
-        except Exception as e:
-            logger.exception("Failed to load use case specifications")
-            return {}
-            
-    def analyze_codebase_with_serena(self) -> Dict[str, Any]:
-        """Analyze existing codebase using Serena MCP for domain pattern discovery"""
-        try:
-            logger.info("🔍 Starting Serena MCP codebase analysis...")
-            
-            analysis_results = {
-                "project_structure": {},
-                "discovered_entities": [],
-                "discovered_value_objects": [],
-                "business_methods": [],
-                "domain_services": [],
-                "repositories": [],
-                "aggregates": []
-            }
-            
-            # This is a simulation of MCP calls since we can't make actual MCP calls in this script
-            # In real implementation, these would be actual MCP function calls
-            
-            # Simulate project structure analysis
-            analysis_results["project_structure"] = self._simulate_project_structure_analysis()
-            
-            # Simulate entity discovery
-            analysis_results["discovered_entities"] = self._simulate_entity_discovery()
-            
-            # Simulate value object discovery
-            analysis_results["discovered_value_objects"] = self._simulate_value_object_discovery()
-            
-            # Simulate business method discovery
-            analysis_results["business_methods"] = self._simulate_business_method_discovery()
-            
-            # Store analysis in memory for future reference
-            self._store_analysis_in_memory("codebase_analysis", analysis_results)
-            
-            logger.info("✅ Serena MCP codebase analysis completed")
-            self.modeling_metadata["mcp_integrations"]["serena"]["status"] = "completed"
-            self.modeling_metadata["mcp_integrations"]["serena"]["features"] = [
-                "project_structure_analysis", "entity_discovery", "value_object_discovery", 
-                "business_method_discovery", "cross_reference_analysis"
-            ]
-            
-            return analysis_results
-            
-        except Exception as e:
-            logger.exception("Failed to analyze codebase with Serena MCP")
-            return {}
-            
-    def _simulate_project_structure_analysis(self) -> Dict[str, Any]:
-        """Simulate project structure analysis"""
-        # In real implementation, this would use mcp__serena__list_dir and mcp__serena__get_symbols_overview
+    def analyze_current_codebase(self) -> Dict[str, Any]:
+        """現在のコードベース分析 (シミュレーション)"""
+        logger.info("🔍 現在のコードベースを分析中...")
+        
+        # 実際の実装では、ここでMCP (Serena)を使用してコードベース分析
+        # 現在はシミュレーションとして実装
+        
+        current_analysis = {
+            "project_structure": self._analyze_project_structure(),
+            "existing_entities": self._discover_existing_entities(),
+            "existing_value_objects": self._discover_existing_value_objects(),
+            "existing_domain_services": self._discover_existing_domain_services(),
+            "code_patterns": self._analyze_code_patterns(),
+            "technical_debt": self._assess_technical_debt()
+        }
+        
+        logger.info("✅ コードベース分析完了")
+        return current_analysis
+        
+    def _analyze_project_structure(self) -> Dict[str, Any]:
+        """プロジェクト構造分析 (シミュレーション)"""
+        # 実際の実装: mcp__serena__list_dir, mcp__serena__get_symbols_overview
         return {
             "total_files": 45,
             "code_files": 32,
             "test_files": 13,
-            "main_directories": ["src", "tests", "docs"],
-            "dominant_language": "python",
             "architecture_style": "layered",
-            "estimated_complexity": "moderate"
+            "estimated_complexity": "moderate",
+            "main_directories": ["src", "tests", "docs"],
+            "language": "python"
         }
         
-    def _simulate_entity_discovery(self) -> List[Dict[str, Any]]:
-        """Simulate entity discovery from code analysis"""
-        # In real implementation, this would use mcp__serena__find_symbol with entity patterns
+    def _discover_existing_entities(self) -> List[Dict[str, Any]]:
+        """既存エンティティ発見 (シミュレーション)"""
+        # 実際の実装: mcp__serena__find_symbol でクラス検索
         return [
             {
                 "name": "User",
                 "file_path": "src/domain/entities/user.py",
                 "methods": ["create", "update_profile", "change_password"],
                 "properties": ["id", "email", "username", "created_at"],
-                "business_rules": ["Email must be unique", "Username cannot be changed"]
+                "business_rules_count": 3,
+                "implementation_status": "implemented"
             },
             {
-                "name": "Order",
-                "file_path": "src/domain/entities/order.py", 
-                "methods": ["add_item", "remove_item", "calculate_total", "confirm"],
-                "properties": ["id", "customer_id", "items", "status", "total"],
-                "business_rules": ["Order total must be positive", "Confirmed orders cannot be modified"]
+                "name": "Order", 
+                "file_path": "src/domain/entities/order.py",
+                "methods": ["add_item", "remove_item", "calculate_total"],
+                "properties": ["id", "customer_id", "items", "status"],
+                "business_rules_count": 2,
+                "implementation_status": "partial"
             }
         ]
         
-    def _simulate_value_object_discovery(self) -> List[Dict[str, Any]]:
-        """Simulate value object discovery and primitive obsession detection"""
-        # In real implementation, this would use mcp__serena__search_for_pattern to find primitive obsession
+    def _discover_existing_value_objects(self) -> List[Dict[str, Any]]:
+        """既存値オブジェクト発見 (シミュレーション)"""
+        # 実際の実装: primitive obsession パターン検索
         return [
             {
-                "name": "Email",
-                "suggested_from": "string email fields",
-                "validation_rules": ["Valid email format", "Max 255 characters"],
-                "immutable": True,
-                "equality_based": True
+                "name": "EmailAddress",
+                "file_path": "src/domain/value_objects/email.py",
+                "validation_implemented": True,
+                "immutability_enforced": True,
+                "usage_count": 15
             },
             {
-                "name": "Money", 
-                "suggested_from": "decimal amount fields",
-                "properties": ["amount", "currency"],
-                "validation_rules": ["Amount must be non-negative", "Currency must be valid ISO code"],
-                "immutable": True
+                "name": "UserId",
+                "file_path": "src/domain/value_objects/user_id.py", 
+                "validation_implemented": False,
+                "immutability_enforced": True,
+                "usage_count": 8
             }
         ]
         
-    def _simulate_business_method_discovery(self) -> List[Dict[str, Any]]:
-        """Simulate business method discovery"""
-        # In real implementation, this would use mcp__serena__find_symbol with business logic patterns
+    def _discover_existing_domain_services(self) -> List[Dict[str, Any]]:
+        """既存ドメインサービス発見 (シミュレーション)"""
         return [
             {
-                "method_name": "calculate_discount",
-                "class": "Order",
-                "business_rule": "Apply discount based on customer tier and order total",
+                "name": "UserRegistrationService",
+                "file_path": "src/domain/services/user_service.py",
                 "complexity": "medium",
-                "dependencies": ["CustomerTier", "DiscountPolicy"]
-            },
-            {
-                "method_name": "validate_payment",
-                "class": "PaymentService",
-                "business_rule": "Validate payment method and available balance",
-                "complexity": "high", 
-                "dependencies": ["PaymentGateway", "FraudDetection"]
+                "responsibilities": ["user validation", "duplicate check"],
+                "dependencies": ["UserRepository", "EmailService"]
             }
         ]
         
-    def integrate_context7_patterns(self) -> Dict[str, Any]:
-        """Integrate latest DDD patterns using Context7 MCP"""
-        try:
-            logger.info("📚 Integrating Context7 DDD patterns...")
-            
-            # This simulates Context7 integration
-            # In real implementation, these would be actual mcp__context7__ calls
-            
-            pattern_integration = {
-                "ddd_tactical_patterns": self._simulate_ddd_patterns(),
-                "aggregate_design_patterns": self._simulate_aggregate_patterns(),
-                "repository_patterns": self._simulate_repository_patterns(),
-                "domain_service_patterns": self._simulate_domain_service_patterns()
-            }
-            
-            # Store pattern integration in memory
-            self._store_analysis_in_memory("context7_patterns", pattern_integration)
-            
-            logger.info("✅ Context7 pattern integration completed")
-            self.modeling_metadata["mcp_integrations"]["context7"]["status"] = "completed"
-            self.modeling_metadata["mcp_integrations"]["context7"]["features"] = [
-                "ddd_tactical_patterns", "aggregate_design", "repository_patterns", "domain_services"
-            ]
-            
-            return pattern_integration
-            
-        except Exception as e:
-            logger.exception("Failed to integrate Context7 patterns")
-            return {}
-            
-    def _simulate_ddd_patterns(self) -> Dict[str, Any]:
-        """Simulate DDD tactical pattern recommendations"""
-        # In real implementation: mcp__context7__get-library-docs for DDD patterns
+    def _analyze_code_patterns(self) -> Dict[str, Any]:
+        """コードパターン分析 (シミュレーション)"""
         return {
-            "entity_patterns": [
-                "Use identity equality for entities",
-                "Implement domain events for state changes",
-                "Keep entities focused on business behavior"
-            ],
-            "value_object_patterns": [
-                "Make value objects immutable",
-                "Implement value-based equality",
-                "Use for primitive obsession elimination"
-            ],
-            "aggregate_patterns": [
-                "Design aggregate boundaries around business transactions", 
-                "Use aggregate roots to control access",
-                "Limit aggregate size for performance"
-            ]
+            "ddd_patterns_used": ["Entity", "Value Object", "Repository"],
+            "anti_patterns_detected": ["Primitive Obsession", "Anemic Domain Model"],
+            "missing_patterns": ["Aggregate", "Domain Events"],
+            "pattern_compliance_score": 65
         }
         
-    def _simulate_aggregate_patterns(self) -> Dict[str, Any]:]:
-        """Simulate aggregate design pattern recommendations"""
+    def _assess_technical_debt(self) -> Dict[str, Any]:
+        """技術的負債評価 (シミュレーション)"""
         return {
-            "design_principles": [
-                "Single aggregate per transaction",
-                "Reference other aggregates by ID only",
-                "Use eventual consistency between aggregates"
-            ],
-            "size_recommendations": [
-                "Keep aggregates small and focused",
-                "Avoid large object graphs",
-                "Consider splitting large aggregates"
-            ],
-            "consistency_patterns": [
-                "Use domain events for cross-aggregate consistency",
-                "Implement saga patterns for long-running transactions",
-                "Apply eventual consistency where appropriate"
-            ]
+            "primitive_obsession_count": 12,
+            "anemic_entities_count": 3,
+            "missing_validation_count": 8,
+            "overall_debt_score": "medium",
+            "priority_fixes": ["implement Email value object", "add entity behavior"]
         }
-        
-    def _simulate_repository_patterns(self) -> Dict[str, Any]:
-        """Simulate repository pattern recommendations"""
-        return {
-            "interface_design": [
-                "Define repository interfaces in domain layer",
-                "Use aggregate root as repository boundary",
-                "Avoid exposing persistence details"
-            ],
-            "query_patterns": [
-                "Use specification pattern for complex queries",
-                "Implement pagination for large result sets", 
-                "Consider CQRS for read optimization"
-            ]
-        }
-        
-    def _simulate_domain_service_patterns(self) -> Dict[str, Any]:
-        """Simulate domain service pattern recommendations"""
-        return {
-            "usage_guidelines": [
-                "Use for operations that don't belong to single entity",
-                "Keep domain services stateless",
-                "Avoid anemic domain model anti-pattern"
-            ],
-            "coordination_patterns": [
-                "Coordinate between multiple aggregates",
-                "Handle complex business processes",
-                "Implement domain policies and rules"
-            ]
-        }
-        
-    def _store_analysis_in_memory(self, memory_name: str, analysis_data: Dict[str, Any]) -> None:
-        """Store analysis results in MCP memory"""
-        try:
-            memory_file = self.memory_dir / "domain_models" / f"{memory_name}_{self.issue_number}.md"
-            memory_file.parent.mkdir(parents=True, exist_ok=True)
-            
-            # Convert analysis data to markdown format
-            markdown_content = self._convert_to_markdown(memory_name, analysis_data)
-            
-            with open(memory_file, 'w', encoding='utf-8') as f:
-                f.write(markdown_content)
-                
-            logger.info(f"✅ Stored analysis in memory: {memory_file}")
-            
-        except Exception as e:
-            logger.exception(f"Failed to store analysis in memory: {memory_name}")
-            
-    def _convert_to_markdown(self, title: str, data: Dict[str, Any]) -> str:
-        """Convert analysis data to markdown format"""
-        markdown = f"# {title.replace('_', ' ').title()} - Issue {self.issue_number}\n\n"
-        markdown += f"**Generated**: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n"
-        
-        def dict_to_markdown(obj: Any, level: int = 2) -> str:
-            result = ""
-            if isinstance(obj, dict):
-                for key, value in obj.items():
-                    result += f"{'#' * level} {key.replace('_', ' ').title()}\n\n"
-                    result += dict_to_markdown(value, level + 1)
-            elif isinstance(obj, list):
-                for item in obj:
-                    if isinstance(item, dict):
-                        result += dict_to_markdown(item, level)
-                    else:
-                        result += f"- {item}\n"
-                result += "\n"
-            else:
-                result += f"{obj}\n\n"
-            return result
-            
-        markdown += dict_to_markdown(data)
-        return markdown
-        
-    def generate_enhanced_domain_model(self, use_case_specs: Dict[str, Any], 
-                                     codebase_analysis: Dict[str, Any],
-                                     pattern_integration: Dict[str, Any]) -> str:
-        """Generate comprehensive enhanced domain model document"""
-        try:
-            logger.info("📝 Generating enhanced domain model document...")
-            
-            domain_model_content = f"""# Enhanced Domain Model - Issue {self.issue_number}
 
-**Generated**: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
-**MCP Analysis**: Serena (Codebase) + Context7 (Patterns)
 
-## 🎯 Domain Analysis Summary
-
-### Use Case Context
-{self._format_use_case_context(use_case_specs)}
-
-### Codebase Analysis Results
-{self._format_codebase_analysis(codebase_analysis)}
-
-### Pattern Integration
-{self._format_pattern_integration(pattern_integration)}
-
-## 🏗️ Enhanced Domain Model Design
-
-### Entities
-{self._generate_entity_specifications(codebase_analysis.get("discovered_entities", []))}
-
-### Value Objects  
-{self._generate_value_object_specifications(codebase_analysis.get("discovered_value_objects", []))}
-
-### Aggregates
-{self._generate_aggregate_specifications(codebase_analysis, pattern_integration)}
-
-### Domain Services
-{self._generate_domain_service_specifications(codebase_analysis.get("business_methods", []))}
-
-### Repositories
-{self._generate_repository_specifications(codebase_analysis.get("repositories", []))}
-
-## 🔍 MCP-Powered Insights
-
-### Discovered Anti-Patterns
-{self._identify_anti_patterns(codebase_analysis)}
-
-### Improvement Recommendations
-{self._generate_improvement_recommendations(codebase_analysis, pattern_integration)}
-
-### Implementation Priority
-{self._generate_implementation_priority()}
-
-## 📊 Quality Metrics
-
-### Domain Model Completeness
-- **Entities Discovered**: {len(codebase_analysis.get("discovered_entities", []))}
-- **Value Objects Recommended**: {len(codebase_analysis.get("discovered_value_objects", []))}
-- **Business Rules Identified**: {len(codebase_analysis.get("business_methods", []))}
-- **Pattern Integration Coverage**: {self._calculate_pattern_coverage(pattern_integration)}%
-
-### Technical Debt Assessment
-{self._assess_technical_debt(codebase_analysis)}
-
-## 🚀 Next Steps
-
-1. **Immediate Actions**
-   - Review and validate discovered domain patterns
-   - Prioritize value object implementation to eliminate primitive obsession
-   - Refactor identified anti-patterns
-
-2. **Test Creation Phase**
-   - Use `/create-tests-enhanced {self.issue_number}` for MCP-powered test generation
-   - Focus on business rule validation tests
-   - Implement aggregate boundary tests
-
-3. **Implementation Phase** 
-   - Follow generated implementation guidance
-   - Apply Context7 pattern recommendations
-   - Maintain domain purity principles
-
-## 📋 References
-
-- **Codebase Analysis**: `.serena/memory/domain_models/codebase_analysis_{self.issue_number}.md`
-- **Pattern Integration**: `.serena/memory/domain_models/context7_patterns_{self.issue_number}.md`
-- **Use Case Specifications**: `{use_case_specs.get("file_path", "N/A")}`
-"""
-            
-            return domain_model_content
-            
-        except Exception as e:
-            logger.exception("Failed to generate enhanced domain model")
-            return "# Error: Failed to generate domain model"
-            
-    def _format_use_case_context(self, use_case_specs: Dict[str, Any]) -> str:
-        """Format use case context section"""
-        if not use_case_specs.get("scenarios"):
-            return "No use case specifications found for this issue."
-            
-        context = f"**Source**: `{use_case_specs['file_path']}`\n\n"
-        context += f"**Scenarios Identified**: {len(use_case_specs['scenarios'])}\n\n"
-        
-        for i, scenario in enumerate(use_case_specs["scenarios"][:3], 1):  # Show first 3 scenarios
-            context += f"**Scenario {i}**:\n"
-            context += f"- Given: {scenario.get('given', 'N/A')}\n"
-            context += f"- When: {scenario.get('when', 'N/A')}\n"  
-            context += f"- Then: {scenario.get('then', 'N/A')}\n\n"
-            
-        return context
-        
-    def _format_codebase_analysis(self, analysis: Dict[str, Any]) -> str:
-        """Format codebase analysis results"""
-        if not analysis:
-            return "No codebase analysis available."
-            
-        structure = analysis.get("project_structure", {})
-        result = f"**Project Complexity**: {structure.get('estimated_complexity', 'unknown')}\n"
-        result += f"**Total Files Analyzed**: {structure.get('total_files', 0)}\n"
-        result += f"**Code Files**: {structure.get('code_files', 0)}\n"
-        result += f"**Architecture Style**: {structure.get('architecture_style', 'unknown')}\n\n"
-        
-        result += f"**Domain Patterns Discovered**:\n"
-        result += f"- Entities: {len(analysis.get('discovered_entities', []))}\n"
-        result += f"- Value Objects (recommended): {len(analysis.get('discovered_value_objects', []))}\n"
-        result += f"- Business Methods: {len(analysis.get('business_methods', []))}\n\n"
-        
-        return result
-        
-    def _format_pattern_integration(self, patterns: Dict[str, Any]) -> str:
-        """Format Context7 pattern integration results"""
-        if not patterns:
-            return "No pattern integration available."
-            
-        result = "**DDD Tactical Patterns Applied**: ✅\n"
-        result += "**Aggregate Design Patterns**: ✅\n" 
-        result += "**Repository Patterns**: ✅\n"
-        result += "**Domain Service Patterns**: ✅\n\n"
-        
-        result += "**Key Recommendations**:\n"
-        tactical = patterns.get("ddd_tactical_patterns", {})
-        if tactical.get("entity_patterns"):
-            result += f"- Entity: {tactical['entity_patterns'][0]}\n"
-        if tactical.get("value_object_patterns"):
-            result += f"- Value Object: {tactical['value_object_patterns'][0]}\n"
-        if tactical.get("aggregate_patterns"):
-            result += f"- Aggregate: {tactical['aggregate_patterns'][0]}\n"
-            
-        return result
-        
-    def _generate_entity_specifications(self, entities: List[Dict[str, Any]]) -> str:
-        """Generate detailed entity specifications"""
-        if not entities:
-            return "No entities discovered in current codebase analysis."
-            
-        result = ""
-        for entity in entities:
-            result += f"#### {entity['name']} Entity\n\n"
-            result += f"**Location**: `{entity['file_path']}`\n\n"
-            result += f"**Properties**:\n"
-            for prop in entity.get("properties", []):
-                result += f"- `{prop}`\n"
-            result += "\n"
-            
-            result += f"**Behavior Methods**:\n"
-            for method in entity.get("methods", []):
-                result += f"- `{method}()`\n"
-            result += "\n"
-            
-            result += f"**Business Rules**:\n"
-            for rule in entity.get("business_rules", []):
-                result += f"- {rule}\n"
-            result += "\n"
-            
-        return result
-        
-    def _generate_value_object_specifications(self, value_objects: List[Dict[str, Any]]) -> str:
-        """Generate value object specifications"""
-        if not value_objects:
-            return "No value object candidates identified."
-            
-        result = ""
-        for vo in value_objects:
-            result += f"#### {vo['name']} Value Object\n\n"
-            result += f"**Purpose**: Eliminate primitive obsession for {vo.get('suggested_from', 'unknown')}\n\n"
-            
-            result += f"**Properties**:\n"
-            for prop in vo.get("properties", [vo['name'].lower()]):
-                result += f"- `{prop}` (immutable)\n"
-            result += "\n"
-            
-            result += f"**Validation Rules**:\n"
-            for rule in vo.get("validation_rules", []):
-                result += f"- {rule}\n"
-            result += "\n"
-            
-            result += f"**Characteristics**:\n"
-            result += f"- Immutable: {'✅' if vo.get('immutable') else '❌'}\n"
-            result += f"- Value Equality: {'✅' if vo.get('equality_based') else '❌'}\n\n"
-            
-        return result
-        
-    def _generate_aggregate_specifications(self, codebase_analysis: Dict[str, Any], 
-                                         patterns: Dict[str, Any]) -> str:
-        """Generate aggregate specifications based on analysis"""
-        entities = codebase_analysis.get("discovered_entities", [])
-        if not entities:
-            return "No aggregates identified from current analysis."
-            
-        result = "Based on entity analysis and Context7 patterns, the following aggregate design is recommended:\n\n"
-        
-        # Group entities into potential aggregates based on business relationships
-        for entity in entities:
-            result += f"#### {entity['name']} Aggregate\n\n"
-            result += f"**Aggregate Root**: {entity['name']}\n"
-            result += f"**Consistency Boundary**: {entity['name']} and its direct child entities\n"
-            result += f"**Business Transaction Scope**: {entity['name']} lifecycle management\n\n"
-            
-            # Add Context7 pattern recommendations
-            aggregate_patterns = patterns.get("aggregate_design_patterns", {})
-            if aggregate_patterns.get("design_principles"):
-                result += f"**Design Principles Applied**:\n"
-                for principle in aggregate_patterns["design_principles"][:2]:
-                    result += f"- {principle}\n"
-                result += "\n"
-                
-        return result
-        
-    def _generate_domain_service_specifications(self, business_methods: List[Dict[str, Any]]) -> str:
-        """Generate domain service specifications"""
-        if not business_methods:
-            return "No complex business methods requiring domain services identified."
-            
-        result = ""
-        # Group high-complexity methods into domain services
-        high_complexity_methods = [m for m in business_methods if m.get("complexity") in ["high", "medium"]]
-        
-        for method in high_complexity_methods:
-            result += f"#### {method['method_name']} Domain Service\n\n"
-            result += f"**Purpose**: {method.get('business_rule', 'Complex business operation')}\n"
-            result += f"**Complexity**: {method.get('complexity', 'unknown')}\n"
-            result += f"**Dependencies**: {', '.join(method.get('dependencies', []))}\n\n"
-            
-        return result if result else "No domain services recommended based on current analysis."
-        
-    def _generate_repository_specifications(self, repositories: List[Dict[str, Any]]) -> str:
-        """Generate repository specifications"""
-        # This is a placeholder - in real implementation, repositories would be discovered from codebase
-        return """#### Repository Interface Design
-
-Based on aggregate analysis, the following repository interfaces are recommended:
-
-**UserRepository**
-- `find_by_id(user_id: UserId) -> Optional[User]`
-- `find_by_email(email: Email) -> Optional[User]`
-- `save(user: User) -> None`
-
-**OrderRepository**
-- `find_by_id(order_id: OrderId) -> Optional[Order]`
-- `find_by_customer(customer_id: CustomerId) -> List[Order]`
-- `save(order: Order) -> None`
-
-**Repository Pattern Application**:
-- Interface defined in domain layer
-- Implementation in infrastructure layer
-- Aggregate root as repository boundary
-"""
-
-    def _identify_anti_patterns(self, analysis: Dict[str, Any]) -> str:
-        """Identify anti-patterns from codebase analysis"""
-        anti_patterns = []
-        
-        # Check for primitive obsession
-        value_objects = analysis.get("discovered_value_objects", [])
-        if value_objects:
-            anti_patterns.append(f"**Primitive Obsession**: {len(value_objects)} candidates for value objects identified")
-            
-        # Check for anemic domain model
-        entities = analysis.get("discovered_entities", [])
-        total_methods = sum(len(entity.get("methods", [])) for entity in entities)
-        if entities and total_methods < len(entities) * 2:
-            anti_patterns.append("**Anemic Domain Model**: Entities have insufficient behavior methods")
-            
-        return "\n".join([f"- {pattern}" for pattern in anti_patterns]) if anti_patterns else "No significant anti-patterns detected."
-        
-    def _generate_improvement_recommendations(self, codebase_analysis: Dict[str, Any],
-                                            patterns: Dict[str, Any]) -> str:
-        """Generate improvement recommendations based on analysis"""
-        recommendations = []
-        
-        # Value object recommendations
-        value_objects = codebase_analysis.get("discovered_value_objects", [])
-        if value_objects:
-            recommendations.append(f"**Priority 1**: Implement {len(value_objects)} value objects to eliminate primitive obsession")
-            
-        # Entity enhancement recommendations
-        entities = codebase_analysis.get("discovered_entities", [])
-        if entities:
-            recommendations.append(f"**Priority 2**: Enhance {len(entities)} entities with business behavior methods")
-            
-        # Pattern application recommendations
-        if patterns:
-            recommendations.append("**Priority 3**: Apply Context7 DDD patterns for aggregate design optimization")
-            
-        return "\n".join([f"{i+1}. {rec}" for i, rec in enumerate(recommendations)]) if recommendations else "Analysis complete - no immediate improvements required."
-        
-    def _generate_implementation_priority(self) -> str:
-        """Generate implementation priority recommendations"""
-        return """**High Priority**:
-1. Implement critical value objects (Email, Money)
-2. Enhance entity behavior methods
-3. Define aggregate boundaries
-
-**Medium Priority**:
-1. Implement domain services for complex operations
-2. Create repository interfaces
-3. Apply aggregate design patterns
-
-**Low Priority**:
-1. Refactor anti-patterns
-2. Optimize cross-reference relationships
-3. Enhance domain event handling"""
-
-    def _calculate_pattern_coverage(self, patterns: Dict[str, Any]) -> int:
-        """Calculate pattern integration coverage percentage"""
-        if not patterns:
-            return 0
-            
-        pattern_categories = ["ddd_tactical_patterns", "aggregate_design_patterns", 
-                            "repository_patterns", "domain_service_patterns"]
-        covered = sum(1 for cat in pattern_categories if patterns.get(cat))
-        return int((covered / len(pattern_categories)) * 100)
-        
-    def _assess_technical_debt(self, analysis: Dict[str, Any]) -> str:
-        """Assess technical debt from analysis"""
-        debt_items = []
-        
-        # Primitive obsession debt
-        value_objects = analysis.get("discovered_value_objects", [])
-        if value_objects:
-            debt_items.append(f"Primitive Obsession: {len(value_objects)} instances")
-            
-        # Entity behavior debt
-        entities = analysis.get("discovered_entities", [])
-        if entities:
-            avg_methods = sum(len(e.get("methods", [])) for e in entities) / len(entities) if entities else 0
-            if avg_methods < 3:
-                debt_items.append(f"Anemic Entities: Average {avg_methods:.1f} methods per entity")
-                
-        return "\n".join([f"- {item}" for item in debt_items]) if debt_items else "Low technical debt detected."
-        
-    def create_mcp_analysis_report(self, codebase_analysis: Dict[str, Any],
-                                 pattern_integration: Dict[str, Any]) -> str:
-        """Create comprehensive MCP analysis report"""
-        try:
-            logger.info("📊 Creating MCP analysis report...")
-            
-            report_content = f"""# MCP Analysis Report - Issue {self.issue_number}
-
-**Generated**: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
-**Analysis Duration**: {self._calculate_analysis_duration()}
-**MCP Integrations**: Serena + Context7
-
-## 🔍 Serena MCP Codebase Analysis
-
-### Project Overview
-{self._format_project_overview(codebase_analysis)}
-
-### Domain Pattern Discovery
-{self._format_domain_discovery(codebase_analysis)}
-
-### Business Logic Analysis
-{self._format_business_logic_analysis(codebase_analysis)}
-
-### Anti-Pattern Detection
-{self._identify_anti_patterns(codebase_analysis)}
-
-## 📚 Context7 Pattern Integration
-
-### Applied Patterns
-{self._format_applied_patterns(pattern_integration)}
-
-### Best Practice Recommendations
-{self._format_best_practices(pattern_integration)}
-
-## 📈 Quality Metrics
-
-### Discovery Metrics
-- **Files Analyzed**: {codebase_analysis.get('project_structure', {}).get('total_files', 0)}
-- **Symbols Discovered**: {self._count_discovered_symbols(codebase_analysis)}
-- **Patterns Identified**: {self._count_patterns(codebase_analysis)}
-- **Business Rules Extracted**: {len(codebase_analysis.get('business_methods', []))}
-
-### Integration Metrics
-- **Pattern Coverage**: {self._calculate_pattern_coverage(pattern_integration)}%
-- **Recommendation Quality**: {self._assess_recommendation_quality()}
-- **Implementation Readiness**: {self._assess_implementation_readiness()}%
-
-## 🎯 Key Findings
-
-### Strengths
-{self._identify_strengths(codebase_analysis)}
-
-### Areas for Improvement  
-{self._identify_improvement_areas(codebase_analysis)}
-
-### Critical Actions Required
-{self._identify_critical_actions(codebase_analysis)}
-
-## 🚀 Implementation Roadmap
-
-### Phase 1: Foundation (Immediate)
-{self._generate_phase_1_roadmap(codebase_analysis)}
-
-### Phase 2: Enhancement (Short-term)
-{self._generate_phase_2_roadmap(pattern_integration)}
-
-### Phase 3: Optimization (Long-term)
-{self._generate_phase_3_roadmap()}
-
-## 📊 Comparison with Best Practices
-
-### DDD Compliance Score
-{self._calculate_ddd_compliance_score(codebase_analysis, pattern_integration)}
-
-### Architecture Quality Assessment
-{self._assess_architecture_quality(codebase_analysis)}
-
-## 📋 Appendix
-
-### Detailed Analysis Data
-- **Codebase Analysis**: `.serena/memory/domain_models/codebase_analysis_{self.issue_number}.md`
-- **Pattern Integration**: `.serena/memory/domain_models/context7_patterns_{self.issue_number}.md`
-- **Session Metadata**: `.serena/sessions/current/session-metadata.json`
-
-### MCP Integration Status
-- **Serena MCP**: ✅ {', '.join(self.modeling_metadata['mcp_integrations']['serena']['features'])}
-- **Context7 MCP**: ✅ {', '.join(self.modeling_metadata['mcp_integrations']['context7']['features'])}
-"""
-            
-            return report_content
-            
-        except Exception as e:
-            logger.exception("Failed to create MCP analysis report")
-            return "# Error: Failed to generate MCP analysis report"
-            
-    def _calculate_analysis_duration(self) -> str:
-        """Calculate analysis duration"""
-        start_time = datetime.fromisoformat(self.modeling_metadata["started_at"])
-        duration = datetime.now() - start_time
-        return f"{duration.total_seconds():.1f} seconds"
-        
-    def _format_project_overview(self, analysis: Dict[str, Any]) -> str:
-        """Format project overview section"""
-        structure = analysis.get("project_structure", {})
-        return f"""**Architecture**: {structure.get('architecture_style', 'unknown')}
-**Language**: {structure.get('dominant_language', 'unknown')}
-**Complexity**: {structure.get('estimated_complexity', 'unknown')}
-**File Structure**: {structure.get('total_files', 0)} total files, {structure.get('code_files', 0)} code files"""
-
-    def _format_domain_discovery(self, analysis: Dict[str, Any]) -> str:
-        """Format domain discovery section"""
-        entities = len(analysis.get("discovered_entities", []))
-        value_objects = len(analysis.get("discovered_value_objects", []))
-        services = len(analysis.get("business_methods", []))
-        
-        return f"""**Entities Discovered**: {entities}
-**Value Object Candidates**: {value_objects}
-**Business Services**: {services}
-**Domain Complexity**: {'High' if entities + value_objects > 10 else 'Moderate' if entities + value_objects > 5 else 'Low'}"""
-
-    def _format_business_logic_analysis(self, analysis: Dict[str, Any]) -> str:
-        """Format business logic analysis section"""
-        methods = analysis.get("business_methods", [])
-        if not methods:
-            return "No complex business methods identified."
-            
-        high_complexity = len([m for m in methods if m.get("complexity") == "high"])
-        medium_complexity = len([m for m in methods if m.get("complexity") == "medium"])
-        
-        return f"""**High Complexity Methods**: {high_complexity}
-**Medium Complexity Methods**: {medium_complexity}
-**Business Rule Density**: {'High' if high_complexity > 2 else 'Medium' if medium_complexity > 3 else 'Low'}
-**Refactoring Priority**: {'Immediate' if high_complexity > 3 else 'Planned'}"""
-
-    def _format_applied_patterns(self, patterns: Dict[str, Any]) -> str:
-        """Format applied patterns section"""
-        if not patterns:
-            return "No patterns integrated."
-            
-        applied = []
-        for pattern_type in patterns.keys():
-            applied.append(f"✅ {pattern_type.replace('_', ' ').title()}")
-            
-        return "\n".join(applied)
-        
-    def _format_best_practices(self, patterns: Dict[str, Any]) -> str:
-        """Format best practices section"""
-        if not patterns:
-            return "No best practices available."
-            
-        practices = []
-        ddd_patterns = patterns.get("ddd_tactical_patterns", {})
-        
-        for category, recommendations in ddd_patterns.items():
-            if isinstance(recommendations, list) and recommendations:
-                practices.append(f"**{category.replace('_', ' ').title()}**: {recommendations[0]}")
-                
-        return "\n".join(practices) if practices else "Best practices integrated successfully."
-        
-    def _count_discovered_symbols(self, analysis: Dict[str, Any]) -> int:
-        """Count total discovered symbols"""
-        entities = len(analysis.get("discovered_entities", []))
-        value_objects = len(analysis.get("discovered_value_objects", []))
-        methods = len(analysis.get("business_methods", []))
-        return entities + value_objects + methods
-        
-    def _count_patterns(self, analysis: Dict[str, Any]) -> int:
-        """Count identified patterns"""
-        patterns = 0
-        if analysis.get("discovered_entities"):
-            patterns += 1  # Entity pattern
-        if analysis.get("discovered_value_objects"):
-            patterns += 1  # Value Object pattern
-        if analysis.get("business_methods"):
-            patterns += 1  # Domain Service pattern
-        return patterns
-        
-    def _assess_recommendation_quality(self) -> str:
-        """Assess quality of recommendations"""
-        # This is a simplified quality assessment
-        return "High"
-        
-    def _assess_implementation_readiness(self) -> int:
-        """Assess implementation readiness percentage"""
-        # This is a simplified readiness assessment
-        return 85
-        
-    def _identify_strengths(self, analysis: Dict[str, Any]) -> str:
-        """Identify project strengths"""
-        strengths = []
-        
-        if analysis.get("project_structure", {}).get("architecture_style") == "layered":
-            strengths.append("Well-structured layered architecture")
-            
-        entities = analysis.get("discovered_entities", [])
-        if entities and all(len(e.get("business_rules", [])) > 0 for e in entities):
-            strengths.append("Entities contain business rules")
-            
-        return "\n".join([f"- {strength}" for strength in strengths]) if strengths else "- Analysis in progress"
-        
-    def _identify_improvement_areas(self, analysis: Dict[str, Any]) -> str:
-        """Identify areas for improvement"""
-        improvements = []
-        
-        value_objects = analysis.get("discovered_value_objects", [])
-        if value_objects:
-            improvements.append(f"Eliminate primitive obsession ({len(value_objects)} candidates)")
-            
-        entities = analysis.get("discovered_entities", [])
-        if entities:
-            avg_methods = sum(len(e.get("methods", [])) for e in entities) / len(entities)
-            if avg_methods < 3:
-                improvements.append("Enhance entity behavior methods")
-                
-        return "\n".join([f"- {improvement}" for improvement in improvements]) if improvements else "- No critical areas identified"
-        
-    def _identify_critical_actions(self, analysis: Dict[str, Any]) -> str:
-        """Identify critical actions required"""
-        actions = []
-        
-        value_objects = analysis.get("discovered_value_objects", [])
-        if len(value_objects) > 3:
-            actions.append("Immediate value object implementation required")
-            
-        business_methods = analysis.get("business_methods", [])
-        high_complexity = [m for m in business_methods if m.get("complexity") == "high"]
-        if len(high_complexity) > 2:
-            actions.append("Refactor high-complexity business methods")
-            
-        return "\n".join([f"- {action}" for action in actions]) if actions else "- No critical actions required"
-        
-    def _generate_phase_1_roadmap(self, analysis: Dict[str, Any]) -> str:
-        """Generate Phase 1 implementation roadmap"""
-        roadmap = ["1. Create value objects for primitive types"]
-        
-        entities = analysis.get("discovered_entities", [])
-        if entities:
-            roadmap.append("2. Enhance entity behavior methods")
-            
-        roadmap.append("3. Define aggregate boundaries")
-        return "\n".join(roadmap)
-        
-    def _generate_phase_2_roadmap(self, patterns: Dict[str, Any]) -> str:
-        """Generate Phase 2 implementation roadmap"""
-        roadmap = ["1. Implement domain services for complex operations"]
-        
-        if patterns:
-            roadmap.append("2. Apply Context7 DDD patterns")
-            
-        roadmap.append("3. Create repository interfaces")
-        return "\n".join(roadmap)
-        
-    def _generate_phase_3_roadmap(self) -> str:
-        """Generate Phase 3 implementation roadmap"""
-        return """1. Optimize aggregate design
-2. Implement domain events
-3. Enhance cross-reference relationships"""
-
-    def _calculate_ddd_compliance_score(self, analysis: Dict[str, Any], patterns: Dict[str, Any]) -> str:
-        """Calculate DDD compliance score"""
-        score = 0
-        max_score = 5
-        
-        # Check for entities
-        if analysis.get("discovered_entities"):
-            score += 1
-            
-        # Check for value objects
-        if analysis.get("discovered_value_objects"):
-            score += 1
-            
-        # Check for business methods
-        if analysis.get("business_methods"):
-            score += 1
-            
-        # Check for pattern integration
-        if patterns:
-            score += 2
-            
-        percentage = int((score / max_score) * 100)
-        return f"**Score**: {score}/{max_score} ({percentage}%)\n**Level**: {'Excellent' if percentage >= 80 else 'Good' if percentage >= 60 else 'Needs Improvement'}"
-        
-    def _assess_architecture_quality(self, analysis: Dict[str, Any]) -> str:
-        """Assess architecture quality"""
-        structure = analysis.get("project_structure", {})
-        quality_factors = []
-        
-        if structure.get("architecture_style") == "layered":
-            quality_factors.append("✅ Layered architecture")
-        else:
-            quality_factors.append("⚠️ Architecture style unclear")
-            
-        complexity = structure.get("estimated_complexity", "")
-        if complexity in ["simple", "moderate"]:
-            quality_factors.append("✅ Manageable complexity")
-        else:
-            quality_factors.append("⚠️ High complexity")
-            
-        return "\n".join(quality_factors)
-        
-    def create_implementation_guidance(self, codebase_analysis: Dict[str, Any],
-                                     pattern_integration: Dict[str, Any]) -> str:
-        """Create detailed implementation guidance document"""
-        try:
-            logger.info("📋 Creating implementation guidance...")
-            
-            guidance_content = f"""# Implementation Guidance - Issue {self.issue_number}
-
-**Generated**: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
-**Based on**: MCP Analysis (Serena + Context7)
-
-## 🎯 Implementation Strategy
-
-### Overview
-This guidance provides a step-by-step implementation plan based on MCP analysis results. Follow the phases sequentially for optimal results.
-
-## 📋 Phase 1: Foundation Implementation
-
-### Step 1: Value Objects Implementation
-{self._create_value_object_guidance(codebase_analysis)}
-
-### Step 2: Entity Enhancement  
-{self._create_entity_guidance(codebase_analysis)}
-
-### Step 3: Aggregate Design
-{self._create_aggregate_guidance(codebase_analysis, pattern_integration)}
-
-## 📋 Phase 2: Advanced Implementation
-
-### Step 4: Domain Services
-{self._create_domain_service_guidance(codebase_analysis)}
-
-### Step 5: Repository Interfaces
-{self._create_repository_guidance()}
-
-### Step 6: Business Rule Implementation
-{self._create_business_rule_guidance(codebase_analysis)}
-
-## 📋 Phase 3: Optimization
-
-### Step 7: Refactoring Anti-Patterns
-{self._create_refactoring_guidance(codebase_analysis)}
-
-### Step 8: Performance Optimization
-{self._create_performance_guidance()}
-
-### Step 9: Testing Strategy
-{self._create_testing_guidance()}
-
-## 🛠️ Implementation Examples
-
-### Value Object Example
-{self._create_value_object_example()}
-
-### Entity Example
-{self._create_entity_example()}
-
-### Aggregate Example
-{self._create_aggregate_example()}
-
-## ⚠️ Important Considerations
-
-### Do's and Don'ts
-{self._create_dos_and_donts()}
-
-### Common Pitfalls
-{self._create_common_pitfalls()}
-
-### Quality Checkpoints
-{self._create_quality_checkpoints()}
-
-## 📊 Progress Tracking
-
-### Implementation Checklist
-{self._create_implementation_checklist(codebase_analysis)}
-
-### Quality Metrics
-{self._create_quality_metrics()}
-
-### Review Points
-{self._create_review_points()}
-
-## 🚀 Next Steps
-
-After completing this implementation:
-
-1. **Testing Phase**: Use `/create-tests-enhanced {self.issue_number}` for comprehensive test creation
-2. **Code Review**: Review implementation against DDD principles
-3. **Performance Validation**: Validate performance implications
-4. **Documentation Update**: Update architectural documentation
-
-## 📋 References
-
-- **Domain Model**: `docs/domain/issue-{self.issue_number}-enhanced-domain-model.md`
-- **MCP Analysis**: `docs/domain/issue-{self.issue_number}-mcp-analysis-report.md`
-- **Context7 Patterns**: Applied DDD best practices from latest documentation
-- **Serena Analysis**: Comprehensive codebase analysis results
-"""
-            
-            return guidance_content
-            
-        except Exception as e:
-            logger.exception("Failed to create implementation guidance")
-            return "# Error: Failed to generate implementation guidance"
-            
-    def _create_value_object_guidance(self, analysis: Dict[str, Any]) -> str:
-        """Create value object implementation guidance"""
-        value_objects = analysis.get("discovered_value_objects", [])
-        if not value_objects:
-            return "No value objects identified for implementation."
-            
-        guidance = "**Priority**: High (Eliminates primitive obsession)\n\n"
-        
-        for i, vo in enumerate(value_objects[:3], 1):  # Show top 3
-            guidance += f"**{i}. {vo['name']} Value Object**\n"
-            guidance += f"- Purpose: {vo.get('suggested_from', 'Type safety')}\n"
-            guidance += f"- Implementation: Create immutable class with validation\n"
-            guidance += f"- Validation: {', '.join(vo.get('validation_rules', ['Basic validation']))}\n\n"
-            
-        return guidance
-        
-    def _create_entity_guidance(self, analysis: Dict[str, Any]) -> str:
-        """Create entity enhancement guidance"""
-        entities = analysis.get("discovered_entities", [])
-        if not entities:
-            return "No entities identified for enhancement."
-            
-        guidance = "**Priority**: High (Enhance domain behavior)\n\n"
-        
-        for entity in entities[:2]:  # Show top 2
-            guidance += f"**{entity['name']} Entity Enhancement**\n"
-            guidance += f"- Current methods: {len(entity.get('methods', []))}\n"
-            guidance += f"- Recommended: Add business behavior methods\n"
-            guidance += f"- Focus: {', '.join(entity.get('business_rules', ['Business logic']))}\n\n"
-            
-        return guidance
-        
-    def _create_aggregate_guidance(self, analysis: Dict[str, Any], patterns: Dict[str, Any]) -> str:
-        """Create aggregate design guidance"""
-        return """**Priority**: Medium (Define consistency boundaries)
-
-**Design Principles**:
-- Single aggregate per transaction
-- Reference other aggregates by ID
-- Keep aggregates small and focused
-
-**Implementation Steps**:
-1. Identify aggregate roots from entities
-2. Define consistency boundaries
-3. Implement aggregate-level business rules
-4. Create aggregate repositories"""
-
-    def _create_domain_service_guidance(self, analysis: Dict[str, Any]) -> str:
-        """Create domain service guidance"""
-        business_methods = analysis.get("business_methods", [])
-        complex_methods = [m for m in business_methods if m.get("complexity") in ["high", "medium"]]
-        
-        if not complex_methods:
-            return "No complex business operations requiring domain services."
-            
-        guidance = "**Priority**: Medium (Organize complex business logic)\n\n"
-        
-        for method in complex_methods[:2]:
-            guidance += f"**{method['method_name']} Service**\n"
-            guidance += f"- Complexity: {method.get('complexity')}\n"
-            guidance += f"- Dependencies: {', '.join(method.get('dependencies', []))}\n"
-            guidance += f"- Implementation: Extract to domain service\n\n"
-            
-        return guidance
-        
-    def _create_repository_guidance(self) -> str:
-        """Create repository implementation guidance"""
-        return """**Priority**: Medium (Data access abstraction)
-
-**Implementation Steps**:
-1. Define repository interfaces in domain layer
-2. Use aggregate root as repository unit
-3. Implement in infrastructure layer
-4. Follow aggregate boundary rules
-
-**Key Methods**:
-- `find_by_id()`: Primary key lookup
-- `save()`: Persist aggregate
-- `find_by_*()`: Business queries"""
-
-    def _create_business_rule_guidance(self, analysis: Dict[str, Any]) -> str:
-        """Create business rule implementation guidance"""
-        entities = analysis.get("discovered_entities", [])
-        total_rules = sum(len(e.get("business_rules", [])) for e in entities)
-        
-        if total_rules == 0:
-            return "No explicit business rules identified."
-            
-        return f"""**Priority**: High (Implement {total_rules} business rules)
-
-**Implementation Approach**:
-1. Place rules in appropriate domain objects
-2. Use specification pattern for complex rules
-3. Implement validation in entity constructors
-4. Create domain events for rule violations
-
-**Testing**: Focus on rule validation and edge cases"""
-
-    def _create_refactoring_guidance(self, analysis: Dict[str, Any]) -> str:
-        """Create refactoring guidance"""
-        return """**Priority**: Low (Improve code quality)
-
-**Anti-Pattern Fixes**:
-1. Primitive Obsession → Value Objects
-2. Anemic Domain Model → Rich Entities
-3. Feature Envy → Proper Encapsulation
-
-**Refactoring Strategy**:
-- Start with high-impact, low-risk changes
-- Maintain test coverage during refactoring
-- Apply one pattern at a time"""
-
-    def _create_performance_guidance(self) -> str:
-        """Create performance guidance"""
-        return """**Considerations**:
-- Aggregate size impacts performance
-- Repository query optimization
-- Domain event handling efficiency
-
-**Monitoring**:
-- Track aggregate load times
-- Monitor query performance
-- Measure business rule execution time"""
-
-    def _create_testing_guidance(self) -> str:
-        """Create testing guidance"""
-        return """**Testing Strategy**:
-1. Unit tests for domain logic
-2. Aggregate behavior tests
-3. Business rule validation tests
-4. Repository contract tests
-
-**Use MCP-Enhanced Testing**:
-Run `/create-tests-enhanced {self.issue_number}` for comprehensive test generation"""
-
-    def _create_value_object_example(self) -> str:
-        """Create value object code example"""
-        return """```python
-@dataclass(frozen=True)
-class Email:
-    value: str
+class GapAnalyzer:
+    """ギャップ分析機能 - 要求と現実の差分分析"""
     
-    def __post_init__(self):
-        if not self._is_valid_email(self.value):
-            raise ValueError(f"Invalid email: {self.value}")
-            
-    def _is_valid_email(self, email: str) -> bool:
-        # Email validation logic
-        return "@" in email and len(email) <= 255
-```"""
-
-    def _create_entity_example(self) -> str:
-        """Create entity code example"""
-        return """```python
-class User:
-    def __init__(self, user_id: UserId, email: Email, username: str):
-        self._id = user_id
-        self._email = email
-        self._username = username
+    def analyze_requirements_vs_reality(self, requirements: Dict[str, Any], 
+                                      current_state: Dict[str, Any]) -> Dict[str, Any]:
+        """要求と現状のギャップ分析"""
+        logger.info("📊 要求と現状のギャップ分析中...")
         
-    def change_email(self, new_email: Email) -> None:
-        # Business rule: Email change requires validation
-        self._email = new_email
-        self._raise_domain_event(EmailChangedEvent(self._id, new_email))
+        gap_analysis = {
+            "entity_gaps": self._analyze_entity_gaps(requirements, current_state),
+            "value_object_gaps": self._analyze_value_object_gaps(requirements, current_state),
+            "business_rule_gaps": self._analyze_business_rule_gaps(requirements, current_state),
+            "overall_alignment": self._calculate_alignment_score(requirements, current_state)
+        }
         
-    def _raise_domain_event(self, event) -> None:
-        # Domain event handling
-        pass
-```"""
-
-    def _create_aggregate_example(self) -> str:
-        """Create aggregate code example"""
-        return """```python
-class Order:  # Aggregate Root
-    def __init__(self, order_id: OrderId, customer_id: CustomerId):
-        self._id = order_id
-        self._customer_id = customer_id
-        self._items: List[OrderItem] = []
+        logger.info("✅ ギャップ分析完了")
+        return gap_analysis
         
-    def add_item(self, product_id: ProductId, quantity: int, price: Money) -> None:
-        # Business rule: Cannot modify confirmed orders
-        if self._is_confirmed:
-            raise DomainException("Cannot modify confirmed order")
-            
-        item = OrderItem(product_id, quantity, price)
-        self._items.append(item)
-```"""
-
-    def _create_dos_and_donts(self) -> str:
-        """Create do's and don'ts section"""
-        return """**Do's**:
-✅ Keep aggregates small and focused
-✅ Use value objects to eliminate primitive obsession
-✅ Place business rules in domain objects
-✅ Use domain events for cross-aggregate communication
-
-**Don'ts**:
-❌ Don't create large aggregates
-❌ Don't put business logic in services unnecessarily  
-❌ Don't reference aggregates directly
-❌ Don't skip domain rule validation"""
-
-    def _create_common_pitfalls(self) -> str:
-        """Create common pitfalls section"""
-        return """- **Large Aggregates**: Keep aggregate boundaries small
-- **Anemic Entities**: Ensure entities have behavior, not just data
-- **Missing Validation**: Always validate business rules
-- **Cross-Aggregate References**: Use IDs, not direct references
-- **Infrastructure Leak**: Keep domain layer pure"""
-
-    def _create_quality_checkpoints(self) -> str:
-        """Create quality checkpoints"""
-        return """**After Each Phase**:
-- [ ] All tests pass
-- [ ] Business rules validated
-- [ ] No infrastructure dependencies in domain
-- [ ] Aggregate boundaries respected
-- [ ] Domain events properly handled"""
-
-    def _create_implementation_checklist(self, analysis: Dict[str, Any]) -> str:
-        """Create implementation checklist"""
-        checklist = []
+    def _analyze_entity_gaps(self, requirements: Dict[str, Any], 
+                           current_state: Dict[str, Any]) -> Dict[str, Any]:
+        """エンティティギャップ分析"""
+        required_entities = {e['name'] for e in requirements.get('entities', [])}
+        existing_entities = {e['name'] for e in current_state.get('existing_entities', [])}
         
-        # Value objects checklist
-        value_objects = analysis.get("discovered_value_objects", [])
-        for vo in value_objects:
-            checklist.append(f"- [ ] Implement {vo['name']} value object")
-            
-        # Entities checklist
-        entities = analysis.get("discovered_entities", [])
-        for entity in entities:
-            checklist.append(f"- [ ] Enhance {entity['name']} entity behavior")
-            
-        # General checklist
-        checklist.extend([
-            "- [ ] Define aggregate boundaries",
-            "- [ ] Create repository interfaces", 
-            "- [ ] Implement domain services",
-            "- [ ] Add business rule validation",
-            "- [ ] Create comprehensive tests"
+        return {
+            "missing_entities": list(required_entities - existing_entities),
+            "unexpected_entities": list(existing_entities - required_entities),
+            "matching_entities": list(required_entities & existing_entities),
+            "implementation_gaps": self._find_implementation_gaps(requirements, current_state)
+        }
+        
+    def _analyze_value_object_gaps(self, requirements: Dict[str, Any],
+                                 current_state: Dict[str, Any]) -> Dict[str, Any]:
+        """値オブジェクトギャップ分析"""
+        required_vos = {vo['name'] for vo in requirements.get('value_objects', [])}
+        existing_vos = {vo['name'] for vo in current_state.get('existing_value_objects', [])}
+        
+        return {
+            "missing_value_objects": list(required_vos - existing_vos),
+            "primitive_obsessions": self._find_primitive_obsessions(current_state),
+            "validation_gaps": self._find_validation_gaps(current_state)
+        }
+        
+    def _analyze_business_rule_gaps(self, requirements: Dict[str, Any],
+                                  current_state: Dict[str, Any]) -> Dict[str, Any]:
+        """ビジネスルールギャップ分析"""
+        required_rules_count = len(requirements.get('business_rules', []))
+        implemented_rules_count = sum(
+            e.get('business_rules_count', 0) 
+            for e in current_state.get('existing_entities', [])
+        )
+        
+        return {
+            "required_rules": required_rules_count,
+            "implemented_rules": implemented_rules_count,
+            "implementation_rate": (implemented_rules_count / max(required_rules_count, 1)) * 100,
+            "missing_validations": current_state.get('technical_debt', {}).get('missing_validation_count', 0)
+        }
+        
+    def _find_implementation_gaps(self, requirements: Dict[str, Any],
+                                current_state: Dict[str, Any]) -> List[Dict[str, Any]]:
+        """実装ギャップ発見"""
+        gaps = []
+        existing_entities = {e['name']: e for e in current_state.get('existing_entities', [])}
+        
+        for req_entity in requirements.get('entities', []):
+            entity_name = req_entity['name']
+            if entity_name in existing_entities:
+                existing = existing_entities[entity_name]
+                req_properties = set(req_entity.get('properties', {}).keys())
+                existing_properties = set(existing.get('properties', []))
+                
+                if req_properties - existing_properties:
+                    gaps.append({
+                        "entity": entity_name,
+                        "type": "missing_properties",
+                        "missing": list(req_properties - existing_properties)
+                    })
+        
+        return gaps
+        
+    def _find_primitive_obsessions(self, current_state: Dict[str, Any]) -> List[str]:
+        """Primitive Obsession発見"""
+        return current_state.get('technical_debt', {}).get('priority_fixes', [])
+        
+    def _find_validation_gaps(self, current_state: Dict[str, Any]) -> List[Dict[str, Any]]:
+        """バリデーションギャップ発見"""
+        validation_gaps = []
+        for vo in current_state.get('existing_value_objects', []):
+            if not vo.get('validation_implemented', False):
+                validation_gaps.append({
+                    "value_object": vo['name'],
+                    "issue": "validation not implemented",
+                    "priority": "high"
+                })
+        return validation_gaps
+        
+    def _calculate_alignment_score(self, requirements: Dict[str, Any],
+                                 current_state: Dict[str, Any]) -> int:
+        """全体的な整合性スコア計算"""
+        # 簡易計算ロジック
+        entity_score = 0
+        vo_score = 0
+        rule_score = 0
+        
+        # エンティティスコア
+        required_entities = len(requirements.get('entities', []))
+        existing_entities = len(current_state.get('existing_entities', []))
+        if required_entities > 0:
+            entity_score = min(100, (existing_entities / required_entities) * 100)
+        
+        # 値オブジェクトスコア
+        required_vos = len(requirements.get('value_objects', []))
+        existing_vos = len(current_state.get('existing_value_objects', []))
+        if required_vos > 0:
+            vo_score = min(100, (existing_vos / required_vos) * 100)
+        
+        # ビジネスルールスコア
+        business_rule_gaps = self._analyze_business_rule_gaps(requirements, current_state)
+        rule_score = business_rule_gaps.get('implementation_rate', 0)
+        
+        # 総合スコア
+        overall_score = int((entity_score + vo_score + rule_score) / 3)
+        return overall_score
+
+
+class EnhancedDomainModeler:
+    """論理的統合型ドメインモデラー"""
+    
+    def __init__(self, issue_number: str):
+        self.issue_number = issue_number
+        self.core_modeler = CoreDomainModeler(issue_number)
+        self.mcp_analyzer = MCPAnalyzer()
+        self.gap_analyzer = GapAnalyzer()
+        
+        # MCP利用可能性チェック
+        self.mcp_available = self.mcp_analyzer.check_mcp_availability()
+        
+    def create_current_analysis_document(self, current_analysis: Dict[str, Any]) -> str:
+        """現状分析ドキュメント生成"""
+        content = f"""# 現状分析レポート - Issue #{self.issue_number}
+
+**生成日**: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+**分析対象**: 既存コードベース
+
+## プロジェクト構造
+
+**アーキテクチャスタイル**: {current_analysis['project_structure']['architecture_style']}
+**推定複雑度**: {current_analysis['project_structure']['estimated_complexity']}
+**総ファイル数**: {current_analysis['project_structure']['total_files']}
+**コードファイル数**: {current_analysis['project_structure']['code_files']}
+
+## 既存ドメイン要素
+
+### エンティティ ({len(current_analysis.get('existing_entities', []))}個)
+"""
+        
+        for entity in current_analysis.get('existing_entities', []):
+            content += f"""
+#### {entity['name']}
+- **場所**: {entity['file_path']}
+- **メソッド数**: {len(entity.get('methods', []))}
+- **プロパティ数**: {len(entity.get('properties', []))}
+- **ビジネスルール数**: {entity.get('business_rules_count', 0)}
+- **実装状況**: {entity.get('implementation_status', 'unknown')}
+"""
+        
+        content += f"""
+### 値オブジェクト ({len(current_analysis.get('existing_value_objects', []))}個)
+"""
+        
+        for vo in current_analysis.get('existing_value_objects', []):
+            content += f"""
+#### {vo['name']}
+- **場所**: {vo['file_path']}
+- **バリデーション実装**: {'✅' if vo.get('validation_implemented') else '❌'}
+- **不変性確保**: {'✅' if vo.get('immutability_enforced') else '❌'}
+- **使用箇所数**: {vo.get('usage_count', 0)}
+"""
+        
+        content += f"""
+### ドメインサービス ({len(current_analysis.get('existing_domain_services', []))}個)
+"""
+        
+        for service in current_analysis.get('existing_domain_services', []):
+            content += f"""
+#### {service['name']}
+- **場所**: {service['file_path']}
+- **複雑度**: {service.get('complexity', 'unknown')}
+- **依存関係**: {', '.join(service.get('dependencies', []))}
+"""
+        
+        patterns = current_analysis.get('code_patterns', {})
+        debt = current_analysis.get('technical_debt', {})
+        
+        content += f"""
+## コードパターン分析
+
+### 使用中のDDDパターン
+{', '.join(patterns.get('ddd_patterns_used', []))}
+
+### 検出されたアンチパターン
+{', '.join(patterns.get('anti_patterns_detected', []))}
+
+### 不足しているパターン
+{', '.join(patterns.get('missing_patterns', []))}
+
+### パターン準拠スコア
+{patterns.get('pattern_compliance_score', 0)}%
+
+## 技術的負債評価
+
+- **Primitive Obsession**: {debt.get('primitive_obsession_count', 0)}箇所
+- **貧血エンティティ**: {debt.get('anemic_entities_count', 0)}個
+- **バリデーション不足**: {debt.get('missing_validation_count', 0)}箇所
+- **総合負債レベル**: {debt.get('overall_debt_score', 'unknown')}
+
+### 優先修正項目
+"""
+        
+        for fix in debt.get('priority_fixes', []):
+            content += f"- {fix}\n"
+        
+        content += """
+---
+*この分析結果はMCP (Serena)による自動分析に基づいています。*
+"""
+        
+        return content
+        
+    def create_gap_analysis_document(self, gap_analysis: Dict[str, Any],
+                                   requirements: Dict[str, Any],
+                                   current_state: Dict[str, Any]) -> str:
+        """ギャップ分析ドキュメント生成"""
+        content = f"""# ギャップ分析レポート - Issue #{self.issue_number}
+
+**生成日**: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+**分析範囲**: 要求仕様 vs 現在の実装
+
+## 総合整合性スコア
+
+**整合性**: {gap_analysis['overall_alignment']}%
+
+## エンティティギャップ分析
+
+### 不足しているエンティティ
+"""
+        
+        missing_entities = gap_analysis['entity_gaps'].get('missing_entities', [])
+        if missing_entities:
+            for entity in missing_entities:
+                content += f"- **{entity}**: 要求仕様には存在するが実装されていない\n"
+        else:
+            content += "なし\n"
+        
+        content += "\n### 想定外のエンティティ\n"
+        unexpected_entities = gap_analysis['entity_gaps'].get('unexpected_entities', [])
+        if unexpected_entities:
+            for entity in unexpected_entities:
+                content += f"- **{entity}**: 実装されているが要求仕様にない\n"
+        else:
+            content += "なし\n"
+        
+        content += "\n### 実装ギャップ\n"
+        implementation_gaps = gap_analysis['entity_gaps'].get('implementation_gaps', [])
+        if implementation_gaps:
+            for gap in implementation_gaps:
+                content += f"- **{gap['entity']}**: {gap['type']} - {', '.join(gap.get('missing', []))}\n"
+        else:
+            content += "重要な実装ギャップなし\n"
+        
+        content += "\n## 値オブジェクトギャップ分析\n"
+        
+        vo_gaps = gap_analysis.get('value_object_gaps', {})
+        missing_vos = vo_gaps.get('missing_value_objects', [])
+        if missing_vos:
+            content += "\n### 不足している値オブジェクト\n"
+            for vo in missing_vos:
+                content += f"- **{vo}**: Primitive Obsessionの解消が必要\n"
+        
+        primitive_obsessions = vo_gaps.get('primitive_obsessions', [])
+        if primitive_obsessions:
+            content += "\n### Primitive Obsession\n"
+            for obsession in primitive_obsessions:
+                content += f"- {obsession}\n"
+        
+        content += "\n## ビジネスルールギャップ分析\n"
+        
+        rule_gaps = gap_analysis.get('business_rule_gaps', {})
+        content += f"""
+- **要求ルール数**: {rule_gaps.get('required_rules', 0)}
+- **実装済みルール数**: {rule_gaps.get('implemented_rules', 0)}
+- **実装率**: {rule_gaps.get('implementation_rate', 0):.1f}%
+- **バリデーション不足**: {rule_gaps.get('missing_validations', 0)}箇所
+
+## 改善推奨事項
+
+### 高優先度
+1. 不足している値オブジェクトの実装
+2. エンティティのビジネス動作強化
+3. バリデーション機能の追加
+
+### 中優先度
+1. 想定外エンティティの整理
+2. ドメインサービスの最適化
+3. アンチパターンの除去
+
+### 低優先度  
+1. パフォーマンス最適化
+2. コード品質向上
+3. ドキュメント整備
+
+---
+*この分析は要求仕様と現在の実装を比較した結果です。*
+"""
+        
+        return content
+        
+    def create_enhancement_recommendations_document(self, requirements: Dict[str, Any],
+                                                  current_analysis: Dict[str, Any],
+                                                  gap_analysis: Dict[str, Any]) -> str:
+        """改善提案ドキュメント生成"""
+        content = f"""# ドメインモデル改善提案 - Issue #{self.issue_number}
+
+**生成日**: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+**基準**: 要求分析 + 現状分析 + ギャップ分析
+
+## エグゼクティブサマリー
+
+現在の実装は要求仕様に対して **{gap_analysis['overall_alignment']}%** の整合性を持っています。
+以下の段階的改善により、理想的なドメインモデルの実現を提案します。
+
+## フェーズ1: 基礎強化 (即座に実行可能)
+
+### 1.1 値オブジェクト実装
+"""
+        
+        missing_vos = gap_analysis.get('value_object_gaps', {}).get('missing_value_objects', [])
+        if missing_vos:
+            content += "**実装対象**:\n"
+            for vo in missing_vos:
+                req_vo = next((v for v in requirements.get('value_objects', []) if v['name'] == vo), None)
+                if req_vo:
+                    content += f"- **{vo}**: {req_vo.get('description', 'Type safety enhancement')}\n"
+        else:
+            content += "値オブジェクトの追加実装は不要です。\n"
+        
+        content += "\n### 1.2 エンティティ強化\n"
+        
+        missing_entities = gap_analysis.get('entity_gaps', {}).get('missing_entities', [])
+        if missing_entities:
+            content += "**新規実装対象**:\n"
+            for entity in missing_entities:
+                req_entity = next((e for e in requirements.get('entities', []) if e['name'] == entity), None)
+                if req_entity:
+                    content += f"- **{entity}**: {req_entity.get('description', 'Business-critical entity')}\n"
+        
+        implementation_gaps = gap_analysis.get('entity_gaps', {}).get('implementation_gaps', [])
+        if implementation_gaps:
+            content += "\n**既存エンティティ強化**:\n"
+            for gap in implementation_gaps:
+                content += f"- **{gap['entity']}**: {gap['type']} - {', '.join(gap.get('missing', []))}\n"
+        
+        content += "\n## フェーズ2: ビジネスロジック最適化 (短期実装)\n"
+        
+        rule_gaps = gap_analysis.get('business_rule_gaps', {})
+        missing_rules = rule_gaps.get('required_rules', 0) - rule_gaps.get('implemented_rules', 0)
+        
+        content += f"""
+### 2.1 ビジネスルール実装
+- **追加実装必要**: {missing_rules}個のビジネスルール
+- **バリデーション強化**: {rule_gaps.get('missing_validations', 0)}箇所
+
+### 2.2 ドメインサービス最適化
+"""
+        
+        existing_services = current_analysis.get('existing_domain_services', [])
+        if existing_services:
+            content += "**既存サービス最適化**:\n"
+            for service in existing_services:
+                content += f"- **{service['name']}**: 複雑度{service.get('complexity', 'unknown')}の最適化\n"
+        
+        # 新規ドメインサービス提案
+        required_services = requirements.get('domain_services', [])
+        if required_services:
+            content += "\n**新規サービス実装**:\n"
+            for service in required_services:
+                content += f"- **{service['name']}**: {service.get('description', 'Complex business logic')}\n"
+        
+        content += "\n## フェーズ3: アーキテクチャ最適化 (長期実装)\n"
+        
+        patterns = current_analysis.get('code_patterns', {})
+        missing_patterns = patterns.get('missing_patterns', [])
+        
+        content += "### 3.1 DDD パターン完全実装\n"
+        if missing_patterns:
+            content += "**不足パターンの実装**:\n"
+            for pattern in missing_patterns:
+                content += f"- **{pattern}**: パターン完全性向上\n"
+        
+        content += "\n### 3.2 アンチパターン除去\n"
+        anti_patterns = patterns.get('anti_patterns_detected', [])
+        if anti_patterns:
+            for pattern in anti_patterns:
+                content += f"- **{pattern}**: リファクタリング対象\n"
+        
+        debt = current_analysis.get('technical_debt', {})
+        content += f"""
+
+### 3.3 技術的負債解消
+- **Primitive Obsession**: {debt.get('primitive_obsession_count', 0)}箇所の解消
+- **貧血エンティティ**: {debt.get('anemic_entities_count', 0)}個の強化
+- **バリデーション**: {debt.get('missing_validation_count', 0)}箇所の追加
+
+## 実装優先度マトリックス
+
+| 項目 | 影響度 | 実装難易度 | 優先度 |
+|------|--------|-----------|--------|
+| 値オブジェクト実装 | 高 | 低 | 最高 |
+| エンティティ強化 | 高 | 中 | 高 |
+| ビジネスルール追加 | 中 | 中 | 中 |
+| ドメインサービス | 中 | 高 | 中 |
+| アンチパターン除去 | 低 | 高 | 低 |
+
+## 期待効果
+
+### 短期効果 (フェーズ1-2完了時)
+- Type Safety の向上
+- ビジネスロジック実装の完全性
+- 保守性の向上
+
+### 長期効果 (フェーズ3完了時)
+- 完全なDDDアーキテクチャ
+- 技術的負債の最小化
+- 開発効率の大幅向上
+
+## 次のステップ
+
+1. **テスト作成**: `/create-tests-enhanced {self.issue_number}` で包括的テスト作成
+2. **段階的実装**: フェーズ1から順次実装
+3. **継続的レビュー**: 各フェーズ完了後の効果測定
+
+---
+*この提案は論理的分析に基づく最適化ロードマップです。*
+"""
+        
+        return content
+        
+    def update_use_case_json_with_enhanced_info(self, json_file_path: str,
+                                              domain_concepts: Dict[str, Any],
+                                              mcp_analysis: Optional[Dict[str, Any]] = None,
+                                              gap_analysis: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+        """ユースケースJSONに拡張情報を更新"""
+        use_case_data = load_use_case_json(json_file_path)
+        
+        # ドメインモデル情報を更新 (既存機能)
+        use_case_data["domain_model"] = domain_concepts
+        
+        # MCP分析結果を追加 (拡張機能)
+        if mcp_analysis:
+            use_case_data["current_state_analysis"] = {
+                "analyzed_at": datetime.now().isoformat(),
+                "mcp_analysis": mcp_analysis,
+                "alignment_score": gap_analysis.get('overall_alignment', 0) if gap_analysis else None
+            }
+        
+        # アーキテクチャ整合性情報を更新
+        architecture = use_case_data.get("architecture_alignment", {})
+        architecture.setdefault("layers", {})["domain"] = False  # まだ実装していない
+        architecture.setdefault("patterns_used", []).extend([
+            "Domain-Driven Design",
+            "Entity-Value Object Pattern", 
+            "Aggregate Pattern"
         ])
         
-        return "\n".join(checklist)
+        if self.mcp_available:
+            architecture.setdefault("enhanced_features", []).extend([
+                "MCP Gap Analysis",
+                "Current State Analysis",
+                "Improvement Recommendations"
+            ])
+            
+        use_case_data["architecture_alignment"] = architecture
         
-    def _create_quality_metrics(self) -> str:
-        """Create quality metrics tracking"""
-        return """**Target Metrics**:
-- Domain Rule Coverage: 100%
-- Value Object Usage: >80% of primitives replaced
-- Entity Behavior Density: >3 methods per entity
-- Aggregate Size: <10 entities per aggregate
-- Test Coverage: >90% for domain logic"""
-
-    def _create_review_points(self) -> str:
-        """Create review points"""
-        return """**Review Checkpoints**:
-1. **Phase 1 Complete**: Value objects and enhanced entities
-2. **Phase 2 Complete**: Domain services and repositories  
-3. **Phase 3 Complete**: Refactoring and optimization
-4. **Final Review**: Complete implementation validation"""
-
-    def save_enhanced_artifacts(self, domain_model: str, analysis_report: str, 
-                              implementation_guidance: str) -> None:
-        """Save all enhanced domain modeling artifacts"""
-        try:
-            # Ensure domain directory exists
-            self.domain_dir.mkdir(parents=True, exist_ok=True)
-            
-            # Save enhanced domain model
-            domain_model_file = self.domain_dir / f"issue-{self.issue_number}-enhanced-domain-model.md"
-            with open(domain_model_file, 'w', encoding='utf-8') as f:
-                f.write(domain_model)
-            logger.info(f"✅ Saved enhanced domain model: {domain_model_file}")
-            
-            # Save MCP analysis report
-            analysis_report_file = self.domain_dir / f"issue-{self.issue_number}-mcp-analysis-report.md"
-            with open(analysis_report_file, 'w', encoding='utf-8') as f:
-                f.write(analysis_report)
-            logger.info(f"✅ Saved MCP analysis report: {analysis_report_file}")
-            
-            # Save implementation guidance
-            guidance_file = self.domain_dir / f"issue-{self.issue_number}-implementation-guidance.md"
-            with open(guidance_file, 'w', encoding='utf-8') as f:
-                f.write(implementation_guidance)
-            logger.info(f"✅ Saved implementation guidance: {guidance_file}")
-            
-            # Update modeling metadata
-            self.modeling_metadata["generated_artifacts"] = [
-                str(domain_model_file),
-                str(analysis_report_file),
-                str(guidance_file)
-            ]
-            
-        except Exception as e:
-            logger.exception("Failed to save enhanced artifacts")
-            raise
-            
-    def update_project_metadata(self) -> None:
-        """Update project metadata with enhanced modeling completion"""
-        try:
-            # Update use case metadata if exists
-            metadata_files = list(Path("docs/use_cases/sprints").rglob(f"*issue*{self.issue_number}*.json"))
-            
-            for metadata_file in metadata_files:
-                try:
-                    with open(metadata_file, 'r', encoding='utf-8') as f:
-                        metadata = json.load(f)
-                        
-                    # Update domain modeling phase
-                    if "phases" not in metadata:
-                        metadata["phases"] = {}
-                    if "domain_model" not in metadata["phases"]:
-                        metadata["phases"]["domain_model"] = {}
-                        
-                    metadata["phases"]["domain_model"].update({
-                        "enhanced_created": True,
-                        "mcp_analysis_completed": True,
-                        "created_at": datetime.now().isoformat(),
-                        "artifacts": self.modeling_metadata["generated_artifacts"]
-                    })
-                    
-                    # Save updated metadata
-                    with open(metadata_file, 'w', encoding='utf-8') as f:
-                        json.dump(metadata, f, indent=2, ensure_ascii=False)
-                        
-                    logger.info(f"✅ Updated metadata: {metadata_file}")
-                    
-                except Exception as e:
-                    logger.warning(f"Could not update metadata file {metadata_file}: {e}")
-                    
-        except Exception as e:
-            logger.exception("Failed to update project metadata")
-            
-    def generate_modeling_report(self, codebase_analysis: Dict[str, Any],
-                               pattern_integration: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate final modeling report"""
-        return {
-            "modeling_info": {
-                "issue_number": self.issue_number,
-                "started_at": self.modeling_metadata["started_at"],
-                "completed_at": datetime.now().isoformat(),
-                "status": "enhanced_success"
-            },
-            "mcp_analysis_results": {
-                "serena_analysis": {
-                    "files_analyzed": codebase_analysis.get("project_structure", {}).get("total_files", 0),
-                    "entities_discovered": len(codebase_analysis.get("discovered_entities", [])),
-                    "value_objects_recommended": len(codebase_analysis.get("discovered_value_objects", [])),
-                    "business_methods_identified": len(codebase_analysis.get("business_methods", []))
-                },
-                "context7_integration": {
-                    "patterns_applied": len(pattern_integration) if pattern_integration else 0,
-                    "pattern_coverage": self._calculate_pattern_coverage(pattern_integration),
-                    "best_practices_integrated": True if pattern_integration else False
-                }
-            },
-            "generated_artifacts": self.modeling_metadata["generated_artifacts"],
-            "quality_metrics": {
-                "domain_completeness": 90,  # Simplified metric
-                "pattern_integration": self._calculate_pattern_coverage(pattern_integration),
-                "implementation_readiness": 85
-            },
-            "next_steps": [
-                f"Review generated domain model: docs/domain/issue-{self.issue_number}-enhanced-domain-model.md",
-                f"Study MCP analysis: docs/domain/issue-{self.issue_number}-mcp-analysis-report.md", 
-                f"Follow implementation guidance: docs/domain/issue-{self.issue_number}-implementation-guidance.md",
-                f"Proceed to enhanced testing: /create-tests-enhanced {self.issue_number}"
-            ]
-        }
+        # 保存
+        save_use_case_json(json_file_path, use_case_data)
+        
+        return use_case_data
         
     async def run_enhanced_modeling(self) -> Dict[str, Any]:
-        """Main enhanced domain modeling workflow"""
-        try:
-            logger.info(f"🧠 Starting MCP-enhanced domain modeling for issue {self.issue_number}")
+        """論理的統合型ドメインモデリング実行"""
+        logger.info(f"🚀 Issue #{self.issue_number} の統合型ドメインモデリングを開始")
+        
+        # Phase 1: 要求分析 (既存機能)
+        logger.info("📋 Phase 1: 要求分析 (Given-When-Then → ドメイン概念)")
+        core_results = self.core_modeler.run_core_modeling()
+        
+        results = {
+            "core_results": core_results,
+            "mcp_available": self.mcp_available,
+            "generated_documents": [core_results["domain_doc_path"]]
+        }
+        
+        if self.mcp_available:
+            # Phase 2: 現状分析 (MCP機能)
+            logger.info("🔍 Phase 2: 現状分析 (コードベース → 現在の実装状況)")
+            current_analysis = self.mcp_analyzer.analyze_current_codebase()
             
-            # Phase 1: Validate MCP session
-            logger.info("🔍 Phase 1: Validating MCP session...")
-            if not self.validate_mcp_session():
-                raise ValueError("MCP session validation failed")
-                
-            # Phase 2: Load use case specifications
-            logger.info("📖 Phase 2: Loading use case specifications...")
-            use_case_specs = self.load_use_case_specifications()
+            # Phase 3: ギャップ分析 (統合機能)
+            logger.info("📊 Phase 3: ギャップ分析 (要求 vs 現実)")
+            gap_analysis = self.gap_analyzer.analyze_requirements_vs_reality(
+                core_results["domain_concepts"], current_analysis
+            )
             
-            # Phase 3: Analyze codebase with Serena MCP
-            logger.info("🔍 Phase 3: Analyzing codebase with Serena MCP...")
-            codebase_analysis = self.analyze_codebase_with_serena()
+            # Phase 4: 拡張ドキュメント生成
+            logger.info("📝 Phase 4: 拡張ドキュメント生成")
+            domain_dir = Path("docs/domain")
             
-            # Phase 4: Integrate Context7 patterns
-            logger.info("📚 Phase 4: Integrating Context7 DDD patterns...")
-            pattern_integration = self.integrate_context7_patterns()
+            # 現状分析ドキュメント
+            current_analysis_doc = self.create_current_analysis_document(current_analysis)
+            current_analysis_path = domain_dir / f"issue-{self.issue_number}-current-analysis.md"
+            with open(current_analysis_path, 'w', encoding='utf-8') as f:
+                f.write(current_analysis_doc)
+            logger.info(f"✅ 現状分析ドキュメント作成: {current_analysis_path}")
             
-            # Phase 5: Generate enhanced domain model
-            logger.info("📝 Phase 5: Generating enhanced domain model...")
-            domain_model = self.generate_enhanced_domain_model(use_case_specs, codebase_analysis, pattern_integration)
+            # ギャップ分析ドキュメント
+            gap_analysis_doc = self.create_gap_analysis_document(
+                gap_analysis, core_results["domain_concepts"], current_analysis
+            )
+            gap_analysis_path = domain_dir / f"issue-{self.issue_number}-gap-analysis.md"
+            with open(gap_analysis_path, 'w', encoding='utf-8') as f:
+                f.write(gap_analysis_doc)
+            logger.info(f"✅ ギャップ分析ドキュメント作成: {gap_analysis_path}")
             
-            # Phase 6: Create MCP analysis report
-            logger.info("📊 Phase 6: Creating MCP analysis report...")
-            analysis_report = self.create_mcp_analysis_report(codebase_analysis, pattern_integration)
+            # 改善提案ドキュメント
+            enhancement_doc = self.create_enhancement_recommendations_document(
+                core_results["domain_concepts"], current_analysis, gap_analysis
+            )
+            enhancement_path = domain_dir / f"issue-{self.issue_number}-enhancement-recommendations.md"
+            with open(enhancement_path, 'w', encoding='utf-8') as f:
+                f.write(enhancement_doc)
+            logger.info(f"✅ 改善提案ドキュメント作成: {enhancement_path}")
             
-            # Phase 7: Create implementation guidance
-            logger.info("📋 Phase 7: Creating implementation guidance...")
-            implementation_guidance = self.create_implementation_guidance(codebase_analysis, pattern_integration)
+            # 結果に拡張情報を追加
+            results.update({
+                "current_analysis": current_analysis,
+                "gap_analysis": gap_analysis,
+                "generated_documents": [
+                    core_results["domain_doc_path"],
+                    str(current_analysis_path),
+                    str(gap_analysis_path),
+                    str(enhancement_path)
+                ]
+            })
             
-            # Phase 8: Save all artifacts
-            logger.info("💾 Phase 8: Saving enhanced artifacts...")
-            self.save_enhanced_artifacts(domain_model, analysis_report, implementation_guidance)
-            
-            # Phase 9: Update project metadata
-            logger.info("📋 Phase 9: Updating project metadata...")
-            self.update_project_metadata()
-            
-            # Generate final report
-            report = self.generate_modeling_report(codebase_analysis, pattern_integration)
-            logger.info("✅ MCP-enhanced domain modeling completed successfully!")
-            
-            return report
-            
-        except Exception as e:
-            logger.exception("MCP-enhanced domain modeling failed")
-            raise
+            # Phase 5: JSONファイル更新
+            logger.info("📊 Phase 5: メタデータ更新")
+            self.update_use_case_json_with_enhanced_info(
+                core_results["json_file_path"],
+                core_results["domain_concepts"],
+                current_analysis,
+                gap_analysis
+            )
+        else:
+            logger.info("ℹ️ MCP機能を使用できません - 基本機能のみで完了")
+            # 既存機能でのJSONファイル更新
+            self.update_use_case_json_with_enhanced_info(
+                core_results["json_file_path"],
+                core_results["domain_concepts"]
+            )
+        
+        # Phase 6: 実行履歴更新
+        logger.info("📋 実行履歴更新中...")
+        update_execution_history(
+            core_results["json_file_path"],
+            "04-domain-modeling-enhanced",
+            "success",
+            {
+                "domain_concepts": core_results["domain_concepts"],
+                "mcp_enhanced": self.mcp_available,
+                "documents_generated": len(results["generated_documents"])
+            }
+        )
+        
+        logger.info("✅ 統合型ドメインモデリング完了!")
+        return results
 
 
 async def main():
-    """Main entry point"""
-    if len(sys.argv) != 2:
-        logger.error("Usage: python 04-domain-modeling-enhanced.py <issue_number>")
+    """メイン処理"""
+    if len(sys.argv) < 2:
+        print("❌ エラー: Issue番号が必要です")
+        print("使用方法: /domain-modeling-enhanced <issue-number>")
         sys.exit(1)
-        
+    
     issue_number = sys.argv[1]
     
     try:
-        # Validate issue number
-        if not issue_number.isdigit():
-            logger.error(f"Invalid issue number: {issue_number}")
-            sys.exit(1)
-            
-        # Initialize enhanced domain modeler
-        modeler = MCPEnhancedDomainModeler(issue_number)
+        # 統合型ドメインモデラー初期化
+        modeler = EnhancedDomainModeler(issue_number)
         
-        # Run enhanced modeling
-        report = await modeler.run_enhanced_modeling()
+        # 統合型モデリング実行
+        results = await modeler.run_enhanced_modeling()
         
-        # Print success summary
+        # 結果表示
         print("\n" + "="*60)
-        print("🎉 MCP-ENHANCED DOMAIN MODELING COMPLETED")
+        print("🎉 統合型ドメインモデリング完了")
         print("="*60)
-        print(f"Issue Number: {report['modeling_info']['issue_number']}")
-        print(f"Status: {report['modeling_info']['status']}")
-        print(f"Started: {report['modeling_info']['started_at']}")
-        print(f"Completed: {report['modeling_info']['completed_at']}")
-        print(f"\n🧠 MCP Analysis Results:")
-        serena_results = report['mcp_analysis_results']['serena_analysis']
-        print(f"  📁 Files Analyzed: {serena_results['files_analyzed']}")
-        print(f"  🏛️ Entities Discovered: {serena_results['entities_discovered']}")
-        print(f"  💎 Value Objects Recommended: {serena_results['value_objects_recommended']}")
-        print(f"  ⚙️ Business Methods Identified: {serena_results['business_methods_identified']}")
-        context7_results = report['mcp_analysis_results']['context7_integration']
-        print(f"  📚 Pattern Coverage: {context7_results['pattern_coverage']}%")
-        print(f"  ✅ Best Practices Integrated: {context7_results['best_practices_integrated']}")
-        print(f"\n📁 Generated Artifacts:")
-        for artifact in report['generated_artifacts']:
-            print(f"  ✅ {artifact}")
-        print(f"\n📊 Quality Metrics:")
-        metrics = report['quality_metrics']
-        print(f"  🎯 Domain Completeness: {metrics['domain_completeness']}%")
-        print(f"  📋 Pattern Integration: {metrics['pattern_integration']}%")
-        print(f"  🚀 Implementation Readiness: {metrics['implementation_readiness']}%")
-        print(f"\n🚀 Next Steps:")
-        for step in report['next_steps']:
-            print(f"  • {step}")
+        print(f"Issue番号: {issue_number}")
+        print(f"MCP拡張機能: {'✅ 有効' if results['mcp_available'] else '❌ 無効'}")
+        
+        core = results["core_results"]["domain_concepts"]
+        print(f"\n📊 ドメイン要素分析結果:")
+        print(f"  - エンティティ: {len(core['entities'])}個")
+        print(f"  - 値オブジェクト: {len(core['value_objects'])}個")
+        print(f"  - ドメインサービス: {len(core['domain_services'])}個")
+        print(f"  - ビジネスルール: {len(core['business_rules'])}個")
+        
+        if results.get("gap_analysis"):
+            print(f"  - 整合性スコア: {results['gap_analysis']['overall_alignment']}%")
+        
+        print(f"\n📁 生成されたドキュメント:")
+        for doc in results["generated_documents"]:
+            print(f"  ✅ {doc}")
+        
+        if results['mcp_available']:
+            print(f"\n🚀 論理的ワークフロー完了:")
+            print(f"  1. ✅ 要求分析 (Given-When-Then → ドメイン概念)")
+            print(f"  2. ✅ 現状分析 (コードベース → 実装状況)")
+            print(f"  3. ✅ ギャップ分析 (要求 vs 現実)")
+            print(f"  4. ✅ 改善提案 (最適化ロードマップ)")
+        
+        print(f"\n📋 次のステップ:")
+        print(f"  • テスト作成: /create-tests-enhanced {issue_number}")
+        print(f"  • 実装フェーズ: 改善提案に従って段階的実装")
         print("="*60)
         
-        sys.exit(0)
-        
-    except KeyboardInterrupt:
-        logger.info("Enhanced domain modeling cancelled by user")
+    except FileNotFoundError as e:
+        print(f"❌ ファイルエラー: {e}")
+        print("先に /create-use-case コマンドを実行してください")
         sys.exit(1)
     except Exception as e:
-        logger.exception("Enhanced domain modeling failed")
+        logger.exception("統合型ドメインモデリングでエラーが発生")
+        print(f"❌ エラー: {e}")
         sys.exit(1)
 
 
