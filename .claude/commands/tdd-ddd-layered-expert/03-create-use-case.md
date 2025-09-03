@@ -67,26 +67,91 @@ if [[ -z "$1" ]]; then
 fi
 
 ISSUE_NUMBER="$1"
-echo "🚀 Executing create-use-case with automated Python implementation..."
+echo "🚀 Executing create-use-case for GitHub Issue #$ISSUE_NUMBER..."
 
-# Execute the enhanced Python implementation
+# CRITICAL: Retrieve GitHub issue with full comment history first
+echo "📥 Retrieving GitHub issue #$ISSUE_NUMBER with complete comment history..."
+
+# Get issue details with comments using gh CLI
+ISSUE_DATA=$(gh issue view $ISSUE_NUMBER --json title,body,comments,updatedAt,createdAt,labels,assignees 2>/dev/null)
+EXIT_CODE=$?
+
+if [[ $EXIT_CODE -ne 0 ]]; then
+    echo "❌ Failed to retrieve issue #$ISSUE_NUMBER. Please check:"
+    echo "  - Issue number exists"
+    echo "  - GitHub CLI is authenticated"
+    echo "  - Repository access permissions"
+    exit 1
+fi
+
+# Extract and analyze comments (prioritize recent ones)
+COMMENT_COUNT=$(echo "$ISSUE_DATA" | jq '.comments | length // 0')
+echo "📊 Found $COMMENT_COUNT comments on issue #$ISSUE_NUMBER"
+
+if [[ $COMMENT_COUNT -gt 0 ]]; then
+    echo "🔍 Analyzing comment timeline for latest requirements..."
+    # Get latest 5 comments (most recent first)
+    RECENT_COMMENTS=$(echo "$ISSUE_DATA" | jq -r '.comments | sort_by(.createdAt) | reverse | .[0:5]')
+    LATEST_COMMENT_DATE=$(echo "$RECENT_COMMENTS" | jq -r '.[0].createdAt // empty')
+    
+    if [[ -n "$LATEST_COMMENT_DATE" ]]; then
+        echo "📅 Latest specification update: $LATEST_COMMENT_DATE"
+        echo "⚠️  PRIORITY: Recent comments take precedence over original issue description"
+    fi
+    
+    # Display recent comment summary
+    echo "📋 Recent Comments Summary:"
+    echo "$RECENT_COMMENTS" | jq -r '.[] | "  [" + .createdAt + "] @" + .author.login + ": " + (.body | split("\n")[0] | .[0:80] + (if length > 80 then "..." else "" end))'
+else
+    echo "📝 No comments found. Using original issue description only."
+fi
+
+# Display issue summary
+echo "📄 Issue Summary:"
+echo "  Title: $(echo "$ISSUE_DATA" | jq -r '.title')"
+echo "  Created: $(echo "$ISSUE_DATA" | jq -r '.createdAt')"
+echo "  Updated: $(echo "$ISSUE_DATA" | jq -r '.updatedAt')"
+echo "  Labels: $(echo "$ISSUE_DATA" | jq -r '.labels[].name // empty' | tr '\n' ', ' | sed 's/,$//')"
+
+# Save issue data for use case creation process
+TEMP_ISSUE_FILE="/tmp/issue-${ISSUE_NUMBER}-data.json"
+echo "$ISSUE_DATA" > "$TEMP_ISSUE_FILE"
+echo "💾 Issue data saved to: $TEMP_ISSUE_FILE"
+
+# Execute the enhanced Python implementation with issue data
 SCRIPT_PATH=".claude/commands/tdd-ddd-layered-expert/utils/03-create-use-case.py"
 
 if [[ -f "$SCRIPT_PATH" ]]; then
     echo "✅ Found enhanced implementation: $SCRIPT_PATH"
-    uv run "$SCRIPT_PATH" "$ISSUE_NUMBER"
+    echo "🔄 Passing issue data and comment history to Python implementation..."
+    
+    # Pass both issue number and temp file path to Python script
+    uv run "$SCRIPT_PATH" "$ISSUE_NUMBER" "$TEMP_ISSUE_FILE"
     EXIT_CODE=$?
+
+    # Cleanup temp file
+    rm -f "$TEMP_ISSUE_FILE"
 
     if [[ $EXIT_CODE -eq 0 ]]; then
         echo "✅ Use case creation completed successfully"
+        echo "🎯 GitHub issue comments were analyzed and prioritized in the specification"
     else
         echo "❌ Use case creation failed with exit code: $EXIT_CODE"
         exit $EXIT_CODE
     fi
 else
     echo "❌ Enhanced implementation not found: $SCRIPT_PATH"
-    echo "💡 Please ensure the Python implementation is available"
-    exit 1
+    echo "💡 Using direct Claude analysis with retrieved issue data..."
+    echo ""
+    echo "🚀 Starting use case creation with comprehensive GitHub issue analysis..."
+    echo "📊 Issue Data Available:"
+    echo "  - Original Description: ✅"
+    echo "  - Comment History: ✅ ($COMMENT_COUNT comments)"
+    echo "  - Latest Updates: ✅"
+    echo ""
+    echo "⏰ Ready for use case specification creation..."
+    # Cleanup temp file
+    rm -f "$TEMP_ISSUE_FILE"
 fi
 ```
 
