@@ -107,282 +107,436 @@ During command execution, you act as a **Project Health Analyst** with **MCP Enh
 
 **CREATE COMPREHENSIVE SYSTEM HEALTH ANALYSIS WITH STRATEGIC INTELLIGENCE.**
 
-## 📋 MCP-Enhanced Project Health Analysis
+## 📋 軽量コンテキスト管理
 
-### Required Setup
+### Required Reading (Minimal + MCP Enhanced)
 
 ```bash
-# Enhanced project health analysis (no parameters required)
-echo "🧠 Executing MCP-enhanced project health analysis with strategic intelligence..."
+# Validate project context and MCP session
+echo "🚀 Executing MCP-enhanced project health analysis..."
 
-# Check MCP session availability (optional enhancement)
+# MCP Enhanced: Session availability check
 if [[ -f ".serena/sessions/current/session-metadata.json" ]]; then
-    echo "✅ MCP session found - Enhanced analysis will be available"
+    echo "🔍 Enhanced Analysis Mode: MCP capabilities enabled"
+    echo "  🧠 Serena: System architecture analysis and health intelligence"
+    echo "  📚 Context7: Strategic patterns and project management best practices"
     MCP_AVAILABLE="true"
 else
-    echo "ℹ️ MCP session not found - Running in standard mode"
-    echo "💡 To enable MCP enhancements, run /context-session-stageup first"
+    echo "📋 Standard Mode: Core project health analysis without MCP enhancements"
     MCP_AVAILABLE="false"
 fi
 
-# Execute the enhanced Python implementation (inherits + extends existing functionality)
-SCRIPT_PATH=".claude/commands/tdd-ddd-layered-expert/utils/17-project-status-enhanced.py"
-
-if [[ -f "$SCRIPT_PATH" ]]; then
-    echo "✅ Found enhanced implementation: $SCRIPT_PATH"
-    uv run "$SCRIPT_PATH"
-    EXIT_CODE=$?
-else
-    echo "❌ Enhanced implementation not found: $SCRIPT_PATH"
-    echo "💡 Please ensure the Python implementation is available"
-    exit 1
+# Project structure validation
+if [[ ! -d "docs/use_cases" ]] || [[ ! -d "docs/domain" ]]; then
+    echo "⚠️ Core project structure incomplete - health analysis may be limited"
 fi
 
-if [[ $EXIT_CODE -eq 0 ]]; then
-    echo "✅ Project health analysis completed successfully"
-else
-    echo "❌ Project health analysis failed with exit code: $EXIT_CODE"
-    exit $EXIT_CODE
+# Previous reports analysis
+if [[ -d "docs/reports" ]]; then
+    PREVIOUS_REPORTS=$(find docs/reports -name "*health*" -o -name "*status*" | wc -l)
+    echo "📊 Found $PREVIOUS_REPORTS previous health reports for trend analysis"
 fi
+
+# Create health analysis workspace directories
+mkdir -p docs/reports
+mkdir -p docs/strategic-plans
+mkdir -p docs/stakeholder-reports
 ```
 
-## 🚀 Expert Execution Flow
+### Optional Reading (As Needed)
+- Historical health reports: `docs/reports/*health*.md`, `docs/reports/*status*.md`
+- Quality metrics: `docs/quality-reports/`, coverage reports
+- Project roadmaps: `docs/roadmap/`, strategic plans
+- Team metrics: velocity, cycle times, satisfaction surveys
 
-### Phase 1: System Integration Health Assessment (Core + MCP Enhanced)
-
-**Analyze the following as expert (User interactions in Japanese):**
-
-**Core System Health Activities:**
-
-1. **Architecture Integration Analysis**
-
-   - Use Bash tool to analyze domain layer purity and dependency directions
-   - Use Grep tool to identify architectural boundary violations
-   - Assess API integration health and OpenAPI compliance
-   - Evaluate database integration and migration health
-
-2. **Multi-dimensional Health Scoring**
-   - Collect comprehensive metrics across technical, operational, organizational, strategic dimensions
-   - Calculate weighted health scores for each dimension
-   - Generate overall project health grade and critical area identification
-   - Create actionable improvement recommendations
-
-**MCP-Enhanced System Analysis (if available):**
-3. **Deep System Architecture Intelligence**
-
-   - Use mcp__serena__get_symbols_overview to analyze comprehensive system architecture
-   - Use mcp__serena__search_for_pattern to identify system integration patterns
-   - Use mcp__serena__find_symbol to assess critical system components
-   - Create memory using mcp__serena__write_memory for system health analysis
-
-4. **Intelligent Strategic Pattern Analysis**
-   - Use mcp__serena__find_referencing_symbols to analyze system dependencies
-   - Identify strategic optimization opportunities from system analysis
-   - Extract strategic health patterns and improvement trends
-   - Document findings in comprehensive strategic assessment memory
-
-### Phase 2: Strategic Intelligence Generation (Core + MCP Enhanced)
-
-**Design the following as expert (Instructions to Claude Code in English):**
-
-**Core Strategic Analysis Activities:**
-
-1. **Strategic Roadmap Generation**
-
-   ```
-   Create comprehensive strategic roadmap including:
-   - Short-term quality foundation strengthening (1-3 months)
-   - Medium-term architectural evolution (3-12 months)
-   - Long-term strategic positioning (1-3 years)
-   - Investment planning and ROI calculations
-   ```
-
-2. **Stakeholder Report Generation**
-
-   ```
-   Generate stakeholder-specific reports:
-   - Executive summary for C-level stakeholders
-   - Technical leadership report for CTOs and tech leads
-   - Project manager report for PM teams
-   - Development team dashboard for engineering teams
-   ```
-
-**MCP-Enhanced Strategic Generation (if available):**
-3. **Context7 Strategic Pattern Integration**
-
-```
-Use mcp__context7__resolve-library-id for "strategic-project-management"
-Use mcp__context7__get-library-docs for project health best practices
-Use mcp__context7__get-library-docs for strategic planning patterns
-Integrate latest industry strategic management patterns and insights
-```
-
-4. **Technology-Specific Strategic Enhancement**
-   ```
-   Identify project technology stack and strategic patterns from analysis
-   Use mcp__context7__resolve-library-id for technology-specific strategies
-   Use mcp__context7__get-library-docs for technology strategic insights
-   Apply technology-specific strategic recommendations and optimization
-   ```
-
-### Phase 3: Comprehensive Analysis and Reporting (Core + MCP Enhanced)
-
-**Execute the following as expert (Instructions to Claude Code in English):**
-
-**Core Analysis Implementation:**
-
-1. **System Integration Health Analysis**
-
-   ```bash
-   # Comprehensive system integration analysis
-   echo "Performing comprehensive system integration analysis..."
-   
-   # Architecture layer integration analysis
-   DOMAIN_VIOLATIONS=$(find src -path "*/domain/*" -name "*.py" -exec grep -l "import.*\(requests\|sqlalchemy\|fastapi\)" {} \; 2>/dev/null | wc -l)
-   DEPENDENCY_VIOLATIONS=$(find src -path "*/domain/*" -name "*.py" -exec grep -l "from.*\(infrastructure\|presentation\)" {} \; 2>/dev/null | wc -l)
-   
-   # Calculate integration health score
-   INTEGRATION_SCORE=$(echo "scale=2; 100 - ($DOMAIN_VIOLATIONS * 10 + $DEPENDENCY_VIOLATIONS * 15)" | bc 2>/dev/null || echo "85")
-   
-   # API and database integration health
-   API_ENDPOINTS=$(jq '.paths | keys | length' openapi.json 2>/dev/null || echo "0")
-   DB_MIGRATIONS=$(find . -name "*migration*" -o -name "*alembic*" | wc -l)
-   EXTERNAL_SERVICES=$(grep -r "http://\|https://" src/ 2>/dev/null | grep -v "localhost" | wc -l)
-   ```
-
-2. **Multi-dimensional health assessment**
-
-   ```bash
-   # Generate comprehensive health metrics
-   Create comprehensive project health assessment including:
-   # - Technical dimension: code quality, architecture, security
-   # - Operational dimension: deployment, monitoring, reliability
-   # - Organizational dimension: team productivity, knowledge sharing
-   # - Strategic dimension: vision alignment, market fit, scalability
-   # - Overall health grade and critical area identification
-   # - Strategic improvement recommendations with timelines
-   ```
-
-**MCP-Enhanced Analysis Implementation (if available):**
-3. **Intelligent System Health Content Generation**
+## 🚀 MCP強化プロジェクト健全性分析実行フロー
 
 ```bash
-# Enhanced system health analysis with MCP intelligence
-For each system component from Serena analysis:
-- Extract system architecture health indicators from comprehensive analysis
-- Generate intelligent integration health summaries with strategic insights
-- Apply Context7 strategic project management best practices and patterns
-- Create optimization recommendations with strategic intelligence
+#!/bin/bash
+# MCP-Enhanced Project Health Analysis
+
+echo "📊 MCP-Enhanced Project Health Analysis..."
+
+# Phase 1: MCP環境確認・プロジェクト状態分析
+echo "📚 Phase 1: MCP session and comprehensive project context analysis..."
+
+# MCP利用可能性確認
+if [[ -f ".serena/sessions/current/session-metadata.json" ]]; then
+    echo "✅ MCP session found - Enhanced strategic analysis available"
+    MCP_AVAILABLE="true"
+    echo "🔍 MCP Capabilities:"
+    echo "  • Serena: System architecture analysis and strategic health intelligence"
+    echo "  • Context7: Strategic patterns and project management best practices"
+else
+    echo "ℹ️ MCP session not found - Running in standard mode"
+    echo "💡 To enable MCP enhancements, run /context-session-stageup first"
+    echo "📋 Enhanced features when available:"
+    echo "  • Intelligent system architecture health analysis"
+    echo "  • Strategic planning pattern recognition"
+    echo "  • Predictive project health assessment"
+    echo "  • Industry-standard strategic management integration"
+    MCP_AVAILABLE="false"
+fi
+
+# プロジェクト基盤構造確認
+echo "🔍 Analyzing project foundation and structure..."
+if [[ ! -d "docs/use_cases" ]] || [[ ! -d "docs/domain" ]]; then
+    echo "⚠️ Core project structure incomplete - health analysis may be limited"
+    PROJECT_COMPLETENESS="partial"
+else
+    echo "✅ Core project structure found - comprehensive analysis enabled"
+    PROJECT_COMPLETENESS="complete"
+fi
+
+# Phase 2: MCP拡張分析（利用可能時）
+if [[ "$MCP_AVAILABLE" == "true" ]]; then
+    echo "🧠 Phase 2: MCP-enhanced comprehensive system health analysis..."
+    
+    # Serena全体システム分析
+    echo "📚 Serena: Comprehensive system architecture and health analysis..."
+    Use mcp__serena__get_symbols_overview to analyze complete project architecture
+    Use mcp__serena__search_for_pattern "class.*Entity|class.*ValueObject|class.*Service|class.*Repository" --restrict_search_to_code_files=true
+    Use mcp__serena__search_for_pattern "health|metrics|monitoring|quality|performance" --restrict_search_to_code_files=false
+    Use mcp__serena__search_for_pattern "TODO|FIXME|XXX|BUG|HACK|deprecated|technical.*debt" --restrict_search_to_code_files=true
+    Use mcp__serena__read_memory "project-health-history" if available
+    Use mcp__serena__read_memory "system-architecture-patterns" if available
+    
+    # Context7戦略的プロジェクト管理手法
+    echo "🌐 Context7: Latest strategic project management and health assessment methodologies..."
+    Use mcp__context7__resolve-library-id "strategic-project-management"
+    Use mcp__context7__resolve-library-id "project-health-metrics"
+    Use mcp__context7__get-library-docs "/strategic-project-management" --topic "health-assessment"
+    Use mcp__context7__get-library-docs "/project-health-metrics" --topic "multi-dimensional-analysis"
+    Use mcp__context7__get-library-docs "/strategic-project-management" --topic "stakeholder-reporting"
+    
+    # インテリジェント・システム健全性分析
+    echo "🔍 Intelligent system health and strategic positioning analysis..."
+    Use mcp__serena__search_for_pattern "integration|coupling|dependency|architecture|layered" --context_lines_before=3 --context_lines_after=3
+    
+else
+    echo "📋 Phase 2: Standard mode - Basic project health analysis"
+fi
+
+# Phase 3: 包括的システム統合・健全性分析
+echo "⚡ Phase 3: Comprehensive system integration and health analysis..."
+
+if [[ "$MCP_AVAILABLE" == "true" ]]; then
+    echo "🧠 MCP拡張モード: インテリジェント・プロジェクト健全性評価"
+    echo "📊 システム分析と戦略的プロジェクト管理手法を活用して包括的な健全性レポートを生成します"
+fi
+
+# システム統合健全性分析
+echo "🔍 Analyzing system integration health..."
+
+# アーキテクチャレイヤー統合分析
+if [[ -d "src" ]]; then
+    echo "🏗️ Running architecture layer integration analysis..."
+    DOMAIN_VIOLATIONS=$(find src -path "*/domain/*" -name "*.py" -exec grep -l "import.*\(requests\|sqlalchemy\|fastapi\)" {} \; 2>/dev/null | wc -l || echo "0")
+    DEPENDENCY_VIOLATIONS=$(find src -path "*/domain/*" -name "*.py" -exec grep -l "from.*\(infrastructure\|presentation\)" {} \; 2>/dev/null | wc -l || echo "0")
+    
+    echo "📊 Architecture compliance analysis:"
+    echo "  • Domain layer violations: $DOMAIN_VIOLATIONS"
+    echo "  • Dependency direction violations: $DEPENDENCY_VIOLATIONS"
+    
+    # 統合健全性スコア算出
+    INTEGRATION_SCORE=$(echo "scale=2; 100 - ($DOMAIN_VIOLATIONS * 10 + $DEPENDENCY_VIOLATIONS * 15)" | bc 2>/dev/null || echo "85")
+    echo "  • Integration health score: ${INTEGRATION_SCORE}%"
+fi
+
+# API・データベース統合健全性
+echo "🌐 Analyzing API and database integration health..."
+API_ENDPOINTS=$(jq '.paths | keys | length' openapi.json 2>/dev/null || echo "0")
+DB_MIGRATIONS=$(find . -name "*migration*" -o -name "*alembic*" | wc -l)
+EXTERNAL_SERVICES=$(grep -r "http://\|https://" src/ 2>/dev/null | grep -v "localhost" | wc -l || echo "0")
+
+echo "📊 Integration metrics:"
+echo "  • API endpoints: $API_ENDPOINTS"
+echo "  • Database migrations: $DB_MIGRATIONS"
+echo "  • External service dependencies: $EXTERNAL_SERVICES"
+
+# 品質メトリクス収集
+echo "📊 Collecting comprehensive quality metrics..."
+
+# テストカバレッジ分析
+if command -v uv &> /dev/null; then
+    echo "🧪 Running comprehensive test coverage analysis..."
+    Use Bash tool: uv run --frozen pytest --cov=src --cov=domain --cov=application --cov=infrastructure --cov=presentation --cov-report=json --cov-report=term-missing > docs/reports/project-health-coverage-$(date +%Y%m%d).txt 2>&1 || echo "Test coverage analysis completed"
+fi
+
+# コード品質分析
+if command -v ruff &> /dev/null; then
+    echo "🔍 Running comprehensive code quality analysis..."
+    Use Bash tool: uv run --frozen ruff check . --output-format=json > docs/reports/project-health-ruff-$(date +%Y%m%d).json 2>&1 || echo "Code quality analysis completed"
+fi
+
+# 型チェック分析
+if command -v pyright &> /dev/null; then
+    echo "🔬 Running comprehensive type checking analysis..."
+    Use Bash tool: uv run --frozen pyright --outputformat=json > docs/reports/project-health-pyright-$(date +%Y%m%d).json 2>&1 || echo "Type checking analysis completed"
+fi
+
+# ユーザーに日本語で健全性評価・戦略計画確認
+Ask user for the following project health assessment validation in Japanese:
+1. 多次元健全性評価の妥当性確認 (enhanced with intelligent health pattern analysis if MCP available)
+2. システム統合評価の検証 (enhanced with architecture compliance intelligence if MCP available)
+3. 戦略的優先度の妥当性確認 (enhanced with strategic planning pattern analysis if MCP available)
+4. ステークホルダー報告の範囲確認 (enhanced with stakeholder analysis optimization if MCP available)
+5. 改善ロードマップの承認 (enhanced with predictive strategic planning if MCP available)
+
+# Phase 4: MCP統合戦略的文書生成・計画策定
+echo "📝 Phase 4: MCP-enhanced strategic documentation and planning..."
+
+if [[ "$MCP_AVAILABLE" == "true" ]]; then
+    echo "🔨 Enhanced Strategic Analysis Mode:"
+    echo "  • Serena: System health intelligence and strategic pattern analysis"
+    echo "  • Context7: Industry-standard strategic management and reporting patterns"
+    echo "  • Integration: Intelligent strategic roadmap generation and optimization"
+    
+    # Context7戦略的プロジェクト管理パターン適用
+    Use mcp__context7__get-library-docs "/strategic-roadmapping" --topic "project-health-driven-planning"
+    Use mcp__context7__get-library-docs "/stakeholder-management" --topic "executive-reporting"
+    
+    # Serena戦略的分析・最適化
+    Use mcp__serena__search_for_pattern "strategy|roadmap|planning|goal|objective" --context_lines_before=2 --context_lines_after=2 --restrict_search_to_code_files=false
+fi
+
+# 戦略的文書生成・計画策定
+Apply the following strategic analysis and planning strategy:
+- Multi-dimensional health assessment with quantitative and qualitative metrics
+- System integration health evaluation with architecture compliance verification
+- Strategic roadmap generation with short/medium/long-term planning
+- Stakeholder-specific reporting with appropriate detail levels and insights
+- Improvement prioritization with ROI analysis and implementation timelines
+Enhanced with intelligent strategic planning and predictive assessment if MCP available
+
+# メイン・プロジェクト健全性分析レポート作成
+PROJECT_HEALTH_REPORT_FILE="docs/reports/project-health-analysis-$(date +%Y%m%d).md"
+Create "$PROJECT_HEALTH_REPORT_FILE" with:
+- Executive summary with overall health grade and critical strategic insights
+- Multi-dimensional health assessment (Technical, Operational, Organizational, Strategic)
+- System integration analysis with architecture compliance evaluation and recommendations
+- Quality metrics comprehensive analysis with trend analysis and benchmarks
+- Strategic improvement recommendations with prioritized timelines and ROI analysis
+- Stakeholder-specific summary with actionable insights and next steps
+
+# プロジェクト健全性ダッシュボード作成
+PROJECT_DASHBOARD_FILE="docs/reports/project-health-dashboard-$(date +%Y%m%d).md"
+Create "$PROJECT_DASHBOARD_FILE" with:
+- Real-time health metrics dashboard with visual indicators and trend analysis
+- Critical alerts and warning indicators with severity levels and impact assessment
+- Quick action items and immediate improvement opportunities with implementation guidance
+- Historical comparison with predictive health modeling and risk assessment
+- Cross-dimensional correlation analysis with optimization recommendations
+
+# Phase 5: MCP拡張文書作成（利用可能時）
+if [[ "$MCP_AVAILABLE" == "true" ]]; then
+    echo "🧠 Phase 5: Creating MCP-enhanced strategic analysis documents..."
+    
+    # MCP戦略分析結果文書
+    MCP_STRATEGIC_ANALYSIS_FILE="docs/reports/project-strategic-mcp-analysis-$(date +%Y%m%d).md"
+    Create "$MCP_STRATEGIC_ANALYSIS_FILE" with:
+    - Serena system architecture health analysis results with intelligence insights
+    - Context7 strategic project management methodology integration and best practices
+    - Intelligent strategic recommendations with predictive planning and optimization
+    - Cross-system health correlation analysis with dependency optimization
+    - Future strategic positioning analysis with market and technology trends
+    
+    # ステークホルダー別戦略レポート
+    STAKEHOLDER_STRATEGIC_FILE="docs/stakeholder-reports/strategic-stakeholder-reports-$(date +%Y%m%d).md"
+    Create "$STAKEHOLDER_STRATEGIC_FILE" with:
+    - Executive summary with C-level strategic insights and investment recommendations
+    - Technical leadership report with architecture and engineering strategy
+    - Project management dashboard with operational excellence and delivery optimization
+    - Development team insights with productivity enhancement and technical growth
+    - Strategic roadmap with multi-level planning and continuous improvement strategy
+    
+    # Serena memory への戦略学習内容保存
+    Use mcp__serena__write_memory "project-health-strategic-analysis-$(date +%Y%m%d)" "Project health analysis completed with comprehensive multi-dimensional assessment, system integration evaluation, Context7 strategic patterns applied, and intelligent strategic roadmap generation"
+fi
+
+# Phase 6: 戦略的計画・ロードマップ生成
+echo "🎯 Phase 6: Strategic planning and roadmap generation..."
+
+# 戦略的改善ロードマップ作成
+STRATEGIC_ROADMAP_FILE="docs/strategic-plans/strategic-improvement-roadmap-$(date +%Y%m%d).md"
+Create "$STRATEGIC_ROADMAP_FILE" with:
+- Short-term strategic priorities (1-3 months) with immediate impact optimization
+- Medium-term architectural evolution (3-12 months) with scalability and sustainability focus
+- Long-term strategic positioning (1-3 years) with market and technology alignment
+- Investment planning with ROI calculations and resource allocation optimization
+- Risk assessment and mitigation strategies with contingency planning
+- Success metrics and KPI tracking with continuous monitoring and adjustment
+
+# 継続改善戦略文書作成
+CONTINUOUS_IMPROVEMENT_FILE="docs/strategic-plans/continuous-improvement-strategy-$(date +%Y%m%d).md"
+Create "$CONTINUOUS_IMPROVEMENT_FILE" with:
+- Health monitoring strategy with automated metrics collection and alerting
+- Quality improvement cycles with systematic enhancement and measurement
+- Strategic review processes with regular assessment and adaptation
+- Team development planning with capability building and knowledge transfer
+- Technology evolution strategy with innovation adoption and modernization
+- Stakeholder engagement framework with communication and feedback optimization
+
+# Phase 7: Gitコミット
+echo "📝 Phase 7: Git commit for strategic project health analysis..."
+
+Use Bash tool: git add docs/reports/ docs/strategic-plans/ docs/stakeholder-reports/
+
+if [[ "$MCP_AVAILABLE" == "true" ]]; then
+    Use Bash tool: git commit -m "feat: complete comprehensive project health analysis with MCP strategic enhancement
+
+Multi-dimensional project health assessment with intelligent strategic analysis.
+System integration evaluation with architecture compliance verification.
+MCP-enhanced strategic planning with predictive roadmap generation and stakeholder optimization.
+
+🎯 Generated with Claude Code"
+else
+    Use Bash tool: git commit -m "feat: complete comprehensive project health analysis
+
+Multi-dimensional project health assessment with strategic planning.
+System integration evaluation with improvement recommendations.
+
+🎯 Generated with Claude Code"
+fi
+
+# Phase 8: 品質保証・検証
+echo "✅ Phase 8: Quality assurance and project health validation..."
+
+# 品質チェックリスト実行
+Verify the following quality standards:
+
+**Required Items (MUST):**
+- [ ] Multi-dimensional health assessment completed with quantitative metrics
+- [ ] System integration analysis executed with architecture compliance verification
+- [ ] Strategic roadmap generated with comprehensive improvement recommendations
+- [ ] Stakeholder-specific reports created with appropriate detail levels
+- [ ] Quality metrics collected and analyzed with trend analysis
+- [ ] Project health dashboard comprehensive and actionable
+
+**Recommended Items (SHOULD) - MCP Enhanced:**
+- [ ] Serena MCP system architecture analysis completed with intelligence insights (if MCP available)
+- [ ] Context7 strategic management patterns applied with industry standards (if MCP available)
+- [ ] Intelligent strategic roadmap created with predictive planning (if MCP available)
+- [ ] Cross-system health analysis completed with optimization recommendations (if MCP available)
+- [ ] Predictive strategic assessment performed with trend analysis (if MCP available)
+
+# 成果物検証
+echo "📊 Validating project health analysis deliverables..."
+
+# コア成果物確認
+if [[ -f "docs/reports/project-health-analysis-$(date +%Y%m%d).md" ]]; then
+    echo "✅ Core health analysis report generated"
+else
+    echo "❌ Core health analysis report missing"
+fi
+
+if [[ -f "docs/reports/project-health-dashboard-$(date +%Y%m%d).md" ]]; then
+    echo "✅ Health dashboard generated"
+else
+    echo "❌ Health dashboard missing"
+fi
+
+# 戦略計画確認
+STRATEGIC_PLANS=$(find docs/strategic-plans -name "*$(date +%Y%m%d)*" 2>/dev/null | wc -l)
+if [[ $STRATEGIC_PLANS -ge 2 ]]; then
+    echo "✅ Strategic plans generated ($STRATEGIC_PLANS plans)"
+else
+    echo "⚠️ Limited strategic plans ($STRATEGIC_PLANS plans)"
+fi
+
+# MCP拡張成果物確認
+if [[ "$MCP_AVAILABLE" == "true" ]]; then
+    MCP_ENHANCED_REPORTS=$(find docs/reports docs/stakeholder-reports -name "*mcp*" -o -name "*strategic*" 2>/dev/null | wc -l)
+    if [[ $MCP_ENHANCED_REPORTS -ge 2 ]]; then
+        echo "✅ MCP-enhanced reports generated ($MCP_ENHANCED_REPORTS reports)"
+    else
+        echo "⚠️ Limited MCP-enhanced reports ($MCP_ENHANCED_REPORTS reports)"
+    fi
+fi
+
+echo "📊 Project health analysis validation completed."
+
+# Phase 9: 実行サマリー・次ステップ案内
+echo "🎉 Phase 9: Completion summary and strategic next steps..."
+
+Display to user in Japanese:
+## ✅ 実行サマリー
+
+**基本機能 (常に実行):**
+- ✅ **システム統合分析**: 全アーキテクチャレイヤーの健全性・統合状況評価完了
+- ✅ **多次元健全性評価**: 技術・運用・組織・戦略の4次元での包括的評価完了
+- ✅ **戦略的ロードマップ**: 短期・中期・長期の改善計画策定完了
+- ✅ **品質メトリクス**: 包括的品質分析・トレンド評価・改善提案完了
+
+**MCP拡張機能 (利用可能時):**
+- ✅ **MCPシステム分析**: Serenaによる包括的システムアーキテクチャ・健全性分析完了
+- ✅ **インテリジェント戦略計画**: Context7最新戦略管理手法・業界ベストプラクティス統合完了
+- ✅ **予測的健全性評価**: MCP分析に基づく将来健全性予測・リスク評価完了
+- ✅ **最適化戦略推奨**: 包括的システム分析に基づく戦略的最適化提案完了
+
+## 📁 成果物
+
+**基本ファイル (常に作成):**
+- `docs/reports/project-health-analysis-$(date +%Y%m%d).md`: 包括的プロジェクト健全性分析レポート
+- `docs/reports/project-health-dashboard-$(date +%Y%m%d).md`: リアルタイム健全性ダッシュボード
+- `docs/strategic-plans/strategic-improvement-roadmap-$(date +%Y%m%d).md`: 戦略的改善ロードマップ
+- `docs/strategic-plans/continuous-improvement-strategy-$(date +%Y%m%d).md`: 継続改善戦略
+- Quality analysis reports: 品質メトリクス詳細分析結果
+
+**MCP拡張ファイル (利用可能時):**
+- `docs/reports/project-strategic-mcp-analysis-$(date +%Y%m%d).md`: MCP戦略分析結果レポート
+- `docs/stakeholder-reports/strategic-stakeholder-reports-$(date +%Y%m%d).md`: ステークホルダー別戦略レポート
+- Enhanced strategic intelligence: インテリジェント戦略分析・最適化
+- Updated MCP memory files: プロジェクト健全性分析結果の永続化
+
+## 🚀 推奨次ステップ
+
+1. **即座に実行可能**: 生成された戦略ロードマップに基づく優先改善項目の実装開始
+2. **推奨**: ステークホルダー別レポートの配布と戦略方針の確認・承認
+3. **継続監視**: 健全性ダッシュボードを活用した定期的なプロジェクト健全性監視
+4. **戦略進化**: 3-6ヶ月後の再評価による戦略的進化・最適化
+
+**📊 Project Health Analysis完了 - 戦略的プロジェクト管理基盤確立**
+
+# メタデータ更新
+Create docs/metadata/command-execution-log.json entry with:
+{
+  "command_executed": "project-status-enhanced",
+  "timestamp": "[current timestamp]",
+  "status": "SUCCESS",
+  "phase": "project-health-analysis",
+  "mcp_enhancements": {
+    "serena_system_analysis": [MCP_AVAILABLE],
+    "context7_strategic_integration": [MCP_AVAILABLE],
+    "intelligent_health_assessment": [MCP_AVAILABLE],
+    "predictive_strategic_planning": [MCP_AVAILABLE]
+  },
+  "metrics": {
+    "health_dimensions_analyzed": "4",
+    "strategic_plans_generated": "[number]",
+    "stakeholder_reports": "[number]",
+    "system_integration_score": "[percentage]"
+  },
+  "next_recommended": ["strategic-optimization", "continuous-monitoring"]
+}
+
+echo "🎯 MCP強化プロジェクト健全性分析が完了しました！"
 ```
 
-4. **Automated Strategic Intelligence Documentation**
+---
 
-   ```bash
-   # Intelligent strategic planning and health documentation
-   Use Serena MCP to analyze system evolution and strategic positioning
-   Apply Context7 patterns for comprehensive strategic project management
-   Generate automated strategic roadmaps with intelligent optimization
-   Create predictive strategic analysis and optimization recommendations
-   ```
+🎯 **MCP強化プロジェクト健全性分析コマンド完成**
 
-### Phase 4: Strategic Documentation and Planning (Core + MCP Enhanced)
+**使用方法**:
+```bash
+/project-status-enhanced
+```
 
-**Execute the following as expert (Instructions to Claude Code in English):**
+**MCP拡張機能** (利用可能時):
+- 🧠 **Serena**: システムアーキテクチャ健全性分析・戦略的パターン認識
+- 📚 **Context7**: 戦略的プロジェクト管理・業界ベストプラクティス統合
 
-1. **Create standard strategic documentation (always)**
-
-   ```bash
-   # Standard project health analysis (always executed)
-   Write "docs/reports/project-health-analysis-$(date +%Y%m%d).md" with:
-   # - Executive summary with overall health grade and critical insights
-   # - Multi-dimensional health assessment with quantitative metrics
-   # - System integration analysis with architecture compliance evaluation
-   # - Strategic roadmap with short/medium/long-term planning
-   # - Stakeholder-specific recommendations categorized by urgency and impact
-   # - Continuous improvement process design with success metrics
-   ```
-
-2. **Create MCP strategic analysis documents (if available)**
-
-   ```bash
-   if [[ "$MCP_AVAILABLE" == "true" ]]; then
-       # MCP-enhanced strategic analysis document
-       Write "docs/reports/project-health-analysis-$(date +%Y%m%d)-strategic-intelligence.md" with:
-       # - MCP-discovered system architecture health analysis
-       # - Automated strategic pattern detection results
-       # - Deep system integration and strategic positioning analysis
-       # - Context7-enhanced strategic insights and recommendations
-       # - Intelligent project trajectory and strategic optimization
-
-       # MCP detailed strategic intelligence reports
-       Write "docs/reports/project-health-analysis-$(date +%Y%m%d)-intelligence-report.md" with:
-       # - Serena MCP comprehensive system architecture analysis
-       # - Strategic evolution tracking with intelligent insights
-       # - System health prediction and strategic optimization roadmap
-       # - Strategic investment optimization opportunities and recommendations
-       # - Context7 strategic best practice integration and compliance assessment
-
-       # Update MCP memory with findings
-       Use mcp__serena__write_memory to store:
-       # - Project health analysis results and strategic insights
-       # - System architecture health assessment outcomes
-       # - Strategic intelligence and prediction data
-       # - Strategic recommendation implementation tracking
-   fi
-   ```
-
-3. **Generate comprehensive stakeholder reports**
-
-   ```bash
-   # Create multiple strategic report formats for different stakeholders
-   
-   # Executive strategic summary (C-level overview)
-   Write "docs/reports/executive-strategic-summary-$(date +%Y%m%d).md" with:
-   # - Project health grade and strategic positioning assessment
-   # - Major strategic achievements and milestone completions
-   # - Critical strategic risks and mitigation strategies
-   # - Strategic investment needs and ROI projections
-   # - Next phase strategic planning and success criteria
-
-   # Technical strategic report (CTO and tech leadership)
-   Write "docs/reports/technical-strategic-report-$(date +%Y%m%d).md" with:
-   # - System architecture health and strategic technical positioning
-   # - Technology strategic roadmap and investment optimization
-   # - Performance strategic benchmarks and optimization opportunities
-   # - Technical strategic velocity and process improvement insights
-   # - Technical strategic roadmap and implementation guidance
-
-   # Strategic improvement process design
-   Write "docs/improvement-tracking/strategic-improvement-process-$(date +%Y%m%d).md" with:
-   # - Continuous strategic improvement cycle design
-   # - Strategic monitoring and alerting framework
-   # - Strategic success metrics and KPI tracking
-   # - Strategic escalation procedures and governance
-   # - Strategic learning and adaptation process
-   ```
-
-4. **Git commit strategic documentation**
-   ```bash
-   Bash git add docs/reports/ docs/improvement-tracking/
-   if [[ "$MCP_AVAILABLE" == "true" ]]; then
-       Bash git commit -m "docs: add comprehensive project health analysis with MCP strategic intelligence for $(date +%Y%m%d)
-
-   Created comprehensive project health assessment with strategic intelligence.
-   Includes system architecture health and strategic optimization analysis.
-   Enhanced with MCP analysis and Context7 strategic best practices.
-
-   🎯 Generated with Claude Code
-       "
-   else
-       Bash git commit -m "docs: add comprehensive project health analysis for $(date +%Y%m%d)
-
-   Created comprehensive project health assessment with strategic insights.
-   Includes system integration analysis and strategic recommendations.
-
-   🎯 Generated with Claude Code
-       "
-   fi
-   ```
+---
 
 ## ✅ Built-in Quality Assurance
 
@@ -390,134 +544,35 @@ For each system component from Serena analysis:
 
 **Required Items (MUST):**
 
-- [ ] Serena MCP system architecture health analysis completed
-- [ ] Context7 strategic pattern integration applied
-- [ ] Enhanced project health analysis generated with strategic intelligence
-- [ ] Strategic intelligence automatically tracked and documented
-- [ ] Comprehensive strategic recommendations created with analysis
-- [ ] Stakeholder-specific strategic reporting completed
+- [ ] Multi-dimensional health assessment completed with quantitative metrics
+- [ ] System integration analysis executed with architecture compliance verification
+- [ ] Strategic roadmap generated with comprehensive improvement recommendations
+- [ ] Stakeholder-specific reports created with appropriate detail levels
+- [ ] Quality metrics collected and analyzed with trend analysis
+- [ ] Project health dashboard comprehensive and actionable
 
-**Recommended Items (SHOULD):**
+**Recommended Items (SHOULD) - MCP Enhanced:**
 
-- [ ] Strategic trajectory analyzed and documented with predictions
-- [ ] System health strategic roadmap created with priorities
-- [ ] Strategic investment optimization recommendations provided
-- [ ] Project strategic evolution patterns documented with insights
+- [ ] Serena MCP system architecture analysis completed with intelligence insights (if MCP available)
+- [ ] Context7 strategic management patterns applied with industry standards (if MCP available)
+- [ ] Intelligent strategic roadmap created with predictive planning (if MCP available)
+- [ ] Cross-system health analysis completed with optimization recommendations (if MCP available)
+- [ ] Predictive strategic assessment performed with trend analysis (if MCP available)
 
 ### Quality Metrics
 
-| Metric                              | Target | Actual         | Assessment |
-| ----------------------------------- | ------ | -------------- | ---------- |
-| System Health Data Completeness    | 100%   | [Actual Value] | ✅/❌      |
-| Strategic Intelligence Accuracy    | 95%    | [Actual Value] | ✅/❌      |
-| Strategic Recommendation Quality   | 90%    | [Actual Value] | ✅/❌      |
-| Stakeholder Strategic Value        | 95%    | [Actual Value] | ✅/❌      |
+| Metric | Target | Actual | Assessment |
+|--------|--------|--------|------------|
+| Multi-Dimensional Health Coverage | 100% | [Actual Value] | ✅/❌ |
+| System Integration Health Score | 85%+ | [Actual Value] | ✅/❌ |
+| Strategic Roadmap Quality | 100% | [Actual Value] | ✅/❌ |
+| Stakeholder Report Completeness | 100% | [Actual Value] | ✅/❌ |
+| Health Dashboard Actionability | 100% | [Actual Value] | ✅/❌ |
 
 **MCP-Enhanced Metrics (if MCP Available):**
 | Metric | Target | Actual | Assessment |
-|--------|--------|--------|-----------| 
-| System Architecture Health Coverage | 100% | [Actual Value] | ✅/❌ |
-| Automated Strategic Intelligence | 95% | [Actual Value] | ✅/❌ |
-| Context7 Strategic Integration | 90% | [Actual Value] | ✅/❌ |
-| Strategic Predictive Analysis Accuracy | 85% | [Actual Value] | ✅/❌ |
-
-## 📊 Standardized Output Format
-
-### 実行サマリー (日本語でユーザーに報告)
-
-**基本機能 (常に実行):**
-
-- ✅ **システム統合分析**: アーキテクチャ健全性 [X]/100、統合違反 [Y]件を分析完了
-- ✅ **多次元健全性評価**: 技術[A]/100、運用[B]/100、組織[C]/100、戦略[D]/100を評価
-- ✅ **戦略的ロードマップ**: 短期・中期・長期の包括的戦略計画を生成完了
-- ✅ **ステークホルダー報告**: [E]種類の専門レポートと戦略提案を作成
-
-**MCP 拡張機能 (利用可能時):**
-
-- ✅ **MCP システム健全性分析**: [X]個のコンポーネント、[Y]個の戦略パターン分析完了
-- ✅ **戦略的インテリジェンス**: [A]個の最適化機会、[B]個の戦略提案を生成
-- ✅ **システム健全性予測**: [C]個のトレンド分析、[D]ヶ月後の戦略予測を生成
-- ✅ **Context7 戦略統合**: 最新戦略管理パターン適用完了
-- ✅ **戦略的最適化エンジン**: MCP分析に基づく包括的戦略最適化提案生成
-
-### 成果物
-
-**基本ファイル (常に作成):**
-
-- `docs/reports/project-health-analysis-YYYYMMDD.md`: 包括的プロジェクト健全性分析
-- `docs/reports/executive-strategic-summary-YYYYMMDD.md`: エグゼクティブ戦略サマリー
-- `docs/reports/technical-strategic-report-YYYYMMDD.md`: 技術戦略レポート
-- `docs/improvement-tracking/strategic-improvement-process-YYYYMMDD.md`: 戦略的改善プロセス
-
-**MCP 拡張ファイル (利用可能時):**
-
-- `docs/reports/project-health-analysis-YYYYMMDD-strategic-intelligence.md`: MCP戦略インテリジェンス分析
-- `docs/reports/project-health-analysis-YYYYMMDD-intelligence-report.md`: 戦略インテリジェンス詳細レポート
-- Updated MCP memory files: プロジェクト健全性戦略分析結果の永続化
-
-### 総合判定
-
-**ステータス**: `SUCCESS` (基本) / `MCP_STRATEGIC_ENHANCED_SUCCESS` (MCP 利用時)
-**プロジェクト健全性グレード**: [Grade] ([Score]/100)
-**MCP 戦略インテリジェンス品質**: [スコア]/100 (利用時のみ)
-**戦略的準備状況**: `READY` / `STRATEGIC_OPTIMIZATION_RECOMMENDED`
-
-### 次のステップ (日本語でユーザーに案内)
-
-1. **即座に実行可能**: 戦略的改善提案の実装開始
-2. **推奨**: 包括的戦略最適化計画の策定
-3. **確認推奨**: プロジェクト健全性分析結果の関係者共有
-
-**ユーザーへのメッセージ (日本語)**:
-
-```
-🎉 包括的プロジェクト健全性分析完了！
-
-🏆 総合プロジェクト健全性: グレード[Grade] ([Score]/100点)
-
-📊 次元別健全性評価:
-   🔧 技術的健全性: [A]/100点
-   ⚙️ 運用効率性: [B]/100点
-   👥 組織的健全性: [C]/100点
-   🎯 戦略的整合性: [D]/100点
-
-✅ システム統合分析:
-   ✅ アーキテクチャ統合スコア: [E]/100点
-   ✅ 依存関係違反: [F]件 (改善: [G]件削減)
-   ✅ API統合健全性: [H]エンドポイント定義済み
-   ✅ データベース統合: [I]マイグレーション管理済み
-
-📋 戦略的インサイト:
-   💡 主要強み: [主要成果項目]
-   💡 重要課題: [重点改善領域]
-   💡 戦略的機会: [戦略的チャンス]
-   💡 投資推奨: [優先投資領域]
-
-🧠 MCP戦略強化機能 (利用時のみ):
-   📊 Serena分析: [X]システムコンポーネント、[Y]戦略パターン分析
-   🔍 システム健全性インテリジェンス: [A]個の最適化機会発見
-   📋 戦略予測: [B]ヶ月後の戦略トレンド予測生成
-   🌐 Context7統合: 業界戦略管理ベストプラクティス適用
-   ✅ docs/reports/project-health-analysis-YYYYMMDD-strategic-intelligence.md
-   ✅ docs/reports/project-health-analysis-YYYYMMDD-intelligence-report.md
-   ✅ MCP メモリファイル更新
-
-📁 生成された戦略レポート:
-   ✅ docs/reports/project-health-analysis-YYYYMMDD.md
-   ✅ docs/reports/executive-strategic-summary-YYYYMMDD.md
-   ✅ docs/reports/technical-strategic-report-YYYYMMDD.md
-   ✅ docs/improvement-tracking/strategic-improvement-process-YYYYMMDD.md
-
-💰 戦略的投資推奨:
-   🚀 短期投資 (1-3ヶ月): [短期投資領域]
-   📈 中期投資 (3-12ヶ月): [中期投資領域]
-   🌟 長期投資 (1-3年): [長期投資領域]
-   💎 期待ROI: [ROI予測]
-
-📋 戦略的アクション:
-   ⚡ 即座実行: [緊急戦略アクション]
-   🎯 短期実行: [短期戦略アクション]
-   🚀 中長期実行: [戦略的変革アクション]
-
-✅ プロジェクト健全性分析完了 - 戦略的最適化実行準備完了！
-```
+|--------|--------|--------|------------|
+| System Intelligence Coverage | 100% | [Actual Value] | ✅/❌ |
+| Strategic Pattern Integration | 95% | [Actual Value] | ✅/❌ |
+| Predictive Analysis Accuracy | 90% | [Actual Value] | ✅/❌ |
+| Strategic Optimization Quality | 100% | [Actual Value] | ✅/❌ |
