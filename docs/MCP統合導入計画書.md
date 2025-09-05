@@ -388,12 +388,26 @@ Serena (記憶・分析) → Context7 (最新手法) → Sequential (論理検�
 - [x] ユーザーフィードバック反映 ✅済
 - [x] Enhanced 版拡張戦略の策定 ✅済
 
-### フェーズ 2 展開（Month 6）
+### フェーズ 1.5 拡張（Month 3-4） ✅完了予定
+
+- [ ] 残り全カスタムコマンド（00-17番台）へのMCP基盤適用
+- [ ] 既存コマンドのSerena+Context7統合完了
+- [ ] 全コマンド安定化とパフォーマンス最適化
+- [ ] フェーズ1成功パターンの標準化
+
+### フェーズ 2 Sequential統合（Month 6）
 
 - [ ] Sequential 統合開発
-- [ ] 3-MCP 統合 Enhanced 版の基盤構築
-- [ ] 実装段階 Enhanced 版の開発
+- [ ] 既存Enhanced版への3-MCP統合追加
+- [ ] Sequential思考パターンの検証と最適化
+- [ ] 3-MCP統合基盤の構築
+
+### フェーズ 3 Enhanced版拡張（Month 9）
+
+- [ ] 3-MCP 統合 Enhanced 版の段階的実装
+- [ ] 実装段階Enhanced版の開発
 - [ ] AI 支援機能強化
+- [ ] 高度分析機能統合
 
 ### 長期ビジョン（Year 1）
 
@@ -413,7 +427,29 @@ Serena (記憶・分析) → Context7 (最新手法) → Sequential (論理検�
 
 #### **将来の Enhanced 版候補**
 
-### **Phase 2 Enhanced 版（Month 6-9）**: 3-MCP 統合実装段階
+#### **Phase 1.5 残りコマンド拡張（Month 3-4）**: フェーズ1成功パターン適用
+
+```bash
+# 残り全カスタムコマンド（00-17番台）への段階的適用
+00-create-vision-enhanced          # MCP統合ビジョン策定
+01-sprint-planning-enhanced        # MCP統合スプリント計画
+02-create-use-case-enhanced        # MCP統合ユースケース作成
+03-domain-modeling                 # 既存（基盤完成済み）
+04-domain-modeling-enhanced        # 既存（完成済み）
+05-create-tests-enhanced          # 既存（完成済み）
+06-implement-domain-enhanced      # MCP統合ドメイン実装
+07-implement-usecase-enhanced     # MCP統合ユースケース実装
+# その他08-17番台コマンドも同様に適用
+```
+
+**統合 MCP 機能（2-MCP基盤）**:
+
+- **Serena MCP**: プロジェクト記憶とパターン分析
+- **Context7 MCP**: 最新手法とベストプラクティス統合  
+- **統合効果**: 実証済みフェーズ1パターンの安全な拡張
+- **学習蓄積**: 各コマンドでの経験が相互に活用される基盤構築
+
+### **Phase 2 Sequential統合版（Month 6-9）**: 3-MCP 統合実装段階
 
 ```bash
 06-implement-domain-enhanced     # 3-MCP統合ドメイン実装
@@ -479,21 +515,24 @@ def triple_mcp_enhanced_pattern():
     return result
 ```
 
-#### **2-MCP 統合パターン（軽量版）**
+#### **Phase 1.5 拡張パターン（安定重視版）**
 
 ```python
-def dual_mcp_enhanced_pattern():
-    # 設計重視: Serena + Sequential
-    if phase in ["domain_modeling", "architecture_review"]:
-        return serena_sequential_integration()
+def phase1_extension_pattern():
+    # フェーズ1実証済みパターンの展開
+    # Serena + Context7 の2-MCP統合を全コマンドに適用
+    
+    # ビジョン・計画系: 記憶 + 最新手法
+    if phase in ["create_vision", "sprint_planning", "use_case"]:
+        return serena_context7_stable_integration()
 
-    # 知識重視: Context7 + Sequential
-    if phase in ["research", "pattern_analysis"]:
-        return context7_sequential_integration()
+    # 実装系: 既存パターン分析 + 最新実装手法
+    if phase in ["implement_domain", "implement_usecase", "implement_infra"]:
+        return serena_context7_implementation_pattern()
 
-    # 記憶重視: Serena + Context7
-    if phase in ["implementation", "optimization"]:
-        return serena_context7_integration()
+    # 保守系: 記憶ベース安全性 + 最新保守手法
+    if phase in ["refactor", "evolve_scenarios"]:
+        return serena_context7_maintenance_pattern()
 ```
 
 ### 📈 Enhanced 版拡張のメリット
@@ -525,31 +564,35 @@ Sequential思考  → 論理的実装  →    3-MCP統合
 - **Sequential**: 複雑性管理・論理的検証・段階的思考
 - **統合効果**: Serena 記憶 + Context7 知識 + Sequential 論理 = 思考品質の大幅向上
 
-### 🎯 Enhanced 版拡張戦略
+### 🎯 修正版Enhanced拡張戦略
 
-#### **3-MCP 統合優先順位**
+#### **段階的MCP統合優先順位（修正版）**
 
 ```
-Phase 2A (Month 6): Sequential統合
-Priority S1: 04-domain-modeling-enhanced   # Sequential論理検証追加
-Priority S2: 25-analytics-dashboard        # Sequential体系的分析追加
+Phase 1.5 (Month 3-4): フェーズ1パターン拡張
+Priority A1: 00-create-vision-enhanced     # Serena+Context7統合
+Priority A2: 01-sprint-planning-enhanced   # Serena+Context7統合
+Priority A3: 02-create-use-case-enhanced   # Serena+Context7統合
+Priority A4: 06-17-implement-*-enhanced    # 全実装系コマンド統合
 
-Phase 2B (Month 7-9): 3-MCP統合実装段階
+Phase 2 (Month 6): Sequential統合導入
+Priority S1: 04-domain-modeling-enhanced   # Sequential論理検証追加
+Priority S2: 05-create-tests-enhanced      # Sequential体系的テスト追加  
+Priority S3: 25-analytics-dashboard        # Sequential分析追加
+
+Phase 3 (Month 9-12): 3-MCP完全統合拡張
 Priority T1: 06-implement-domain-enhanced  # 3-MCP統合実装
 Priority T2: 11-refactor-enhanced         # 3-MCP統合リファクタリング
-
-Phase 3 (Month 10-12): 3-MCP完全統合
 Priority F1: 28-architecture-review-enhanced # 3-MCP統合設計検証
-Priority F2: 29-legacy-migration-enhanced    # 3-MCP統合レガシー移行
-Priority F3: 26-performance-optimization-enhanced  # 3-MCP統合最適化
 ```
 
-#### **MCP 統合判断基準（更新版）**
+#### **MCP 統合判断基準（リスク軽減重視版）**
 
-1. **複雑性**: そのフェーズで高度な判断・論理的検証が必要か
-2. **学習価値**: 3-MCP 統合で得られる相乗効果が大きいか
-3. **頻度**: 十分な使用頻度と ROI 改善が見込めるか
-4. **統合効果**: Sequential 論理思考の価値があるか
+1. **安定性**: フェーズ1で実証済みのパターンを優先
+2. **段階性**: 2-MCP → 3-MCP の無理のない拡張ルート
+3. **学習効率**: 既存成功パターンから段階的に学習蓄積
+4. **複雑性管理**: Sequential統合は基盤安定後に追加
+5. **ROI確実性**: 実証済み効果の拡張を優先
 
 ### 💡 Enhanced 版プラットフォーム戦略
 
@@ -576,10 +619,40 @@ TDD/DDD ワークフロー全体が 3-MCP 統合により体系的にインテ�
 - **Serena + Sequential**: セマンティック分析 → アーキテクチャ分析（実証済み）
 - **3-MCP 統合**: Sequential 論理思考による品質向上が期待（理論予測値 75%品質向上）
 
+## 🎯 修正版戦略の意図と利点
+
+### なぜフェーズ1拡張を優先するか
+
+#### 1. **リスク軽減重視のアプローチ**
+- **実証済み**: フェーズ1の04-05 Enhancedで成功パターンが確立
+- **複雑性管理**: Sequential統合前に2-MCP基盤を全体に安定展開
+- **学習効率**: 既知のパターンで残りコマンドの知見を蓄積
+
+#### 2. **段階的拡張の戦略的価値**
+- **基盤強化**: 全コマンドで2-MCP統合→より安全な3-MCP統合
+- **経験蓄積**: 各コマンド特性の理解→Sequential導入時の最適化
+- **ROI確実性**: 実証済み効果の拡張→投資リターンの確実性
+
+#### 3. **長期的品質向上への準備**
+```
+Phase 1 実証 → Phase 1.5 拡張 → Phase 2 Sequential → Phase 3 完全統合
+     ↓              ↓              ↓              ↓
+  2-MCP成功     全体基盤完成    3-MCP導入      最適化完了
+     ↓              ↓              ↓              ↓
+   安定性         経験蓄積       論理強化      品質最大化
+```
+
+### 修正版のメリット
+
+- **失敗リスク最小化**: 複雑なSequential統合を基盤安定後に実施
+- **効果の確実性**: 実証済みパターンの安全な拡張
+- **学習効率向上**: 2-MCP→3-MCPの段階的スキル蓄積
+- **投資対効果**: より確実で測定可能なROI実現
+
 ---
 
 **承認者**: プロジェクトマネージャー  
 **実装責任者**: 開発チームリーダー  
 **品質責任者**: QA マネージャー  
 **作成日**: 2025-01-15  
-**最終更新**: 2025-01-15（3-MCP 統合 Enhanced 版拡張ロードマップ追加）
+**最終更新**: 2025-01-15（フェーズ1拡張優先戦略への修正）
