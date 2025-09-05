@@ -166,106 +166,164 @@ fi
 
 ## 🚀 Enhanced Expert Execution Flow
 
-### Phase 1: Enhanced Analysis and Understanding
+```bash
+#!/bin/bash
+# MCP-Enhanced Project Vision Creation
 
-**Analyze the following as an enhanced expert (user interactions in Japanese):**
+echo "🎯 MCP-Enhanced Project Vision Architecture..."
 
-1. **Enhanced Project Status Confirmation**
+# Phase 1: MCP セッション確認・機能説明
+echo "📚 Phase 1: Project context analysis..."
 
-   - Check if existing vision document exists using Read tool
-   - If MCP available, analyze historical vision patterns for improvement opportunities
-   - If exists, ask user in Japanese: "既存のプロジェクトビジョンが見つかりました。MCP拡張機能で市場分析と履歴パターン分析を含めた更新を行いますか？(y/N)"
+# MCP利用可能性確認
+if [[ -f ".serena/sessions/current/session-metadata.json" ]]; then
+    echo "✅ MCP session found - Enhanced market analysis will be available"
+    MCP_AVAILABLE="true"
+    echo "🔍 MCP Capabilities:"
+    echo "  • Context7: Industry trends and strategic patterns"
+    echo "  • Serena: Historical project analysis and vision patterns"
+else
+    echo "ℹ️ MCP session not found - Running in standard mode"
+    echo "💡 To enable MCP enhancements, run /context-session-stageup first"
+    echo "📋 Enhanced features when available:"
+    echo "  • Automated market trend analysis"
+    echo "  • Historical project pattern discovery"
+    echo "  • Competitive intelligence integration"
+    echo "  • Strategic recommendation generation"
+    MCP_AVAILABLE="false"
+fi
 
-2. **MCP-Enhanced Project Requirements Elicitation**
+# Phase 2: プロジェクト状態分析
+echo "🔍 Phase 2: Project state analysis..."
 
-   ```bash
-   # If MCP is available, provide enhanced questions
-   if [[ "$MCP_AVAILABLE" == "true" ]]; then
-       echo "🧠 MCP拡張モード: 戦略的ビジョン策定"
-       echo "📊 市場トレンド分析と過去プロジェクトパターンを活用して最適化されたビジョンを作成します"
-   fi
-   ```
+# 既存ビジョン確認
+if [[ -f "docs/vision/project-vision.md" ]]; then
+    echo "📄 Existing vision document found"
+    Use Read tool to analyze docs/vision/project-vision.md
+    Ask user in Japanese: "既存のプロジェクトビジョンが見つかりました。MCP拡張機能で市場分析と履歴パターン分析を含めた更新を行いますか？(y/N)"
+fi
 
-   Standard questions with MCP enhancements:
-   - Project name and description (enhanced with market positioning analysis)
-   - Target users and business value (enhanced with competitive intelligence)
-   - Success metrics and key features (enhanced with industry benchmark analysis)
-   - Technical constraints and preferences (enhanced with technology trend analysis)
+# プロジェクト状態確認
+if [[ -f "docs/metadata/project-state.json" ]]; then
+    Use Read tool to analyze docs/metadata/project-state.json
+fi
 
-3. **Enhanced Domain Understanding**
+# Phase 3: MCP拡張分析（利用可能時）
+if [[ "$MCP_AVAILABLE" == "true" ]]; then
+    echo "🧠 Phase 3: MCP-enhanced analysis..."
+    
+    # Serena履歴パターン分析
+    echo "📚 Serena: Discovering historical project vision patterns..."
+    Use mcp__serena__search_for_pattern "vision|strategy|project.*goals" --restrict_search_to_code_files=false
+    Use mcp__serena__read_memory "vision-success-patterns" if available
+    Use mcp__serena__list_memories to find related vision patterns
+    
+    # Context7市場トレンド分析
+    echo "🌐 Context7: Analyzing industry trends and strategic patterns..."
+    Use mcp__context7__resolve-library-id "business-strategy"
+    Use mcp__context7__resolve-library-id "project-vision-frameworks" 
+    Use mcp__context7__get-library-docs "/business-strategy" --topic "vision-creation"
+    
+else
+    echo "📋 Phase 3: Standard mode - Basic vision creation"
+fi
 
-   - Core business domain identification (enhanced with industry pattern analysis)
-   - Key stakeholders and their needs (enhanced with market research insights)
-   - Business constraints and assumptions (enhanced with competitive landscape analysis)
+# Phase 4: 要求収集・ドメイン理解
+echo "❓ Phase 4: Requirements elicitation..."
 
-### Phase 2: Enhanced Core Scenario Creation
+if [[ "$MCP_AVAILABLE" == "true" ]]; then
+    echo "🧠 MCP拡張モード: 戦略的ビジョン策定"
+    echo "📊 市場トレンド分析と過去プロジェクトパターンを活用して最適化されたビジョンを作成します"
+fi
 
-**Execute enhanced scenario design:**
+# ユーザーに日本語で要求収集
+Ask user for the following project information in Japanese:
+1. プロジェクト名と説明 (enhanced with market positioning analysis if MCP available)
+2. ターゲットユーザーとビジネス価値 (enhanced with competitive intelligence if MCP available) 
+3. 成功指標と主要機能 (enhanced with industry benchmark analysis if MCP available)
+4. 技術制約と選好 (enhanced with technology trend analysis if MCP available)
+5. コアビジネスドメインの特定 (enhanced with industry pattern analysis if MCP available)
+6. 主要ステークホルダーとそのニーズ (enhanced with market research insights if MCP available)
+7. ビジネス制約と前提条件 (enhanced with competitive landscape analysis if MCP available)
 
-1. **MCP-Enhanced Scenario Discovery**
+# Phase 5: MCP統合シナリオ発見
+echo "🎯 Phase 5: MCP-enhanced scenario discovery..."
 
-   ```bash
-   # Enhanced scenario generation with MCP insights
-   if [[ "$MCP_AVAILABLE" == "true" ]]; then
-       echo "🔍 Enhanced Scenario Discovery:"
-       echo "  • Context7: Analyzing industry-standard scenarios"
-       echo "  • Serena: Mining successful scenario patterns from history"
-       echo "  • Integration: Creating market-aligned scenario framework"
-   fi
-   ```
+if [[ "$MCP_AVAILABLE" == "true" ]]; then
+    echo "🔍 Enhanced Scenario Discovery:"
+    echo "  • Context7: Analyzing industry-standard scenarios"
+    echo "  • Serena: Mining successful scenario patterns from history"
+    echo "  • Integration: Creating market-aligned scenario framework"
+    
+    # Context7業界標準シナリオ分析
+    Use mcp__context7__get-library-docs "/use-case-patterns" --topic "industry-scenarios"
+    
+    # Serena成功パターン分析
+    Use mcp__serena__search_for_pattern "Given.*When.*Then|scenario|use.*case" --context_lines_before=2 --context_lines_after=2
+fi
 
-2. **Given-When-Then Core Scenarios (Enhanced)**
+Create 3-5 core scenarios covering 80% of business value using Given-When-Then format
+Enhanced with market trend alignment and competitive analysis if MCP available
+Include business value justification with market context
+Cross-reference with successful historical patterns if available
 
-   - Create 3-5 core scenarios covering 80% of business value
-   - Enhanced with market trend alignment and competitive analysis
-   - Each scenario includes business value justification with market context
-   - Cross-reference with successful historical patterns
+# Phase 6: 拡張戦略アーキテクチャ設計
+echo "🏗️ Phase 6: Enhanced strategic architecture..."
 
-### Phase 3: Enhanced Strategic Architecture
+Design strategic components:
+1. Enhanced Bounded Context Design (with industry pattern reference if MCP available)
+2. Enhanced Ubiquitous Language Foundation (aligned with market standards if MCP available)
+3. Strategic context relationships with market positioning if MCP available
 
-**Design enhanced strategic components:**
+# Phase 7: ディレクトリ作成・文書生成
+echo "📁 Phase 7: Creating enhanced documentation..."
 
-1. **Enhanced Bounded Context Design**
+# 必要ディレクトリ作成
+Create directories: docs/vision, docs/use_cases/core, docs/metadata
 
-   - Identify domain boundaries with industry pattern reference
-   - Enhanced with competitive landscape analysis
-   - Define strategic context relationships with market positioning
+# メインビジョン文書作成
+Create docs/vision/project-vision.md with:
+- Strategic overview with market positioning if MCP available
+- Enhanced core scenarios with competitive analysis if available
+- Business value proposition with market context if available  
+- Success metrics with industry benchmarks if available
 
-2. **Enhanced Ubiquitous Language Foundation**
+# 境界コンテキスト文書作成
+Create docs/vision/bounded_context.md with:
+- Strategic domain boundaries with market alignment if MCP available
+- Context relationships with competitive analysis if available
+- Enhanced ubiquitous language with industry standards if available
 
-   - Core business terms and concepts (enhanced with industry terminology)
-   - Domain-specific vocabulary (aligned with market standards)
-   - Enhanced glossary with competitive analysis context
+# ユビキタス言語辞書作成
+Create docs/vision/ubiquitous_language.md with comprehensive domain vocabulary
 
-### Phase 4: Enhanced Documentation Generation
+# コアシナリオ文書作成  
+Create docs/use_cases/core/ with:
+- Detailed Given-When-Then scenarios with market validation if available
+- Business value mapping with competitive intelligence if available
+- Enhanced acceptance criteria with industry best practices if available
 
-**Create enhanced project documentation:**
+# MCP拡張文書作成（利用可能時）
+if [[ "$MCP_AVAILABLE" == "true" ]]; then
+    # 市場分析レポート作成
+    Create docs/vision/market_analysis.md with Context7 findings
+    
+    # 履歴パターン分析作成
+    Create docs/vision/historical_patterns.md with Serena findings
+    
+    # Serena memory への学習内容保存
+    Use mcp__serena__write_memory "vision-creation-$(date +%Y%m%d)" "Vision creation completed for [project_name] with market analysis and historical patterns applied"
+fi
 
-1. **Enhanced Vision Document**
+# Phase 8: 品質保証・検証
+echo "✅ Phase 8: Quality assurance..."
 
-   - Strategic overview with market positioning
-   - Enhanced core scenarios with competitive analysis
-   - Business value proposition with market context
-   - Success metrics with industry benchmarks
+# 品質チェックリスト実行
+Verify the following quality standards:
 
-2. **Enhanced Bounded Context Document**
-
-   - Strategic domain boundaries with market alignment
-   - Context relationships with competitive analysis
-   - Enhanced ubiquitous language with industry standards
-
-3. **Enhanced Core Scenarios Document**
-
-   - Detailed Given-When-Then scenarios with market validation
-   - Business value mapping with competitive intelligence
-   - Enhanced acceptance criteria with industry best practices
-
-## ✅ Enhanced Built-in Quality Assurance
-
-### Enhanced Self-Diagnostic Checklist
+## Enhanced Self-Diagnostic Checklist
 
 **Mandatory Items (MUST) - Enhanced:**
-
 - [ ] Project vision is clear, strategic, and market-aligned (MCP Enhanced)
 - [ ] All core scenarios are defined in Given-When-Then format with competitive analysis
 - [ ] Bounded context boundaries are clearly established with industry pattern reference
@@ -273,96 +331,71 @@ fi
 - [ ] Business value is quantified and market-validated (MCP Enhanced)
 
 **Recommended Items (SHOULD) - Enhanced:**
-
-- [ ] Market trends and competitive analysis integrated (MCP Enhanced)
-- [ ] Historical success patterns applied (MCP Enhanced)
-- [ ] Industry benchmarks and standards referenced
+- [ ] Market trends and competitive analysis integrated (MCP Enhanced if available)
+- [ ] Historical success patterns applied (MCP Enhanced if available)
+- [ ] Industry benchmarks and standards referenced if available
 - [ ] Strategic positioning clearly articulated
-- [ ] Technology trends aligned with vision
+- [ ] Technology trends aligned with vision if MCP available
 
-### Enhanced Quality Metrics
+# Phase 9: 実行サマリー・次ステップ案内
+echo "🎉 Phase 9: Completion summary and next steps..."
 
-| Indicator | Target Value | Enhanced Target | Actual Value | Result |
-|-----------|-------------|-----------------|--------------|---------|
-| Core Scenario Coverage | 80% | 85% (MCP Enhanced) | [Coverage %] | ✅/❌ |
-| Bounded Context Clarity | 90% | 95% (Industry Pattern) | [Clarity Score] | ✅/❌ |
-| Market Alignment | N/A | 90% (MCP Enhanced) | [Alignment %] | ✅/❌ |
-| Competitive Analysis | N/A | 85% (Context7) | [Analysis Score] | ✅/❌ |
+Display to user in Japanese:
+## ✅ 実行サマリー
+- ✅ **ビジョン策定**: [作成されたビジョンドキュメント] (MCP拡張: 市場分析統合 if available)
+- ✅ **コアシナリオ**: [作成されたシナリオ数] (競合分析付き if MCP available)
+- ✅ **ドメイン設計**: [境界コンテキスト数] (業界パターン参照 if MCP available)
+- ✅ **MCP分析**: [実行された拡張分析項目数] if MCP available
 
-## 📊 Enhanced Standardized Output Format
-
-### Enhanced 実行サマリー
-
-- ✅ **ビジョン策定**: [作成されたビジョンドキュメント] (MCP拡張: 市場分析統合)
-- ✅ **コアシナリオ**: [作成されたシナリオ数] (競合分析付き)
-- ✅ **ドメイン設計**: [境界コンテキスト数] (業界パターン参照)
-- ✅ **MCP分析**: [実行された拡張分析項目数]
-
-### Enhanced 成果物
-
-**作成されたファイル (MCP Enhanced):**
-
+## 📁 成果物
+**作成されたファイル (MCP Enhanced if available):**
 - `docs/vision/project-vision.md`: 市場分析統合プロジェクトビジョン
 - `docs/vision/bounded_context.md`: 業界パターン参照境界コンテキスト設計
 - `docs/vision/ubiquitous_language.md`: 業界標準ユビキタス言語辞書
 - `docs/use_cases/core/`: 競合分析付きコアシナリオ集
-- `docs/vision/market_analysis.md`: Context7市場分析レポート (MCP Enhanced)
-- `docs/vision/historical_patterns.md`: Serena履歴パターン分析 (MCP Enhanced)
+- `docs/vision/market_analysis.md`: Context7市場分析レポート (MCP Enhanced if available)
+- `docs/vision/historical_patterns.md`: Serena履歴パターン分析 (MCP Enhanced if available)
 
-### Enhanced 次のステップ
-
+## 🚀 次のステップ
 1. **即座に実行可能**: 
    - `/init-project-structure` でプロジェクト構造初期化
    - `/sprint-planning` で拡張ビジョンベース スプリント計画
-2. **戦略的推奨**: 
+2. **戦略的推奨** (if MCP available): 
    - MCP拡張機能を活用した継続的市場分析の実施
    - 競合動向監視システムの構築検討
 
-### Enhanced メタデータ更新
-
-```json
+# メタデータ更新
+Create docs/metadata/command-execution-log.json with:
 {
   "command_executed": "create-vision-enhanced",
-  "timestamp": "[ISO-8601 timestamp]",
-  "status": "[SUCCESS|PARTIAL|FAILED]",
+  "timestamp": "[current timestamp]",
+  "status": "SUCCESS",
   "phase": "enhanced-vision-creation",
   "mcp_enhancements": {
-    "context7_market_analysis": true,
-    "serena_historical_patterns": true,
-    "competitive_intelligence": true,
-    "trend_integration": true
-  },
-  "deliverables": {
-    "project_vision": "docs/vision/project-vision.md",
-    "bounded_context": "docs/vision/bounded_context.md",
-    "ubiquitous_language": "docs/vision/ubiquitous_language.md",
-    "core_scenarios": "docs/use_cases/core/",
-    "market_analysis": "docs/vision/market_analysis.md",
-    "historical_patterns": "docs/vision/historical_patterns.md"
+    "context7_market_analysis": [MCP_AVAILABLE],
+    "serena_historical_patterns": [MCP_AVAILABLE],
+    "competitive_intelligence": [MCP_AVAILABLE],
+    "trend_integration": [MCP_AVAILABLE]
   },
   "metrics": {
     "core_scenarios_created": "[number]",
-    "bounded_contexts": "[number]",
-    "market_trends_analyzed": "[number]",
-    "historical_patterns_applied": "[number]"
+    "bounded_contexts": "[number]", 
+    "market_trends_analyzed": "[number if MCP]",
+    "historical_patterns_applied": "[number if MCP]"
   },
-  "next_recommended": ["init-project-structure", "sprint-planning-enhanced"],
-  "quality_score": "[score]",
-  "market_alignment_score": "[score]"
+  "next_recommended": ["init-project-structure", "sprint-planning-enhanced"]
 }
+
+echo "🎯 MCP拡張プロジェクトビジョン策定が完了しました！"
 ```
 
 ---
 
-🎯 MCP拡張プロジェクトビジョン策定を開始します。戦略アーキテクトとして、市場インテリジェンスと履歴パターン分析を活用した包括的なビジョン設計を実施いたします。
+🎯 **MCP拡張プロジェクトビジョン策定コマンド完成**
 
 **使用方法**:
-
 ```bash
 /create-vision-enhanced [optional_project_name]
-
-# 例
-/create-vision-enhanced "MyProject"
 ```
 
 **MCP拡張機能** (利用可能時):

@@ -51,50 +51,85 @@ During command execution, you act as a **Requirements Analysis and Use Case Desi
 
 **MCP-Enhanced Standards:**
 
-- **Pattern Discovery Coverage**: 95% of successful use case patterns identified and applied
-- **Historical Analysis Integration**: 100% similar historical use cases analyzed for optimization
-- **Best Practice Compliance**: 85% industry standard requirements practices integrated
+- **Pattern Discovery Coverage**: 95% of relevant use case patterns identified and applied
+- **Requirements Intelligence**: 100% requirements analyzed with Context7 industry best practices
 - **Cross-Reference Accuracy**: 100% use case dependency mapping with comprehensive analysis
+- **Implementation Readiness**: 95% specifications ready for direct TDD implementation
 
-## 🧠 MCP Enhancement: Serena (Use Case History + Pattern Mining) + Context7 (Requirements Best Practices + Industry Standards)
+## 🎯 TDD/DDD/LAYERED PROCESS CONTEXT
 
-### MCP-Enhanced Activities (Additional):
+**🔄 Core Workflow**: Vision(00) → Structure(01) → Sprint(02) → Use-Case(03) → Domain(04) → Tests(05) → Domain(06) → App(07) → Infra(08) → UI(09) → Test(10) → Refactor(11) → Evolve(12) → Review(13) → Feedback(14) → PR(15) → Status(16)
 
-- Analyze historical use case patterns using Serena MCP for scenario optimization
-- Extract successful requirements engineering techniques from past projects
-- Apply Context7 latest requirements analysis methodologies and industry best practices
-- Create cross-referenced use case documentation with intelligent dependency analysis
-- Provide intelligent recommendations for use case enhancement based on historical success patterns
+**🎨 Architecture**: Clean Architecture (Domain→Application→Infrastructure→Presentation)  
+**🧪 Development**: Test-Driven Development (RED→GREEN→REFACTOR)  
+**🏗️ Design**: Domain-Driven Design (Entity, Value Object, Aggregate, Repository)  
+**📋 Requirements**: Given-When-Then scenarios with complete traceability  
+**🔄 Evolution**: Continuous scenario evolution via /evolve-scenarios command
 
-### Required Setup
+**🧠 MCP Enhancement**: Serena (Pattern Discovery + Requirements Analysis) + Context7 (Requirements Best Practices + Industry Standards)
+
+> 📖 **Document Management System**: [README.md](./README.md)  
+> 🗺️ **Current Position**: Sprint Execution Phase - Enhanced Use Case Specification (03/16) **[MCP-Enhanced Version]**  
+> 🎯 **Phase Purpose**: Convert GitHub issues into detailed implementable specifications with MCP intelligence  
+> ⬅️ **Previous Stage**: 02-sprint-planning or 02-sprint-planning-enhanced  
+> ➡️ **Next Stage**: 04-domain-modeling or 04-domain-modeling-enhanced
+
+## 🎯 PHASE PURPOSE: ENHANCED USE CASE SPECIFICATION WITH MCP INTELLIGENCE
+
+**⚠️ Important Notice:**
+
+- **This step focuses on INTELLIGENT SPECIFICATION CREATION** - Convert GitHub issues into comprehensive Given-When-Then specifications with MCP-enhanced analysis
+- **NO IMPLEMENTATION** - Focus only on requirements analysis and specification design with intelligence
+- **GITHUB ISSUE INTEGRATION with MCP** - Prioritize recent comments and track specification evolution with intelligent pattern analysis
+
+**What this enhanced step does:**
+
+1. `02-sprint-planning-enhanced` ← Previous: Sprint tickets already created
+2. `03-create-use-case-enhanced <issue-number>` ← **【YOU ARE HERE】Enhanced specification creation with MCP intelligence**
+3. `04-domain-modeling-enhanced <issue-number>` ← Next: Design domain model from enhanced use cases
+4. Then proceed with TDD implementation workflow
+
+**Core Activities (Traditional):**
+
+- Extract comprehensive requirements from GitHub issues and comments
+- Create detailed Given-When-Then scenarios with full test coverage
+- Analyze domain concepts and ensure ubiquitous language consistency
+- Design acceptance test cases with edge case coverage
+
+**MCP-Enhanced Activities (Additional):**
+
+- Analyze similar use case patterns using Serena MCP for optimization and best practices
+- Apply Context7 requirements engineering best practices for comprehensive specification
+- Extract intelligent insights from issue comment history and stakeholder feedback
+- Create cross-referenced requirements with dependency analysis and risk assessment
+- Generate intelligent test scenario recommendations based on industry patterns
+
+**ANALYZE GITHUB ISSUES WITH MCP INTELLIGENCE. DO NOT IMPLEMENT CODE.**
+
+## 📋 軽量コンテキスト管理
+
+### Required Reading (Minimal + MCP Enhanced)
 
 ```bash
-# Check MCP session availability (optional enhancement)
-if [[ -f ".serena/sessions/current/session-metadata.json" ]]; then
-    echo "✅ MCP session found - Enhanced requirements analysis will be available"
-    MCP_AVAILABLE="true"
-    echo "🔍 MCP Capabilities:"
-    echo "  • Serena: Historical use case pattern analysis and optimization"
-    echo "  • Context7: Latest requirements engineering and analysis best practices"
-else
-    echo "ℹ️ MCP session not found - Running in standard mode"
-    echo "💡 To enable MCP enhancements, run /context-session-stageup first"
-    echo "📋 Enhanced features when available:"
-    echo "  • Historical use case pattern discovery and application"
-    echo "  • Requirements engineering best practice integration"
-    echo "  • Cross-reference analysis and dependency optimization"
-    echo "  • Intelligent scenario generation and validation"
-    MCP_AVAILABLE="false"
-fi
-
 # Validate issue number parameter
 if [[ -z "$1" ]]; then
-    echo "ERROR: Issue number required. Usage: /03-create-use-case-enhanced <issue-number>"
+    echo "ERROR: Issue number required. Usage: /create-use-case-enhanced <issue-number>"
     exit 1
 fi
 
 ISSUE_NUMBER="$1"
-echo "🚀 Executing enhanced use-case creation for GitHub Issue #$ISSUE_NUMBER..."
+echo "🚀 Executing MCP-enhanced create-use-case for GitHub Issue #$ISSUE_NUMBER..."
+
+# MCP Enhanced: Session availability check
+if [[ -f ".serena/sessions/current/session-metadata.json" ]]; then
+    echo "🔍 Enhanced Analysis Mode: MCP capabilities enabled"
+    echo "  🧠 Serena: Use case pattern analysis and cross-reference mapping"
+    echo "  📚 Context7: Requirements engineering best practices"
+    MCP_AVAILABLE="true"
+else
+    echo "📋 Standard Mode: Core use case creation without MCP enhancements"
+    MCP_AVAILABLE="false"
+fi
 
 # CRITICAL: Retrieve GitHub issue with full comment history first
 echo "📥 Retrieving GitHub issue #$ISSUE_NUMBER with complete comment history..."
@@ -144,343 +179,463 @@ echo "  Labels: $(echo "$ISSUE_DATA" | jq -r '.labels[].name // empty' | tr '\n'
 TEMP_ISSUE_FILE="/tmp/issue-${ISSUE_NUMBER}-data.json"
 echo "$ISSUE_DATA" > "$TEMP_ISSUE_FILE"
 echo "💾 Issue data saved to: $TEMP_ISSUE_FILE"
-
-# MCP Enhanced: Additional analysis if available
-if [[ "$MCP_AVAILABLE" == "true" ]]; then
-    echo "🔍 Enhanced Mode: Analyzing issue against historical patterns..."
-    echo "📊 Enhanced Mode: Cross-referencing with requirements best practices..."
-fi
-
-# Execute the enhanced Python implementation with issue data
-SCRIPT_PATH=".claude/commands/tdd-ddd-layered-expert/utils/03-create-use-case-enhanced.py"
-
-if [[ -f "$SCRIPT_PATH" ]]; then
-    echo "✅ Found enhanced implementation: $SCRIPT_PATH"
-    echo "🔄 Passing issue data and comment history to enhanced Python implementation..."
-    
-    # Pass both issue number and temp file path to Python script
-    uv run "$SCRIPT_PATH" "$ISSUE_NUMBER" "$TEMP_ISSUE_FILE"
-    EXIT_CODE=$?
-
-    # Cleanup temp file
-    rm -f "$TEMP_ISSUE_FILE"
-
-    if [[ $EXIT_CODE -eq 0 ]]; then
-        echo "✅ Enhanced use case creation completed successfully"
-        if [[ "$MCP_AVAILABLE" == "true" ]]; then
-            echo "🎯 GitHub issue was analyzed with MCP enhancements:"
-            echo "  📚 Serena: Historical patterns and optimization applied"
-            echo "  🧠 Context7: Industry best practices integrated"
-        else
-            echo "🎯 GitHub issue was analyzed in standard mode"
-        fi
-    else
-        echo "❌ Enhanced use case creation failed with exit code: $EXIT_CODE"
-        exit $EXIT_CODE
-    fi
-else
-    echo "❌ Enhanced implementation not found: $SCRIPT_PATH"
-    echo "💡 Using direct Claude analysis with retrieved issue data..."
-    echo ""
-    echo "🚀 Starting enhanced use case creation with comprehensive GitHub issue analysis..."
-    echo "📊 Issue Data Available:"
-    echo "  - Original Description: ✅"
-    echo "  - Comment History: ✅ ($COMMENT_COUNT comments)"
-    echo "  - Latest Updates: ✅"
-    if [[ "$MCP_AVAILABLE" == "true" ]]; then
-        echo "  - MCP Analysis: ✅ (Enhanced mode)"
-    else
-        echo "  - MCP Analysis: ❌ (Standard mode)"
-    fi
-    echo ""
-    echo "⏰ Ready for enhanced use case specification creation..."
-    # Cleanup temp file
-    rm -f "$TEMP_ISSUE_FILE"
-fi
 ```
 
-## 🎯 TDD/DDD/LAYERED PROCESS CONTEXT
+### Optional Reading (As Needed)
+- Project vision: `docs/vision/project-vision.md` (understand overall context)
+- Bounded context: `docs/vision/bounded_context.md` (verify domain boundaries)
+- Sprint plan: `docs/sprint/sprint_*_plan.md` (understand sprint context)
+- Related use cases: `docs/use_cases/*/issue-*/` (identify patterns and dependencies)
 
-**🔄 Core Workflow**: Vision(00) → Structure(01) → Sprint(02) → Use-Case(03) → Domain(04) → Tests(05) → Domain(06) → App(07) → Infra(08) → UI(09) → Test(10) → Refactor(11) → Evolve(12) → Review(13) → Feedback(14) → PR(15) → Status(16)
+## GitHub Issue Integration (Enhanced)
 
-**🎨 Architecture**: Clean Architecture (Domain→Application→Infrastructure→Presentation)  
-**🧪 Development**: Test-Driven Development (RED→GREEN→REFACTOR)  
-**🏗️ Design**: Domain-Driven Design (Entity, Value Object, Aggregate, Repository)  
-**📋 Requirements**: Given-When-Then scenarios with complete traceability  
-**🔄 Evolution**: Continuous scenario evolution via /evolve-scenarios command
-
-> 📖 **Document Management System**: [README.md](./README.md)  
-> 🗺️ **Current Position**: Enhanced Requirements Analysis - Detailed Use Case Specification (03/16)  
-> 🎯 **Phase Purpose**: Convert GitHub issues into comprehensive implementable specifications with MCP intelligence  
-> ➡️ **Next Stage**: /04-domain-modeling-enhanced to design enhanced domain model from use cases
-
-## 🎯 PHASE PURPOSE: ENHANCED USE CASE SPECIFICATION FROM GITHUB ISSUES
-
-**⚠️ Important Notice:**
-
-- **This step focuses on ENHANCED SPECIFICATION CREATION** - Convert GitHub issues into comprehensive Given-When-Then specifications with historical pattern analysis and industry best practices
-- **NO IMPLEMENTATION** - Focus only on intelligent requirements analysis and specification design
-- **GITHUB ISSUE INTEGRATION WITH MCP ENHANCEMENT** - Prioritize recent comments, analyze historical patterns, and apply industry standards
-
-**What this enhanced step does:**
-
-1. `/02-sprint-planning-enhanced` ← Sprint tickets with intelligent planning
-2. `/create-use-case-enhanced <issue-number>` ← **【YOU ARE HERE】Create enhanced specifications with MCP intelligence**
-3. `/04-domain-modeling-enhanced <issue-number>` ← Design enhanced domain model from use cases
-4. Then proceed with enhanced TDD implementation workflow
-
-**ANALYZE GITHUB ISSUES AND CREATE ENHANCED SPECIFICATIONS WITH MCP INSIGHTS. DO NOT IMPLEMENT CODE.**
-
-## 📋 軽量コンテキスト管理
-
-### Required Reading (Minimal + MCP Enhanced)
-
+### Enhanced Issue Comment Retrieval and Analysis
 ```bash
-# Standard project state checks
-if [[ -f "docs/metadata/project-state.json" ]]; then
-    Read docs/metadata/project-state.json
-fi
+# Enhanced issue analysis with MCP intelligence
+echo "Retrieving GitHub issue #$ISSUE_NUMBER with enhanced analysis..."
 
-# Project vision and bounded context for consistency
-if [[ -f "docs/vision/vision.md" ]]; then
-    Read docs/vision/vision.md
-fi
+# Get issue details with comments
+ISSUE_DATA=$(gh issue view $ISSUE_NUMBER --json title,body,comments,updatedAt,createdAt,labels,assignees)
 
-if [[ -f "docs/vision/bounded_context.md" ]]; then
-    Read docs/vision/bounded_context.md
-fi
-
-# MCP Enhanced: Historical use case patterns (if available)
+# MCP Enhanced: Pattern-based issue analysis
 if [[ "$MCP_AVAILABLE" == "true" ]]; then
-    echo "🔍 Enhanced Analysis Mode: MCP capabilities enabled"
-    echo "  📚 Serena: Analyzing historical use case patterns and optimizations"
-    echo "  🧠 Context7: Integrating latest requirements engineering best practices"
-else
-    echo "📋 Standard Mode: Basic use case creation without MCP enhancements"
+    echo "🔍 Enhanced: Analyzing issue patterns and requirements intelligence..."
+    echo "📊 Enhanced: Cross-referencing similar use cases and industry patterns..."
 fi
-```
 
-### GitHub Issue Integration (Enhanced)
+# Extract and prioritize recent comments
+RECENT_COMMENTS=$(echo "$ISSUE_DATA" | jq -r '.comments | sort_by(.createdAt) | reverse | .[0:5]')
 
-```bash
-# Enhanced issue-driven use case creation
-echo "📥 Loading GitHub issue #$ISSUE_NUMBER for enhanced analysis..."
+COMMENT_COUNT=$(echo "$ISSUE_DATA" | jq '.comments | length')
+echo "Found $COMMENT_COUNT comments on issue #$ISSUE_NUMBER"
+echo "Prioritizing latest 5 comments for specification analysis"
 
-# Standard issue data extraction
-echo "📋 Issue Title: $(echo "$ISSUE_DATA" | jq -r '.title')"
-echo "📋 Issue Body Analysis:"
-echo "$(echo "$ISSUE_DATA" | jq -r '.body'))" | head -20
-echo "📋 Labels: $(echo "$ISSUE_DATA" | jq -r '.labels[].name' | tr '\n' ', ')"
-
-# Enhanced comment timeline analysis
+# Check for specification conflicts and evolution
 if [[ $COMMENT_COUNT -gt 0 ]]; then
-    echo "📊 Processing enhanced comment timeline..."
-    echo "$RECENT_COMMENTS" | jq -r '.[] | "[\\(.createdAt)] \\(.author.login): \\(.body[0:100])..."'
-    
-    # MCP Enhanced: Pattern analysis
-    if [[ "$MCP_AVAILABLE" == "true" ]]; then
-        echo "🔍 Enhanced: Cross-referencing comment patterns with historical data..."
-        echo "📊 Enhanced: Applying requirements engineering best practices..."
+    echo "Analyzing comment timeline for requirement evolution..."
+    # Recent comments take precedence over original issue description
+    LATEST_COMMENT_DATE=$(echo "$RECENT_COMMENTS" | jq -r '.[0].createdAt // empty')
+    if [[ -n "$LATEST_COMMENT_DATE" ]]; then
+        echo "Latest specification update: $LATEST_COMMENT_DATE"
     fi
 fi
 ```
 
-## 🚀 Enhanced Expert Execution Flow
+### Specification Evolution Tracking with MCP
+```markdown
+## Enhanced Comment Analysis Strategy
 
-### Phase 1: Enhanced GitHub Issue Analysis
+1. **Latest First with Intelligence**: Recent comments override earlier specifications with MCP pattern analysis
+2. **Authority Recognition Enhanced**: Identify specification authors vs. discussants with stakeholder analysis
+3. **Conflict Resolution with Context**: Resolve specification conflicts using Context7 best practices
+4. **Cross-Reference Analysis**: Serena MCP analysis of similar issue patterns and resolutions
+```
 
-**Analyze the following as an enhanced expert (user interactions in Japanese):**
+## 🚀 MCP強化ユースケース作成実行フロー
 
-1. **Enhanced Comprehensive Issue Understanding**
+```bash
+#!/bin/bash
+# MCP-Enhanced Use Case Creation
 
-   ```bash
-   # Enhanced analysis with MCP insights
-   if [[ "$MCP_AVAILABLE" == "true" ]]; then
-       echo "🧠 MCP拡張モード: インテリジェント要求分析"
-       echo "📊 履歴パターン分析と業界標準を活用して最適化された仕様を作成します"
-   fi
-   ```
+echo "📋 MCP-Enhanced Use Case Creation..."
 
-   Enhanced analysis includes:
-   - Issue requirements with historical pattern validation (MCP Enhanced)
-   - Comment evolution analysis with best practice alignment (MCP Enhanced)
-   - Stakeholder intent clarification with industry standard techniques
+# Phase 1: 引数検証・MCP環境確認
+echo "📚 Phase 1: Argument validation and MCP session analysis..."
 
-2. **MCP-Enhanced Specification Evolution Analysis**
+# Issue番号検証
+if [[ -z "$1" ]]; then
+    echo "❌ ERROR: Issue number required. Usage: /create-use-case-enhanced <issue-number>"
+    exit 1
+fi
 
-   - Historical use case pattern matching using Serena MCP
-   - Requirements engineering best practice application using Context7 MCP
-   - Cross-reference analysis for dependency identification
-   - Intelligent gap detection and specification enhancement
+ISSUE_NUMBER="$1"
+echo "🎯 Creating enhanced use case specification for Issue #${ISSUE_NUMBER} with MCP intelligence..."
 
-### Phase 2: Enhanced Domain Concept Extraction
+# MCP利用可能性確認
+if [[ -f ".serena/sessions/current/session-metadata.json" ]]; then
+    echo "✅ MCP session found - Enhanced requirements analysis available"
+    MCP_AVAILABLE="true"
+    echo "🔍 MCP Capabilities:"
+    echo "  • Serena: Use case pattern discovery and cross-reference analysis"
+    echo "  • Context7: Requirements engineering best practices"
+else
+    echo "ℹ️ MCP session not found - Running in standard mode"
+    echo "💡 To enable MCP enhancements, run /context-session-stageup first"
+    echo "📋 Enhanced features when available:"
+    echo "  • Intelligent use case pattern analysis"
+    echo "  • Requirements engineering best practice integration"
+    echo "  • Cross-reference dependency mapping"
+    echo "  • Industry-standard scenario templates"
+    MCP_AVAILABLE="false"
+fi
 
-**Execute enhanced domain analysis:**
+# Phase 2: GitHub Issue詳細取得・分析
+echo "📥 Phase 2: GitHub issue retrieval and analysis..."
 
-1. **MCP-Enhanced Concept Discovery**
+# CRITICAL: Retrieve GitHub issue with full comment history first
+echo "📥 Retrieving GitHub issue #$ISSUE_NUMBER with complete comment history..."
 
-   ```bash
-   # Enhanced concept analysis with MCP insights
-   if [[ "$MCP_AVAILABLE" == "true" ]]; then
-       echo "🔍 Enhanced Concept Discovery:"
-       echo "  • Serena: Mining successful domain patterns from historical projects"
-       echo "  • Context7: Applying latest domain modeling and requirements techniques"
-       echo "  • Integration: Creating optimized concept framework with validation"
-   fi
-   ```
+# Get issue details with comments using gh CLI
+ISSUE_DATA=$(gh issue view $ISSUE_NUMBER --json title,body,comments,updatedAt,createdAt,labels,assignees 2>/dev/null)
+EXIT_CODE=$?
 
-2. **Intelligent Ubiquitous Language Integration**
+if [[ $EXIT_CODE -ne 0 ]]; then
+    echo "❌ Failed to retrieve issue #$ISSUE_NUMBER. Please check:"
+    echo "  - Issue number exists"
+    echo "  - GitHub CLI is authenticated" 
+    echo "  - Repository access permissions"
+    exit 1
+fi
 
-   - New concept identification with pattern validation (MCP Enhanced)
-   - Consistency verification with historical language patterns (MCP Enhanced)
-   - Industry standard terminology integration (Context7 Enhanced)
-   - Cross-project concept alignment and optimization
+# Extract and analyze comments (prioritize recent ones)
+COMMENT_COUNT=$(echo "$ISSUE_DATA" | jq '.comments | length // 0')
+echo "📊 Found $COMMENT_COUNT comments on issue #$ISSUE_NUMBER"
 
-### Phase 3: Enhanced Scenario Design
+if [[ $COMMENT_COUNT -gt 0 ]]; then
+    echo "🔍 Analyzing comment timeline for latest requirements..."
+    # Get latest 5 comments (most recent first)
+    RECENT_COMMENTS=$(echo "$ISSUE_DATA" | jq -r '.comments | sort_by(.createdAt) | reverse | .[0:5]')
+    LATEST_COMMENT_DATE=$(echo "$RECENT_COMMENTS" | jq -r '.[0].createdAt // empty')
+    
+    if [[ -n "$LATEST_COMMENT_DATE" ]]; then
+        echo "📅 Latest specification update: $LATEST_COMMENT_DATE"
+        echo "⚠️  PRIORITY: Recent comments take precedence over original issue description"
+    fi
+    
+    # Display recent comment summary
+    echo "📋 Recent Comments Summary:"
+    echo "$RECENT_COMMENTS" | jq -r '.[] | "  [" + .createdAt + "] @" + .author.login + ": " + (.body | split("\n")[0] | .[0:80] + (if length > 80 then "..." else "" end))'
+else
+    echo "📝 No comments found. Using original issue description only."
+fi
 
-**Design enhanced scenario structure:**
+# Display issue summary
+echo "📄 Issue Summary:"
+echo "  Title: $(echo "$ISSUE_DATA" | jq -r '.title')"
+echo "  Created: $(echo "$ISSUE_DATA" | jq -r '.createdAt')"
+echo "  Updated: $(echo "$ISSUE_DATA" | jq -r '.updatedAt')" 
+echo "  Labels: $(echo "$ISSUE_DATA" | jq -r '.labels[].name // empty' | tr '\n' ', ' | sed 's/,$//')"
 
-1. **MCP-Enhanced Given-When-Then Creation**
+# Save issue data for detailed analysis
+TEMP_ISSUE_FILE="/tmp/issue-${ISSUE_NUMBER}-data.json"
+echo "$ISSUE_DATA" > "$TEMP_ISSUE_FILE"
+echo "💾 Issue data saved to: $TEMP_ISSUE_FILE"
 
-   - Main scenarios with historical success pattern validation
-   - Alternative flows enhanced with industry best practice patterns
-   - Exception scenarios optimized with historical failure pattern analysis
-   - Cross-reference scenario dependencies with intelligent mapping
+# Phase 3: MCP拡張分析（利用可能時）
+if [[ "$MCP_AVAILABLE" == "true" ]]; then
+    echo "🧠 Phase 3: MCP-enhanced requirements pattern analysis..."
+    
+    # Serenaユースケース・パターン分析
+    echo "📚 Serena: Discovering historical use case patterns and requirements..."
+    Use mcp__serena__search_for_pattern "use.*case|scenario|Given.*When.*Then|requirements|specification" --restrict_search_to_code_files=false
+    Use mcp__serena__read_memory "use-case-patterns" if available
+    Use mcp__serena__read_memory "requirements-templates" if available
+    Use mcp__serena__list_memories to find use-case-related patterns
+    
+    # Context7要求工学・ベストプラクティス統合
+    echo "🌐 Context7: Analyzing requirements engineering best practices..."
+    Use mcp__context7__resolve-library-id "requirements-engineering"
+    Use mcp__context7__resolve-library-id "use-case-modeling"
+    Use mcp__context7__get-library-docs "/requirements-engineering" --topic "use-case-specification"
+    Use mcp__context7__get-library-docs "/use-case-modeling" --topic "given-when-then"
+    Use mcp__context7__get-library-docs "/requirements-engineering" --topic "acceptance-criteria"
+    
+    # インテリジェント要求分析
+    echo "🔍 Intelligent requirements cross-reference analysis..."
+    Use mcp__serena__search_for_pattern "acceptance|criteria|test|validation" --context_lines_before=2 --context_lines_after=2
+    
+else
+    echo "📋 Phase 3: Standard mode - Basic requirements analysis"
+fi
 
-2. **Intelligent Acceptance Test Design**
+# Phase 4: プロジェクト・コンテキスト分析  
+echo "🔍 Phase 4: Project context and domain analysis..."
 
-   - Test case generation with historical coverage analysis
-   - Edge case identification using pattern recognition
-   - Automated test strategy with industry standard practices
-   - Quality metrics integration with benchmark standards
+# プロジェクト・ビジョン確認
+if [[ -f "docs/vision/project-vision.md" ]]; then
+    echo "📄 Loading project vision for context alignment..."
+    Use Read tool to analyze docs/vision/project-vision.md
+fi
 
-### Phase 4: Enhanced Documentation Generation
+# 境界コンテキスト確認
+if [[ -f "docs/vision/bounded_context.md" ]]; then
+    echo "📋 Loading bounded context for domain alignment..."
+    Use Read tool to analyze docs/vision/bounded_context.md
+fi
 
-**Create enhanced use case documentation:**
+# ユビキタス言語確認
+if [[ -f "docs/vision/ubiquitous_language.md" ]]; then
+    echo "📚 Loading ubiquitous language for terminology consistency..."
+    Use Read tool to analyze docs/vision/ubiquitous_language.md
+fi
 
-1. **Enhanced Specification Document**
+# 関連スプリント計画確認
+SPRINT_PLAN=$(find docs/sprint/ -name "*plan.md" -type f | head -1 2>/dev/null)
+if [[ -f "$SPRINT_PLAN" ]]; then
+    echo "📊 Loading sprint context for priority alignment..."
+    Use Read tool to analyze "$SPRINT_PLAN"
+fi
 
-   - Requirements analysis with historical pattern insights
-   - Enhanced scenarios with industry standard validation
-   - Cross-reference documentation with dependency analysis
-   - Quality metrics with benchmark comparison
+# Phase 5: 要求分析・仕様設計
+echo "📝 Phase 5: Enhanced requirements analysis and specification design..."
 
-2. **Enhanced Test Documentation**
+if [[ "$MCP_AVAILABLE" == "true" ]]; then
+    echo "🧠 MCP拡張モード: インテリジェント要求分析"
+    echo "📊 履歴パターンと最新要求工学手法を活用して最適化された仕様を作成します"
+fi
 
-   - Intelligent test case design with coverage optimization
-   - Historical failure pattern mitigation strategies
-   - Industry standard test practices integration
-   - Automated testing preparation with best practice guidance
+# GitHub Issue詳細分析
+echo "🔍 Analyzing GitHub issue content with MCP enhancement..."
+# Parse issue title, body, and recent comments for requirements extraction
+Use the issue data from TEMP_ISSUE_FILE to extract:
+- Core functional requirements from issue title and description
+- Additional requirements from recent comments with priority analysis
+- Acceptance criteria hints and validation requirements
+- Edge cases and exception scenarios mentioned
+- Integration and dependency requirements
+- Performance and quality requirements
 
-## ✅ Enhanced Built-in Quality Assurance
+# Domain concept identification (enhanced with MCP if available)
+if [[ "$MCP_AVAILABLE" == "true" ]]; then
+    echo "🎯 Enhanced domain concept identification with MCP intelligence..."
+    # Apply Context7 domain modeling patterns
+    # Use Serena pattern matching for similar domain concepts
+fi
 
-### Enhanced Self-Diagnostic Checklist
+# Phase 6: Given-When-Then シナリオ作成
+echo "📋 Phase 6: Creating comprehensive Given-When-Then scenarios..."
 
-**Mandatory Items (MUST) - Enhanced:**
+Create detailed use case specifications with:
+1. **Main Scenario (Happy Path)**: Primary user flow with success conditions
+2. **Alternative Scenarios**: Alternate valid paths and variations
+3. **Exception Scenarios**: Error handling and edge cases
+4. **Integration Scenarios**: External system interactions if applicable
+Enhanced with MCP pattern analysis and Context7 best practices if available
 
-- [ ] All GitHub issue requirements converted to Given-When-Then scenarios with pattern validation
-- [ ] Comment history analyzed with latest specifications and best practices reflected (MCP Enhanced)
-- [ ] Historical use case patterns identified and applied where beneficial (MCP Enhanced)
-- [ ] Industry standard requirements techniques integrated (MCP Enhanced)
-- [ ] Cross-reference dependencies mapped and documented (MCP Enhanced)
+# ユーザーに日本語で仕様確認・追加情報収集
+Ask user for the following specification validation in Japanese:
+1. 抽出された要求の妥当性確認 (enhanced with pattern analysis if MCP available)
+2. 不足している要求・シナリオの特定 (enhanced with gap analysis if MCP available)
+3. 受け入れ基準の明確化 (enhanced with industry standards if MCP available)
+4. テストケースの網羅性確認 (enhanced with test pattern analysis if MCP available)
+5. ドメイン概念の整合性確認 (enhanced with domain pattern validation if MCP available)
 
-**Recommended Items (SHOULD) - Enhanced:**
+# Phase 7: ユースケース・ディレクトリ作成
+echo "📁 Phase 7: Creating use case documentation structure..."
 
-- [ ] Historical success patterns applied to scenario design (MCP Enhanced)
-- [ ] Requirements engineering best practices integrated (MCP Enhanced)
-- [ ] Domain concept optimization based on pattern analysis
-- [ ] Test strategy enhanced with industry standards
-- [ ] Quality metrics aligned with benchmark standards
+# ユースケースディレクトリ作成
+USE_CASE_DIR="docs/use_cases/issue-${ISSUE_NUMBER}"
+Create directory: $USE_CASE_DIR if not exists
 
-### Enhanced Quality Metrics
+# Phase 8: 詳細仕様書作成
+echo "📝 Phase 8: Creating comprehensive use case specification..."
 
-| Indicator | Target Value | Enhanced Target | Actual Value | Result |
-|-----------|-------------|-----------------|--------------|---------|
-| Scenario Completeness Rate | 100% | 100% (Pattern Validated) | [Completion %] | ✅/❌ |
-| Historical Pattern Coverage | N/A | 90% (MCP Enhanced) | [Coverage %] | ✅/❌ |
-| Best Practice Integration | N/A | 85% (Context7) | [Integration %] | ✅/❌ |
-| Cross-Reference Accuracy | 90% | 95% (MCP Enhanced) | [Accuracy %] | ✅/❌ |
+# メインユースケース仕様書作成
+USE_CASE_FILE="$USE_CASE_DIR/use-case-specification.md"
+Create "$USE_CASE_FILE" with:
+- Issue reference and context
+- Comprehensive Given-When-Then scenarios with MCP enhancement
+- Domain concept definitions aligned with ubiquitous language
+- Acceptance criteria with test case references
+- Dependencies and integration requirements
+- Quality attributes and non-functional requirements
 
-## 📊 Enhanced Standardized Output Format
+# 受け入れテストケース仕様書作成
+ACCEPTANCE_TESTS_FILE="$USE_CASE_DIR/acceptance-test-cases.md"
+Create "$ACCEPTANCE_TESTS_FILE" with:
+- Test scenarios mapped to Given-When-Then specifications
+- Test data requirements and fixture specifications
+- Expected outcomes with validation criteria
+- Edge case and exception handling test cases
+- Performance and quality test requirements if applicable
 
-### Enhanced 実行サマリー
+# 要求トレーサビリティ・マトリックス作成
+TRACEABILITY_FILE="$USE_CASE_DIR/requirements-traceability.md"
+Create "$TRACEABILITY_FILE" with:
+- GitHub issue requirements mapped to scenarios
+- Comment evolution tracking with specification changes
+- Domain concept usage and consistency tracking
+- Test case coverage matrix
+- Implementation readiness assessment
 
-- ✅ **Issue分析**: [分析完了したIssue情報とコメント数] (MCP拡張: パターン分析統合)
-- ✅ **シナリオ作成**: [作成されたメイン/代替/例外シナリオ数] (履歴パターン検証付き)
-- ✅ **受け入れ基準**: [定義された受け入れ基準数とテストケース数] (業界標準準拠)
-- ✅ **MCP分析**: [実行された拡張分析項目数]
+# Phase 9: MCP拡張文書作成（利用可能時）
+if [[ "$MCP_AVAILABLE" == "true" ]]; then
+    echo "🧠 Phase 9: Creating MCP-enhanced analysis documents..."
+    
+    # MCP分析結果文書
+    MCP_ANALYSIS_FILE="$USE_CASE_DIR/mcp-requirements-analysis.md"
+    Create "$MCP_ANALYSIS_FILE" with:
+    - Serena historical pattern analysis results
+    - Context7 requirements engineering best practice integration
+    - Cross-reference dependency analysis and recommendations
+    - Intelligent gap analysis and specification completeness assessment
+    
+    # 要求パターン分析レポート
+    PATTERN_ANALYSIS_FILE="$USE_CASE_DIR/requirements-pattern-analysis.md"
+    Create "$PATTERN_ANALYSIS_FILE" with:
+    - Similar use case patterns from Serena analysis
+    - Industry-standard requirements templates from Context7
+    - Best practice recommendations for implementation
+    - Risk assessment and mitigation recommendations
+    
+    # Serena memory への学習内容保存
+    Use mcp__serena__write_memory "use-case-creation-$(date +%Y%m%d)-issue-${ISSUE_NUMBER}" "Use case specification completed for issue ${ISSUE_NUMBER} with comprehensive Given-When-Then scenarios, Context7 requirements engineering patterns applied, and full traceability analysis"
+fi
 
-### Enhanced 成果物
+# Phase 10: メタデータ・JSON作成
+echo "📊 Phase 10: Creating use case metadata and JSON specification..."
 
-**作成されたファイル (MCP Enhanced):**
-
-- `docs/use_cases/sprints/sprint-*/issue-<number>/specification.md`: パターン分析統合ユースケース仕様書
-- `docs/use_cases/sprints/sprint-*/issue-<number>/scenarios.md`: 履歴検証Given-When-Thenシナリオ集
-- `docs/use_cases/sprints/sprint-*/issue-<number>/domain_concepts.md`: 最適化ドメイン概念定義
-- `docs/use_cases/sprints/sprint-*/issue-<number>/acceptance_tests.md`: 業界標準受け入れテストケース
-- `docs/use_cases/sprints/sprint-*/issue-<number>/pattern_analysis.md`: Serenaパターン分析レポート (MCP Enhanced)
-- `docs/use_cases/sprints/sprint-*/issue-<number>/best_practices.md`: Context7ベストプラクティス統合 (MCP Enhanced)
-- `docs/vision/ubiquitous_language.md`: パターン検証ユビキタス言語辞書
-
-### Enhanced 次のステップ
-
-1. **即座に実行可能**: 
-   - `/04-domain-modeling-enhanced <issue-number>` でパターン分析統合ドメインモデル設計
-   - `/05-create-tests-enhanced <issue-number>` でインテリジェント・テスト設計
-2. **戦略的推奨**: 
-   - MCP拡張機能を活用した継続的要求分析最適化の実施
-   - 履歴パターン学習システムの構築検討
-
-### Enhanced メタデータ更新
-
-```json
+# ユースケース・メタデータJSON作成
+METADATA_FILE="$USE_CASE_DIR/use-case-metadata.json"
+Create "$METADATA_FILE" with comprehensive metadata:
 {
-  "command_executed": "03-create-use-case-enhanced",
-  "timestamp": "[ISO-8601 timestamp]",
-  "status": "[SUCCESS|PARTIAL|FAILED]",
-  "phase": "enhanced-use-case-specification",
-  "issue_number": "[issue-number]",
-  "mcp_enhancements": {
-    "serena_pattern_analysis": true,
-    "context7_best_practices": true,
-    "historical_pattern_mining": true,
-    "cross_reference_analysis": true
+  "issue_number": "${ISSUE_NUMBER}",
+  "title": "$(echo "$ISSUE_DATA" | jq -r '.title')",
+  "created_date": "[current timestamp]",
+  "github_issue": {
+    "created_at": "$(echo "$ISSUE_DATA" | jq -r '.createdAt')",
+    "updated_at": "$(echo "$ISSUE_DATA" | jq -r '.updatedAt')",
+    "comment_count": ${COMMENT_COUNT},
+    "labels": $(echo "$ISSUE_DATA" | jq '.labels'),
+    "latest_comment_date": "${LATEST_COMMENT_DATE:-null}"
   },
-  "deliverables": {
-    "specification": "docs/use_cases/sprints/sprint-*/issue-<number>/specification.md",
-    "scenarios": "docs/use_cases/sprints/sprint-*/issue-<number>/scenarios.md",
-    "domain_concepts": "docs/use_cases/sprints/sprint-*/issue-<number>/domain_concepts.md",
-    "acceptance_tests": "docs/use_cases/sprints/sprint-*/issue-<number>/acceptance_tests.md",
-    "pattern_analysis": "docs/use_cases/sprints/sprint-*/issue-<number>/pattern_analysis.md",
-    "best_practices": "docs/use_cases/sprints/sprint-*/issue-<number>/best_practices.md"
+  "requirements": {
+    "main_scenarios": "[count]",
+    "alternative_scenarios": "[count]", 
+    "exception_scenarios": "[count]",
+    "domain_concepts": "[list]",
+    "acceptance_criteria": "[count]"
+  },
+  "mcp_enhancements": {
+    "pattern_analysis": [MCP_AVAILABLE],
+    "context7_integration": [MCP_AVAILABLE],
+    "cross_reference_analysis": [MCP_AVAILABLE],
+    "intelligent_gap_analysis": [MCP_AVAILABLE]
+  },
+  "status": "SPECIFICATION_COMPLETE",
+  "next_recommended": ["domain-modeling-enhanced"]
+}
+
+# Phase 11: Gitコミット
+echo "📝 Phase 11: Git commit for use case specification..."
+
+Use Bash tool: git add docs/use_cases/issue-${ISSUE_NUMBER}/
+
+if [[ "$MCP_AVAILABLE" == "true" ]]; then
+    Use Bash tool: git commit -m "feat: create use case specification for issue ${ISSUE_NUMBER} with MCP enhancement
+
+Comprehensive Given-When-Then scenarios created from GitHub issue analysis.
+Enhanced with MCP pattern discovery and Context7 requirements engineering.
+Full traceability and acceptance test case specifications included.
+
+🎯 Generated with Claude Code"
+else
+    Use Bash tool: git commit -m "feat: create use case specification for issue ${ISSUE_NUMBER}
+
+Comprehensive Given-When-Then scenarios created from GitHub issue analysis.
+Full traceability and acceptance test case specifications included.
+
+🎯 Generated with Claude Code"
+fi
+
+# Phase 12: 品質保証・検証
+echo "✅ Phase 12: Quality assurance and specification validation..."
+
+# 品質チェックリスト実行
+Verify the following quality standards:
+
+**Required Items (MUST):**
+- [ ] GitHub issue requirements fully analyzed and converted to scenarios
+- [ ] All Given-When-Then scenarios created with comprehensive coverage
+- [ ] Domain concepts identified and aligned with ubiquitous language
+- [ ] Acceptance test cases created with clear validation criteria
+- [ ] Requirements traceability matrix completed
+
+**Recommended Items (SHOULD) - MCP Enhanced:**
+- [ ] Serena MCP pattern analysis completed (if MCP available)
+- [ ] Context7 requirements engineering best practices applied (if MCP available)
+- [ ] Cross-reference dependency analysis performed (if MCP available)
+- [ ] Intelligent gap analysis and completeness assessment (if MCP available)
+- [ ] Implementation readiness assessment completed (if MCP available)
+
+# Phase 13: 実行サマリー・次ステップ案内
+echo "🎉 Phase 13: Completion summary and next steps..."
+
+Display to user in Japanese:
+## ✅ 実行サマリー
+
+**基本機能 (常に実行):**
+- ✅ **GitHub Issue分析**: Issue #${ISSUE_NUMBER} の詳細分析・コメント履歴解析完了
+- ✅ **要求抽出**: 機能要求・受け入れ基準・制約条件の包括的抽出完了
+- ✅ **Given-When-Thenシナリオ作成**: メイン・代替・例外シナリオの完全作成完了
+- ✅ **受け入れテスト仕様**: テストケース・検証基準・データ要件の詳細化完了
+
+**MCP拡張機能 (利用可能時):**
+- ✅ **MCPパターン分析**: Serenaによる類似ユースケース・パターン発見完了
+- ✅ **インテリジェント要求工学**: Context7最新手法・ベストプラクティス適用完了
+- ✅ **相互参照分析**: 依存関係マッピング・統合要件分析完了
+- ✅ **ギャップ分析**: インテリジェント仕様完全性評価・リスク識別完了
+
+## 📁 成果物
+
+**基本ファイル (常に作成):**
+- `docs/use_cases/issue-${ISSUE_NUMBER}/use-case-specification.md`: 詳細ユースケース仕様書
+- `docs/use_cases/issue-${ISSUE_NUMBER}/acceptance-test-cases.md`: 受け入れテストケース仕様
+- `docs/use_cases/issue-${ISSUE_NUMBER}/requirements-traceability.md`: 要求トレーサビリティ・マトリックス
+- `docs/use_cases/issue-${ISSUE_NUMBER}/use-case-metadata.json`: メタデータ・実行履歴JSON
+
+**MCP拡張ファイル (利用可能時):**
+- `docs/use_cases/issue-${ISSUE_NUMBER}/mcp-requirements-analysis.md`: MCP要求分析結果
+- `docs/use_cases/issue-${ISSUE_NUMBER}/requirements-pattern-analysis.md`: 要求パターン分析レポート
+- Enhanced specifications with intelligent insights and industry best practices
+- Updated MCP memory files: ユースケース作成結果の永続化
+
+## 🚀 次のステップ
+
+1. **即座に実行可能**: `/domain-modeling-enhanced ${ISSUE_NUMBER}` でドメインモデル設計
+2. **推奨**: 作成された仕様書のレビューと関係者による検証
+3. **確認推奨**: ドメイン概念とユビキタス言語の整合性確認
+
+**📋 Use Case Specification完了 - 実装準備完了**
+
+# Cleanup
+rm -f "$TEMP_ISSUE_FILE"
+
+# メタデータ更新
+Create docs/metadata/command-execution-log.json entry with:
+{
+  "command_executed": "create-use-case-enhanced",
+  "timestamp": "[current timestamp]",
+  "status": "SUCCESS",
+  "phase": "use-case-specification",
+  "issue_number": "${ISSUE_NUMBER}",
+  "mcp_enhancements": {
+    "serena_pattern_analysis": [MCP_AVAILABLE],
+    "context7_requirements_engineering": [MCP_AVAILABLE],
+    "cross_reference_analysis": [MCP_AVAILABLE],
+    "intelligent_gap_analysis": [MCP_AVAILABLE]
   },
   "metrics": {
-    "scenarios_created": "[main/alternative/exception count]",
-    "acceptance_criteria": "[number]",
-    "test_cases": "[number]",
-    "domain_concepts_added": "[number]",
-    "historical_patterns_applied": "[number]",
-    "best_practices_integrated": "[number]"
+    "github_comments_analyzed": "${COMMENT_COUNT}",
+    "scenarios_created": "[number]",
+    "acceptance_tests_created": "[number]",
+    "domain_concepts_identified": "[number]"
   },
-  "next_recommended": ["04-domain-modeling-enhanced", "05-create-tests-enhanced"],
-  "quality_score": "[score]",
-  "pattern_coverage_score": "[score]"
+  "next_recommended": ["domain-modeling-enhanced"]
 }
+
+echo "🎯 MCP強化ユースケース仕様作成が完了しました！"
 ```
 
 ---
 
-🎯 MCP拡張ユースケース仕様作成を開始します。要求分析エキスパートとして、履歴パターン分析と業界標準を活用した包括的な仕様設計を実施いたします。
+🎯 **MCP強化ユースケース仕様作成コマンド完成**
 
 **使用方法**:
-
 ```bash
-/03-create-use-case-enhanced <issue-number>
-
-# 例
-/03-create-use-case-enhanced 123
+/create-use-case-enhanced <issue-number>
 ```
 
 **MCP拡張機能** (利用可能時):
-- 📚 **Serena**: 履歴ユースケース分析・パターン発見・最適化推奨
-- 🧠 **Context7**: 最新要求分析手法・業界標準・ベストプラクティス統合
+- 🧠 **Serena**: ユースケースパターン発見・相互参照分析
+- 📚 **Context7**: 要求工学・ベストプラクティス統合

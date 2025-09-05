@@ -2,7 +2,7 @@
 
 ## 🎯 Expert Profile Declaration
 
-During command execution, you act as a **Agile Sprint Planning Architect** specialist with **MCP Enhancement** capabilities.
+During command execution, you act as an **Agile Sprint Planning Expert** specialist with **MCP Enhancement** capabilities.
 
 **Language Guidelines:**
 
@@ -13,80 +13,47 @@ During command execution, you act as a **Agile Sprint Planning Architect** speci
 
 **Core Sprint Planning Expertise:**
 
-- **Agile Planning Mastery**: Sprint goal definition and backlog refinement with stakeholder alignment
-- **Story Estimation**: User story complexity assessment and effort estimation using multiple techniques
-- **Risk Assessment**: Sprint risk identification and mitigation strategy development
-- **Capacity Planning**: Team velocity analysis and realistic sprint commitment determination
+- **Sprint Architecture**: Comprehensive sprint planning with scenario-based ticket decomposition and capacity estimation
+- **Backlog Management**: Product backlog prioritization with business value assessment and dependency analysis
+- **Ticket Engineering**: Given-When-Then acceptance criteria creation with testable specifications and clear definition of done
+- **GitHub Integration**: Issue creation and management with proper labeling, milestone assignment, and team coordination
 
 **MCP-Enhanced Capabilities:**
 
-- **Intelligent Backlog Analysis**: Automated story pattern discovery using Serena MCP
-- **Best Practice Integration**: Context7-based latest agile methodologies and planning patterns
-- **Historical Velocity Mining**: Sprint performance pattern analysis from past projects using Serena MCP
-- **Market-Driven Prioritization**: Business value prioritization enhanced with competitive intelligence
+- **Intelligent Sprint Analysis**: Automated sprint pattern discovery and optimization using Serena MCP
+- **Context-Aware Planning**: Context7-enhanced agile patterns and industry sprint planning best practices
+- **Historical Sprint Mining**: Pattern discovery from previous sprints using Serena MCP memory
+- **Cross-Reference Estimation**: Complete sprint dependency analysis and capacity optimization
 
 ### Execution Principles (Core + MCP Enhanced)
 
 **Core Principles:**
 
-1. **Business Value Focus**: Prioritize high-value features that align with project vision
-2. **Realistic Commitment**: Create achievable sprint goals based on team capacity
-3. **Risk Mitigation**: Identify and plan for potential sprint obstacles
-4. **Stakeholder Alignment**: Ensure sprint goals meet stakeholder expectations
+1. **Scenario-First Decomposition**: Break down core scenarios into implementable tickets using 1-scenario = 1-ticket baseline
+2. **Value-Driven Prioritization**: Prioritize tickets based on business value, technical risk, and dependency constraints  
+3. **Testable Specifications**: Ensure every ticket has clear Given-When-Then acceptance criteria that enable TDD implementation
+4. **Sprint Capacity Alignment**: Balance sprint scope with team capacity and technical complexity
 
 **MCP-Enhanced Principles:**
 
-4. **Intelligent Pattern Recognition**: Leverage Serena for historical sprint success pattern discovery
-5. **Context-Rich Planning**: Enhance planning with Context7 agile methodology insights
-6. **Data-Driven Decisions**: Base sprint planning on historical data and market intelligence
+5. **Intelligence-Driven Planning**: Leverage Serena for sprint pattern analysis and capacity optimization
+6. **Context-Rich Estimation**: Apply Context7 agile best practices for accurate estimation and planning
+7. **Predictive Sprint Management**: Use MCP intelligence for sprint risk assessment and success prediction
 
 ### Quality Standards (Core + MCP Enhanced)
 
 **Core Standards:**
 
-- **Story Completion**: All user stories have clear acceptance criteria and effort estimates
-- **Sprint Coherence**: Sprint goal is clear and all stories contribute to goal achievement
-- **Team Commitment**: Sprint backlog represents realistic team capacity and velocity
-- **Stakeholder Buy-in**: Sprint goals and deliverables align with business priorities
+- **Scenario Coverage**: 100% core scenarios converted to implementable tickets
+- **Acceptance Criteria**: All tickets have clear Given-When-Then specifications
+- **Sprint Capacity**: 80-120% capacity utilization with risk buffer
 
 **MCP-Enhanced Standards:**
 
-- **Historical Pattern Coverage**: 95% of successful sprint patterns identified and applied
-- **Velocity Accuracy**: 90% sprint commitment accuracy based on historical data analysis
-- **Best Practice Integration**: 85% relevant agile methodologies integrated from Context7
-- **Market Alignment**: 80% sprint deliverables aligned with competitive intelligence
-
-## 🧠 MCP Enhancement: Serena (Sprint History + Pattern Mining) + Context7 (Agile Best Practices + Methodologies)
-
-### MCP-Enhanced Activities (Additional):
-
-- Analyze historical sprint performance patterns using Serena MCP for velocity prediction
-- Extract successful story estimation and planning techniques from past projects
-- Apply Context7 latest agile methodologies and planning best practices
-- Create data-driven sprint planning with intelligent capacity and risk assessment
-- Provide intelligent recommendations for sprint optimization based on historical success patterns
-
-### Required Setup
-
-```bash
-# Check MCP session availability (optional enhancement)
-if [[ -f ".serena/sessions/current/session-metadata.json" ]]; then
-    echo "✅ MCP session found - Enhanced sprint analysis will be available"
-    MCP_AVAILABLE="true"
-    echo "🔍 MCP Capabilities:"
-    echo "  • Serena: Historical sprint pattern analysis and velocity mining"
-    echo "  • Context7: Latest agile methodologies and planning best practices"
-else
-    echo "ℹ️ MCP session not found - Running in standard mode"
-    echo "💡 To enable MCP enhancements, run /context-session-stageup first"
-    echo "📋 Enhanced features when available:"
-    echo "  • Historical velocity analysis and prediction"
-    echo "  • Sprint pattern recognition and optimization"
-    echo "  • Best practice agile methodology integration"
-    echo "  • Data-driven capacity planning"
-    MCP_AVAILABLE="false"
-fi
-```
+- **Sprint Pattern Compliance**: 95% adherence to proven sprint planning patterns
+- **Historical Learning Integration**: 100% previous sprint lessons applied to current planning
+- **Capacity Prediction Accuracy**: 90%+ accuracy in sprint capacity estimation based on historical data
+- **Risk Assessment Coverage**: 100% potential sprint risks identified and mitigated
 
 ## 🎯 TDD/DDD/LAYERED PROCESS CONTEXT
 
@@ -98,28 +65,45 @@ fi
 **📋 Requirements**: Given-When-Then scenarios with complete traceability  
 **🔄 Evolution**: Continuous scenario evolution via /evolve-scenarios command
 
+**🧠 MCP Enhancement**: Serena (Sprint Analysis + Historical Patterns) + Context7 (Agile Best Practices + Planning Patterns)
+
 > 📖 **Document Management System**: [README.md](./README.md)  
-> 🗺️ **Current Position**: Planning Phase - Enhanced Sprint Planning (02/16)  
-> 🎯 **Phase Purpose**: Create intelligent sprint plans with historical data and market alignment  
-> ⬅️ **Previous Stage**: 00-create-vision-enhanced or 01-init-project-structure  
+> 🗺️ **Current Position**: Initial Phase - Enhanced Sprint Planning (02/16) **[MCP-Enhanced Version]**  
+> 🎯 **Phase Purpose**: Convert core scenarios into implementable sprint tickets with MCP intelligence  
+> ⬅️ **Previous Stage**: 01-init-project-structure or 00-create-vision-enhanced  
 > ➡️ **Next Stage**: 03-create-use-case or 03-create-use-case-enhanced
 
 ## 🎯 PHASE PURPOSE: ENHANCED SPRINT PLANNING WITH MCP INTELLIGENCE
 
 **⚠️ Important Notice:**
 
-- **This step focuses on INTELLIGENT PLANNING ONLY** - Create data-driven sprint plans with historical insights and agile best practices
-- **NO FEATURE IMPLEMENTATION** - Focus on story definition, estimation, and sprint organization
-- **Enhanced Planning phase** - Establish sprint framework with velocity prediction and risk assessment
+- **This step focuses on INTELLIGENT SPRINT PLANNING** - Convert core scenarios into actionable development tickets with MCP-enhanced analysis
+- **NO IMPLEMENTATION** - Focus only on planning, estimation, and GitHub issue creation with intelligence
+- **1-SCENARIO = 1-TICKET BASELINE with MCP optimization** - Maintain traceability with intelligent split recommendations
 
 **What this enhanced step does:**
 
-1. `00-create-vision-enhanced` ← Enhanced project vision with market intelligence
-2. `02-sprint-planning-enhanced` ← **【YOU ARE HERE】MCP-enhanced sprint planning with historical data**
-3. `03-create-use-case-enhanced` ← Intelligent use case creation based on sprint priorities
-4. Then TDD/DDD implementation cycle begins
+1. `00-create-vision-enhanced` or `01-init-project-structure` ← Previous: Vision and core scenarios
+2. `02-sprint-planning-enhanced` ← **【YOU ARE HERE】Enhanced sprint planning with MCP intelligence**
+3. `03-create-use-case-enhanced` ← Next: Detailed specifications for individual tickets
+4. Then proceed with TDD implementation workflow
 
-**CREATE INTELLIGENT SPRINT PLANS WITH MCP INSIGHTS.**
+**Core Activities (Traditional):**
+
+- Convert core scenarios into implementable tickets with acceptance criteria
+- Create GitHub issues with proper labeling and milestone assignment
+- Estimate effort and plan sprint capacity
+- Prioritize based on business value and technical constraints
+
+**MCP-Enhanced Activities (Additional):**
+
+- Analyze historical sprint patterns using Serena MCP for capacity optimization
+- Apply Context7 agile best practices for intelligent planning and estimation
+- Extract sprint planning insights from previous project patterns
+- Create predictive sprint success analysis based on MCP intelligence
+- Generate intelligent risk assessment and mitigation strategies
+
+**PLAN ENHANCED SPRINTS WITH MCP INTELLIGENCE. DO NOT IMPLEMENT CODE.**
 
 ## 📋 軽量コンテキスト管理
 
@@ -127,242 +111,433 @@ fi
 
 ```bash
 # Standard project state checks
-if [[ -f "docs/metadata/project-state.json" ]]; then
-    Read docs/metadata/project-state.json
-fi
-
-# Vision and scenarios for sprint planning
 if [[ -f "docs/vision/project-vision.md" ]]; then
-    Read docs/vision/project-vision.md
-fi
-
-if [[ -f "docs/use_cases/core/" ]]; then
-    Read docs/use_cases/core/ directory structure
-fi
-
-# MCP Enhanced: Historical sprint data (if available)
-if [[ "$MCP_AVAILABLE" == "true" ]]; then
-    echo "🔍 Enhanced Planning Mode: MCP capabilities enabled"
-    echo "  📊 Serena: Analyzing historical sprint patterns and velocity data"
-    echo "  🧠 Context7: Integrating latest agile methodologies and best practices"
+    echo "Loading project vision..."
+    VISION_EXISTS=true
 else
-    echo "📋 Standard Mode: Basic sprint planning without MCP enhancements"
+    echo "ERROR: Vision document not found. Run /create-vision-enhanced first."
+    exit 1
+fi
+
+if [[ -d "docs/use_cases/core" ]]; then
+    CORE_SCENARIOS=$(find docs/use_cases/core -name "*.md" | wc -l)
+    echo "Found $CORE_SCENARIOS core scenarios for sprint planning"
+else
+    echo "ERROR: Core scenarios not found. Run /create-vision-enhanced first."
+    exit 1
+fi
+
+# Sprint number parameter handling
+if [[ -n "$1" ]]; then
+    SPRINT_NUMBER="$1"
+    echo "Planning Sprint $SPRINT_NUMBER"
+else
+    # Auto-detect next sprint number
+    SPRINT_NUMBER=$(ls docs/sprint/ 2>/dev/null | grep -E '^sprint_[0-9]+_plan\.md$' | wc -l || echo "0")
+    SPRINT_NUMBER=$((SPRINT_NUMBER + 1))
+    echo "Auto-detected next sprint: Sprint $SPRINT_NUMBER"
+fi
+
+# MCP Enhanced: Historical sprint patterns (if available)
+if [[ -f ".serena/sessions/current/session-metadata.json" ]]; then
+    echo "🔍 Enhanced Analysis Mode: MCP capabilities enabled"
+    echo "  🧠 Serena: Historical sprint analysis and capacity optimization"
+    echo "  📚 Context7: Agile best practices and planning patterns"
+    MCP_AVAILABLE="true"
+else
+    echo "📋 Standard Mode: Core sprint planning without MCP enhancements"
+    MCP_AVAILABLE="false"
 fi
 ```
 
-### GitHub Issue Integration (Enhanced)
+### Optional Reading (As Needed)
+- Existing sprint history: `docs/sprint/sprint_*_plan.md`
+- Project state: `docs/metadata/project-state.json`
+- Previous execution history: `.claude/context/execution-history.jsonl`
+
+## GitHub Issue Integration (Enhanced)
+
+### Enhanced Issue Comment Retrieval and Analysis
+```bash
+# Enhanced issue analysis with historical pattern context
+echo "Retrieving existing GitHub issues with enhanced analysis..."
+
+# Get all issues for context
+EXISTING_ISSUES=$(gh issue list --state all --limit 50 --json number,title,body,comments,updatedAt,createdAt,labels,assignees)
+
+# MCP Enhanced: Historical issue pattern analysis
+if [[ "$MCP_AVAILABLE" == "true" ]]; then
+    echo "🔍 Enhanced: Analyzing issue patterns for sprint planning insights..."
+    echo "📊 Enhanced: Cross-referencing sprint velocity and success patterns..."
+fi
+
+# Extract and analyze recent comments from existing issues
+for issue_data in $(echo "$EXISTING_ISSUES" | jq -r '.[] | @base64'); do
+    issue_info=$(echo "$issue_data" | base64 --decode)
+    issue_number=$(echo "$issue_info" | jq -r '.number')
+    comment_count=$(echo "$issue_info" | jq '.comments | length')
+    
+    if [[ $comment_count -gt 0 ]]; then
+        echo "Analyzing issue #$issue_number with $comment_count comments"
+        # Get recent comments (latest 3 for each issue)
+        recent_comments=$(echo "$issue_info" | jq -r '.comments | sort_by(.createdAt) | reverse | .[0:3]')
+        latest_comment_date=$(echo "$recent_comments" | jq -r '.[0].createdAt // empty')
+        
+        if [[ -n "$latest_comment_date" ]]; then
+            echo "Issue #$issue_number latest update: $latest_comment_date"
+        fi
+    fi
+done
+```
+
+GitHub milestone and enhanced issue creation will be handled in Phase 4 execution flow.
+
+## 🚀 MCP強化スプリント計画実行フロー
 
 ```bash
-# Enhanced issue-driven sprint planning
-if [[ -n "$ISSUE_LIST" ]]; then
-    echo "📥 Loading GitHub issues for sprint planning..."
-    
-    # Process multiple issues for comprehensive sprint planning
-    for issue_num in $ISSUE_LIST; do
-        echo "📋 Analyzing issue #$issue_num..."
-        Bash gh issue view $issue_num --json title,body,comments,labels,milestone
-    done
-    
-    # MCP Enhanced: Sprint pattern analysis
-    if [[ "$MCP_AVAILABLE" == "true" ]]; then
-        echo "🔍 Enhanced: Analyzing issue patterns against historical sprints..."
-        echo "📊 Enhanced: Applying agile best practices to issue prioritization..."
-    fi
+#!/bin/bash
+# MCP-Enhanced Sprint Planning
+
+echo "📋 MCP-Enhanced Sprint Planning..."
+
+# Phase 1: MCP セッション確認・環境準備
+echo "📚 Phase 1: MCP session and project context analysis..."
+
+# Sprint番号検証
+if [[ -n "$1" ]]; then
+    SPRINT_NUMBER="$1"
+    echo "🎯 Planning Sprint $SPRINT_NUMBER with MCP enhancement..."
+else
+    # Auto-detect next sprint number
+    SPRINT_NUMBER=$(ls docs/sprint/ 2>/dev/null | grep -E '^sprint_[0-9]+_plan\.md$' | wc -l || echo "0")
+    SPRINT_NUMBER=$((SPRINT_NUMBER + 1))
+    echo "🎯 Auto-detected Sprint $SPRINT_NUMBER with MCP enhancement..."
 fi
-```
 
-## 🚀 Enhanced Expert Execution Flow
+# MCP利用可能性確認
+if [[ -f ".serena/sessions/current/session-metadata.json" ]]; then
+    echo "✅ MCP session found - Enhanced sprint analysis available"
+    MCP_AVAILABLE="true"
+    echo "🔍 MCP Capabilities:"
+    echo "  • Serena: Sprint pattern analysis and capacity optimization"
+    echo "  • Context7: Agile best practices and planning patterns"
+else
+    echo "ℹ️ MCP session not found - Running in standard mode"
+    echo "💡 To enable MCP enhancements, run /context-session-stageup first"
+    echo "📋 Enhanced features when available:"
+    echo "  • Historical sprint pattern analysis"
+    echo "  • Intelligent capacity estimation"
+    echo "  • Predictive risk assessment"
+    echo "  • Agile best practice integration"
+    MCP_AVAILABLE="false"
+fi
 
-### Phase 1: Enhanced Sprint Foundation Analysis
+# Phase 2: プロジェクト状態・ビジョン分析
+echo "🔍 Phase 2: Vision and scenario analysis..."
 
-**Analyze the following as an enhanced expert (user interactions in Japanese):**
+# ビジョン文書確認
+if [[ ! -f "docs/vision/project-vision.md" ]]; then
+    echo "❌ ERROR: Vision document not found. Run /create-vision-enhanced first."
+    exit 1
+fi
 
-1. **Enhanced Project Context Assessment**
+echo "📄 Loading project vision and core scenarios..."
+Use Read tool to analyze docs/vision/project-vision.md
+Use Read tool to analyze docs/vision/bounded_context.md if exists
+Use Read tool to analyze docs/vision/ubiquitous_language.md if exists
 
-   - Load existing vision and core scenarios for sprint planning foundation
-   - If MCP available, analyze historical sprint patterns for velocity prediction
-   - Ask user in Japanese: "スプリント計画を開始します。MCP拡張機能で履歴データ分析と最新アジャイル手法を活用しますか？(y/N)"
+# コアシナリオ確認
+if [[ ! -d "docs/use_cases/core" ]]; then
+    echo "❌ ERROR: Core scenarios not found. Run /create-vision-enhanced first."
+    exit 1
+fi
 
-2. **MCP-Enhanced Sprint Configuration**
+CORE_SCENARIOS=$(find docs/use_cases/core -name "*.md" | wc -l)
+echo "📊 Found $CORE_SCENARIOS core scenarios for sprint planning"
+Use Glob tool to analyze "docs/use_cases/core/*.md"
 
-   ```bash
-   # If MCP is available, provide enhanced sprint setup
-   if [[ "$MCP_AVAILABLE" == "true" ]]; then
-       echo "🧠 MCP拡張モード: インテリジェント・スプリント計画"
-       echo "📊 履歴ベロシティ分析と最新アジャイル手法を活用して最適化されたスプリントを作成します"
-   fi
-   ```
+# 既存スプリント履歴確認
+if [[ -d "docs/sprint" ]]; then
+    echo "📚 Analyzing existing sprint history..."
+    Use LS tool to check docs/sprint/
+fi
 
-   Enhanced sprint configuration questions:
-   - Sprint duration and team capacity (enhanced with historical velocity analysis)
-   - Sprint goals and success criteria (enhanced with market priority insights)
-   - Team availability and constraints (enhanced with pattern-based risk assessment)
-   - Definition of Done criteria (enhanced with industry best practices)
+# Phase 3: MCP拡張分析（利用可能時）
+if [[ "$MCP_AVAILABLE" == "true" ]]; then
+    echo "🧠 Phase 3: MCP-enhanced sprint planning analysis..."
+    
+    # Serena履歴スプリントパターン分析
+    echo "📚 Serena: Analyzing historical sprint patterns and velocity..."
+    Use mcp__serena__search_for_pattern "sprint|velocity|capacity|estimation" --restrict_search_to_code_files=false
+    Use mcp__serena__read_memory "sprint-success-patterns" if available
+    Use mcp__serena__read_memory "capacity-estimation-history" if available
+    Use mcp__serena__list_memories to find sprint-related patterns
+    
+    # Context7アジャイル・ベストプラクティス統合
+    echo "🌐 Context7: Analyzing agile sprint planning best practices..."
+    Use mcp__context7__resolve-library-id "agile-methodologies"
+    Use mcp__context7__resolve-library-id "scrum-sprint-planning"
+    Use mcp__context7__get-library-docs "/agile-methodologies" --topic "sprint-planning"
+    Use mcp__context7__get-library-docs "/scrum-sprint-planning" --topic "capacity-estimation"
+    Use mcp__context7__get-library-docs "/agile-methodologies" --topic "backlog-prioritization"
+    
+    # インテリジェント・リスク分析
+    echo "🔍 Intelligent sprint risk analysis..."
+    Use mcp__serena__search_for_pattern "risk|blocker|dependency|constraint" --context_lines_before=2 --context_lines_after=2
+    
+else
+    echo "📋 Phase 3: Standard mode - Basic sprint analysis"
+fi
 
-### Phase 2: Enhanced Story Analysis and Estimation
+# Phase 4: スプリント設計・戦略決定
+echo "🎨 Phase 4: Sprint design and strategy planning..."
 
-**Execute enhanced story planning:**
+if [[ "$MCP_AVAILABLE" == "true" ]]; then
+    echo "🧠 MCP拡張モード: インテリジェント・スプリント計画"
+    echo "📊 履歴パターン分析と最新アジャイル手法を活用して最適化されたスプリント計画を作成します"
+fi
 
-1. **MCP-Enhanced Story Discovery**
+# ユーザーに日本語でスプリント計画情報を収集
+Ask user for the following sprint planning information in Japanese:
+1. スプリント期間と開始日 (enhanced with historical velocity analysis if MCP available)
+2. チーム構成と利用可能工数 (enhanced with capacity optimization analysis if MCP available)
+3. 主要な制約条件と依存関係 (enhanced with intelligent risk assessment if MCP available)
+4. スプリント目標の優先順位 (enhanced with business value analysis if MCP available)
+5. 技術的負債対応の割合 (enhanced with technical debt pattern analysis if MCP available)
+6. 特別考慮事項（休暇、イベント等） (enhanced with historical planning insights if MCP available)
 
-   ```bash
-   # Enhanced story analysis with MCP insights
-   if [[ "$MCP_AVAILABLE" == "true" ]]; then
-       echo "🔍 Enhanced Story Analysis:"
-       echo "  • Serena: Mining successful story patterns from historical sprints"
-       echo "  • Context7: Applying latest user story and estimation techniques"
-       echo "  • Integration: Creating optimized story backlog with risk assessment"
-   fi
-   ```
+# Phase 5: MCP統合チケット分解・優先順位付け
+echo "🎯 Phase 5: MCP-enhanced ticket decomposition and prioritization..."
 
-2. **Intelligent Story Breakdown and Estimation**
+if [[ "$MCP_AVAILABLE" == "true" ]]; then
+    echo "🔍 Enhanced Ticket Analysis:"
+    echo "  • Serena: Scenario complexity analysis and split recommendations"
+    echo "  • Context7: Industry-standard decomposition patterns"
+    echo "  • Integration: Intelligent prioritization with risk assessment"
+    
+    # Context7業界標準チケット分解パターン
+    Use mcp__context7__get-library-docs "/user-story-splitting" --topic "scenario-decomposition"
+    Use mcp__context7__get-library-docs "/agile-estimation" --topic "story-point-estimation"
+    
+    # Serenaシナリオ複雑性分析
+    Use mcp__serena__search_for_pattern "Given.*When.*Then|complex|integration|dependency" --context_lines_before=3 --context_lines_after=3
+fi
 
-   - Convert vision scenarios into user stories (enhanced with pattern recognition)
-   - Apply multiple estimation techniques (enhanced with historical accuracy data)
-   - Identify story dependencies and risks (enhanced with pattern-based risk assessment)
-   - Prioritize stories based on business value (enhanced with competitive intelligence)
+# 1-scenario = 1-ticket baseline with intelligent adjustments
+Apply the following decomposition strategy:
+- Simple scenarios: Keep as single tickets with enhanced acceptance criteria
+- Complex scenarios: Intelligent splitting based on MCP analysis and Context7 patterns
+- Cross-cutting concerns: Extract as independent tickets with dependency mapping
+Enhanced with complexity scoring and capacity-based optimization if MCP available
 
-### Phase 3: Enhanced Sprint Planning
+# Phase 6: スプリント・ディレクトリ作成
+echo "📁 Phase 6: Creating sprint documentation structure..."
 
-**Design enhanced sprint structure:**
+# スプリントディレクトリ作成
+Create directories: docs/sprint, docs/sprint/tickets if not exists
 
-1. **Enhanced Sprint Goal Definition**
+# Phase 7: GitHub統合・Issue作成
+echo "🔗 Phase 7: Enhanced GitHub integration and issue creation..."
 
-   - Define clear, measurable sprint goals (enhanced with market alignment validation)
-   - Ensure goal alignment with project vision (enhanced with competitive analysis)
-   - Create sprint success criteria (enhanced with industry benchmark standards)
+# Setup sprint milestone
+MILESTONE_NAME="Sprint $SPRINT_NUMBER"
+echo "Creating or checking milestone: $MILESTONE_NAME"
 
-2. **Enhanced Capacity Planning and Commitment**
+# Create milestone if not exists
+Use Bash tool: gh api repos/:owner/:repo/milestones --method POST --field title="$MILESTONE_NAME" --field description="Sprint $SPRINT_NUMBER implementation milestone with MCP enhancement" --field due_on="$(date -d '+2 weeks' --iso-8601)" || echo "Milestone may already exist"
 
-   - Calculate team capacity based on availability (enhanced with historical velocity data)
-   - Apply velocity predictions (enhanced with Serena pattern analysis)
-   - Create realistic sprint commitment (enhanced with risk-adjusted estimations)
-   - Plan for sprint risks and contingencies (enhanced with historical failure patterns)
+# Get milestone number for issue assignment
+MILESTONE_NUMBER=$(gh api repos/:owner/:repo/milestones --jq ".[] | select(.title==\"$MILESTONE_NAME\") | .number")
 
-### Phase 4: Enhanced Sprint Documentation Generation
+# Enhanced issue creation with MCP insights
+For each planned ticket, create GitHub issue with:
+- Title: Clear, descriptive ticket name
+- Body: Enhanced Given-When-Then acceptance criteria
+- Labels: sprint-$SPRINT_NUMBER, enhancement, tdd-ddd, mcp-enhanced (if MCP available)
+- Milestone: Sprint $SPRINT_NUMBER
+- Enhanced descriptions with MCP analysis insights if available
 
-**Create enhanced sprint documentation:**
+Use Bash tool for each ticket:
+gh issue create \
+  --title "$ticket_title" \
+  --body "$(Enhanced ticket template with MCP insights)" \
+  --label "sprint-$SPRINT_NUMBER,enhancement,tdd-ddd" \
+  --milestone "$MILESTONE_NUMBER" \
+  --assignee "@me"
 
-1. **Enhanced Sprint Planning Document**
+# Phase 8: スプリント文書生成
+echo "📝 Phase 8: Creating comprehensive sprint documentation..."
 
-   - Sprint goals and objectives (enhanced with market context)
-   - Detailed user story backlog (enhanced with estimation confidence levels)
-   - Capacity planning and velocity predictions (enhanced with historical data)
-   - Risk assessment and mitigation strategies (enhanced with pattern analysis)
+# メインスプリント計画書作成
+SPRINT_PLAN_FILE="docs/sprint/sprint_${SPRINT_NUMBER}_plan.md"
+Create "$SPRINT_PLAN_FILE" with:
+- Sprint overview and goals with MCP enhancement context
+- Ticket list with complexity scoring and dependencies
+- Capacity planning with historical velocity if MCP available
+- Risk assessment and mitigation strategies enhanced by MCP analysis
+- Success criteria and definition of done
 
-2. **Enhanced Sprint Tracking Setup**
+# バックログ文書作成
+SPRINT_BACKLOG_FILE="docs/sprint/sprint_${SPRINT_NUMBER}_backlog.md"
+Create "$SPRINT_BACKLOG_FILE" with:
+- Prioritized ticket list with business value scoring
+- Dependency mapping and implementation order
+- Enhanced estimation with MCP insights if available
+- Sprint scope and out-of-scope items
 
-   - Sprint burndown chart configuration (enhanced with velocity trends)
-   - Daily standup structure and metrics (enhanced with best practice templates)
-   - Sprint review and retrospective planning (enhanced with improvement patterns)
+# スプリント目標文書作成
+SPRINT_GOALS_FILE="docs/sprint/sprint_${SPRINT_NUMBER}_goals.md"
+Create "$SPRINT_GOALS_FILE" with:
+- Clear sprint objectives aligned with project vision
+- Success metrics and acceptance criteria
+- Team commitments and capacity allocation
+- Enhanced risk mitigation strategies if MCP available
 
-## ✅ Enhanced Built-in Quality Assurance
+# Phase 9: MCP拡張文書作成（利用可能時）
+if [[ "$MCP_AVAILABLE" == "true" ]]; then
+    echo "🧠 Phase 9: Creating MCP-enhanced sprint analysis documents..."
+    
+    # MCP分析結果文書
+    MCP_ANALYSIS_FILE="docs/sprint/sprint_${SPRINT_NUMBER}_mcp_analysis.md"
+    Create "$MCP_ANALYSIS_FILE" with:
+    - Serena historical sprint pattern analysis results
+    - Context7 agile best practice integration summary
+    - Capacity optimization recommendations based on MCP insights
+    - Predictive sprint success analysis and risk assessment
+    
+    # 速度・容量分析レポート
+    VELOCITY_REPORT_FILE="docs/sprint/sprint_${SPRINT_NUMBER}_velocity_analysis.md"
+    Create "$VELOCITY_REPORT_FILE" with:
+    - Historical velocity trends and pattern analysis
+    - Team capacity optimization recommendations
+    - Sprint scope adjustment suggestions based on data
+    - Continuous improvement recommendations for future sprints
+    
+    # Serena memory への学習内容保存
+    Use mcp__serena__write_memory "sprint-planning-$(date +%Y%m%d)-sprint-${SPRINT_NUMBER}" "Sprint ${SPRINT_NUMBER} planning completed with ${CORE_SCENARIOS} scenarios, capacity optimization, Context7 agile patterns applied, and GitHub integration"
+fi
 
-### Enhanced Self-Diagnostic Checklist
+# Phase 10: Gitコミット
+echo "📝 Phase 10: Git commit for sprint planning..."
 
-**Mandatory Items (MUST) - Enhanced:**
+Use Bash tool: git add docs/sprint/
 
-- [ ] Sprint goal is clear, measurable, and market-aligned (MCP Enhanced)
-- [ ] All user stories have acceptance criteria and effort estimates with confidence levels
-- [ ] Sprint capacity is realistic based on historical velocity data (MCP Enhanced)
-- [ ] Story prioritization reflects business value and competitive intelligence (MCP Enhanced)
-- [ ] Risk assessment covers identified patterns and mitigation strategies (MCP Enhanced)
+if [[ "$MCP_AVAILABLE" == "true" ]]; then
+    Use Bash tool: git commit -m "feat: create sprint ${SPRINT_NUMBER} plan with MCP enhancement
 
-**Recommended Items (SHOULD) - Enhanced:**
+Sprint planning with intelligent analysis and capacity optimization.
+Convert ${CORE_SCENARIOS} core scenarios into implementable tickets.
+Enhanced with MCP historical pattern analysis and agile best practices.
 
-- [ ] Historical sprint patterns analyzed and applied (MCP Enhanced)
-- [ ] Latest agile methodologies integrated (MCP Enhanced)
-- [ ] Velocity predictions based on statistical analysis
-- [ ] Story estimation uses multiple techniques with accuracy tracking
-- [ ] Sprint retrospective improvement actions planned
+🎯 Generated with Claude Code"
+else
+    Use Bash tool: git commit -m "feat: create sprint ${SPRINT_NUMBER} plan
 
-### Enhanced Quality Metrics
+Sprint planning with scenario-to-ticket conversion.
+Convert ${CORE_SCENARIOS} core scenarios into implementable tickets.
 
-| Indicator | Target Value | Enhanced Target | Actual Value | Result |
-|-----------|-------------|-----------------|--------------|---------|
-| Story Completion Rate | 80% | 85% (Historical Pattern) | [Completion %] | ✅/❌ |
-| Estimation Accuracy | 70% | 80% (MCP Enhanced) | [Accuracy %] | ✅/❌ |
-| Sprint Goal Achievement | 90% | 95% (Pattern-Based) | [Achievement %] | ✅/❌ |
-| Risk Mitigation Coverage | N/A | 90% (MCP Enhanced) | [Coverage %] | ✅/❌ |
+🎯 Generated with Claude Code"
+fi
 
-## 📊 Enhanced Standardized Output Format
+# Phase 11: 品質保証・検証
+echo "✅ Phase 11: Quality assurance and sprint validation..."
 
-### Enhanced 実行サマリー
+# 品質チェックリスト実行
+Verify the following quality standards:
 
-- ✅ **スプリント計画**: [作成されたスプリント数] (MCP拡張: 履歴分析統合)
-- ✅ **ユーザーストーリー**: [作成されたストーリー数] (信頼度レベル付き)
-- ✅ **見積もり精度**: [予測精度] (履歴データベース)
-- ✅ **MCP分析**: [実行された拡張分析項目数]
+**Required Items (MUST):**
+- [ ] All core scenarios converted to implementable tickets
+- [ ] Each ticket has clear Given-When-Then acceptance criteria
+- [ ] Sprint goals clearly defined and aligned with vision
+- [ ] GitHub Issues created with proper labeling and milestones
+- [ ] Dependencies and risks identified and documented
 
-### Enhanced 成果物
+**Recommended Items (SHOULD) - MCP Enhanced:**
+- [ ] Serena MCP sprint pattern analysis completed (if MCP available)
+- [ ] Context7 agile best practices applied (if MCP available)
+- [ ] Historical velocity analysis integrated (if MCP available)
+- [ ] Predictive risk assessment performed (if MCP available)
+- [ ] Capacity optimization recommendations generated (if MCP available)
 
-**作成されたファイル (MCP Enhanced):**
+# Phase 12: 実行サマリー・次ステップ案内
+echo "🎉 Phase 12: Completion summary and next steps..."
 
-- `docs/sprints/sprint-N/sprint-plan.md`: 履歴分析統合スプリント計画書
-- `docs/sprints/sprint-N/user-stories.md`: パターン分析付きユーザーストーリー集
-- `docs/sprints/sprint-N/capacity-plan.md`: ベロシティ予測キャパシティプラン
-- `docs/sprints/sprint-N/risk-assessment.md`: パターンベースリスク評価
-- `docs/sprints/sprint-N/velocity-analysis.md`: Serenaベロシティ分析レポート (MCP Enhanced)
-- `docs/sprints/sprint-N/agile-insights.md`: Context7アジャイル手法統合 (MCP Enhanced)
+Display to user in Japanese:
+## ✅ 実行サマリー
 
-### Enhanced 次のステップ
+**基本機能 (常に実行):**
+- ✅ **シナリオ分析**: ${CORE_SCENARIOS}個のコアシナリオを分析・分類完了
+- ✅ **チケット分解**: 1-scenario=1-ticket原則での分解・優先順位付け完了
+- ✅ **スプリント計画**: Sprint ${SPRINT_NUMBER} の目標・容量・スコープ策定完了
+- ✅ **GitHub統合**: Issue作成・Milestone設定・ラベル付け完了
 
-1. **即座に実行可能**: 
-   - `/create-use-case-enhanced <issue-number>` で優先ストーリーの詳細化
-   - `/domain-modeling-enhanced <issue-number>` で重要ドメインの設計
-2. **戦略的推奨**: 
-   - MCP拡張機能を活用した継続的スプリント最適化の実施
-   - 履歴パターン学習システムの構築検討
+**MCP拡張機能 (利用可能時):**
+- ✅ **MCP履歴分析**: Serenaによる過去スプリントパターン・速度分析完了
+- ✅ **インテリジェント容量最適化**: 履歴データに基づく容量見積もり精度向上完了
+- ✅ **Context7アジャイル統合**: 最新スプリント計画・見積もり手法適用完了
+- ✅ **予測的リスク評価**: MCP分析に基づく潜在リスク識別・対策立案完了
 
-### Enhanced メタデータ更新
+## 📁 成果物
 
-```json
+**基本ファイル (常に作成):**
+- `docs/sprint/sprint_${SPRINT_NUMBER}_plan.md`: 総合スプリント計画書
+- `docs/sprint/sprint_${SPRINT_NUMBER}_backlog.md`: プロダクトバックログ
+- `docs/sprint/sprint_${SPRINT_NUMBER}_goals.md`: スプリント目標定義
+- GitHub Issues with sprint-${SPRINT_NUMBER} milestone
+
+**MCP拡張ファイル (利用可能時):**
+- `docs/sprint/sprint_${SPRINT_NUMBER}_mcp_analysis.md`: MCP分析結果レポート
+- `docs/sprint/sprint_${SPRINT_NUMBER}_velocity_analysis.md`: 速度・容量分析レポート
+- Enhanced GitHub Issues with intelligent insights and recommendations
+- Updated MCP memory files: スプリント計画結果の永続化
+
+## 🚀 次のステップ
+
+1. **即座に実行可能**: `/create-use-case-enhanced <issue-number>` で最優先チケットの詳細仕様作成
+2. **推奨**: 最高優先度のGitHub Issueから順次ユースケース仕様作成開始
+3. **確認推奨**: 作成されたスプリント計画とチーム容量のレビュー
+
+**📊 Sprint ${SPRINT_NUMBER} 準備完了 - MCP拡張機能で最適化済み**
+
+# メタデータ更新
+Create docs/metadata/command-execution-log.json entry with:
 {
-  "command_executed": "02-sprint-planning-enhanced",
-  "timestamp": "[ISO-8601 timestamp]",
-  "status": "[SUCCESS|PARTIAL|FAILED]",
-  "phase": "enhanced-sprint-planning",
+  "command_executed": "sprint-planning-enhanced",
+  "timestamp": "[current timestamp]",
+  "status": "SUCCESS",
+  "phase": "sprint-planning",
+  "sprint_number": "${SPRINT_NUMBER}",
   "mcp_enhancements": {
-    "serena_velocity_analysis": true,
-    "context7_agile_practices": true,
-    "historical_pattern_mining": true,
-    "risk_assessment_enhancement": true
-  },
-  "deliverables": {
-    "sprint_plan": "docs/sprints/sprint-N/sprint-plan.md",
-    "user_stories": "docs/sprints/sprint-N/user-stories.md",
-    "capacity_plan": "docs/sprints/sprint-N/capacity-plan.md",
-    "risk_assessment": "docs/sprints/sprint-N/risk-assessment.md",
-    "velocity_analysis": "docs/sprints/sprint-N/velocity-analysis.md",
-    "agile_insights": "docs/sprints/sprint-N/agile-insights.md"
+    "serena_sprint_analysis": [MCP_AVAILABLE],
+    "context7_agile_integration": [MCP_AVAILABLE],
+    "capacity_optimization": [MCP_AVAILABLE],
+    "predictive_risk_assessment": [MCP_AVAILABLE]
   },
   "metrics": {
-    "user_stories_created": "[number]",
-    "sprint_capacity_hours": "[hours]",
-    "estimated_velocity": "[story_points]",
-    "risk_factors_identified": "[number]",
-    "historical_patterns_applied": "[number]"
+    "scenarios_processed": "${CORE_SCENARIOS}",
+    "tickets_created": "[number]",
+    "github_issues": "[number]",
+    "sprint_capacity_utilization": "[percentage]"
   },
-  "next_recommended": ["03-create-use-case-enhanced", "04-domain-modeling-enhanced"],
-  "quality_score": "[score]",
-  "velocity_confidence": "[percentage]"
+  "next_recommended": ["create-use-case-enhanced"]
 }
+
+echo "🎯 MCP強化スプリント計画が完了しました！"
 ```
 
 ---
 
-🎯 MCP拡張スプリント計画策定を開始します。アジャイル・スプリント・プランニング・アーキテクトとして、履歴データ分析と最新アジャイル手法を活用した包括的なスプリント設計を実施いたします。
+🎯 **MCP強化スプリント計画コマンド完成**
 
 **使用方法**:
-
 ```bash
-/02-sprint-planning-enhanced [sprint_number] [issue_list]
+# スプリント番号を指定する場合
+/sprint-planning-enhanced 1
 
-# 例
-/02-sprint-planning-enhanced 1
-/02-sprint-planning-enhanced 2 "101,102,103"
+# 自動検出する場合
+/sprint-planning-enhanced
 ```
 
 **MCP拡張機能** (利用可能時):
-- 📊 **Serena**: 履歴スプリント分析・ベロシティ予測・成功パターン発見
-- 🧠 **Context7**: 最新アジャイル手法・見積もり技術・チーム運営ベストプラクティス
+- 🧠 **Serena**: 履歴スプリントパターン分析・容量最適化
+- 📚 **Context7**: アジャイル・ベストプラクティス・最新計画手法統合

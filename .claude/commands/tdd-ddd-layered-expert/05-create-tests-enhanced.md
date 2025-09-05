@@ -101,33 +101,52 @@ During command execution, you act as a **Test-Driven Development Architect** spe
 
 **CREATE FAILING TESTS ONLY.**
 
-## 📋 MCP-Enhanced Test Analysis
-
-### Required Setup
+## 🚀 MCP強化TDDテスト作成実行フロー
 
 ```bash
-# Validate issue number and MCP session
+#!/bin/bash
+# MCP-Enhanced TDD Test Creation (RED Phase)
+
+echo "🧪 MCP-Enhanced TDD Test Creation (RED Phase)..."
+
+# Phase 1: 引数検証・MCP環境確認
+echo "📚 Phase 1: Argument validation and MCP session analysis..."
+
+# Issue番号検証
 if [[ -z "$1" ]]; then
-    echo "ERROR: Issue number required. Usage: /create-tests-enhanced <issue-number>"
+    echo "❌ ERROR: Issue number required. Usage: /create-tests-enhanced <issue-number>"
     exit 1
 fi
 
 ISSUE_NUMBER="$1"
-echo "🧪 Executing MCP-enhanced test creation with intelligent analysis..."
+echo "🎯 Creating failing tests for Issue #${ISSUE_NUMBER} with MCP enhancement..."
 
-# Check MCP session availability (optional enhancement)
+# MCP利用可能性確認
 if [[ -f ".serena/sessions/current/session-metadata.json" ]]; then
-    echo "✅ MCP session found - Enhanced test analysis will be available"
+    echo "✅ MCP session found - Enhanced test analysis available"
     MCP_AVAILABLE="true"
+    echo "🔍 MCP Capabilities:"
+    echo "  • Serena: Test discovery and coverage analysis"
+    echo "  • Context7: Testing patterns and best practices"
 else
     echo "ℹ️ MCP session not found - Running in standard mode"
     echo "💡 To enable MCP enhancements, run /context-session-stageup first"
+    echo "📋 Enhanced features when available:"
+    echo "  • Automated test scenario identification"
+    echo "  • Business rule test mining"
+    echo "  • Testing pattern integration"
+    echo "  • Coverage gap analysis"
     MCP_AVAILABLE="false"
 fi
 
-# Check for domain model prerequisites
+# Phase 2: 前提条件確認
+echo "🔍 Phase 2: Prerequisites validation..."
+
+# ユースケース仕様ファイル確認
 USE_CASE_FILE=$(find docs/use_cases/ -name "*issue*${ISSUE_NUMBER}*.md" -type f | head -1)
-DOMAIN_FILE=$(find docs/domain/ -name "*issue*${ISSUE_NUMBER}*domain-model.md" -type f | head -1)
+if [[ ! -f "$USE_CASE_FILE" ]]; then
+    USE_CASE_FILE=$(find docs/use_cases/ -name "*${ISSUE_NUMBER}*.json" -type f | head -1)
+fi
 
 if [[ ! -f "$USE_CASE_FILE" ]]; then
     echo "❌ Error: Use case specification for Issue #${ISSUE_NUMBER} not found"
@@ -135,45 +154,279 @@ if [[ ! -f "$USE_CASE_FILE" ]]; then
     exit 1
 fi
 
+# ドメインモデルファイル確認
+DOMAIN_FILE=$(find docs/domain/ -name "*issue*${ISSUE_NUMBER}*domain-model.md" -type f | head -1)
 if [[ ! -f "$DOMAIN_FILE" ]]; then
     echo "❌ Error: Domain model for Issue #${ISSUE_NUMBER} not found"
-    echo "💡 Please execute /domain-modeling ${ISSUE_NUMBER} first"
+    echo "💡 Please execute /domain-modeling-enhanced ${ISSUE_NUMBER} first"
     exit 1
 fi
 
-# Execute the enhanced Python implementation (inherits + extends existing functionality)
-SCRIPT_PATH=".claude/commands/tdd-ddd-layered-expert/utils/05-create-tests-enhanced.py"
+echo "📄 Found use case specification: $USE_CASE_FILE"
+echo "📄 Found domain model: $DOMAIN_FILE"
 
-if [[ -f "$SCRIPT_PATH" ]]; then
-    echo "✅ Found enhanced implementation: $SCRIPT_PATH"
-    uv run "$SCRIPT_PATH" "$ISSUE_NUMBER"
-    EXIT_CODE=$?
-else
-    echo "❌ Enhanced implementation not found: $SCRIPT_PATH"
-    echo "💡 Please ensure the Python implementation is available"
-    exit 1
+# 既存テスト構造確認
+if [[ -d "tests" ]]; then
+    Use LS tool to check existing test structure: tests/
 fi
 
-if [[ $EXIT_CODE -eq 0 ]]; then
-    echo "✅ Test creation completed successfully (RED Phase)"
-    echo "💡 All tests should be FAILING - this is expected in TDD RED phase"
+# Phase 3: ドキュメント分析
+echo "📖 Phase 3: Document analysis and test scenario extraction..."
+
+Use Read tool to analyze "$USE_CASE_FILE"
+Use Read tool to analyze "$DOMAIN_FILE"
+
+# Phase 4: MCP拡張分析（利用可能時）
+if [[ "$MCP_AVAILABLE" == "true" ]]; then
+    echo "🧠 Phase 4: MCP-enhanced test discovery..."
+    
+    # Serenaインテリジェント・テスト発見
+    echo "📚 Serena: Discovering testable components and patterns..."
+    Use mcp__serena__get_symbols_overview to identify existing test-related code
+    Use mcp__serena__search_for_pattern "test_|Test|def.*test|@pytest|given|when|then" --restrict_search_to_code_files=true
+    Use mcp__serena__search_for_pattern "assert|expect|should|validate|check" --context_lines_before=2 --context_lines_after=2
+    Use mcp__serena__find_symbol "*test*|*Test*" --include_kinds=[12,6] --include_body=true
+    
+    # Context7テストパターン・ベストプラクティス統合
+    echo "🌐 Context7: Analyzing testing patterns and best practices..."
+    Use mcp__context7__resolve-library-id "testing-patterns"
+    Use mcp__context7__resolve-library-id "tdd-best-practices"
+    Use mcp__context7__get-library-docs "/testing-patterns" --topic "unit-testing"
+    Use mcp__context7__get-library-docs "/testing-patterns" --topic "integration-testing"
+    Use mcp__context7__get-library-docs "/tdd-best-practices" --topic "red-green-refactor"
+    
+    # ビジネスルールテストマイニング
+    echo "🔍 Business rule test mining..."
+    Use mcp__serena__search_for_pattern "business.*rule|invariant|constraint|validation" --context_lines_before=3 --context_lines_after=3
+    
 else
-    echo "❌ Test creation failed with exit code: $EXIT_CODE"
-    exit $EXIT_CODE
+    echo "📋 Phase 4: Standard mode - Basic test scenario extraction"
 fi
+
+# Phase 5: テスト設計・戦略決定
+echo "🎨 Phase 5: Test design and strategy planning..."
+
+Ask user for the following test design decisions in Japanese:
+1. テスト戦略の確認 (単体・統合・E2Eテストの分割)
+2. Given-When-Thenシナリオの優先順位付け (enhanced with MCP analysis if available)
+3. テストデータ・フィクスチャ設計 (based on domain model)
+4. モック・スタブ戦略 (for external dependencies)
+5. テストカバレッジ目標設定 (enhanced with gap analysis if MCP available)
+6. 特別なテストケース (エラーケース・境界値・セキュリティ)
+
+# Phase 6: テスト用ディレクトリ確認・作成
+echo "📁 Phase 6: Test directory structure validation..."
+
+# 基本テスト構造確認・作成
+Ensure test directory structure exists:
+- tests/unit/domain/entities/
+- tests/unit/domain/value_objects/
+- tests/unit/application/use_cases/
+- tests/integration/repositories/
+- tests/fixtures/
+
+# Phase 7: TDD REDフェーズテスト作成
+echo "🔴 Phase 7: Creating TDD RED Phase failing tests..."
+
+**⚠️ TDD RED PHASE - FAILING TESTS ONLY**
+
+# ドメインエンティティテスト作成
+Create failing tests for domain entities identified in domain model:
+- Entity identity and lifecycle tests
+- Business rule validation tests  
+- Invariant constraint tests
+- Entity behavior tests
+
+# 値オブジェクトテスト作成
+Create failing tests for value objects:
+- Immutability tests
+- Validation rule tests
+- Equality semantics tests
+- Factory method tests
+
+# ユースケーステスト作成
+Create failing tests for use cases from Given-When-Then scenarios:
+- Main scenario tests
+- Alternative scenario tests
+- Exception scenario tests
+- Business rule integration tests
+
+# リポジトリインターフェーステスト作成
+Create failing tests for repository interfaces:
+- CRUD operation tests
+- Query method tests
+- Constraint validation tests
+
+# Phase 8: MCP拡張テスト強化（利用可能時）
+if [[ "$MCP_AVAILABLE" == "true" ]]; then
+    echo "🧠 Phase 8: Creating MCP-enhanced test cases..."
+    
+    # インテリジェント・テストカバレッジ分析
+    echo "📊 Intelligent test coverage analysis..."
+    Based on Serena analysis, create additional tests for:
+    - Discovered business rule patterns
+    - Missing validation scenarios
+    - Edge cases and boundary conditions
+    - Error handling scenarios
+    
+    # Context7パターンベーステスト
+    echo "🌐 Pattern-based test creation..."
+    Apply Context7 testing patterns to create:
+    - Industry-standard test cases
+    - Best practice test structures
+    - Maintainable test patterns
+    
+    # テストメンテナンス推奨事項
+    Create docs/tests/issue-${ISSUE_NUMBER}-test-maintenance-guide.md with:
+    - Test refactoring recommendations
+    - Coverage improvement suggestions
+    - Test performance optimization
+    - Future test evolution planning
+    
+    # Serena memoryに学習内容保存
+    Use mcp__serena__write_memory "test-creation-$(date +%Y%m%d)-issue-${ISSUE_NUMBER}" "TDD RED phase test creation completed for issue ${ISSUE_NUMBER} with comprehensive failing tests, business rule coverage, and Context7 testing pattern integration"
+fi
+
+# Phase 9: テスト実行・RED検証
+echo "🔴 Phase 9: TDD RED phase validation - Ensuring all tests fail..."
+
+**CRITICAL: All tests must fail to validate TDD RED phase**
+
+Use Bash tool to run tests and verify they fail:
+PYTEST_DISABLE_PLUGIN_AUTOLOAD="" uv run --frozen pytest tests/ -v
+
+Verify that:
+- All newly created tests fail as expected
+- Test failure messages are clear and descriptive
+- No production code exists to make tests pass
+- Test structure is correct and runnable
+
+# Phase 10: Gitコミット
+echo "📝 Phase 10: Git commit for failing tests..."
+
+Use Bash tool: git add tests/ docs/tests/ (if exists)
+
+if [[ "$MCP_AVAILABLE" == "true" ]]; then
+    Use Bash tool: git commit -m "test: create failing tests for issue ${ISSUE_NUMBER} (TDD RED phase) with MCP enhancement
+
+Create comprehensive failing tests based on Given-When-Then scenarios.
+Cover domain entities, value objects, use cases, and business rules.
+Enhanced with MCP intelligent test discovery and pattern integration.
+
+🔴 TDD RED PHASE: All tests failing as expected
+🎯 Generated with Claude Code"
+else
+    Use Bash tool: git commit -m "test: create failing tests for issue ${ISSUE_NUMBER} (TDD RED phase)
+
+Create comprehensive failing tests based on Given-When-Then scenarios.
+Cover domain entities, value objects, use cases, and business rules.
+
+🔴 TDD RED PHASE: All tests failing as expected  
+🎯 Generated with Claude Code"
+fi
+
+# Phase 11: 品質保証・検証
+echo "✅ Phase 11: Quality assurance and TDD validation..."
+
+# 品質チェックリスト実行
+Verify the following quality standards:
+
+**Required Items (MUST):**
+- [ ] All Given-When-Then scenarios have corresponding failing tests
+- [ ] Domain entities, value objects, and use cases are tested
+- [ ] All tests fail as expected (RED phase validation)
+- [ ] Test structure follows Clean Architecture layers
+- [ ] Git commit completed with proper TDD message
+
+**Recommended Items (SHOULD) - MCP Enhanced:**
+- [ ] Serena MCP test discovery completed (if MCP available)
+- [ ] Context7 testing patterns applied (if MCP available)
+- [ ] Business rule test mining completed (if MCP available)
+- [ ] Coverage gap analysis performed (if MCP available)
+- [ ] Test maintenance guide created (if MCP available)
+
+# Phase 12: 実行サマリー・次ステップ案内
+echo "🎉 Phase 12: Completion summary and next steps..."
+
+Display to user in Japanese:
+## ✅ 実行サマリー
+
+**基本機能 (常に実行):**
+- ✅ **ユースケース・ドメインモデル分析**: Issue #${ISSUE_NUMBER} の仕様・設計を分析完了
+- ✅ **TDD REDフェーズテスト作成**: 全Given-When-Thenシナリオの失敗テスト作成
+- ✅ **テスト構造構築**: Clean Architectureレイヤーに沿ったテスト構造
+- ✅ **失敗検証完了**: 全テストが期待通り失敗することを確認
+
+**MCP拡張機能 (利用可能時):**
+- ✅ **MCPテスト発見**: Serenaによるテスト可能コンポーネント自動発見完了
+- ✅ **ビジネスルールマイニング**: ビジネスルール検証テスト自動抽出完了
+- ✅ **Context7パターン統合**: 最新テスト設計パターン・ベストプラクティス適用完了
+- ✅ **カバレッジ分析**: インテリジェント・テストカバレッジ分析・ギャップ識別完了
+
+## 📁 成果物
+
+**基本ファイル (常に作成):**
+- Comprehensive failing test suite in tests/ directory
+- Entity, value object, and use case tests
+- Integration and repository interface tests
+- Test fixtures and utilities
+
+**MCP拡張ファイル (利用可能時):**
+- `docs/tests/issue-${ISSUE_NUMBER}-test-maintenance-guide.md`: テストメンテナンスガイド
+- Enhanced test coverage with intelligent gap analysis
+- Pattern-based test structures following Context7 best practices
+- Updated MCP memory files: テスト作成結果の永続化
+
+## 🚀 次のステップ
+
+1. **即座に実行可能**: `/implement-domain ${ISSUE_NUMBER}` でTDD GREENフェーズ（実装）
+2. **TDD GREENフェーズ**: 失敗テストを成功させる最小実装を作成
+3. **確認必須**: 全テストが現在失敗していることの確認
+
+**🔴 TDD RED PHASE完了 - 全テストが期待通り失敗中**
+
+# メタデータ更新
+Create docs/metadata/command-execution-log.json entry with:
+{
+  "command_executed": "create-tests-enhanced",
+  "timestamp": "[current timestamp]",
+  "status": "SUCCESS",
+  "phase": "tdd-red-phase",
+  "issue_number": "${ISSUE_NUMBER}",
+  "mcp_enhancements": {
+    "serena_test_discovery": [MCP_AVAILABLE],
+    "context7_testing_patterns": [MCP_AVAILABLE],
+    "business_rule_mining": [MCP_AVAILABLE],
+    "coverage_gap_analysis": [MCP_AVAILABLE]
+  },
+  "metrics": {
+    "failing_tests_created": "[number]",
+    "test_files_generated": "[number]",
+    "business_rules_tested": "[number]",
+    "coverage_percentage": "[estimated]"
+  },
+  "next_recommended": ["implement-domain-enhanced"]
+}
+
+echo "🎯 MCP強化TDDテスト作成が完了しました！"
+echo "🔴 TDD REDフェーズ: 全テストが期待通り失敗中"
+echo "➡️ 次は /implement-domain ${ISSUE_NUMBER} でGREENフェーズに進んでください"
 ```
 
-## 🚀 Expert Execution Flow
+---
 
-### Phase 1: Analysis and Understanding (Core + MCP Enhanced)
+🎯 **MCP強化TDDテスト作成コマンド完成**
 
-**As an expert, analyze the following (user interactions in Japanese):**
+**使用方法**:
+```bash
+/create-tests-enhanced <issue-number>
+```
 
-**Core Analysis Activities:**
+**🔴 TDD REDフェーズ専用** - 失敗テストのみ作成
 
-1. **Given-When-Then Scenario Analysis**
-
-   - Extract test scenarios from use case specifications using Read tool
+**MCP拡張機能** (利用可能時):
+- 🧠 **Serena**: テスト発見・カバレッジ分析
+- 📚 **Context7**: テストパターン・ベストプラクティス統合
    - Map each Given-When-Then to specific test methods
    - Identify acceptance criteria for testable assertions
    - Parse domain model design for entity and behavior expectations
