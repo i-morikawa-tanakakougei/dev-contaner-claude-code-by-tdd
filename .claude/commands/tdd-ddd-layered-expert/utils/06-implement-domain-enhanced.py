@@ -111,6 +111,7 @@ class CoreDomainImplementer:
             methods = entity.get("methods", ["validate"])
             
             # Python実装コード生成
+            props_str = ': str\n    '.join(properties)
             implementation = f'''"""
 {entity_name} Domain Entity
 """
@@ -124,7 +125,7 @@ class {entity_name}:
     """
     {entity_name} entity representing core business object
     """
-    {': str\\n    '.join(properties)}: str
+    {props_str}: str
     created_at: datetime = None
     updated_at: datetime = None
     
@@ -139,7 +140,7 @@ class {entity_name}:
         """Validate entity business rules"""
         # Implement validation logic
         return all([
-            {f'self.{prop}' for prop in properties if prop != 'id'}
+            getattr(self, prop) is not None for prop in ['id'] if hasattr(self, prop)
         ])
     
     def update(self, **kwargs) -> None:
@@ -164,6 +165,7 @@ class {entity_name}:
             properties = vo.get("properties", ["value"])
             
             # Python実装コード生成
+            vo_props_str = ': Any\n    '.join(properties)
             implementation = f'''"""
 {vo_name} Value Object
 """
@@ -176,7 +178,7 @@ class {vo_name}:
     """
     {vo_name} value object - immutable business concept
     """
-    {': Any\\n    '.join(properties)}: Any
+    {vo_props_str}: Any
     
     def __post_init__(self):
         """Validate value object constraints"""
@@ -188,7 +190,10 @@ class {vo_name}:
         pass
     
     def __str__(self) -> str:
-        return f"{vo_name}({', '.join([f'{prop}={{self.{prop}}}' for prop in properties])})"
+        prop_strs = []
+        for prop in properties:
+            prop_strs.append(f'{prop}=' + str(getattr(self, prop)))
+        return f"{vo_name}({', '.join(prop_strs)})"
 '''
             
             implementations[vo_name] = implementation
