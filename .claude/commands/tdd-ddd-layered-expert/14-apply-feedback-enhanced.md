@@ -105,291 +105,369 @@ During command execution, you act as a **Feedback Application Specialist** with 
 
 **APPLY FEEDBACK SYSTEMATICALLY WITH INTELLIGENCE.**
 
-## 📋 MCP-Enhanced Feedback Analysis
+## 📋 軽量コンテキスト管理
 
-### Required Setup
+### Required Reading (Minimal + MCP Enhanced)
 
 ```bash
-# Validate issue number and MCP session
+# Validate issue number parameter
 if [[ -z "$1" ]]; then
     echo "ERROR: Issue number required. Usage: /apply-feedback-enhanced <issue-number>"
     exit 1
 fi
 
 ISSUE_NUMBER="$1"
-echo "🧠 Executing MCP-enhanced feedback application with intelligent analysis..."
+echo "🚀 Executing MCP-enhanced feedback application for GitHub Issue #$ISSUE_NUMBER..."
 
-# Check MCP session availability (optional enhancement)
+# MCP Enhanced: Session availability check
 if [[ -f ".serena/sessions/current/session-metadata.json" ]]; then
-    echo "✅ MCP session found - Enhanced analysis will be available"
+    echo "🔍 Enhanced Analysis Mode: MCP capabilities enabled"
+    echo "  🧠 Serena: Feedback analysis and improvement pattern recognition"
+    echo "  📚 Context7: Enhancement patterns and quality improvement best practices"
     MCP_AVAILABLE="true"
 else
-    echo "ℹ️ MCP session not found - Running in standard mode"
-    echo "💡 To enable MCP enhancements, run /context-session-stageup first"
+    echo "📋 Standard Mode: Core feedback application without MCP enhancements"
     MCP_AVAILABLE="false"
 fi
 
-# Execute the enhanced Python implementation (inherits + extends existing functionality)
-SCRIPT_PATH=".claude/commands/tdd-ddd-layered-expert/utils/14-apply-feedback-enhanced.py"
-
-if [[ -f "$SCRIPT_PATH" ]]; then
-    echo "✅ Found enhanced implementation: $SCRIPT_PATH"
-    uv run "$SCRIPT_PATH" "$ISSUE_NUMBER"
-    EXIT_CODE=$?
+# GitHub integration check
+if command -v gh &> /dev/null && gh auth status &> /dev/null; then
+    echo "✅ GitHub CLI authenticated - Issue feedback integration available"
+    GITHUB_AVAILABLE="true"
 else
-    echo "❌ Enhanced implementation not found: $SCRIPT_PATH"
-    echo "💡 Please ensure the Python implementation is available"
+    echo "ℹ️ GitHub CLI not available - Running without GitHub integration"
+    GITHUB_AVAILABLE="false"
+fi
+
+# Create feedback workspace directories
+mkdir -p docs/feedback
+mkdir -p docs/quality-improvement
+mkdir -p tests/feedback-validation
+```
+
+### Optional Reading (As Needed)
+- Review reports: `docs/review/issue-${ISSUE_NUMBER}-review.md`
+- Quality reports: `docs/quality-reports/issue-${ISSUE_NUMBER}-quality-dashboard.md`  
+- MCP analysis: `docs/review/issue-${ISSUE_NUMBER}-mcp-analysis.md`
+- Previous feedback: `docs/feedback/issue-*-feedback-application.md`
+
+## 🚀 MCP強化フィードバック適用実行フロー
+
+```bash
+#!/bin/bash
+# MCP-Enhanced Feedback Application
+
+echo "⚡ MCP-Enhanced Feedback Application..."
+
+# Phase 1: 引数検証・MCP環境確認
+echo "📚 Phase 1: Argument validation and MCP session analysis..."
+
+# Issue番号検証
+if [[ -z "$1" ]]; then
+    echo "❌ ERROR: Issue number required. Usage: /apply-feedback-enhanced <issue-number>"
     exit 1
 fi
 
-if [[ $EXIT_CODE -eq 0 ]]; then
-    echo "✅ Feedback application completed successfully"
+ISSUE_NUMBER="$1"
+echo "🎯 Applying comprehensive feedback for Issue #${ISSUE_NUMBER} with MCP intelligence..."
+
+# MCP利用可能性確認
+if [[ -f ".serena/sessions/current/session-metadata.json" ]]; then
+    echo "✅ MCP session found - Enhanced feedback application available"
+    MCP_AVAILABLE="true"
+    echo "🔍 MCP Capabilities:"
+    echo "  • Serena: Feedback pattern analysis and impact assessment"
+    echo "  • Context7: Enhancement patterns and quality improvement practices"
 else
-    echo "❌ Feedback application failed with exit code: $EXIT_CODE"
-    exit $EXIT_CODE
+    echo "ℹ️ MCP session not found - Running in standard mode"
+    echo "💡 To enable MCP enhancements, run /context-session-stageup first"
+    echo "📋 Enhanced features when available:"
+    echo "  • Intelligent feedback pattern recognition"
+    echo "  • Automated improvement opportunity identification"
+    echo "  • Industry-standard enhancement methodology application"
+    echo "  • Strategic quality improvement prioritization"
+    MCP_AVAILABLE="false"
 fi
-```
 
-## 🚀 Expert Execution Flow
+# Phase 2: フィードバック収集・分析
+echo "📥 Phase 2: Feedback collection and intelligent analysis..."
 
-### Phase 1: Feedback Collection and Analysis (Core + MCP Enhanced)
+# レビューレポート確認
+REVIEW_REPORT="docs/review/issue-${ISSUE_NUMBER}-review.md"
+if [[ -f "$REVIEW_REPORT" ]]; then
+    echo "📄 Loading implementation review report for feedback extraction..."
+    Use Read tool to analyze "$REVIEW_REPORT"
+else
+    echo "⚠️ Review report not found: $REVIEW_REPORT"
+fi
 
-**Analyze the following as expert (User interactions in Japanese):**
+# 品質ダッシュボード確認
+QUALITY_DASHBOARD="docs/quality-reports/issue-${ISSUE_NUMBER}-quality-dashboard.md"
+if [[ -f "$QUALITY_DASHBOARD" ]]; then
+    echo "📊 Loading quality metrics dashboard for improvement analysis..."
+    Use Read tool to analyze "$QUALITY_DASHBOARD"
+else
+    echo "⚠️ Quality dashboard not found: $QUALITY_DASHBOARD"
+fi
 
-**Core Analysis Activities:**
+# GitHub Issue フィードバック取得
+if [[ "$GITHUB_AVAILABLE" == "true" ]]; then
+    ISSUE_DATA=$(gh issue view $ISSUE_NUMBER --json title,body,labels,comments,updatedAt,createdAt 2>/dev/null)
+    EXIT_CODE=$?
+    
+    if [[ $EXIT_CODE -eq 0 ]]; then
+        echo "📥 GitHub Issue #$ISSUE_NUMBER feedback retrieved successfully"
+        COMMENT_COUNT=$(echo "$ISSUE_DATA" | jq '.comments | length // 0')
+        echo "📊 Found $COMMENT_COUNT comments for feedback analysis"
+        
+        # Save feedback data for analysis
+        TEMP_FEEDBACK_FILE="/tmp/feedback-${ISSUE_NUMBER}-data.json"
+        echo "$ISSUE_DATA" > "$TEMP_FEEDBACK_FILE"
+    else
+        echo "⚠️ Could not retrieve GitHub feedback - proceeding with local analysis"
+    fi
+fi
 
-1. **GitHub Issues and PR Feedback Collection**
+# Phase 3: MCP拡張分析（利用可能時）
+if [[ "$MCP_AVAILABLE" == "true" ]]; then
+    echo "🧠 Phase 3: MCP-enhanced comprehensive improvement analysis..."
+    
+    # Serena全体品質分析
+    echo "📚 Serena: Comprehensive quality and improvement opportunity analysis..."
+    Use mcp__serena__get_symbols_overview to analyze current codebase quality
+    Use mcp__serena__search_for_pattern "TODO|FIXME|XXX|BUG|HACK|deprecated|refactor" --restrict_search_to_code_files=true
+    Use mcp__serena__search_for_pattern "duplicate|redundant|smell|anti-pattern|violation" --restrict_search_to_code_files=true
+    Use mcp__serena__search_for_pattern "performance|optimize|slow|inefficient" --restrict_search_to_code_files=true
+    Use mcp__serena__read_memory "feedback-application-history" if available
+    Use mcp__serena__read_memory "quality-improvement-patterns" if available
+    
+    # Context7最新最適化手法
+    echo "🌐 Context7: Latest quality improvement and optimization methodologies..."
+    Use mcp__context7__resolve-library-id "code-quality-improvement"
+    Use mcp__context7__resolve-library-id "refactoring-patterns"
+    Use mcp__context7__get-library-docs "/code-quality-improvement" --topic "feedback-application"
+    Use mcp__context7__get-library-docs "/refactoring-patterns" --topic "systematic-improvement"
+    Use mcp__context7__get-library-docs "/code-quality-improvement" --topic "technical-debt-reduction"
+    
+    # インテリジェント改善機会分析
+    echo "🔍 Intelligent improvement opportunity analysis..."
+    Use mcp__serena__search_for_pattern "coupling|cohesion|complexity|maintainability" --context_lines_before=2 --context_lines_after=2
+    
+else
+    echo "📋 Phase 3: Standard mode - Basic feedback analysis"
+fi
 
-   - Use Bash tool to collect feedback from GitHub comments using `gh issue view`
-   - Extract feedback from recent PR reviews and comments
-   - Identify feedback themes and priority areas
-   - Document feedback sources and timestamps
+# Phase 4: フィードバック優先度付け・改善計画
+echo "🎯 Phase 4: Feedback prioritization and improvement planning..."
 
-2. **Existing Quality Metrics Assessment**
-   - Check current test coverage and code quality metrics using Bash tool
-   - Identify areas needing improvement based on metrics
-   - Establish baseline for improvement measurement
+if [[ "$MCP_AVAILABLE" == "true" ]]; then
+    echo "🧠 MCP拡張モード: インテリジェント改善計画"
+    echo "📊 履歴パターン分析と最新品質改善手法を活用して戦略的改善計画を作成します"
+fi
 
-**MCP-Enhanced Analysis (if available):**
-3. **Automated Feedback Pattern Discovery**
+# ベースライン品質メトリクス取得
+echo "📊 Capturing baseline quality metrics..."
 
-   - Use mcp__serena__search_for_pattern to identify code smell patterns
-   - Use mcp__serena__find_symbol to locate improvement opportunities
-   - Use mcp__serena__find_referencing_symbols to analyze change impact
-   - Create memory using mcp__serena__write_memory for feedback analysis
+# テストカバレッジベースライン
+if command -v uv &> /dev/null; then
+    echo "🧪 Running baseline test coverage analysis..."
+    Use Bash tool: uv run --frozen pytest --cov=src --cov=domain --cov=application --cov=infrastructure --cov=presentation --cov-report=json --cov-report=term-missing > tests/feedback-validation/baseline-coverage-${ISSUE_NUMBER}.txt 2>&1 || echo "Baseline coverage analysis completed"
+fi
 
-4. **Intelligent Quality Assessment**
-   - Use mcp__serena__get_symbols_overview to assess codebase health
-   - Identify technical debt patterns and improvement opportunities
-   - Extract optimization recommendations from code analysis
-   - Document findings in quality assessment memory
+# コード品質ベースライン
+if command -v ruff &> /dev/null; then
+    echo "🔍 Running baseline code quality analysis..."
+    Use Bash tool: uv run --frozen ruff check . --output-format=json > tests/feedback-validation/baseline-ruff-${ISSUE_NUMBER}.json 2>&1 || echo "Baseline quality analysis completed"
+fi
 
-### Phase 2: Feedback Prioritization and Planning (Core + MCP Enhanced)
+# 型チェックベースライン
+if command -v pyright &> /dev/null; then
+    echo "🔬 Running baseline type checking analysis..."
+    Use Bash tool: uv run --frozen pyright --outputformat=json > tests/feedback-validation/baseline-pyright-${ISSUE_NUMBER}.json 2>&1 || echo "Baseline type checking completed"
+fi
 
-**Design the following as expert (Instructions to Claude Code in English):**
+# ユーザーに日本語でフィードバック適用・改善計画確認
+Ask user for the following feedback application planning in Japanese:
+1. 優先度付けの妥当性確認 (enhanced with impact analysis if MCP available)
+2. 改善対象範囲の検証 (enhanced with scope optimization if MCP available)
+3. 実装リスク評価の確認 (enhanced with intelligent risk assessment if MCP available)
+4. 品質改善目標の設定 (enhanced with metric-driven targets if MCP available)
+5. 段階的実装計画の承認 (enhanced with strategic sequencing if MCP available)
 
-**Core Planning Activities:**
+# Phase 5: MCP統合段階的改善実装
+echo "⚡ Phase 5: MCP-enhanced incremental improvement implementation..."
 
-1. **Feedback Prioritization Matrix**
+if [[ "$MCP_AVAILABLE" == "true" ]]; then
+    echo "🔨 Enhanced Implementation Mode:"
+    echo "  • Serena: Impact analysis and pattern-based improvement"
+    echo "  • Context7: Industry-standard refactoring and optimization patterns"
+    echo "  • Integration: Intelligent change validation and quality enhancement"
+    
+    # Context7業界標準改善パターン適用
+    Use mcp__context7__get-library-docs "/systematic-refactoring" --topic "incremental-improvement"
+    Use mcp__context7__get-library-docs "/quality-enhancement" --topic "feedback-driven-improvement"
+    
+    # Serena影響分析・最適化
+    Use mcp__serena__search_for_pattern "class|function|method" --context_lines_before=1 --context_lines_after=1 --restrict_search_to_code_files=true
+fi
 
-   ```
-   Categorize feedback by:
-   - Impact level (High/Medium/Low)
-   - Risk level (High/Medium/Low)
-   - Implementation complexity
-   - Dependencies between feedback items
-   ```
+# 段階的改善実装戦略
+Apply the following improvement strategy:
+- High-impact, low-risk improvements first with enhanced validation
+- Medium-impact improvements with comprehensive testing
+- Low-impact optimizations with quality metric tracking
+- Cross-cutting concerns with dependency analysis and impact validation
+Enhanced with intelligent sequencing and risk assessment if MCP available
 
-2. **Implementation Planning**
+# 実装前テスト実行
+echo "🧪 Running comprehensive pre-implementation test validation..."
+if command -v uv &> /dev/null; then
+    Use Bash tool: uv run --frozen pytest
+    PRE_IMPLEMENTATION_EXIT_CODE=$?
+    
+    if [[ $PRE_IMPLEMENTATION_EXIT_CODE -ne 0 ]]; then
+        echo "❌ Pre-implementation tests failed - addressing test issues first"
+        echo "🔧 Fixing test issues before applying feedback improvements..."
+    else
+        echo "✅ Pre-implementation tests passed - proceeding with improvements"
+    fi
+fi
 
-   ```
-   For each priority feedback:
-   - Define specific implementation steps
-   - Identify test validation requirements
-   - Plan incremental application approach
-   - Document expected outcomes
-   ```
+# 改善適用・検証サイクル実行
+echo "🔄 Executing improvement application and validation cycle..."
+Apply improvements incrementally with the following validation pattern:
+1. Apply single improvement with clear scope and rationale
+2. Execute comprehensive test validation to ensure no regressions
+3. Capture quality metrics to measure improvement impact
+4. Document improvement outcome and lessons learned
+5. Proceed to next improvement if validation successful
+Enhanced with MCP impact prediction and optimization if available
 
-**MCP-Enhanced Planning (if available):**
-3. **Context7 Improvement Pattern Integration**
+# Phase 6: 品質改善・文書生成
+echo "📝 Phase 6: Quality improvement documentation and reporting..."
 
-```
-Use mcp__context7__resolve-library-id for "code-quality"
-Use mcp__context7__get-library-docs for improvement patterns
-Use mcp__context7__get-library-docs for refactoring best practices
-Integrate latest improvement methodologies into planning
-```
+# メインフィードバック適用レポート作成
+FEEDBACK_REPORT_FILE="docs/feedback/issue-${ISSUE_NUMBER}-feedback-application.md"
+Create "$FEEDBACK_REPORT_FILE" with:
+- Issue context and feedback sources with GitHub integration if available
+- Applied feedback summary with priority classification and impact analysis
+- Implementation approach and methodology with detailed rationale
+- Quality metrics before/after comparison with improvement calculations
+- Risk assessment and mitigation strategies with lessons learned
+- Remaining feedback items and future improvement roadmap
 
-4. **Technology-Specific Enhancement Guidance**
-   ```
-   Identify project tech stack from codebase analysis
-   Use mcp__context7__resolve-library-id for framework-specific improvements
-   Use mcp__context7__get-library-docs for optimization patterns
-   Apply technology-specific improvement recommendations
-   ```
+# 品質改善メトリクス・レポート作成
+QUALITY_METRICS_FILE="docs/feedback/issue-${ISSUE_NUMBER}-quality-metrics.md"
+Create "$QUALITY_METRICS_FILE" with:
+- Comprehensive quality metrics comparison with trend analysis
+- Test coverage improvement tracking with edge case coverage
+- Code quality scores with detailed improvement breakdown
+- Performance and maintainability enhancement measurements
+- Technical debt reduction achievements and remaining items
+- Future quality improvement recommendations and strategic planning
 
-### Phase 3: Incremental Feedback Application (Core + MCP Enhanced)
+# 最終品質メトリクス取得
+echo "📊 Capturing final quality metrics for improvement analysis..."
 
-**Execute the following as expert (Instructions to Claude Code in English):**
+# 最終テストカバレッジ
+if command -v uv &> /dev/null; then
+    echo "🧪 Running final test coverage analysis..."
+    Use Bash tool: uv run --frozen pytest --cov=src --cov=domain --cov=application --cov=infrastructure --cov=presentation --cov-report=json --cov-report=term-missing > tests/feedback-validation/final-coverage-${ISSUE_NUMBER}.txt 2>&1 || echo "Final coverage analysis completed"
+fi
 
-**Core Implementation Steps:**
+# 最終コード品質
+if command -v ruff &> /dev/null; then
+    echo "🔍 Running final code quality analysis..."
+    Use Bash tool: uv run --frozen ruff check . --output-format=json > tests/feedback-validation/final-ruff-${ISSUE_NUMBER}.json 2>&1 || echo "Final quality analysis completed"
+fi
 
-1. **Validate prerequisites and environment**
+# 最終型チェック
+if command -v pyright &> /dev/null; then
+    echo "🔬 Running final type checking analysis..."
+    Use Bash tool: uv run --frozen pyright --outputformat=json > tests/feedback-validation/final-pyright-${ISSUE_NUMBER}.json 2>&1 || echo "Final type checking completed"
+fi
 
-   ```bash
-   # Validate issue number requirement
-   if [[ $# -eq 0 ]]; then
-       echo "Error: At least one issue number must be specified"
-       echo "Usage example: /apply-feedback-enhanced 1"
-       exit 1
-   fi
+# Phase 7: MCP拡張文書作成（利用可能時）
+if [[ "$MCP_AVAILABLE" == "true" ]]; then
+    echo "🧠 Phase 7: Creating MCP-enhanced feedback analysis documents..."
+    
+    # MCP分析結果文書
+    MCP_FEEDBACK_ANALYSIS_FILE="docs/feedback/issue-${ISSUE_NUMBER}-mcp-feedback-analysis.md"
+    Create "$MCP_FEEDBACK_ANALYSIS_FILE" with:
+    - Serena feedback pattern analysis results and improvement opportunity identification
+    - Context7 enhancement methodology integration and best practice application
+    - Intelligent improvement recommendations with strategic prioritization and impact assessment
+    - Change impact analysis and optimization results with dependency mapping
+    - Future enhancement roadmap with predictive quality improvement strategies
+    
+    # 詳細品質改善レポート
+    QUALITY_IMPROVEMENT_REPORT_FILE="docs/feedback/issue-${ISSUE_NUMBER}-quality-improvement-report.md"
+    Create "$QUALITY_IMPROVEMENT_REPORT_FILE" with:
+    - Comprehensive quality improvement analysis with historical comparison and trend analysis
+    - Applied improvement patterns and methodologies with effectiveness measurement
+    - Technical debt reduction achievements with strategic debt management planning
+    - Performance and maintainability enhancement tracking with optimization recommendations
+    - Context7 pattern integration outcomes with industry benchmark comparison
+    
+    # Serena memory への学習内容保存
+    Use mcp__serena__write_memory "feedback-application-$(date +%Y%m%d)-issue-${ISSUE_NUMBER}" "Feedback application completed for issue ${ISSUE_NUMBER} with systematic improvement implementation, quality metrics enhancement, Context7 patterns applied, and comprehensive validation"
+fi
 
-   # Run baseline tests
-   echo "Running baseline tests..."
-   uv run --frozen pytest
-   BASELINE_EXIT_CODE=$?
-   
-   # Capture baseline metrics
-   echo "Capturing baseline quality metrics..."
-   uv run --frozen ruff check . --statistics > baseline_ruff.txt
-   uv run --frozen pytest --cov=src --cov-report=term | grep TOTAL > baseline_coverage.txt
-   ```
+# Phase 8: GitHub統合・フィードバック投稿
+echo "🔗 Phase 8: GitHub integration and feedback posting..."
 
-2. **Apply feedback incrementally with validation**
+if [[ "$GITHUB_AVAILABLE" == "true" ]]; then
+    # GitHub Issue への改善結果投稿
+    IMPROVEMENT_SUMMARY="✅ フィードバック適用完了 - Issue #${ISSUE_NUMBER}
 
-   ```bash
-   # Apply feedback in priority order
-   for feedback_item in high_priority medium_priority low_priority; do
-       echo "Applying: $feedback_item"
-       
-       # Pre-change validation
-       echo "Running pre-change tests..."
-       uv run --frozen pytest
-       
-       # Apply specific feedback changes
-       # (Implementation logic here)
-       
-       # Post-change validation
-       echo "Running post-change tests..."
-       uv run --frozen pytest
-       POST_CHANGE_EXIT_CODE=$?
-       
-       if [[ $POST_CHANGE_EXIT_CODE -ne 0 ]]; then
-           echo "❌ Tests failed after applying $feedback_item"
-           echo "Rolling back changes..."
-           # Rollback logic here
-           continue
-       fi
-       
-       echo "✅ Successfully applied: $feedback_item"
-   done
-   ```
+📊 **品質改善結果**:
+- 🧪 テストカバレッジ: [改善前]% → [改善後]% (+[改善度]%)
+- 🔍 コード品質スコア: [改善前] → [改善後] (-[改善件数]件)
+- 🔬 型安全性: [改善前] → [改善後] (+[改善度]%)
+- ⚡ パフォーマンス: [最適化項目数]件の最適化適用
 
-**MCP-Enhanced Implementation (if available):**
-3. **Intelligent Change Application**
+📁 **詳細レポート**:
+- [フィードバック適用レポート](docs/feedback/issue-${ISSUE_NUMBER}-feedback-application.md)
+- [品質改善メトリクス](docs/feedback/issue-${ISSUE_NUMBER}-quality-metrics.md)
+"
+    
+    if [[ "$MCP_AVAILABLE" == "true" ]]; then
+        IMPROVEMENT_SUMMARY="$IMPROVEMENT_SUMMARY
+🤖 **MCP拡張分析**:
+- [MCP分析結果](docs/feedback/issue-${ISSUE_NUMBER}-mcp-feedback-analysis.md)
+- [品質改善詳細レポート](docs/feedback/issue-${ISSUE_NUMBER}-quality-improvement-report.md)
+"
+    fi
+    
+    IMPROVEMENT_SUMMARY="$IMPROVEMENT_SUMMARY
+🚀 **次のステップ**:
+プルリクエスト作成準備完了。
+"
+    
+    Use Bash tool: gh issue comment "${ISSUE_NUMBER}" --body "$IMPROVEMENT_SUMMARY"
+fi
 
-```bash
-# Enhanced feedback application with MCP analysis
-For each feedback item from Serena analysis:
-- Apply change impact analysis before implementation
-- Use intelligent refactoring patterns from Context7
-- Validate architectural compliance automatically
-- Generate optimization recommendations
-```
+# Phase 9: Gitコミット
+echo "📝 Phase 9: Git commit for feedback application..."
 
-4. **Automated Quality Enhancement**
+Use Bash tool: git add docs/feedback/ tests/feedback-validation/
 
-   ```bash
-   # Intelligent quality improvement
-   Use Serena MCP to identify code duplication patterns
-   Apply Context7 refactoring patterns for improvement
-   Generate automated test enhancements
-   Create quality metric improvement documentation
-   ```
+if [[ "$MCP_AVAILABLE" == "true" ]]; then
+    Use Bash tool: git commit -m "feat: apply comprehensive feedback for issue ${ISSUE_NUMBER} with MCP enhancement
 
-### Phase 4: Quality Validation and Documentation (Core + MCP Enhanced)
+Systematic feedback application with priority-based improvement implementation.
+Quality metrics enhancement with comprehensive validation and testing.
+MCP-enhanced analysis with pattern recognition and intelligent optimization.
 
-**Execute the following as expert (Instructions to Claude Code in English):**
+🎯 Generated with Claude Code"
+else
+    Use Bash tool: git commit -m "feat: apply comprehensive feedback for issue ${ISSUE_NUMBER}
 
-1. **Create feedback application documentation (always)**
+Systematic feedback application with priority-based improvement implementation.
+Quality metrics enhancement with comprehensive validation and testing.
 
-   ```bash
-   # Standard feedback application document (always created)
-   Write "docs/feedback/issue-${ISSUE_NUMBER}-feedback-application.md" with:
-   # - Applied feedback summary and categorization
-   # - Implementation approach and rationale
-   # - Quality metrics before/after comparison
-   # - Risk assessment and mitigation strategies
-   # - Next steps and remaining feedback items
-   ```
-
-2. **Create MCP analysis documents (if available)**
-
-   ```bash
-   if [[ "$MCP_AVAILABLE" == "true" ]]; then
-       # MCP-enhanced analysis document
-       Write "docs/feedback/issue-${ISSUE_NUMBER}-mcp-feedback-analysis.md" with:
-       # - MCP-discovered improvement patterns analysis
-       # - Automated quality enhancement recommendations
-       # - Change impact analysis and optimization results
-       # - Context7-enhanced improvement implementation guide
-       # - Future optimization roadmap
-
-       # MCP detailed reports
-       Write "docs/feedback/issue-${ISSUE_NUMBER}-quality-improvement-report.md" with:
-       # - Serena MCP codebase quality analysis summary
-       # - Identified optimization opportunities and recommendations
-       # - Applied improvement patterns and results
-       # - Quality metrics improvement tracking
-       # - Context7 pattern integration outcomes
-
-       # Update MCP memory with findings
-       Use mcp__serena__write_memory to store:
-       # - Feedback application analysis results
-       # - Quality improvement outcomes
-       # - Optimization recommendation tracking
-       # - Pattern application effectiveness
-   fi
-   ```
-
-3. **Update quality metrics tracking**
-
-   ```bash
-   # Capture final metrics and comparison
-   echo "Capturing final quality metrics..."
-   uv run --frozen ruff check . --statistics > final_ruff.txt
-   uv run --frozen pytest --cov=src --cov-report=term | grep TOTAL > final_coverage.txt
-   
-   # Generate improvement report
-   Write "docs/feedback/issue-${ISSUE_NUMBER}-quality-metrics.md" with:
-   # - Baseline vs final metrics comparison
-   # - Quality improvement percentage calculations
-   # - Remaining improvement opportunities
-   # - Recommendations for future sprints
-   ```
-
-4. **Git commit feedback applications**
-   ```bash
-   Bash git add .
-   if [[ "$MCP_AVAILABLE" == "true" ]]; then
-       Bash git commit -m "feat: apply feedback for issue ${ISSUE_NUMBER} with MCP enhancement
-
-   Apply systematic feedback based on priority and impact analysis.
-   Implement quality improvements while maintaining test coverage.
-   Enhanced with MCP intelligent analysis and improvement patterns.
-
-   🎯 Generated with Claude Code
-       "
-   else
-       Bash git commit -m "feat: apply feedback for issue ${ISSUE_NUMBER}
-
-   Apply systematic feedback based on priority and impact analysis.
-   Implement quality improvements while maintaining test coverage.
-
-   🎯 Generated with Claude Code
-       "
-   fi
-   ```
+🎯 Generated with Claude Code"
+fi
 
 ## ✅ Built-in Quality Assurance
 
@@ -397,19 +475,20 @@ For each feedback item from Serena analysis:
 
 **Required Items (MUST):**
 
-- [ ] Serena MCP feedback pattern analysis completed
-- [ ] Context7 improvement pattern integration applied
-- [ ] Enhanced feedback application with intelligence
-- [ ] Quality improvement automatically tracked and documented
-- [ ] Change impact analysis completed
-- [ ] Implementation guidance updated
+- [ ] Feedback systematically applied based on priority and impact analysis
+- [ ] Quality metrics improvement achieved and documented comprehensively
+- [ ] Test coverage maintained or improved after feedback application
+- [ ] All changes properly validated with comprehensive testing
+- [ ] Documentation updated to reflect applied improvements and lessons learned
+- [ ] GitHub issue updated with improvement results (if GitHub integration available)
 
-**Recommended Items (SHOULD):**
+**Recommended Items (SHOULD) - MCP Enhanced:**
 
-- [ ] Technical debt reduction achieved and documented
-- [ ] Performance implications analyzed and optimized
-- [ ] Security improvements validated
-- [ ] Code maintainability enhancements applied
+- [ ] Serena MCP feedback pattern analysis completed with pattern recognition (if MCP available)
+- [ ] Context7 improvement patterns applied with industry standards (if MCP available)
+- [ ] Strategic improvement roadmap created with intelligent prioritization (if MCP available)
+- [ ] Change impact analysis completed with optimization recommendations (if MCP available)
+- [ ] Predictive quality assessment performed with technical debt management (if MCP available)
 
 ### Quality Metrics
 
@@ -419,91 +498,12 @@ For each feedback item from Serena analysis:
 | Quality Metrics Improvement         | 90%    | [Actual Value] | ✅/❌      |
 | Test Coverage Maintenance           | 95%    | [Actual Value] | ✅/❌      |
 | Architecture Compliance             | 100%   | [Actual Value] | ✅/❌      |
+| Documentation Completeness         | 100%   | [Actual Value] | ✅/❌      |
 
 **MCP-Enhanced Metrics (if MCP Available):**
 | Metric | Target | Actual | Assessment |
 |--------|--------|--------|-----------|
-| Pattern Discovery Coverage | 90% | [Actual Value] | ✅/❌ |
-| Automated Improvement Application | 95% | [Actual Value] | ✅/❌ |
-| Context7 Integration | 85% | [Actual Value] | ✅/❌ |
-| Change Impact Accuracy | 100% | [Actual Value] | ✅/❌ |
-
-## 📊 Standardized Output Format
-
-### 実行サマリー (日本語でユーザーに報告)
-
-**基本機能 (常に実行):**
-
-- ✅ **フィードバック収集分析**: GitHub コメント X 件、PR レビュー Y 件を分析完了
-- ✅ **優先度付け実装**: 高優先度 A 項目、中優先度 B 項目、低優先度 C 項目を適用
-- ✅ **品質メトリクス改善**: カバレッジ X%→Y%、Ruff問題 A→B に改善
-- ✅ **ドキュメント更新**: docs/feedback/issue-X-feedback-application.md 作成
-
-**MCP 拡張機能 (利用可能時):**
-
-- ✅ **MCP フィードバック分析**: [X]個のファイル、[Y]個の改善パターン分析完了
-- ✅ **自動改善適用**: [A]個の品質改善、[B]個の最適化を自動適用
-- ✅ **変更影響分析**: [C]個のコンポーネント影響分析完了
-- ✅ **Context7 パターン統合**: 最新改善パターン適用完了
-- ✅ **改善ガイダンス生成**: MCP 分析に基づく改善計画更新
-
-### 成果物
-
-**基本ファイル (常に作成):**
-
-- `docs/feedback/issue-X-feedback-application.md`: フィードバック適用記録
-- `docs/feedback/issue-X-quality-metrics.md`: 品質メトリクス改善記録
-- Updated test coverage and quality metrics
-
-**MCP 拡張ファイル (利用可能時):**
-
-- `docs/feedback/issue-X-mcp-feedback-analysis.md`: MCP フィードバック分析
-- `docs/feedback/issue-X-quality-improvement-report.md`: 品質改善詳細レポート
-- Updated MCP memory files: フィードバック適用結果の永続化
-
-### 総合判定
-
-**ステータス**: `SUCCESS` (基本) / `MCP_ENHANCED_SUCCESS` (MCP 利用時)
-**品質改善スコア**: [スコア]/100
-**MCP インテリジェンス品質**: [スコア]/100 (利用時のみ)
-**次フェーズ準備**: `READY`
-
-### 次のステップ (日本語でユーザーに案内)
-
-1. **即座に実行可能**: `/create-pr [issue-numbers]` または `/create-pr-enhanced [issue-numbers]`
-2. **推奨**: プルリクエスト作成フェーズに進む
-3. **確認推奨**: フィードバック適用結果のレビュー
-
-**ユーザーへのメッセージ (日本語)**:
-
-```
-🎉 フィードバック適用完了！
-
-🔧 適用されたフィードバック:
-   📊 高優先度: [count] 項目 (100%完了)
-   📊 中優先度: [count] 項目 ([percentage]%完了)
-   📊 低優先度: [count] 項目 ([percentage]%完了)
-
-📈 品質メトリクス改善:
-   ✅ テストカバレッジ: [before]% → [after]% (+[improvement]%)
-   ✅ Ruff問題: [before] → [after] (-[reduction])
-   ✅ 複雑度スコア: [before] → [after] (-[improvement]%)
-
-📁 作成されたファイル:
-   ✅ docs/feedback/issue-X-feedback-application.md
-   ✅ docs/feedback/issue-X-quality-metrics.md
-
-🧠 MCP強化機能 (利用時のみ):
-   📊 Serena分析: [X]ファイル、[Y]パターン分析
-   🔍 自動改善適用: [A]個の品質改善実装
-   📋 変更影響分析: [C]個のコンポーネント分析
-   🌐 Context7統合: 最新改善パターン適用
-   ✅ docs/feedback/issue-X-mcp-feedback-analysis.md
-   ✅ docs/feedback/issue-X-quality-improvement-report.md
-   ✅ MCP メモリファイル更新
-
-📋 次のステップ (プルリクエスト作成):
-   /create-pr [issue-numbers] または /create-pr-enhanced [issue-numbers]
-
-✅ フィードバック適用完了 - プルリクエスト作成準備完了！
-```
+| Pattern Recognition Accuracy | 95% | [Actual Value] | ✅/❌ |
+| Intelligent Improvement Application | 90% | [Actual Value] | ✅/❌ |
+| Context7 Integration Coverage | 85% | [Actual Value] | ✅/❌ |
+| Strategic Assessment Alignment | 100% | [Actual Value] | ✅/❌ |
